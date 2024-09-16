@@ -17,12 +17,18 @@ Pro každou novou fíčuru [udělejte issue](https://github.com/victoriousoft/to
 [WA tutoriál](https://kf-ga.github.io/0_introduction/04_git.html#vytvareni-vetvi-v-git)
 
 Žádnou práci pls nědelat na main branch, na každou fíčuru bude branch
+
+2) Před vytvořením se přehodím na main a pullnu nejnovější změny
+```
+$ git checkout main && git pull
+```
+
 1) Vyvtoření branche
 ```
 $ git branch <nazev-branche>
 ```
 
-2) Změna na branch
+3) Změna na branch
 ```
 $ git checkout <nazev-branche>
 ```
