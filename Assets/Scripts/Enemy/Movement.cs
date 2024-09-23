@@ -39,4 +39,9 @@ public class Movement : MonoBehaviour
 
         transform.position = Vector3.MoveTowards(transform.position, points[currentPointIndex].position, speed * Time.deltaTime);
     }
+
+    public float getDistanceToLastPoint()
+    {
+        return Vector3.Distance(transform.position, points[points.Length - 1].position);
+    }
 }

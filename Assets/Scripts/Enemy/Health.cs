@@ -10,7 +10,7 @@ public class Health : MonoBehaviour
         health = maxHealth;
     }
 
-    void takeDamage(int damage)
+    public void takeDamage(int damage)
     {
         health -= damage;
         if (health <= 0)
