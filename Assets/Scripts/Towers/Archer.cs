@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ public class Archer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameObject[] enemies = getEnemiesInRange();
+        GameObject[] enemies = GetEnemiesInRange();
         Debug.Log("Enemies in range: " + enemies.Length);
         Debug.Log("Can shoot: " + canShoot);
         if (enemies.Length > 0 && canShoot)
@@ -27,30 +28,23 @@ public class Archer : MonoBehaviour
             Debug.Log("Closest enemy: " + closestEnemy.name);
             Shoot(closestEnemy);
             canShoot = false;
-            Invoke("ResetCooldown", cooldown);
+            StartCoroutine(ResetCooldown());
         }
     }
 
-    void ResetCooldown()
+    IEnumerator ResetCooldown()
     {
+        yield return new WaitForSeconds(cooldown);
         canShoot = true;
     }
 
     void Shoot(GameObject enemy)
     {
         Debug.Log("Shooting at " + enemy.name);
-        GameObject arrow = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-        arrow.transform.position = transform.position;
-        while (Vector3.Distance(arrow.transform.position, enemy.transform.position) > 0.1f)
-        {
-            arrow.transform.position = Vector3.MoveTowards(arrow.transform.position, enemy.transform.position, 1 * Time.deltaTime);
-        }
-
-        Destroy(arrow);
-        enemy.GetComponent<Health>().takeDamage((int)damage);
+        enemy.GetComponent<Health>().TakeDamage((int)damage);
     }
 
-    GameObject[] getEnemiesInRange()
+    GameObject[] GetEnemiesInRange()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, range);
         return hitColliders.Where(c => c.CompareTag("Enemy")).Select(c => c.gameObject).ToArray();
