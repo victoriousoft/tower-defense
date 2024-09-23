@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] Transform pathParent;
-    [SerializeField] float speed = 1f;
+    public Transform pathParent;
+    public float speed = 1f;
 
     private int currentPointIndex = 0;
     private Transform[] points;
@@ -20,7 +20,6 @@ public class Movement : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         Move();
@@ -39,5 +38,10 @@ public class Movement : MonoBehaviour
         }
 
         transform.position = Vector3.MoveTowards(transform.position, points[currentPointIndex].position, speed * Time.deltaTime);
+    }
+
+    public float getDistanceToLastPoint()
+    {
+        return Vector3.Distance(transform.position, points[points.Length - 1].position);
     }
 }
