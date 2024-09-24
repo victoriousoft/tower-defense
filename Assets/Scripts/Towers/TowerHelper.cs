@@ -29,7 +29,7 @@ public static class TowerHelpers
         GameObject target,
         float height,
         float duration,
-        Action<GameObject> destroyCallback,
+        Action destroyCallback,
         string rotationType = TowerProjectileRotationTypes.NONE
         )
     {
@@ -66,6 +66,6 @@ public static class TowerHelpers
             yield return null;
         }
 
-        destroyCallback(projectile);
+        destroyCallback();
     }
 }

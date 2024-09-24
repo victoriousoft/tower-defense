@@ -25,7 +25,6 @@ public class Archer : MonoBehaviour
         {
             GameObject closestEnemy = enemies.OrderBy(e => e.GetComponent<Movement>().getDistanceToLastPoint()).First();
             Debug.Log("Closest enemy: " + closestEnemy.name);
-            Shoot(closestEnemy);
             StartCoroutine(AnimateArrow(closestEnemy));
             canShoot = false;
             StartCoroutine(ResetCooldown());
@@ -45,18 +44,12 @@ public class Archer : MonoBehaviour
         arrow.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         arrow.GetComponent<Renderer>().material.color = Color.red;
 
-        yield return TowerHelpers.AnimateBezierProjectile(arrow, transform.position, enemy, 2, 1, KillArrow, TowerHelpers.TowerProjectileRotationTypes.LOOK_AT_TARGET);
+        yield return TowerHelpers.AnimateBezierProjectile(arrow, transform.position, enemy, 2, 1, () => KillArrow(arrow, enemy), TowerHelpers.TowerProjectileRotationTypes.LOOK_AT_TARGET);
     }
 
-    void KillArrow(GameObject arrow)
+    void KillArrow(GameObject arrow, GameObject enemy)
     {
         Destroy(arrow);
-    }
-
-
-    void Shoot(GameObject enemy)
-    {
-        Debug.Log("Shooting at " + enemy.name);
         enemy.GetComponent<Health>().TakeDamage((int)damage);
     }
 }
