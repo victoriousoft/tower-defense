@@ -44,7 +44,6 @@ public static class TowerHelpers
             {
                 if (target.CompareTag("Enemy")) targetPosition = target.transform.position;
                 else target = null;
-
             }
 
             controlPoint = (startPosition + targetPosition) / 2 + Vector3.up * height;
@@ -54,7 +53,15 @@ public static class TowerHelpers
             projectile.transform.position = currentPosition;
 
             Vector3 direction = (CalculateBezierPoint(t + 0.01f, startPosition, controlPoint, targetPosition) - currentPosition).normalized;
-            projectile.transform.rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(90, 0, 0);
+
+            if (rotationType == TowerProjectileRotationTypes.LOOK_AT_TARGET)
+            {
+                projectile.transform.rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(90, 0, 0);
+            }
+            else if (rotationType == TowerProjectileRotationTypes.SPIN)
+            {
+                projectile.transform.Rotate(Vector3.up, 360 * Time.deltaTime / duration);
+            }
 
             yield return null;
         }
