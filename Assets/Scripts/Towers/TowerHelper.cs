@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -22,7 +23,15 @@ public static class TowerHelpers
         return Mathf.Pow(1 - t, 2) * p0 + 2 * (1 - t) * t * p1 + Mathf.Pow(t, 2) * p2;
     }
 
-    public static IEnumerator AnimateBezierProjectile(GameObject projectile, Vector3 startPosition, GameObject target, float height, float duration, string rotationType = TowerProjectileRotationTypes.NONE)
+    public static IEnumerator AnimateBezierProjectile(
+        GameObject projectile,
+        Vector3 startPosition,
+        GameObject target,
+        float height,
+        float duration,
+        Action<GameObject> destroyCallback,
+        string rotationType = TowerProjectileRotationTypes.NONE
+        )
     {
         Vector3 targetPosition = target != null ? target.transform.position : Vector3.zero;
         Vector3 controlPoint = (startPosition + targetPosition) / 2 + Vector3.up * height;
@@ -50,6 +59,6 @@ public static class TowerHelpers
             yield return null;
         }
 
-        Archer.KillArrow(projectile);
+        destroyCallback(projectile);
     }
 }

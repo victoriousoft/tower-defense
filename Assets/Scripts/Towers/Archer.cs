@@ -45,10 +45,10 @@ public class Archer : MonoBehaviour
         arrow.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         arrow.GetComponent<Renderer>().material.color = Color.red;
 
-        yield return TowerHelpers.AnimateBezierProjectile(arrow, transform.position, enemy, 2, 1, TowerHelpers.TowerProjectileRotationTypes.LOOK_AT_TARGET);
+        yield return TowerHelpers.AnimateBezierProjectile(arrow, transform.position, enemy, 2, 1, KillArrow, TowerHelpers.TowerProjectileRotationTypes.LOOK_AT_TARGET);
     }
 
-    public static void KillArrow(GameObject arrow)
+    void KillArrow(GameObject arrow)
     {
         Destroy(arrow);
     }
