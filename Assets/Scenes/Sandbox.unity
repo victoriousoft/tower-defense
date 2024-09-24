@@ -1389,10 +1389,10 @@ Transform:
   m_Children:
   - {fileID: 10574153}
   - {fileID: 521126624}
-  - {fileID: 1398804658}
   - {fileID: 1866149646}
   - {fileID: 727319010}
   - {fileID: 767308794}
+  - {fileID: 1398804658}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1605,9 +1605,9 @@ GameObject:
   - component: {fileID: 767308798}
   - component: {fileID: 767308797}
   - component: {fileID: 767308796}
-  - component: {fileID: 767308795}
+  - component: {fileID: 767308799}
   m_Layer: 0
-  m_Name: Archer (5)
+  m_Name: Bomber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1628,21 +1628,6 @@ Transform:
   m_Father: {fileID: 679680969}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &767308795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 767308793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05d89a09a4b733b49a14c0ece1fe604c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: 2
-  cooldown: 1
-  damage: 10
 --- !u!65 &767308796
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1714,6 +1699,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 767308793}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &767308799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767308793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeefb539347ff754fa200950e816ac9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 4
+  cooldown: 1
+  damage: 10
+  splashRadius: 1
 --- !u!1 &841696767
 GameObject:
   m_ObjectHideFlags: 0
@@ -2553,9 +2554,9 @@ GameObject:
   - component: {fileID: 1398804662}
   - component: {fileID: 1398804661}
   - component: {fileID: 1398804660}
-  - component: {fileID: 1398804659}
+  - component: {fileID: 1398804663}
   m_Layer: 0
-  m_Name: Archer (2)
+  m_Name: Bomber (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2576,21 +2577,6 @@ Transform:
   m_Father: {fileID: 679680969}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1398804659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1398804657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05d89a09a4b733b49a14c0ece1fe604c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: 2
-  cooldown: 1
-  damage: 10
 --- !u!65 &1398804660
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2662,6 +2648,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1398804657}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1398804663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398804657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeefb539347ff754fa200950e816ac9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 4
+  cooldown: 1
+  damage: 10
+  splashRadius: 1
 --- !u!1 &1487224608
 GameObject:
   m_ObjectHideFlags: 0
