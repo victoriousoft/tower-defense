@@ -19,12 +19,9 @@ public class Archer : MonoBehaviour
     void Update()
     {
         GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform, range);
-        Debug.Log("Enemies in range: " + enemies.Length);
-        Debug.Log("Can shoot: " + canShoot);
         if (enemies.Length > 0 && canShoot)
         {
             GameObject closestEnemy = enemies.OrderBy(e => e.GetComponent<Movement>().getDistanceToLastPoint()).First();
-            Debug.Log("Closest enemy: " + closestEnemy.name);
             StartCoroutine(AnimateArrow(closestEnemy));
             canShoot = false;
             StartCoroutine(ResetCooldown());
