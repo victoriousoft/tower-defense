@@ -18,11 +18,13 @@ public static class TowerHelpers
         return hitColliders.Where(c => c.CompareTag("Enemy")).Select(c => c.gameObject).ToArray();
     }
 
+    // moc nevim co tohle dělá
     public static Vector3 CalculateBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2)
     {
         return Mathf.Pow(1 - t, 2) * p0 + 2 * (1 - t) * t * p1 + Mathf.Pow(t, 2) * p2;
     }
 
+    // animuje bezier projectile (archers, bomb tower)
     public static IEnumerator AnimateBezierProjectile(
         GameObject projectile,
         Vector3 startPosition,
