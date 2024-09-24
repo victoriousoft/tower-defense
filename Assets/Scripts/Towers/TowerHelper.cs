@@ -24,22 +24,21 @@ public static class TowerHelpers
 
     public static IEnumerator AnimateBezierProjectile(GameObject projectile, Vector3 startPosition, GameObject target, float height, float duration, string rotationType = TowerProjectileRotationTypes.NONE)
     {
-        Vector3 targetPosition = target.transform.position;
+        Vector3 targetPosition = target != null ? target.transform.position : Vector3.zero;
         Vector3 controlPoint = (startPosition + targetPosition) / 2 + Vector3.up * height;
 
         float startTime = Time.time;
 
         while (Time.time < startTime + duration)
         {
-            if (target == null)
+            if (target != null)
             {
-                // TODO: do not destroy arrows mid air
-                Archer.KillArrow(projectile);
-                yield break;
+                if (target.CompareTag("Enemy")) targetPosition = target.transform.position;
+                else target = null;
+
             }
 
-            targetPosition = target.transform.position;
-            controlPoint = (startPosition + targetPosition) / 2 + Vector3.up * 2;
+            controlPoint = (startPosition + targetPosition) / 2 + Vector3.up * height;
 
             float t = (Time.time - startTime) / duration;
             Vector3 currentPosition = CalculateBezierPoint(t, startPosition, controlPoint, targetPosition);
