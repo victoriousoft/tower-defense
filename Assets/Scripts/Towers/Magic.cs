@@ -49,6 +49,6 @@ public class Magic : MonoBehaviour
     void KillSphere(GameObject sphere, GameObject enemy, Vector3 _enemyPosition)
     {
         Destroy(sphere);
-        enemy.GetComponent<Health>().TakeDamage((int)damage);
+        if (enemy != null) enemy.GetComponent<Health>().TakeDamage((int)damage);
     }
 }
