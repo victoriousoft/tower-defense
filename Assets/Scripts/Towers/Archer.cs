@@ -16,7 +16,7 @@ public class Archer : MonoBehaviour
         //DrawRangeOutline();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, range);
         if (enemies.Length > 0 && canShoot)

@@ -1106,9 +1106,9 @@ GameObject:
   - component: {fileID: 521126628}
   - component: {fileID: 521126627}
   - component: {fileID: 521126626}
-  - component: {fileID: 521126625}
+  - component: {fileID: 521126629}
   m_Layer: 0
-  m_Name: Archer (1)
+  m_Name: Magic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1129,21 +1129,6 @@ Transform:
   m_Father: {fileID: 679680969}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &521126625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 521126623}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05d89a09a4b733b49a14c0ece1fe604c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: 2
-  cooldown: 1
-  damage: 10
 --- !u!65 &521126626
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1215,6 +1200,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 521126623}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &521126629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521126623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 797a0241fe2889345bd8a20faa3b82d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 4
+  cooldown: 1
+  damage: 10
 --- !u!1 &537678405
 GameObject:
   m_ObjectHideFlags: 0
@@ -1388,11 +1388,11 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 10574153}
-  - {fileID: 521126624}
-  - {fileID: 1866149646}
   - {fileID: 727319010}
   - {fileID: 767308794}
   - {fileID: 1398804658}
+  - {fileID: 521126624}
+  - {fileID: 1866149646}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3065,9 +3065,9 @@ GameObject:
   - component: {fileID: 1866149650}
   - component: {fileID: 1866149649}
   - component: {fileID: 1866149648}
-  - component: {fileID: 1866149647}
+  - component: {fileID: 1866149651}
   m_Layer: 0
-  m_Name: Archer (3)
+  m_Name: Archer (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3088,21 +3088,6 @@ Transform:
   m_Father: {fileID: 679680969}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1866149647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1866149645}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05d89a09a4b733b49a14c0ece1fe604c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: 2
-  cooldown: 1
-  damage: 10
 --- !u!65 &1866149648
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3174,6 +3159,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1866149645}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1866149651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866149645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 797a0241fe2889345bd8a20faa3b82d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 4
+  cooldown: 1
+  damage: 10
 --- !u!1 &1929494950
 GameObject:
   m_ObjectHideFlags: 0

@@ -62,7 +62,7 @@ public static class TowerHelpers
             }
             else if (rotationType == TowerProjectileRotationTypes.SPIN)
             {
-                projectile.transform.Rotate(Vector3.up, 360 * Time.deltaTime / duration);
+                projectile.transform.Rotate(Vector3.up, 360 * Time.fixedDeltaTime / duration);
             }
 
             yield return null;
@@ -84,7 +84,7 @@ public static class TowerHelpers
         while (target != null)
         {
             Vector3 direction = (target.transform.position - projectile.transform.position).normalized;
-            projectile.transform.position += speed * Time.deltaTime * direction;
+            projectile.transform.position += speed * Time.fixedDeltaTime * direction;
 
             projectile.transform.LookAt(target.transform);
 

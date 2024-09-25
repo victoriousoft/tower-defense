@@ -20,7 +20,7 @@ public class Movement : MonoBehaviour
 
     }
 
-    void Update()
+    void FixedUpdate()
     {
         Move();
     }
@@ -37,7 +37,7 @@ public class Movement : MonoBehaviour
             }
         }
 
-        transform.position = Vector3.MoveTowards(transform.position, points[currentPointIndex].position, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, points[currentPointIndex].position, speed * Time.fixedDeltaTime);
     }
 
     public float getDistanceToLastPoint()
