@@ -70,4 +70,27 @@ public static class TowerHelpers
 
         destroyCallback();
     }
+
+    public static IEnumerator AnimateDirectProjectile(
+        GameObject projectile,
+        Vector3 startPosition,
+        GameObject target,
+        float speed,
+        Action destroyCallback
+        )
+    {
+        float startTime = Time.time;
+
+        while (target != null)
+        {
+            Vector3 direction = (target.transform.position - projectile.transform.position).normalized;
+            projectile.transform.position += speed * Time.deltaTime * direction;
+
+            projectile.transform.LookAt(target.transform);
+
+            yield return null;
+        }
+
+        destroyCallback();
+    }
 }
