@@ -18,7 +18,7 @@ public class Archer : MonoBehaviour
 
     void Update()
     {
-        GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform, range);
+        GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, range);
         if (enemies.Length > 0 && canShoot)
         {
             GameObject closestEnemy = enemies.OrderBy(e => e.GetComponent<Movement>().getDistanceToLastPoint()).First();
@@ -41,10 +41,10 @@ public class Archer : MonoBehaviour
         arrow.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         arrow.GetComponent<Renderer>().material.color = Color.red;
 
-        yield return TowerHelpers.AnimateBezierProjectile(arrow, transform.position, enemy, 2, 1, () => KillArrow(arrow, enemy), TowerHelpers.TowerProjectileRotationTypes.LOOK_AT_TARGET);
+        yield return TowerHelpers.AnimateBezierProjectile(arrow, transform.position, enemy, 2, 1, KillArrow, TowerHelpers.TowerProjectileRotationTypes.LOOK_AT_TARGET);
     }
 
-    void KillArrow(GameObject arrow, GameObject enemy)
+    void KillArrow(GameObject arrow, GameObject enemy, Vector3 _enemyPosition)
     {
         Destroy(arrow);
         enemy.GetComponent<Health>().TakeDamage((int)damage);

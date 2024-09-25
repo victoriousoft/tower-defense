@@ -20,7 +20,7 @@ public class Bomber : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform, range);
+        GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, range);
         if (enemies.Length > 0 && canShoot)
         {
             GameObject closestEnemy = enemies.OrderBy(e => e.GetComponent<Movement>().getDistanceToLastPoint()).First();
@@ -43,13 +43,13 @@ public class Bomber : MonoBehaviour
         bomb.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
         bomb.GetComponent<Renderer>().material.color = Color.red;
 
-        yield return TowerHelpers.AnimateBezierProjectile(bomb, transform.position, enemy, 2, 1, () => ExplodeBomb(bomb, enemy), TowerHelpers.TowerProjectileRotationTypes.SPIN);
+        yield return TowerHelpers.AnimateBezierProjectile(bomb, transform.position, enemy, 2, 1, ExplodeBomb, TowerHelpers.TowerProjectileRotationTypes.SPIN);
     }
 
-    void ExplodeBomb(GameObject bomb, GameObject enemy)
+    void ExplodeBomb(GameObject bomb, GameObject enemy, Vector3 enemyPosition)
     {
         Destroy(bomb);
-        GameObject[] enemies = TowerHelpers.GetEnemiesInRange(enemy.transform, splashRadius);
+        GameObject[] enemies = TowerHelpers.GetEnemiesInRange(enemyPosition, splashRadius);
         foreach (GameObject e in enemies)
         {
             e.GetComponent<Health>().TakeDamage((int)damage);

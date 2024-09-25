@@ -12,9 +12,9 @@ public static class TowerHelpers
         public const string SPIN = "spin";
     }
 
-    public static GameObject[] GetEnemiesInRange(Transform transform, float range)
+    public static GameObject[] GetEnemiesInRange(Vector3 position, float range)
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, range);
+        Collider[] hitColliders = Physics.OverlapSphere(position, range);
         return hitColliders.Where(c => c.CompareTag("Enemy")).Select(c => c.gameObject).ToArray();
     }
 
@@ -31,7 +31,7 @@ public static class TowerHelpers
         GameObject target,
         float height,
         float duration,
-        Action destroyCallback,
+        Action<GameObject, GameObject, Vector3> destroyCallback,
         string rotationType = TowerProjectileRotationTypes.NONE
         )
     {
@@ -68,7 +68,7 @@ public static class TowerHelpers
             yield return null;
         }
 
-        destroyCallback();
+        destroyCallback(projectile, target, target != null ? target.transform.position : Vector3.zero);
     }
 
     public static IEnumerator AnimateDirectProjectile(
@@ -76,7 +76,7 @@ public static class TowerHelpers
         Vector3 startPosition,
         GameObject target,
         float speed,
-        Action destroyCallback
+        Action<GameObject, GameObject, Vector3> destroyCallback
         )
     {
         float startTime = Time.time;
@@ -91,6 +91,6 @@ public static class TowerHelpers
             yield return null;
         }
 
-        destroyCallback();
+        destroyCallback(projectile, target, target != null ? target.transform.position : Vector3.zero);
     }
 }

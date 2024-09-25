@@ -20,7 +20,7 @@ public class Magic : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform, range);
+        GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, range);
         if (enemies.Length > 0 && canShoot)
         {
             GameObject closestEnemy = enemies.OrderBy(e => e.GetComponent<Movement>().getDistanceToLastPoint()).First();
@@ -43,10 +43,10 @@ public class Magic : MonoBehaviour
         sphere.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         sphere.GetComponent<Renderer>().material.color = Color.blue;
 
-        yield return TowerHelpers.AnimateDirectProjectile(sphere, transform.position, enemy, 5, () => KillSphere(sphere, enemy));
+        yield return TowerHelpers.AnimateDirectProjectile(sphere, transform.position, enemy, 5, KillSphere);
     }
 
-    void KillSphere(GameObject sphere, GameObject enemy)
+    void KillSphere(GameObject sphere, GameObject enemy, Vector3 _enemyPosition)
     {
         Destroy(sphere);
         enemy.GetComponent<Health>().TakeDamage((int)damage);
