@@ -7,5 +7,5 @@
     "files.exclude": {
         "**/*.meta": true
     },
-    "dotnet.defaultSolution": "ratar-td.sln"
+    "dotnet.defaultSolution": "tower-defense.sln"
 }
