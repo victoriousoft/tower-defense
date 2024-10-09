@@ -8,12 +8,12 @@ public class Health : MonoBehaviour
     public int cashDrop;
 
     public HealthBar healthBar;
-    private PlayerStatsManager psvm;
+    private PlayerStatsManager playerStats;
 
     void Awake()
     {
         health = maxHealth;
-        psvm = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
+        playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
     }
 
     public void TakeDamage(float damage)
@@ -24,7 +24,7 @@ public class Health : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
-            psvm.AddGold(cashDrop);//random??
+            playerStats.AddGold(cashDrop);//random??
         }
     }
 

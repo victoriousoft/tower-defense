@@ -15,7 +15,7 @@ public class PlayerStatsManager : MonoBehaviour
     {
         gold += value;
     }
-    public bool SubGold(int value)
+    public bool SubtractGold(int value)
     {
         if (gold >= value)
         {
@@ -24,7 +24,7 @@ public class PlayerStatsManager : MonoBehaviour
         }
         else return false;
     }
-    public void SubLives(int value)
+    public void SubtractLives(int value)
     {
         lives -= value;
         Debug.Log("hp= " + lives);
