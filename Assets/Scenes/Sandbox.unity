@@ -619,6 +619,7 @@ MonoBehaviour:
   health: 100
   maxHealth: 100
   hpSub: 5
+  cashDrop: 666
   healthBar: {fileID: 1711163193}
 --- !u!61 &283419633
 BoxCollider2D:
@@ -793,6 +794,7 @@ MonoBehaviour:
   health: 100
   maxHealth: 100
   hpSub: 3
+  cashDrop: 666
   healthBar: {fileID: 1892911416}
 --- !u!114 &408339387
 MonoBehaviour:
@@ -1199,6 +1201,7 @@ MonoBehaviour:
   health: 100
   maxHealth: 100
   hpSub: 5
+  cashDrop: 666
   healthBar: {fileID: 465939813}
 --- !u!61 &500015120
 BoxCollider2D:
@@ -2413,6 +2416,7 @@ MonoBehaviour:
   health: 100
   maxHealth: 100
   hpSub: 5
+  cashDrop: 666
   healthBar: {fileID: 1270177002}
 --- !u!61 &996612545
 BoxCollider2D:
@@ -2902,6 +2906,7 @@ MonoBehaviour:
   health: 100
   maxHealth: 100
   hpSub: 5
+  cashDrop: 666
   healthBar: {fileID: 1922104574}
 --- !u!114 &1315230000
 MonoBehaviour:

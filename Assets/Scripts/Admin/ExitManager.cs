@@ -14,6 +14,7 @@ public class ExitManager : MonoBehaviour
         if (enemy.CompareTag("Enemy"))
         {
             psvm.SubLives(enemy.GetComponent<Health>().hpSub);
+            Destroy(enemy);
         }
     }
 }
