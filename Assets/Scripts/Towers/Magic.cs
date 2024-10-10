@@ -10,14 +10,7 @@ public class Magic : MonoBehaviour
     public float damage = 10;
 
     private bool canShoot = true;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
+    
     void FixedUpdate()
     {
         GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, range);

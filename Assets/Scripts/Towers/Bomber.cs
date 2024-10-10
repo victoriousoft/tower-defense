@@ -12,12 +12,8 @@ public class Bomber : MonoBehaviour
 
     private bool canShoot = true;
 
-    void Start()
-    {
-        // TODO: draw the range of the tower
-    }
-
-    // Update is called once per frame
+    // TODO: draw the range of the tower
+    
     void FixedUpdate()
     {
         GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, range);

@@ -10,11 +10,7 @@ public class Archer : MonoBehaviour
 
     private bool canShoot = true;
 
-    void Start()
-    {
-        // TODO: draw the range of the tower
-        //DrawRangeOutline();
-    }
+    //DrawRangeOutline();
 
     void FixedUpdate()
     {
