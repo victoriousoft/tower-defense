@@ -620,8 +620,8 @@ MonoBehaviour:
   maxHealth: 100
   hpSub: 5
   cashDrop: 666
-  physicalResistance: 4
-  magicResistance: 0
+  physicalResistance: 1
+  magicResistance: 4
 --- !u!61 &283419633
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -796,7 +796,7 @@ MonoBehaviour:
   maxHealth: 100
   hpSub: 3
   cashDrop: 666
-  physicalResistance: 4
+  physicalResistance: 1
   magicResistance: 0
 --- !u!114 &408339387
 MonoBehaviour:
@@ -1204,8 +1204,8 @@ MonoBehaviour:
   maxHealth: 100
   hpSub: 5
   cashDrop: 666
-  physicalResistance: 4
-  magicResistance: 4
+  physicalResistance: 3
+  magicResistance: 1
 --- !u!61 &500015120
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1407,7 +1407,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &521126624
 Transform:
   m_ObjectHideFlags: 0
@@ -1982,7 +1982,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &767308794
 Transform:
   m_ObjectHideFlags: 0
@@ -2420,7 +2420,7 @@ MonoBehaviour:
   maxHealth: 100
   hpSub: 5
   cashDrop: 666
-  physicalResistance: 4
+  physicalResistance: 1
   magicResistance: 0
 --- !u!61 &996612545
 BoxCollider2D:
@@ -2911,7 +2911,7 @@ MonoBehaviour:
   maxHealth: 100
   hpSub: 5
   cashDrop: 666
-  physicalResistance: 4
+  physicalResistance: 1
   magicResistance: 0
 --- !u!114 &1315230000
 MonoBehaviour:
@@ -3179,7 +3179,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1398804658
 Transform:
   m_ObjectHideFlags: 0
@@ -3766,7 +3766,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1866149646
 Transform:
   m_ObjectHideFlags: 0
