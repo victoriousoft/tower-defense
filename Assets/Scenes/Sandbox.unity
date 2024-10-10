@@ -2911,7 +2911,7 @@ MonoBehaviour:
   maxHealth: 100
   hpSub: 5
   cashDrop: 666
-  physicalResistance: 1
+  physicalResistance: 0
   magicResistance: 0
 --- !u!114 &1315230000
 MonoBehaviour:
