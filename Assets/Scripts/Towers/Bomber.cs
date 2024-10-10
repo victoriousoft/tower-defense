@@ -13,7 +13,7 @@ public class Bomber : MonoBehaviour
     private bool canShoot = true;
 
     // TODO: draw the range of the tower
-    
+
     void FixedUpdate()
     {
         GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, range);
@@ -48,7 +48,7 @@ public class Bomber : MonoBehaviour
         GameObject[] enemies = TowerHelpers.GetEnemiesInRange(enemyPosition, splashRadius);
         foreach (GameObject e in enemies)
         {
-            if (e != null) e.GetComponent<Health>().TakeDamage((int)damage);
+            if (e != null) e.GetComponent<Health>().TakeDamage((int)damage, DamageTypes.EXPLOSION);
         }
     }
 }
