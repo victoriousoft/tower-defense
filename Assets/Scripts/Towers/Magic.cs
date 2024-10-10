@@ -10,7 +10,7 @@ public class Magic : MonoBehaviour
     public float damage = 10;
 
     private bool canShoot = true;
-    
+
     void FixedUpdate()
     {
         GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, range);
@@ -36,7 +36,7 @@ public class Magic : MonoBehaviour
         sphere.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         sphere.GetComponent<Renderer>().material.color = Color.blue;
 
-        yield return TowerHelpers.AnimateDirectProjectile(sphere, transform.position, enemy, 5, KillSphere);
+        yield return TowerHelpers.AnimateDirectProjectile(sphere, enemy, 5, KillSphere);
     }
 
     void KillSphere(GameObject sphere, GameObject enemy, Vector3 _enemyPosition)

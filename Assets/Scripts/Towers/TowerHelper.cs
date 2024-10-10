@@ -83,15 +83,13 @@ public static class TowerHelpers
 
     public static IEnumerator AnimateDirectProjectile(
         GameObject projectile,
-        Vector3 startPosition,
         GameObject target,
         float speed,
         Action<GameObject, GameObject, Vector3> destroyCallback
         )
     {
-        float startTime = Time.time;
 
-        while (target != null)
+        while (target != null && Vector3.Distance(projectile.transform.position, target.transform.position) > 0.1f)
         {
             Vector3 direction = (target.transform.position - projectile.transform.position).normalized;
             projectile.transform.position += speed * Time.fixedDeltaTime * direction;
