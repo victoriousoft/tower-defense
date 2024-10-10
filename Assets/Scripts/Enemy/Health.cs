@@ -2,13 +2,6 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public static class DamageTypes
-    {
-        public const int PHYSICAL = 0;
-        public const int MAGIC = 1;
-        public const int EXPLOSION = 2;
-    }
-
     public float health = 100;
     public float maxHealth = 100;
     public int hpSub;
@@ -29,7 +22,6 @@ public class Health : MonoBehaviour
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
     }
 
-    //0- PHYSICAL, 1- MAGIC, 2- BOMB, 3- TRUE
     //res lvl 1- 50%, lvl2-65%, lvl3-80%
     public void TakeDamage(float damage, int damageType)
     {
