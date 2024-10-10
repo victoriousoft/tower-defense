@@ -1,10 +1,11 @@
 {
-	"editor.formatOnSave": true,
-	"[csharp]": {
-		"editor.defaultFormatter": "ms-dotnettools.csharp"
-	},
-	"omnisharp.enableEditorConfigSupport": false,
-	"files.exclude": {
-		"**/*.meta": true
-	}
+    "editor.formatOnSave": true,
+    "[csharp]": {
+        "editor.defaultFormatter": "ms-dotnettools.csharp"
+    },
+    "omnisharp.enableEditorConfigSupport": false,
+    "files.exclude": {
+        "**/*.meta": true
+    },
+    "dotnet.defaultSolution": "ratar-td.sln"
 }
