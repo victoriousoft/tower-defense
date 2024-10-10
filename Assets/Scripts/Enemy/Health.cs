@@ -24,9 +24,9 @@ public class Health : MonoBehaviour
     //res lvl 1- 50%, lvl2-65%, lvl3-80%
     public void TakeDamage(float damage, int damageType)
     {
-        /* health -= (damageType == 0 && physicalResistance > 0) ? damage * resistanceValues[physicalResistance] :
+        health -= (damageType == 0 && physicalResistance > 0) ? damage * resistanceValues[physicalResistance] :
              (damageType == 1 && magicResistance > 0) ? damage * resistanceValues[magicResistance] :
-             (damageType == 2 && physicalResistance > 0) ? damage * (resistanceValues[physicalResistance] / 2) : damage;*/
+             (damageType == 2 && physicalResistance > 0) ? damage * (resistanceValues[physicalResistance] / 2) : damage;
         health -= damage;
 
         healthBar.SetHealth(health / maxHealth);
