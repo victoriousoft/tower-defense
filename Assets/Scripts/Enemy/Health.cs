@@ -2,6 +2,13 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    public static class DamageTypes
+    {
+        public const int PHYSICAL = 0;
+        public const int MAGIC = 1;
+        public const int EXPLOSION = 2;
+    }
+
     public float health = 100;
     public float maxHealth = 100;
     public int hpSub;
@@ -12,6 +19,8 @@ public class Health : MonoBehaviour
 
     private HealthBar healthBar;
     private PlayerStatsManager playerStats;
+
+
 
     void Awake()
     {
@@ -24,9 +33,9 @@ public class Health : MonoBehaviour
     //res lvl 1- 50%, lvl2-65%, lvl3-80%
     public void TakeDamage(float damage, int damageType)
     {
-        health -= (damageType == 0 && physicalResistance > 0) ? damage * resistanceValues[physicalResistance] :
-             (damageType == 1 && magicResistance > 0) ? damage * resistanceValues[magicResistance] :
-             (damageType == 2 && physicalResistance > 0) ? damage * (resistanceValues[physicalResistance] / 2) : damage;
+        health -= (damageType == DamageTypes.PHYSICAL && physicalResistance > 0) ? damage * resistanceValues[physicalResistance] :
+             (damageType == DamageTypes.MAGIC && magicResistance > 0) ? damage * resistanceValues[magicResistance] :
+             (damageType == DamageTypes.EXPLOSION && physicalResistance > 0) ? damage * (resistanceValues[physicalResistance] / 2) : damage;
         health -= damage;
 
         healthBar.SetHealth(health / maxHealth);
