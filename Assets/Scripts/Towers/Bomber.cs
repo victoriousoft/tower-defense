@@ -10,20 +10,23 @@ public class Bomber : MonoBehaviour
     public float damage = 10;
     public float splashRadius = 1;
 
+    public TowerHelpers.TowerTargetTypes targetType = TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH;
+
     private bool canShoot = true;
 
     // TODO: draw the range of the tower
 
     void FixedUpdate()
     {
+        if (!canShoot) return;
+
         GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, range);
-        if (enemies.Length > 0 && canShoot)
-        {
-            GameObject closestEnemy = enemies.OrderBy(e => e.GetComponent<Movement>().getDistanceToLastPoint()).First();
-            StartCoroutine(AnimateBomb(closestEnemy));
-            canShoot = false;
-            StartCoroutine(ResetCooldown());
-        }
+        if (enemies.Length == 0) return;
+
+        GameObject target = TowerHelpers.SelectEnemyToAttack(enemies, targetType);
+        StartCoroutine(AnimateBomb(target));
+        canShoot = false;
+        StartCoroutine(ResetCooldown());
     }
 
     IEnumerator ResetCooldown()

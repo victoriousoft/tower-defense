@@ -40,8 +40,25 @@ public class Movement : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, points[currentPointIndex].position, speed * Time.fixedDeltaTime);
     }
 
-    public float getDistanceToLastPoint()
+    public float GetDistanceToFinish()
     {
-        return Vector3.Distance(transform.position, points[points.Length - 1].position);
+        float distance = 0;
+        for (int i = currentPointIndex; i < points.Length - 1; i++)
+        {
+            distance += Vector3.Distance(points[i].position, points[i + 1].position);
+        }
+
+        return distance;
+    }
+
+    public float GetDistanceToStart()
+    {
+        float distance = 0;
+        for (int i = currentPointIndex; i >= 0; i--)
+        {
+            distance += Vector3.Distance(points[i].position, points[i - 1].position);
+        }
+
+        return distance;
     }
 }

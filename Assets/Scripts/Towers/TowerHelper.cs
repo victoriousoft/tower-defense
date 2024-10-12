@@ -6,12 +6,9 @@ using UnityEngine;
 
 public static class TowerHelpers
 {
-    public static class TowerProjectileRotationTypes
-    {
-        public const string NONE = "none";
-        public const string LOOK_AT_TARGET = "lookAtTarget";
-        public const string SPIN = "spin";
-    }
+    public enum TowerProjectileRotationTypes { NONE, LOOK_AT_TARGET, SPIN };
+    public enum TowerTargetTypes { CLOSEST_TO_FINISH, CLOSEST_TO_START, MOST_HP, LEAST_HP };
+
 
     public static GameObject[] GetEnemiesInRange(Vector3 position, float range)
     {
@@ -28,6 +25,33 @@ public static class TowerHelpers
         */
     }
 
+    public static GameObject SelectEnemyToAttack(GameObject[] enemies, TowerTargetTypes targetType)
+    {
+        GameObject target = null;
+
+        switch (targetType)
+        {
+            case TowerTargetTypes.CLOSEST_TO_FINISH:
+                target = enemies.OrderBy(e => e.GetComponent<Movement>().GetDistanceToFinish()).FirstOrDefault();
+                break;
+            case TowerTargetTypes.CLOSEST_TO_START:
+                target = enemies.OrderBy(e => e.GetComponent<Movement>().GetDistanceToStart()).FirstOrDefault();
+                break;
+            case TowerTargetTypes.MOST_HP:
+                target = enemies.OrderByDescending(e => e.GetComponent<Health>().health).FirstOrDefault();
+                break;
+            case TowerTargetTypes.LEAST_HP:
+                target = enemies.OrderBy(e => e.GetComponent<Health>().health).FirstOrDefault();
+                break;
+            default:
+                Debug.LogWarning("Invalid target type, fallback to closest to finish");
+                target = enemies.OrderBy(e => e.GetComponent<Movement>().GetDistanceToFinish()).FirstOrDefault();
+                break;
+        }
+
+        return target;
+    }
+
     // moc nevim co tohle dělá
     public static Vector3 CalculateBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2)
     {
@@ -42,7 +66,7 @@ public static class TowerHelpers
         float height,
         float duration,
         Action<GameObject, GameObject, Vector3> destroyCallback,
-        string rotationType = TowerProjectileRotationTypes.NONE
+        TowerProjectileRotationTypes rotationType = TowerProjectileRotationTypes.NONE
         )
     {
         Vector3 targetPosition = target != null ? target.transform.position : Vector3.zero;
