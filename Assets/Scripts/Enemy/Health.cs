@@ -20,7 +20,7 @@ public class Health : MonoBehaviour
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
     }
 
-    public void TakeDamage(float damage, int damageType)
+    public void TakeDamage(float damage, DamageTypes damageType)
     {
         health -= (damageType == DamageTypes.PHYSICAL) ? damage * resistanceValues[physicalResistance] :
              (damageType == DamageTypes.MAGIC) ? damage * resistanceValues[magicResistance] :
