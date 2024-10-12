@@ -6,14 +6,7 @@ using UnityEngine;
 
 public static class TowerHelpers
 {
-    public static class TowerProjectileRotationTypes
-    {
-        public const string NONE = "none";
-        public const string LOOK_AT_TARGET = "lookAtTarget";
-        public const string SPIN = "spin";
-    }
-
-
+    public enum TowerProjectileRotationTypes { NONE, LOOK_AT_TARGET, SPIN };
     public enum TowerTargetTypes { CLOSEST_TO_FINISH, CLOSEST_TO_START, MOST_HP, LEAST_HP };
 
 
@@ -73,7 +66,7 @@ public static class TowerHelpers
         float height,
         float duration,
         Action<GameObject, GameObject, Vector3> destroyCallback,
-        string rotationType = TowerProjectileRotationTypes.NONE
+        TowerProjectileRotationTypes rotationType = TowerProjectileRotationTypes.NONE
         )
     {
         Vector3 targetPosition = target != null ? target.transform.position : Vector3.zero;
