@@ -8,20 +8,22 @@ public class Archer : MonoBehaviour
     public float cooldown = 1;
     public float damage = 10;
 
+    public TowerHelpers.TowerTargetTypes targetType = TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH;
+
     private bool canShoot = true;
 
-    //DrawRangeOutline();
 
     void FixedUpdate()
     {
+        if (!canShoot) return;
+
         GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, range);
-        if (enemies.Length > 0 && canShoot)
-        {
-            GameObject closestEnemy = enemies.OrderBy(e => e.GetComponent<Movement>().getDistanceToLastPoint()).First();
-            StartCoroutine(AnimateArrow(closestEnemy));
-            canShoot = false;
-            StartCoroutine(ResetCooldown());
-        }
+        if (enemies.Length == 0) return;
+
+        GameObject target = TowerHelpers.SelectEnemyToAttack(enemies, targetType);
+        StartCoroutine(AnimateArrow(target));
+        canShoot = false;
+        StartCoroutine(ResetCooldown());
     }
 
     IEnumerator ResetCooldown()

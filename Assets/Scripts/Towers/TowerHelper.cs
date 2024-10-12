@@ -13,6 +13,10 @@ public static class TowerHelpers
         public const string SPIN = "spin";
     }
 
+
+    public enum TowerTargetTypes { CLOSEST_TO_FINISH, CLOSEST_TO_START, MOST_HP, LEAST_HP };
+
+
     public static GameObject[] GetEnemiesInRange(Vector3 position, float range)
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(position, range);
@@ -26,6 +30,33 @@ public static class TowerHelpers
         Collider[] hitColliders = Physics.OverlapSphere(position, range);
         return hitColliders.Where(c => c.CompareTag("Enemy")).Select(c => c.gameObject).ToArray();
         */
+    }
+
+    public static GameObject SelectEnemyToAttack(GameObject[] enemies, TowerTargetTypes targetType)
+    {
+        GameObject target = null;
+
+        switch (targetType)
+        {
+            case TowerTargetTypes.CLOSEST_TO_FINISH:
+                target = enemies.OrderBy(e => e.GetComponent<Movement>().GetDistanceToFinish()).FirstOrDefault();
+                break;
+            case TowerTargetTypes.CLOSEST_TO_START:
+                target = enemies.OrderBy(e => e.GetComponent<Movement>().GetDistanceToStart()).FirstOrDefault();
+                break;
+            case TowerTargetTypes.MOST_HP:
+                target = enemies.OrderByDescending(e => e.GetComponent<Health>().health).FirstOrDefault();
+                break;
+            case TowerTargetTypes.LEAST_HP:
+                target = enemies.OrderBy(e => e.GetComponent<Health>().health).FirstOrDefault();
+                break;
+            default:
+                Debug.LogWarning("Invalid target type, fallback to closest to finish");
+                target = enemies.OrderBy(e => e.GetComponent<Movement>().GetDistanceToFinish()).FirstOrDefault();
+                break;
+        }
+
+        return target;
     }
 
     // moc nevim co tohle dělá
