@@ -4,6 +4,7 @@ public class Movement : MonoBehaviour
 {
     public Transform pathParent;
     public float speed = 1f;
+    public bool isPaused = false;
 
     private int currentPointIndex = 0;
     private Transform[] points;
@@ -22,7 +23,7 @@ public class Movement : MonoBehaviour
 
     void FixedUpdate()
     {
-        Move();
+        if (!isPaused) Move();
     }
 
     void Move()
