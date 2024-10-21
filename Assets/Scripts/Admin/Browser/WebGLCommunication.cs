@@ -17,7 +17,6 @@ public class WebGLMessageHandler : MonoBehaviour
 
     public void SendToJavaScript(string message)
     {
-        Debug.Log("UNITY - Sending message to JavaScript: " + message);
         SendMessageToJS(message);
     }
 
