@@ -16,9 +16,12 @@ public abstract class BaseTroop : MonoBehaviour
 
     public GameObject homeBase = null;
 
-    private HealthBar healthBar;
-    private GameObject currentEnemy;
-    private bool canAttack = true;
+    protected HealthBar healthBar;
+    protected GameObject currentEnemy;
+    protected bool canAttack = true;
+
+    protected abstract void Attack();
+    protected abstract void FixedUpdate();
 
     void Awake()
     {
@@ -51,42 +54,19 @@ public abstract class BaseTroop : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
     }
 
-    void FixedUpdate()
-    {
-        if (targetLocation != null) WalkTo(targetLocation);
-
-
-        if (currentEnemy == null) currentEnemy = FindNewEnemy();
-        if (currentEnemy != null)
-        {
-            currentEnemy.GetComponent<Movement>().isPaused = true;
-            targetLocation = currentEnemy.transform;
-            if (canAttack) Attack();
-        }
-        else
-        {
-            targetLocation = homeBase.GetComponent<Barracks>().RequestTroopRandezvousPoint();
-        }
-    }
-
-    GameObject FindNewEnemy()
+    protected GameObject FindNewEnemy()
     {
         GameObject[] enemiesInRange = TowerHelpers.GetEnemiesInRange(transform.position, attackRange);
         enemiesInRange = enemiesInRange.OrderBy(enemy => Vector3.Distance(transform.position, enemy.transform.position)).ToArray();
-        if (enemiesInRange.Length > 0) return enemiesInRange[0];
+        if (enemiesInRange.Length > 0)
+        {
+            return enemiesInRange[0];
+        }
+
         return null;
     }
 
-    void Attack()
-    {
-        if (currentEnemy == null) return;
-
-        currentEnemy.GetComponent<Health>().TakeDamage(damage, DamageTypes.PHYSICAL);
-        canAttack = false;
-        StartCoroutine(ResetAttackCooldown());
-    }
-
-    IEnumerator ResetAttackCooldown()
+    protected IEnumerator ResetAttackCooldown()
     {
         yield return new WaitForSeconds(attackCooldown);
         canAttack = true;
