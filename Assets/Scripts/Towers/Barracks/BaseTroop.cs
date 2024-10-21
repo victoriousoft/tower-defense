@@ -16,12 +16,20 @@ public abstract class BaseTroop : MonoBehaviour
 
     public GameObject homeBase = null;
 
+    private HealthBar healthBar;
     private GameObject currentEnemy;
     private bool canAttack = true;
+
+    void Awake()
+    {
+        health = maxHealth;
+        healthBar = GetComponentInChildren<HealthBar>();
+    }
 
     public void TakeDamage(float damage)
     {
         health -= damage;
+        healthBar.SetHealth(health / maxHealth);
         if (health <= 0) Die();
     }
 
@@ -29,6 +37,7 @@ public abstract class BaseTroop : MonoBehaviour
     {
         health += amount;
         health = Mathf.Min(health, maxHealth);
+        healthBar.SetHealth(health / maxHealth);
     }
 
 
