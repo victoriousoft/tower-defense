@@ -17,6 +17,7 @@ public class TowerHolder : MonoBehaviour
     void BuildTower(GameObject tower){
         if(playerStats.SubtractGold(100) && towerInstance == null){
             towerInstance = Instantiate(tower,transform.position,Quaternion.identity,transform);
+            sprite.enabled = false;
         }else if(!playerStats.SubtractGold(100)){
             Debug.Log("nedeostatek peněz");
         }
@@ -27,6 +28,7 @@ public class TowerHolder : MonoBehaviour
             Destroy(towerInstance);
             towerInstance = null;
             playerStats.AddGold(100);
+            sprite.enabled = true;
         }
     }
     void UpgradeTower(){
