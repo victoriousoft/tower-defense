@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class BaseTroop : MonoBehaviour
@@ -12,7 +10,8 @@ public abstract class BaseTroop : MonoBehaviour
     public float damage;
     public float attackCooldown;
     public float attackRange;
-    public Transform targetLocation;
+    public Vector3 targetLocation;
+    public int id = -1;
 
     public GameObject homeBase = null;
 
@@ -47,12 +46,14 @@ public abstract class BaseTroop : MonoBehaviour
     public void Die()
     {
         currentEnemy.GetComponent<Movement>().isPaused = false;
+        homeBase.GetComponent<Barracks>().RequestTroopRevive(id);
         Destroy(gameObject);
+
     }
 
-    public void WalkTo(Transform target)
+    public void WalkTo(Vector3 target)
     {
-        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
     }
 
     protected GameObject FindNewEnemy()

@@ -19,12 +19,12 @@ public class TestTroop : BaseTroop
         if (currentEnemy != null)
         {
             currentEnemy.GetComponent<Movement>().isPaused = true;
-            targetLocation = currentEnemy.transform;
+            targetLocation = currentEnemy.transform.position;
             if (canAttack) Attack();
         }
         else
         {
-            targetLocation = homeBase.GetComponent<Barracks>().RequestTroopRandezvousPoint();
+            targetLocation = homeBase.GetComponent<Barracks>().RequestTroopRandezvousPoint(id);
         }
     }
 
