@@ -13,7 +13,7 @@ public class ExitManager : MonoBehaviour
         GameObject enemy = col.gameObject;
         if (enemy.CompareTag("Enemy"))
         {
-            playerStats.SubtractLives(enemy.GetComponent<Health>().hpSub);
+            playerStats.SubtractLives(enemy.GetComponent<BaseEnemy>().damage);
             Destroy(enemy);
         }
     }

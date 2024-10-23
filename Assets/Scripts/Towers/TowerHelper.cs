@@ -32,20 +32,20 @@ public static class TowerHelpers
         switch (targetType)
         {
             case TowerTargetTypes.CLOSEST_TO_FINISH:
-                target = enemies.OrderBy(e => e.GetComponent<Movement>().GetDistanceToFinish()).FirstOrDefault();
+                target = enemies.OrderBy(e => e.GetComponent<BaseEnemy>().GetDistanceToFinish()).FirstOrDefault();
                 break;
             case TowerTargetTypes.CLOSEST_TO_START:
-                target = enemies.OrderBy(e => e.GetComponent<Movement>().GetDistanceToStart()).FirstOrDefault();
+                target = enemies.OrderBy(e => e.GetComponent<BaseEnemy>().GetDistanceToStart()).FirstOrDefault();
                 break;
             case TowerTargetTypes.MOST_HP:
-                target = enemies.OrderByDescending(e => e.GetComponent<Health>().health).FirstOrDefault();
+                target = enemies.OrderByDescending(e => e.GetComponent<BaseEnemy>().health).FirstOrDefault();
                 break;
             case TowerTargetTypes.LEAST_HP:
-                target = enemies.OrderBy(e => e.GetComponent<Health>().health).FirstOrDefault();
+                target = enemies.OrderBy(e => e.GetComponent<BaseEnemy>().health).FirstOrDefault();
                 break;
             default:
                 Debug.LogWarning("Invalid target type, fallback to closest to finish");
-                target = enemies.OrderBy(e => e.GetComponent<Movement>().GetDistanceToFinish()).FirstOrDefault();
+                target = enemies.OrderBy(e => e.GetComponent<BaseEnemy>().GetDistanceToFinish()).FirstOrDefault();
                 break;
         }
 

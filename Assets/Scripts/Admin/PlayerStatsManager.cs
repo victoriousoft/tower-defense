@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerStatsManager : MonoBehaviour
@@ -27,7 +25,6 @@ public class PlayerStatsManager : MonoBehaviour
     public void SubtractLives(int value)
     {
         lives -= value;
-        Debug.Log("hp= " + lives);
         if (lives <= 0) GameOver();
     }
     void GameOver()

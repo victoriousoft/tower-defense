@@ -388,9 +388,8 @@ GameObject:
   - component: {fileID: 283419627}
   - component: {fileID: 283419631}
   - component: {fileID: 283419630}
-  - component: {fileID: 283419628}
-  - component: {fileID: 283419632}
   - component: {fileID: 283419633}
+  - component: {fileID: 283419634}
   m_Layer: 0
   m_Name: EnemyC
   m_TagString: Enemy
@@ -414,21 +413,6 @@ Transform:
   m_Father: {fileID: 1258185204}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &283419628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 283419626}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbd6092f5c3e18849a838777f1fc2ec5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pathParent: {fileID: 1763392645}
-  speed: 1
-  isPaused: 0
 --- !u!23 &283419630
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -479,24 +463,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 283419626}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &283419632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 283419626}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99ef8e21d9d6d4943af759820a895dac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  maxHealth: 100
-  hpSub: 5
-  cashDrop: 666
-  physicalResistance: 1
-  magicResistance: 4
 --- !u!61 &283419633
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -542,6 +508,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.99999994, y: 0.99999994}
   m_EdgeRadius: 0
+--- !u!114 &283419634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283419626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dcea8b3382dd364fafc898896eeb586, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  maxHealth: 100
+  damage: 10
+  cashDrop: 2
+  physicalResistance: 0
+  magicResistance: 0
+  pathParent: {fileID: 1763392645}
+  speed: 1
+  isPaused: 0
+  currentTarget: {fileID: 0}
+  range: 1
+  attackCooldown: 1
 --- !u!1 &408339384
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,9 +543,8 @@ GameObject:
   - component: {fileID: 408339385}
   - component: {fileID: 408339390}
   - component: {fileID: 408339389}
-  - component: {fileID: 408339387}
-  - component: {fileID: 408339386}
   - component: {fileID: 408339391}
+  - component: {fileID: 408339392}
   m_Layer: 0
   m_Name: EnemyC (1)
   m_TagString: Enemy
@@ -579,39 +568,6 @@ Transform:
   m_Father: {fileID: 1258185204}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &408339386
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 408339384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99ef8e21d9d6d4943af759820a895dac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  maxHealth: 100
-  hpSub: 3
-  cashDrop: 666
-  physicalResistance: 1
-  magicResistance: 0
---- !u!114 &408339387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 408339384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbd6092f5c3e18849a838777f1fc2ec5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pathParent: {fileID: 1763392645}
-  speed: 2
-  isPaused: 0
 --- !u!23 &408339389
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -707,6 +663,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.99999994, y: 0.99999994}
   m_EdgeRadius: 0
+--- !u!114 &408339392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 408339384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dcea8b3382dd364fafc898896eeb586, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  maxHealth: 100
+  damage: 10
+  cashDrop: 2
+  physicalResistance: 0
+  magicResistance: 0
+  pathParent: {fileID: 1763392645}
+  speed: 3
+  isPaused: 0
+  currentTarget: {fileID: 0}
+  range: 1
+  attackCooldown: 1
 --- !u!224 &453862080 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1836382847107017493, guid: a651510a993b289478439f239264d2a3, type: 3}
@@ -785,9 +765,8 @@ GameObject:
   - component: {fileID: 500015114}
   - component: {fileID: 500015118}
   - component: {fileID: 500015117}
-  - component: {fileID: 500015115}
-  - component: {fileID: 500015119}
   - component: {fileID: 500015120}
+  - component: {fileID: 500015121}
   m_Layer: 0
   m_Name: EnemyA
   m_TagString: Enemy
@@ -811,21 +790,6 @@ Transform:
   m_Father: {fileID: 1258185204}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &500015115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 500015113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbd6092f5c3e18849a838777f1fc2ec5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pathParent: {fileID: 1110906503}
-  speed: 1
-  isPaused: 0
 --- !u!23 &500015117
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -876,24 +840,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 500015113}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &500015119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 500015113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99ef8e21d9d6d4943af759820a895dac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  maxHealth: 100
-  hpSub: 5
-  cashDrop: 666
-  physicalResistance: 3
-  magicResistance: 1
 --- !u!61 &500015120
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -939,6 +885,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.99999994, y: 0.99999994}
   m_EdgeRadius: 0
+--- !u!114 &500015121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500015113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dcea8b3382dd364fafc898896eeb586, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  maxHealth: 100
+  damage: 10
+  cashDrop: 2
+  physicalResistance: 0
+  magicResistance: 0
+  pathParent: {fileID: 1110906503}
+  speed: 2
+  isPaused: 0
+  currentTarget: {fileID: 0}
+  range: 1
+  attackCooldown: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1983,9 +1953,8 @@ GameObject:
   - component: {fileID: 996612539}
   - component: {fileID: 996612543}
   - component: {fileID: 996612542}
-  - component: {fileID: 996612540}
-  - component: {fileID: 996612544}
   - component: {fileID: 996612545}
+  - component: {fileID: 996612546}
   m_Layer: 0
   m_Name: EnemyB
   m_TagString: Enemy
@@ -2009,21 +1978,6 @@ Transform:
   m_Father: {fileID: 1258185204}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &996612540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 996612538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbd6092f5c3e18849a838777f1fc2ec5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pathParent: {fileID: 841696768}
-  speed: 1
-  isPaused: 0
 --- !u!23 &996612542
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2074,24 +2028,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 996612538}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &996612544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 996612538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99ef8e21d9d6d4943af759820a895dac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  maxHealth: 100
-  hpSub: 5
-  cashDrop: 666
-  physicalResistance: 1
-  magicResistance: 0
 --- !u!61 &996612545
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2137,6 +2073,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.99999994, y: 0.99999994}
   m_EdgeRadius: 0
+--- !u!114 &996612546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996612538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dcea8b3382dd364fafc898896eeb586, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  maxHealth: 100
+  damage: 10
+  cashDrop: 2
+  physicalResistance: 0
+  magicResistance: 0
+  pathParent: {fileID: 841696768}
+  speed: 1
+  isPaused: 0
+  currentTarget: {fileID: 0}
+  range: 1
+  attackCooldown: 1
 --- !u!1 &1004788801
 GameObject:
   m_ObjectHideFlags: 0
@@ -2532,9 +2492,8 @@ GameObject:
   - component: {fileID: 1315229998}
   - component: {fileID: 1315230003}
   - component: {fileID: 1315230002}
-  - component: {fileID: 1315230000}
-  - component: {fileID: 1315229999}
   - component: {fileID: 1315230004}
+  - component: {fileID: 1315230005}
   m_Layer: 0
   m_Name: EnemyC (2)
   m_TagString: Enemy
@@ -2558,39 +2517,6 @@ Transform:
   m_Father: {fileID: 1258185204}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1315229999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1315229997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99ef8e21d9d6d4943af759820a895dac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  maxHealth: 100
-  hpSub: 5
-  cashDrop: 666
-  physicalResistance: 0
-  magicResistance: 0
---- !u!114 &1315230000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1315229997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbd6092f5c3e18849a838777f1fc2ec5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pathParent: {fileID: 1763392645}
-  speed: 0.5
-  isPaused: 0
 --- !u!23 &1315230002
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2686,6 +2612,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.99999994, y: 0.99999994}
   m_EdgeRadius: 0
+--- !u!114 &1315230005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315229997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dcea8b3382dd364fafc898896eeb586, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  maxHealth: 100
+  damage: 10
+  cashDrop: 2
+  physicalResistance: 0
+  magicResistance: 0
+  pathParent: {fileID: 1763392645}
+  speed: 2
+  isPaused: 0
+  currentTarget: {fileID: 0}
+  range: 1
+  attackCooldown: 1
 --- !u!1 &1361128318
 GameObject:
   m_ObjectHideFlags: 0

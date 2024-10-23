@@ -45,6 +45,6 @@ public class Archer : MonoBehaviour
     void KillArrow(GameObject arrow, GameObject enemy, Vector3 _enemyPosition)
     {
         Destroy(arrow);
-        if (enemy != null) enemy.GetComponent<Health>().TakeDamage((int)damage, DamageTypes.PHYSICAL);
+        if (enemy != null) enemy.GetComponent<BaseEnemy>().TakeDamage((int)damage, DamageTypes.PHYSICAL);
     }
 }
