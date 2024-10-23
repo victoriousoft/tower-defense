@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Health : MonoBehaviour
@@ -8,16 +9,22 @@ public class Health : MonoBehaviour
     public int cashDrop;
     [Range(0, 4)] public int physicalResistance;
     [Range(0, 4)] public int magicResistance;
-    private float[] resistanceValues = new float[] { 1, 0.5f, 0.35f, 0.2f, 0 };
+    private readonly float[] resistanceValues = new float[] { 1, 0.5f, 0.35f, 0.2f, 0 };
 
     private HealthBar healthBar;
     private PlayerStatsManager playerStats;
+    public GameObject currentTarget { get; set; }
 
     void Awake()
     {
         health = maxHealth;
         healthBar = GetComponentInChildren<HealthBar>();
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
+    }
+
+    void FixedUpdate()
+    {
+        if (currentTarget != null) currentTarget.GetComponent<BaseTroop>().TakeDamage(hpSub);
     }
 
     public void TakeDamage(float damage, DamageTypes damageType)
