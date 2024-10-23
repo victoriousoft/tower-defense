@@ -46,6 +46,7 @@ public abstract class BaseTroop : MonoBehaviour
 
     public void Die()
     {
+        currentEnemy.GetComponent<Movement>().isPaused = false;
         Destroy(gameObject);
     }
 
