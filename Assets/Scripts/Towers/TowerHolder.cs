@@ -6,19 +6,19 @@ public class TowerHolder : MonoBehaviour
 {
     private GameObject towerInstance;
     private PlayerStatsManager playerStats;
+    private SpriteRenderer sprite;
 
     void Awake()
     {
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
-    }
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.P)) BuildTower(TowerTypes.towerDictionary["ARCHER"]);
-        if(Input.GetKeyDown(KeyCode.O)) SellTower();
+        sprite = GetComponent<SpriteRenderer>();
+        sprite.color = Color.black;
     }
     void BuildTower(GameObject tower){
-        if(playerStats.SubtractGold(0) && towerInstance == null){
+        if(playerStats.SubtractGold(100) && towerInstance == null){
             towerInstance = Instantiate(tower,transform.position,Quaternion.identity,transform);
+        }else if(!playerStats.SubtractGold(100)){
+            Debug.Log("nedeostatek peněz");
         }
     }
     void SellTower(){
@@ -26,9 +26,25 @@ public class TowerHolder : MonoBehaviour
             
             Destroy(towerInstance);
             towerInstance = null;
+            playerStats.AddGold(100);
         }
     }
     void UpgradeTower(){
 
+    }
+    private void OnMouseEnter()
+    {
+        Debug.Log("Mouse entered the collider area.");
+        sprite.color = Color.cyan;
+    }
+
+    private void OnMouseExit()
+    {
+        Debug.Log("Mouse exited the collider area.");
+        sprite.color = Color.black;
+    }
+    private void OnMouseDown(){
+        if(towerInstance == null)BuildTower(TowerTypes.towerDictionary["ARCHER"]);
+        else SellTower();
     }
 }
