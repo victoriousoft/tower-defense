@@ -34,17 +34,17 @@ public class TowerHolder : MonoBehaviour
     }
     private void OnMouseEnter()
     {
-        Debug.Log("Mouse entered the collider area.");
         sprite.color = Color.cyan;
     }
 
     private void OnMouseExit()
     {
-        Debug.Log("Mouse exited the collider area.");
         sprite.color = Color.black;
     }
     private void OnMouseDown(){
-        if(towerInstance == null)BuildTower(TowerTypes.towerDictionary["ARCHER"]);
+        if(towerInstance == null){
+            BuildTower(TowerTypes.towerDictionary["ARCHER"]);
+        }
         else SellTower();
     }
 }
