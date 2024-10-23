@@ -51,7 +51,7 @@ public class Bomber : MonoBehaviour
         GameObject[] enemies = TowerHelpers.GetEnemiesInRange(enemyPosition, splashRadius);
         foreach (GameObject e in enemies)
         {
-            if (e != null) e.GetComponent<Health>().TakeDamage((int)damage, DamageTypes.EXPLOSION);
+            if (e != null) e.GetComponent<BaseEnemy>().TakeDamage((int)damage, DamageTypes.EXPLOSION);
         }
     }
 }

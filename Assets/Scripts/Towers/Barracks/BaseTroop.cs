@@ -45,7 +45,7 @@ public abstract class BaseTroop : MonoBehaviour
 
     public void Die()
     {
-        currentEnemy.GetComponent<Movement>().isPaused = false;
+        currentEnemy.GetComponent<BaseEnemy>().isPaused = false;
         homeBase.GetComponent<Barracks>().RequestTroopRevive(id);
         Destroy(gameObject);
 
