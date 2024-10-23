@@ -3,6 +3,9 @@ using UnityEngine;
 
 public static class TowerTypes
 {
-    public static Dictionary<string, GameObject> towerDictionary;
+    public static GameObject barracksPrefab;
+    public static GameObject archerPrefab;
+    public static GameObject magicPrefab;
+    public static GameObject bombPrefab;
 
 }

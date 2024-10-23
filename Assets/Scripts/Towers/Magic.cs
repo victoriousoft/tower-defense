@@ -35,6 +35,7 @@ public class Magic : MonoBehaviour
     IEnumerator AnimateSphere(GameObject enemy)
     {
         GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        sphere.transform.SetParent(transform);
         sphere.transform.position = transform.position;
         sphere.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         sphere.GetComponent<Renderer>().material.color = Color.blue;

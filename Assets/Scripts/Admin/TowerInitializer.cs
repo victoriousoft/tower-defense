@@ -10,12 +10,9 @@ public class TowerInitializer : MonoBehaviour
 
     void Awake()
     {
-        TowerTypes.towerDictionary= new Dictionary<string, GameObject>
-        {
-            { "BARRACKS", barracksPrefab },
-            { "ARCHER", archerPrefab },
-            { "MAGIC", magicPrefab },
-            { "BOMB", bombPrefab },
-        };
+        TowerTypes.barracksPrefab = barracksPrefab;
+        TowerTypes.archerPrefab = archerPrefab;
+        TowerTypes.magicPrefab = magicPrefab;
+        TowerTypes.bombPrefab = bombPrefab;
     }
 }
