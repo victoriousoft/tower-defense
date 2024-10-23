@@ -14,9 +14,9 @@ public class TowerHolder : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         sprite.color = Color.black;
     }
-    void BuildTower(GameObject tower){
+    void BuildTower(string tower){
         if(playerStats.SubtractGold(100) && towerInstance == null){
-            towerInstance = Instantiate(tower,transform.position,Quaternion.identity,transform);
+            towerInstance = Instantiate(TowerTypes.towerDictionary[tower],transform.position,Quaternion.identity,transform);
         }else if(!playerStats.SubtractGold(100)){
             Debug.Log("nedeostatek peněz");
         }
@@ -43,7 +43,7 @@ public class TowerHolder : MonoBehaviour
     }
     private void OnMouseDown(){
         if(towerInstance == null){
-            BuildTower(TowerTypes.towerDictionary["ARCHER"]);
+            BuildTower("ARCHER");
         }
         else SellTower();
     }
