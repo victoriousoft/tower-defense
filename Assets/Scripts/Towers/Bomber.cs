@@ -38,6 +38,7 @@ public class Bomber : MonoBehaviour
     IEnumerator AnimateBomb(GameObject enemy)
     {
         GameObject bomb = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        bomb.transform.SetParent(transform);
         bomb.transform.position = transform.position;
         bomb.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
         bomb.GetComponent<Renderer>().material.color = Color.red;

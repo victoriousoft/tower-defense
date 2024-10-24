@@ -35,6 +35,7 @@ public class Archer : MonoBehaviour
     IEnumerator AnimateArrow(GameObject enemy)
     {
         GameObject arrow = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+        arrow.transform.SetParent(transform);
         arrow.transform.position = transform.position;
         arrow.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         arrow.GetComponent<Renderer>().material.color = Color.red;
@@ -42,7 +43,7 @@ public class Archer : MonoBehaviour
         yield return TowerHelpers.AnimateBezierProjectile(arrow, transform.position, enemy, 2, 1, KillArrow, TowerHelpers.TowerProjectileRotationTypes.LOOK_AT_TARGET);
     }
 
-    void KillArrow(GameObject arrow, GameObject enemy, Vector3 _enemyPosition)
+    public void KillArrow(GameObject arrow, GameObject enemy, Vector3 _enemyPosition)
     {
         Destroy(arrow);
         if (enemy != null) enemy.GetComponent<BaseEnemy>().TakeDamage((int)damage, DamageTypes.PHYSICAL);
