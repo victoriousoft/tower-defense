@@ -1065,7 +1065,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &521126624
 Transform:
   m_ObjectHideFlags: 0
@@ -1717,8 +1717,8 @@ MonoBehaviour:
   range: 4
   cooldown: 1
   damage: 10
-  splashRadius: 1
   targetType: 0
+  splashRadius: 1
 --- !u!224 &840162236 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1836382847107017493, guid: a651510a993b289478439f239264d2a3, type: 3}
@@ -2819,8 +2819,8 @@ MonoBehaviour:
   range: 4
   cooldown: 1
   damage: 10
-  splashRadius: 1
   targetType: 0
+  splashRadius: 1
 --- !u!224 &1403917415 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1836382847107017493, guid: a651510a993b289478439f239264d2a3, type: 3}
@@ -3318,7 +3318,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1866149646
 Transform:
   m_ObjectHideFlags: 0
