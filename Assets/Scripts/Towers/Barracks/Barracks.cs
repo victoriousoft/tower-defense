@@ -1,9 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
-public class Barracks : MonoBehaviour
+public class Barracks : BaseTower
 {
-    public float range = 4;
     public int troopCount = 3;
     public float respawnCooldown = 5; // seconds
     public Vector3 localTroopRandezvousPoint;
@@ -17,6 +16,11 @@ public class Barracks : MonoBehaviour
         troops = new GameObject[troopCount];
         SpawnTroops(troopCount);
     }
+
+    // tohle se neimplementuje v barracks
+    protected override void FixedUpdate() { }
+    protected override IEnumerator AnimateProjectile(GameObject enemy) { yield return null; }
+    protected override void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition) { }
 
     void SpawnTroops(int count)
     {

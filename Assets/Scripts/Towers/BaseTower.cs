@@ -16,7 +16,7 @@ public abstract class BaseTower : MonoBehaviour
     protected abstract IEnumerator AnimateProjectile(GameObject enemy);
     protected abstract void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition);
 
-    void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (!canShoot) return;
 
