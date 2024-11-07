@@ -1,0 +1,8 @@
+
+services:
+    webgl:
+      container_name: webgl
+      image: webgl
+      build: .
+      ports:
+        - "8080:80"
