@@ -7,12 +7,13 @@ public static class PriceSheet
     public static Dictionary<string, TowerData> towerPriceDictionary = new Dictionary<string, TowerData>
     {
         { "BARRACKS", new TowerData {
+            towerName = "Barracks",
             basePrice = 100,
             upgradePrices = new List<int> { 200, 300, 400 },
             evolutions = new Evolution[]
             {
                 new Evolution {
-                    specializationName = "barracks evo 1",
+                    specializationName = "Spartan Hoplites",
                     skills = new Skill[]
                     {
                         new Skill { skillName = "skill 1", upgradeCosts = new int[] { 100, 200, 300 } },
@@ -20,7 +21,7 @@ public static class PriceSheet
                     }
                 },
                 new Evolution {
-                    specializationName = " evo 2",
+                    specializationName = "Musketeer Quarters",
                     skills = new Skill[]
                     {
                         new Skill { skillName = "skill 1", upgradeCosts = new int[] { 100, 200, 300 } },
@@ -28,13 +29,14 @@ public static class PriceSheet
                     }
                 }
             }
-        }},{ "ARCHER", new TowerData {
+        }},{ "ARCHERS", new TowerData {
+            towerName = "Archers Hideout",
             basePrice = 100,
             upgradePrices = new List<int> { 200, 300, 400 },
             evolutions = new Evolution[]
             {
                 new Evolution {
-                    specializationName = " evo 1",
+                    specializationName = "MG 42",
                     skills = new Skill[]
                     {
                         new Skill { skillName = "skill 1", upgradeCosts = new int[] { 100, 200, 300 } },
@@ -42,7 +44,7 @@ public static class PriceSheet
                     }
                 },
                 new Evolution {
-                    specializationName = " evo 2",
+                    specializationName = "Sharpshooters Parapet",
                     skills = new Skill[]
                     {
                         new Skill { skillName = "skill 1", upgradeCosts = new int[] { 100, 200, 300 } },
@@ -51,28 +53,30 @@ public static class PriceSheet
                 }
             }
         }},{ "MAGIC", new TowerData {
+            towerName = "Tech Center",
             basePrice = 100,
             upgradePrices = new List<int> { 200, 300, 400 },
             evolutions = new Evolution[]
             {
                 new Evolution {
-                    specializationName = " evo 1",
+                    specializationName = "Anonymous",
                     skills = new Skill[]
                     {
-                        new Skill { skillName = "skill 1", upgradeCosts = new int[] { 100, 200, 300 } },
+                        new Skill { skillName = "Stack Overflow", upgradeCosts = new int[] { 100, 200, 300 } },
                         new Skill { skillName = "skill 2", upgradeCosts = new int[] { 100, 200, 300 } }
                     }
                 },
                 new Evolution {
-                    specializationName = " evo 2",
+                    specializationName = "IBM",
                     skills = new Skill[]
                     {
-                        new Skill { skillName = "skill 1", upgradeCosts = new int[] { 100, 200, 300 } },
+                        new Skill { skillName = "1. 1. 1970", upgradeCosts = new int[] { 100, 200, 300 } },
                         new Skill { skillName = "skill 2", upgradeCosts = new int[] { 100, 200, 300 } }
                     }
                 }
             }
         }},{ "BOMB", new TowerData {
+            towerName = "Bomb Tower",
             basePrice = 100,
             upgradePrices = new List<int> { 200, 300, 400 },
             evolutions = new Evolution[]
@@ -86,7 +90,7 @@ public static class PriceSheet
                     }
                 },
                 new Evolution {
-                    specializationName = "Gripen",
+                    specializationName = "Saab JAS-39 Gripen",
                     skills = new Skill[]
                     {
                         new Skill { skillName = "skill 1", upgradeCosts = new int[] { 100, 200, 300 } },
@@ -101,6 +105,7 @@ public static class PriceSheet
 [System.Serializable]
 public class TowerData
 {
+    public string towerName;
     public int basePrice;
     public List<int> upgradePrices;
     public Evolution[] evolutions;
