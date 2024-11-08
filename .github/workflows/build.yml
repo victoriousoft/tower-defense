@@ -38,8 +38,8 @@ jobs:
 
             - name: Build Docker image
               run: |
-                  docker build -t ${{ secrets.DOCKER_USERNAME }}/tower-defense:latest .
+                  docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/tower-defense:latest .
 
             - name: Push Docker image
               run: |
-                  docker push ${{ secrets.DOCKER_USERNAME }}/tower-defense:latest
+                  docker push ${{ secrets.DOCKERHUB_USERNAME }}/tower-defense:latest
