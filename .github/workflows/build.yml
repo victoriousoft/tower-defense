@@ -30,6 +30,11 @@ jobs:
                   targetPlatform: WebGL
                   buildsPath: Build
 
+            - name: Move WebGL build output
+              run: |
+                  mv Build/WebGL/WebGL/* Build/
+                  rm -rf Build/WebGL
+
             - name: Log in to Docker Hub
               uses: docker/login-action@v2
               with:
