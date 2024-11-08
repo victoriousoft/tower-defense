@@ -11,6 +11,8 @@ jobs:
         steps:
             - name: Checkout repository
               uses: actions/checkout@v3
+              with:
+                  lfs: true
 
             - uses: actions/cache@v3
               with:
@@ -28,6 +30,7 @@ jobs:
                   UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
               with:
                   targetPlatform: WebGL
+                  buildsPath: Build
 
             - name: Log in to Docker Hub
               uses: docker/login-action@v2
@@ -37,8 +40,8 @@ jobs:
 
             - name: Build Docker image
               run: |
-                  docker build -t ${{ secrets.DOCKER_USERNAME }}/tower-defense:latest ./Build
+                  docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/tower-defense:latest .
 
             - name: Push Docker image
               run: |
-                  docker push ${{ secrets.DOCKER_USERNAME }}/tower-defense:latest
+                  docker push ${{ secrets.DOCKERHUB_USERNAME }}/tower-defense:latest
