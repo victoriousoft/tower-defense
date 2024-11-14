@@ -6,7 +6,7 @@ public abstract class BaseTower : MonoBehaviour
 {
     public float range = 4;
     public float cooldown = 1;
-    public float damage = TowerSheet.towerDictionary["ARCHER"].damageValues[0];
+    public float damage = 0;
     public int level = 1; 
     public string towerName;
     private PlayerStatsManager playerStats;
