@@ -73,3 +73,6 @@ crashlytics-build.properties
 
 .vscode/settings.json
 /[Dd]ist/
+
+# LEON
+**/.DS_Store
