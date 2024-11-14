@@ -10,7 +10,6 @@ public abstract class BaseEnemy : MonoBehaviour
     public int cashDrop = 2;
     [Range(0, 4)] public int physicalResistance;
     [Range(0, 4)] public int magicResistance;
-    public Transform pathParent;
     public float speed = 1f;
     public bool isPaused = false;
     public GameObject currentTarget;
@@ -25,15 +24,27 @@ public abstract class BaseEnemy : MonoBehaviour
     private HealthBar healthBar;
     private PlayerStatsManager playerStats;
 
+
     protected bool canAttack = true;
     protected abstract void Attack();
 
     void Awake()
     {
+        if (points == null) Debug.LogError("Path parent not set");
+
         health = maxHealth;
         healthBar = GetComponentInChildren<HealthBar>();
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
+    }
 
+    void FixedUpdate()
+    {
+        if (!isPaused) Move();
+        if (currentTarget != null && canAttack) Attack();
+    }
+
+    public void SetPathParent(Transform pathParent)
+    {
         points = new Transform[pathParent.childCount];
         for (int i = 0; i < pathParent.childCount; i++)
         {
@@ -43,15 +54,9 @@ public abstract class BaseEnemy : MonoBehaviour
         transform.position = points[currentPointIndex].position;
     }
 
-    void FixedUpdate()
-    {
-        if (!isPaused) Move();
-        if (currentTarget != null && canAttack) Attack();
-    }
-
     void Move()
     {
-        if (Vector3.Distance(transform.position, points[currentPointIndex].position) < 0.1f)
+        if (Vector2.Distance(transform.position, points[currentPointIndex].position) < 0.1f)
         {
             currentPointIndex++;
             if (currentPointIndex >= points.Length)
@@ -61,7 +66,7 @@ public abstract class BaseEnemy : MonoBehaviour
             }
         }
 
-        transform.position = Vector3.MoveTowards(transform.position, points[currentPointIndex].position, speed * Time.fixedDeltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, points[currentPointIndex].position, speed * Time.fixedDeltaTime);
     }
 
     public float GetDistanceToFinish()
@@ -69,9 +74,8 @@ public abstract class BaseEnemy : MonoBehaviour
         float distance = 0;
         for (int i = currentPointIndex; i < points.Length - 1; i++)
         {
-            distance += Vector3.Distance(points[i].position, points[i + 1].position);
+            distance += Vector2.Distance(points[i].position, points[i + 1].position);
         }
-
         return distance;
     }
 
@@ -80,7 +84,7 @@ public abstract class BaseEnemy : MonoBehaviour
         float distance = 0;
         for (int i = currentPointIndex; i >= 0; i--)
         {
-            distance += Vector3.Distance(points[i].position, points[i - 1].position);
+            distance += Vector2.Distance(points[i].position, points[i - 1].position);
         }
 
         return distance;

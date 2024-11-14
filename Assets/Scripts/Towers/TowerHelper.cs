@@ -19,10 +19,6 @@ public static class TowerHelpers
             if (collider.CompareTag("Enemy")) enemies.Add(collider.gameObject);
         }
         return enemies.ToArray();
-        /* tady jsem to změnil z 3d box collideru na 2d box collidery, a to i v gamese (nevim jestli je to nutny - kdyz bys to chtel ale vratit bylo by potreba zmenit i componenty na enemakach zpatky na 3d a v exitech checkovat 3d a ne 2d)
-        Collider[] hitColliders = Physics.OverlapSphere(position, range);
-        return hitColliders.Where(c => c.CompareTag("Enemy")).Select(c => c.gameObject).ToArray();
-        */
     }
 
     public static GameObject SelectEnemyToAttack(GameObject[] enemies, TowerTargetTypes targetType)
