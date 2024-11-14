@@ -1,0 +1,4 @@
+[submodule "td-web"]
+	path = td-web
+	url = https://github.com/victoriousoft/td-web
+	branch = main
