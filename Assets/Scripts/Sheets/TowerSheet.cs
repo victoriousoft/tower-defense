@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class PriceSheet
+public static class TowerSheet
 {
-    public static Dictionary<string, TowerData> towerPriceDictionary = new Dictionary<string, TowerData>
+    public static Dictionary<string, TowerData> towerDictionary = new Dictionary<string, TowerData>
     {
         { "BARRACKS", new TowerData {
             towerName = "Barracks",
             basePrice = 100,
-            upgradePrices = new List<int> { 200, 300, 400 },
+            upgradePrices = new int[] { 200, 300, 400 },
+            damageValues = new int[] { 1000, 10000, 50000 },
             evolutions = new Evolution[]
             {
                 new Evolution {
@@ -29,10 +30,11 @@ public static class PriceSheet
                     }
                 }
             }
-        }},{ "ARCHERS", new TowerData {
+        }},{ "ARCHER", new TowerData {
             towerName = "Archers Hideout",
-            basePrice = 100,
-            upgradePrices = new List<int> { 200, 300, 400 },
+            basePrice = 200,
+            upgradePrices = new int[] { 200, 300, 400 },
+            damageValues = new int[] { 200, 300, 400 },
             evolutions = new Evolution[]
             {
                 new Evolution {
@@ -54,8 +56,9 @@ public static class PriceSheet
             }
         }},{ "MAGIC", new TowerData {
             towerName = "Tech Center",
-            basePrice = 100,
-            upgradePrices = new List<int> { 200, 300, 400 },
+            basePrice = 300,
+            upgradePrices = new int[] { 200, 300, 400 },
+            damageValues = new int[] { 200, 300, 400 },
             evolutions = new Evolution[]
             {
                 new Evolution {
@@ -77,8 +80,9 @@ public static class PriceSheet
             }
         }},{ "BOMB", new TowerData {
             towerName = "Bomb Tower",
-            basePrice = 100,
-            upgradePrices = new List<int> { 200, 300, 400 },
+            basePrice = 400,
+            upgradePrices = new int[] { 200, 300, 400 },
+            damageValues = new int[] { 200, 300, 400 },
             evolutions = new Evolution[]
             {
                 new Evolution {
@@ -107,7 +111,8 @@ public class TowerData
 {
     public string towerName;
     public int basePrice;
-    public List<int> upgradePrices;
+    public int[] upgradePrices;
+    public int[] damageValues;
     public Evolution[] evolutions;
 }
 [System.Serializable]

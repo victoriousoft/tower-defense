@@ -6,7 +6,10 @@ public abstract class BaseTower : MonoBehaviour
 {
     public float range = 4;
     public float cooldown = 1;
-    public float damage = 10;
+    public float damage = TowerSheet.towerDictionary["ARCHER"].damageValues[0];
+    public int level = 1; 
+    public string towerName;
+    private PlayerStatsManager playerStats;
 
     public TowerHelpers.TowerTargetTypes targetType = TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH;
 
@@ -16,6 +19,9 @@ public abstract class BaseTower : MonoBehaviour
     protected abstract IEnumerator AnimateProjectile(GameObject enemy);
     protected abstract void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition);
 
+    void Awake(){
+        playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
+    }
     protected virtual void FixedUpdate()
     {
         if (!canShoot) return;
@@ -34,6 +40,12 @@ public abstract class BaseTower : MonoBehaviour
     {
         yield return new WaitForSeconds(cooldown);
         canShoot = true;
+    }
+    public void UpgradeTower(){
+        if(playerStats.SubtractGold(TowerSheet.towerDictionary[towerName].upgradePrices[level])){
+            damage = TowerSheet.towerDictionary[towerName].damageValues[level];
+            level++;
+        }
     }
 
 }
