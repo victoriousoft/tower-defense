@@ -30,8 +30,6 @@ public abstract class BaseEnemy : MonoBehaviour
 
     void Awake()
     {
-        if (points == null) Debug.LogError("Path parent not set");
-
         health = maxHealth;
         healthBar = GetComponentInChildren<HealthBar>();
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
@@ -56,6 +54,8 @@ public abstract class BaseEnemy : MonoBehaviour
 
     void Move()
     {
+        if (points == null) return;
+
         if (Vector2.Distance(transform.position, points[currentPointIndex].position) < 0.1f)
         {
             currentPointIndex++;
