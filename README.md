@@ -1,6 +1,10 @@
 # Videohra tower defense
 
 Ročníková práce š. r. 2024/2025
+<div>
+<img src="https://github.com/victoriousoft/tower-defense/actions/workflows/build.yml/badge.svg"/>
+<img src="https://github.com/victoriousoft/tower-defense/actions/workflows/update-submodules.yml/badge.svg"/>
+</div>
 
 ## Členové týmu
  - Kristián Kunc
@@ -10,7 +14,7 @@ Ročníková práce š. r. 2024/2025
 ## Co kde najdu?
 Repozitář obsahuje videohru v Unity enginu a používá jím stanovenou strukturu souborů s následujícími doplňky:
  - Dokumentace: [`docs/`](docs/)
- - Webová stránka: [`td-web/`](td-web/)
+ - Webová stránka: [`td-web/`](https://github.com/victoriousoft/td-web/tree/main/)
 
 
 ## Jak spustit lokálně?
