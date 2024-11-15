@@ -1,9 +1,10 @@
 # Videohra tower defense
 
 Ročníková práce š. r. 2024/2025
+
 <div>
-<img src="https://github.com/victoriousoft/tower-defense/actions/workflows/build.yml/badge.svg"/>
-<img src="https://github.com/victoriousoft/tower-defense/actions/workflows/update-submodules.yml/badge.svg"/>
+    <img src="https://github.com/victoriousoft/tower-defense/actions/workflows/build.yml/badge.svg" alt="build status badge"/>
+    <img src="https://github.com/victoriousoft/tower-defense/actions/workflows/update-submodules.yml/badge.svg" alt="submodule update status badge"/>
 </div>
 
 ## Členové týmu
