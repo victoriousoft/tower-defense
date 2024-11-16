@@ -10,7 +10,7 @@ Ročníková práce š. r. 2024/2025
 ## Členové týmu
  - Kristián Kunc
  - Viktor Jakovec
- - Leon Kubota
+ - Leon Kubota (Textury a animace)
 
 ## Co kde najdu?
 Repozitář obsahuje videohru v Unity enginu a používá jím stanovenou strukturu souborů s následujícími doplňky:
