@@ -15,14 +15,19 @@ public class TowerHolder : MonoBehaviour
     public GameObject magicPrefab;
     public GameObject bombPrefab;
     private Dictionary<string, GameObject> towerPrefabs;
+    private BaseTower baseTowerScript = null;
+    [HideInInspector]public Animator UIAnimator;
+    private TowerButton[] towerButtons;
 
     void Awake()
     {
+        towerButtons = GetComponentsInChildren<TowerButton>();
+
+        UIAnimator = GetComponent<Animator>();
         UIMenu.SetActive(false);
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
         sprite = GetComponent<SpriteRenderer>();
 
-        //dal jsem to sem aby se daly accessnout data v sheetu
         towerPrefabs = new Dictionary<string, GameObject>
         {
             { "BARRACKS", barracksPrefab },
@@ -34,6 +39,7 @@ public class TowerHolder : MonoBehaviour
 
     void Update(){
         if(Input.GetKeyDown(KeyCode.U)) UpgradeTower();
+        
     }
 
     public void BuildTower(string towerName)
@@ -41,7 +47,7 @@ public class TowerHolder : MonoBehaviour
         if (playerStats.SubtractGold(TowerSheet.towerDictionary[towerName].basePrice) && towerInstance == null)
         {
             towerInstance = Instantiate(towerPrefabs[towerName], transform.position, Quaternion.identity, transform);
-            BaseTower baseTowerScript = towerInstance.GetComponent<BaseTower>();
+            baseTowerScript = towerInstance.GetComponent<BaseTower>();
             baseTowerScript.towerName = towerName;
             baseTowerScript.damage = TowerSheet.towerDictionary[towerName].damageValues[0];
             sprite.enabled = false;
@@ -50,8 +56,6 @@ public class TowerHolder : MonoBehaviour
         {
             Debug.Log("nedeostatek peněz");
         }
-
-        UIMenu.SetActive(false);
     }
 
     public void SellTower()
@@ -64,27 +68,54 @@ public class TowerHolder : MonoBehaviour
             playerStats.AddGold(100);
             sprite.enabled = true;
         }
-
-        UIMenu.SetActive(false);
     }
 
-    void UpgradeTower()
+    public void UpgradeTower()
     {
-        BaseTower baseTowerScript = towerInstance.GetComponent<BaseTower>();
-        if (baseTowerScript != null)
-        {
-           baseTowerScript.UpgradeTower();
-        }
-        else
-        {
-            Debug.LogWarning("No BaseTower-derived script is attached to the tower instance.");
-        }
+        //změna vzhledu towerky
+        baseTowerScript.UpgradeTower();
+    }
+
+    public void ChangeTargeting(){
+        baseTowerScript.ChangeTargeting();
     }
 
     private void OnMouseDown()
     {
-        Debug.Log("clicked");
-
         UIMenu.SetActive(!UIMenu.activeSelf);
+        if (!UIMenu.activeSelf)
+        {
+            foreach (TowerButton button in towerButtons)
+            {
+                button.gameObject.GetComponent<Animator>().SetTrigger("disable");
+            }
+        UIMenu.SetActive(false);
     }
+        UIAnimator.SetTrigger("enable");
+        if(UIMenu.activeSelf)StartCoroutine(EnableButtons());
+    }
+    private IEnumerator EnableButtons()
+    {
+        yield return new WaitForSeconds(0.15f);
+        foreach (TowerButton button in towerButtons)
+        {
+            if(towerInstance == null){
+                if(button.towerType == TowerTypes.Barracks || button.towerType == TowerTypes.Archer || button.towerType == TowerTypes.Magic || button.towerType == TowerTypes.Bomb){
+                    button.gameObject.GetComponent<Animator>().SetTrigger("enable");
+                }else{
+                    button.gameObject.GetComponent<Animator>().SetTrigger("disable");   
+                }
+            }
+            else{
+                if(button.towerType == TowerTypes.Upgrade || button.towerType == TowerTypes.Destroy || button.towerType == TowerTypes.Retarget){
+                    button.gameObject.GetComponent<Animator>().SetTrigger("enable");
+                }else{
+                    button.gameObject.GetComponent<Animator>().SetTrigger("disable");
+                }
+            }
+            yield return new WaitForSeconds(0.05f);
+        }
+    }
+
+
 }

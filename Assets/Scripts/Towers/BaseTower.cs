@@ -48,4 +48,8 @@ public abstract class BaseTower : MonoBehaviour
         }
     }
 
+    public void ChangeTargeting(){
+        //změnit targeting
+    }
+
 }

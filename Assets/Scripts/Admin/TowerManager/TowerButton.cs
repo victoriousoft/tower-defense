@@ -26,6 +26,14 @@ public class TowerButton : MonoBehaviour
             case TowerTypes.Destroy:
                 towerHolder.GetComponent<TowerHolder>().SellTower();
                 break;
+            case TowerTypes.Upgrade:
+                towerHolder.GetComponent<TowerHolder>().UpgradeTower();
+                break;
+            case TowerTypes.Retarget:
+                towerHolder.GetComponent<TowerHolder>().ChangeTargeting();
+                break;
         }
+        towerHolder.GetComponent<TowerHolder>().UIAnimator.SetTrigger("enable");
+        towerHolder.GetComponent<TowerHolder>().UIMenu.SetActive(!towerHolder.GetComponent<TowerHolder>().UIMenu.activeSelf);
     }
 }
