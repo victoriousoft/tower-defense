@@ -17,6 +17,8 @@ public class Magic : BaseTower
     protected override void KillProjectile(GameObject sphere, GameObject enemy, Vector3 _enemyPosition)
     {
         Destroy(sphere);
-        if (enemy != null) enemy.GetComponent<BaseEnemy>().TakeDamage((int)damage, DamageTypes.MAGIC);
+        if (enemy == null) return;
+
+        enemy.GetComponent<BaseEnemy>().TakeDamage((int)damage, DamageTypes.MAGIC);
     }
 }

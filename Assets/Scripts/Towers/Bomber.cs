@@ -22,7 +22,8 @@ public class Bomber : BaseTower
         GameObject[] enemies = TowerHelpers.GetEnemiesInRange(enemyPosition, splashRadius);
         foreach (GameObject e in enemies)
         {
-            e?.GetComponent<BaseEnemy>().TakeDamage((int)damage, DamageTypes.EXPLOSION);
+            if (e == null) return;
+            e.GetComponent<BaseEnemy>().TakeDamage((int)damage, DamageTypes.EXPLOSION);
         }
     }
 }
