@@ -45,7 +45,7 @@ public abstract class BaseTroop : MonoBehaviour
 
     public void Die()
     {
-        currentEnemy.GetComponent<BaseEnemy>().isPaused = false;
+        currentEnemy.GetComponent<BaseEnemy>().currentTarget = null;
         homeBase.GetComponent<Barracks>().RequestTroopRevive(id);
         Destroy(gameObject);
 
@@ -53,7 +53,7 @@ public abstract class BaseTroop : MonoBehaviour
 
     public void WalkTo(Vector3 target)
     {
-        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.fixedDeltaTime);
     }
 
     protected GameObject FindNewEnemy()

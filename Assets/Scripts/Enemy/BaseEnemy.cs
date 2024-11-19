@@ -37,6 +37,8 @@ public abstract class BaseEnemy : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (currentTarget == null) isPaused = false;
+
         if (!isPaused) Move();
         if (currentTarget != null && canAttack) Attack();
     }
