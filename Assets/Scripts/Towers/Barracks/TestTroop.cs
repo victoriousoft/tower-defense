@@ -12,6 +12,12 @@ public class TestTroop : BaseTroop
 
     protected override void FixedUpdate()
     {
+        if (canAttack && currentEnemy == null)
+        {
+            Heal(10);
+            canAttack = false;
+            StartCoroutine(ResetAttackCooldown());
+        }
         if (targetLocation != null) WalkTo(targetLocation);
 
 
