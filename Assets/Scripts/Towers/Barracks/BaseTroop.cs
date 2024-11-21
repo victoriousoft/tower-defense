@@ -59,7 +59,10 @@ public abstract class BaseTroop : MonoBehaviour
     protected GameObject FindNewEnemy()
     {
         GameObject[] enemiesInRange = TowerHelpers.GetEnemiesInRange(transform.position, attackRange);
-        enemiesInRange = enemiesInRange.OrderBy(enemy => Vector3.Distance(transform.position, enemy.transform.position)).ToArray();
+        enemiesInRange = enemiesInRange
+            .OrderBy(enemy => enemy.GetComponent<BaseEnemy>().currentTarget != null)
+            .ThenBy(enemy => Vector3.Distance(transform.position, enemy.transform.position))
+            .ToArray();
         if (enemiesInRange.Length > 0)
         {
             return enemiesInRange[0];

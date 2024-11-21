@@ -15,7 +15,7 @@ public class TestTroop : BaseTroop
         if (targetLocation != null) WalkTo(targetLocation);
 
 
-        if (currentEnemy == null) currentEnemy = FindNewEnemy();
+        if (currentEnemy == null || currentEnemy.GetComponent<BaseEnemy>().currentTarget != gameObject) currentEnemy = FindNewEnemy();
         if (currentEnemy != null)
         {
             currentEnemy.GetComponent<BaseEnemy>().isPaused = true;

@@ -15,7 +15,7 @@ public abstract class BaseEnemy : MonoBehaviour
     public GameObject currentTarget;
     public float range = 1f;
     public float attackCooldown = 1f; // seconds
-
+    public readonly GameObject targetingLockedTo;
     private int currentPointIndex = 0;
     private Transform[] points;
 
@@ -111,6 +111,11 @@ public abstract class BaseEnemy : MonoBehaviour
     {
         health = Mathf.Min(health += amount, maxHealth);
         healthBar.SetHealth(health / maxHealth);
+    }
+
+    public void RequestTarget(GameObject target)
+    {
+        if (currentTarget == null) currentTarget = target;
     }
 
     protected IEnumerator ResetAttackCooldown()
