@@ -15,7 +15,6 @@ public abstract class BaseEnemy : MonoBehaviour
     public GameObject currentTarget;
     public float range = 1f;
     public float attackCooldown = 1f; // seconds
-    public readonly GameObject targetingLockedTo;
     private int currentPointIndex = 0;
     private Transform[] points;
 

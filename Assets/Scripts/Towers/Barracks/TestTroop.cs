@@ -3,7 +3,7 @@ public class TestTroop : BaseTroop
     protected override void Attack()
     {
         if (currentEnemy == null) return;
-        if (currentEnemy.GetComponent<BaseEnemy>().currentTarget == null) currentEnemy.GetComponent<BaseEnemy>().currentTarget = gameObject;
+        if (currentEnemy.GetComponent<BaseEnemy>().currentTarget == null) currentEnemy.GetComponent<BaseEnemy>().RequestTarget(gameObject);
 
         currentEnemy.GetComponent<BaseEnemy>().TakeDamage(damage, DamageTypes.PHYSICAL);
         canAttack = false;
