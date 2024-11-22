@@ -24,7 +24,6 @@ public class TestTroop : BaseTroop
         if (currentEnemy == null || currentEnemy.GetComponent<BaseEnemy>().currentTarget != gameObject) currentEnemy = FindNewEnemy();
         if (currentEnemy != null)
         {
-            currentEnemy.GetComponent<BaseEnemy>().isPaused = true;
             targetLocation = currentEnemy.transform.position;
             if (canAttack) Attack();
         }

@@ -1388,7 +1388,7 @@ MonoBehaviour:
     - enemyPrefab: {fileID: 9059301247369330279, guid: 5454311c74a546e44954c494185f1ca7, type: 3}
       pathParent: {fileID: 1110906503}
       count: 99
-      spawnDelay: 2
+      spawnDelay: 99
       initialDelay: 0
 --- !u!1 &1287674483
 GameObject:
