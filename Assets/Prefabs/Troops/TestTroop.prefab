@@ -125,7 +125,8 @@ MonoBehaviour:
   damage: 10
   attackCooldown: 1
   attackRange: 1
-  targetLocation: {fileID: 0}
+  targetLocation: {x: 0, y: 0, z: 0}
+  id: -1
   homeBase: {fileID: 0}
 --- !u!1001 &7596330086438579085
 PrefabInstance:

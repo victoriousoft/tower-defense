@@ -3,7 +3,7 @@ public class TestTroop : BaseTroop
     protected override void Attack()
     {
         if (currentEnemy == null) return;
-        if (currentEnemy.GetComponent<BaseEnemy>().currentTarget == null) currentEnemy.GetComponent<BaseEnemy>().currentTarget = gameObject;
+        if (currentEnemy.GetComponent<BaseEnemy>().currentTarget == null) currentEnemy.GetComponent<BaseEnemy>().RequestTarget(gameObject);
 
         currentEnemy.GetComponent<BaseEnemy>().TakeDamage(damage, DamageTypes.PHYSICAL);
         canAttack = false;
@@ -12,13 +12,18 @@ public class TestTroop : BaseTroop
 
     protected override void FixedUpdate()
     {
+        if (canAttack && currentEnemy == null)
+        {
+            Heal(10);
+            canAttack = false;
+            StartCoroutine(ResetAttackCooldown());
+        }
         if (targetLocation != null) WalkTo(targetLocation);
 
 
-        if (currentEnemy == null) currentEnemy = FindNewEnemy();
+        if (currentEnemy == null || currentEnemy.GetComponent<BaseEnemy>().currentTarget != gameObject) currentEnemy = FindNewEnemy();
         if (currentEnemy != null)
         {
-            currentEnemy.GetComponent<BaseEnemy>().isPaused = true;
             targetLocation = currentEnemy.transform.position;
             if (canAttack) Attack();
         }

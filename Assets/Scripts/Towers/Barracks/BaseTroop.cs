@@ -45,7 +45,7 @@ public abstract class BaseTroop : MonoBehaviour
 
     public void Die()
     {
-        currentEnemy.GetComponent<BaseEnemy>().isPaused = false;
+        currentEnemy.GetComponent<BaseEnemy>().currentTarget = null;
         homeBase.GetComponent<Barracks>().RequestTroopRevive(id);
         Destroy(gameObject);
 
@@ -53,15 +53,22 @@ public abstract class BaseTroop : MonoBehaviour
 
     public void WalkTo(Vector3 target)
     {
-        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.fixedDeltaTime);
     }
 
     protected GameObject FindNewEnemy()
     {
-        GameObject[] enemiesInRange = TowerHelpers.GetEnemiesInRange(transform.position, attackRange);
-        enemiesInRange = enemiesInRange.OrderBy(enemy => Vector3.Distance(transform.position, enemy.transform.position)).ToArray();
+        GameObject[] enemiesInTroopRange = TowerHelpers.GetEnemiesInRange(transform.position, attackRange);
+        GameObject[] enemiesInTowerRange = TowerHelpers.GetEnemiesInRange(homeBase.transform.position, homeBase.GetComponent<BaseTower>().range);
+        GameObject[] enemiesInRange = enemiesInTroopRange.Intersect(enemiesInTowerRange).ToArray();
+
+        enemiesInRange = enemiesInRange
+            .OrderBy(enemy => enemy.GetComponent<BaseEnemy>().currentTarget != null)
+            .ThenBy(enemy => Vector3.Distance(transform.position, enemy.transform.position))
+            .ToArray();
         if (enemiesInRange.Length > 0)
         {
+            enemiesInRange[0].GetComponent<BaseEnemy>().isPaused = true;
             return enemiesInRange[0];
         }
 
