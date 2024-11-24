@@ -82,23 +82,23 @@ public class TowerHolder : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if(UIAnimator.GetCurrentAnimatorStateInfo(0).IsName("disable_ui")) return;
         UIMenu.SetActive(!UIMenu.activeSelf);
-        if (!UIMenu.activeSelf)
-        {
+        if (!UIMenu.activeSelf){
+            StopCoroutine(EnableButtons());
             foreach (TowerButton button in towerButtons)
             {
                 button.gameObject.GetComponent<Animator>().SetTrigger("disable");
             }
-        UIMenu.SetActive(false);
-    }
+        }else StartCoroutine(EnableButtons());
         UIAnimator.SetTrigger("enable");
-        if(UIMenu.activeSelf)StartCoroutine(EnableButtons());
     }
     private IEnumerator EnableButtons()
     {
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(0.05f);
         foreach (TowerButton button in towerButtons)
         {
+            if(!UIMenu.activeSelf) break;
             if(towerInstance == null){
                 if(button.towerType == TowerTypes.Barracks || button.towerType == TowerTypes.Archer || button.towerType == TowerTypes.Magic || button.towerType == TowerTypes.Bomb){
                     button.gameObject.GetComponent<Animator>().SetTrigger("enable");
@@ -116,6 +116,4 @@ public class TowerHolder : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
         }
     }
-
-
 }
