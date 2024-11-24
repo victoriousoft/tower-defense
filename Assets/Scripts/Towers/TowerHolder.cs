@@ -85,7 +85,6 @@ public class TowerHolder : MonoBehaviour
         if(UIAnimator.GetCurrentAnimatorStateInfo(0).IsName("disable_ui")) return;
         UIMenu.SetActive(!UIMenu.activeSelf);
         if (!UIMenu.activeSelf){
-            StopCoroutine(EnableButtons());
             foreach (TowerButton button in towerButtons)
             {
                 button.gameObject.GetComponent<Animator>().SetTrigger("disable");
