@@ -1,21 +1,21 @@
-# Videohra tower defense
+# Videohra v Unity - Tower Defense
 
-Ročníková práce š. r. 2024/2025
+Ročníková práce 3.E š. r. 2024/2025
 
 <div>
     <img src="https://github.com/victoriousoft/tower-defense/actions/workflows/build.yml/badge.svg" alt="build status badge"/>
-    <img src="https://github.com/victoriousoft/tower-defense/actions/workflows/update-submodules.yml/badge.svg" alt="submodule update status badge"/>
 </div>
 
 ## Členové týmu
- - Kristián Kunc
- - Viktor Jakovec
- - Leon Kubota (Textury a animace)
+ - Kristián Kunc (Web, Deployment, Unity)
+ - Viktor Jakovec (Unity, Web)
+ - Leon Kubota (Textury, Animace)
 
 ## Co kde najdu?
 Repozitář obsahuje videohru v Unity enginu a používá jím stanovenou strukturu souborů s následujícími doplňky:
  - Dokumentace: [`docs/`](docs/)
- - Webová stránka: [`td-web/`](https://github.com/victoriousoft/td-web/tree/main/)
+ - Webová stránka: [`🔗 td-web/`](https://github.com/victoriousoft/td-web/tree/main/)
+ - Modely/rendery: [`🔗 blender/`](https://github.com/victoriousoft/blender)
 
 
 ## Jak spustit lokálně?
