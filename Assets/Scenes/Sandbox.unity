@@ -224,6 +224,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8982898746854816660, guid: e3c07a957e799124699f4440dddc0c1e, type: 3}
   m_PrefabInstance: {fileID: 307698764}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &341591797
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 6200545831253146637, guid: 64d14df4e2e72cf408bcbc16f3c3745f, type: 3}
+  m_PrefabInstance: {fileID: 1236722692}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 853084327}
+  m_Layer: 0
+  m_Name: Barracks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
 --- !u!1 &383246296 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8157201419114760175, guid: 320c079c83f59cc498fbb3ba68c6c5c6, type: 3}
@@ -748,6 +764,136 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &752858946
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 441395592289404917, guid: 64d14df4e2e72cf408bcbc16f3c3745f, type: 3}
+  m_PrefabInstance: {fileID: 1236722692}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 752858947}
+  - component: {fileID: 752858951}
+  - component: {fileID: 752858950}
+  - component: {fileID: 752858949}
+  - component: {fileID: 752858948}
+  m_Layer: 0
+  m_Name: Barracks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &752858947
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 1208364948331843477, guid: 64d14df4e2e72cf408bcbc16f3c3745f, type: 3}
+  m_PrefabInstance: {fileID: 1236722692}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752858946}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 17.47, y: 5.71, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 853084327}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &752858948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 3775310599250710779, guid: 64d14df4e2e72cf408bcbc16f3c3745f, type: 3}
+  m_PrefabInstance: {fileID: 1236722692}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752858946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c977bb1f84a77684296892f5bc0ad763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 4
+  cooldown: 1
+  damage: 10
+  level: 1
+  towerName: 
+  towerType: 0
+  targetType: 0
+  troopCount: 3
+  respawnCooldown: 5
+  localTroopRandezvousPoint: {x: 0, y: -1, z: 0}
+  troopPrefab: {fileID: 7100516105498062489, guid: 25beaebbad9a4914ea1dc90f9bdfa452, type: 3}
+  randezvousOffset: 0.5
+--- !u!65 &752858949
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 3754136391192091738, guid: 64d14df4e2e72cf408bcbc16f3c3745f, type: 3}
+  m_PrefabInstance: {fileID: 1236722692}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752858946}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &752858950
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 3841092558597688997, guid: 64d14df4e2e72cf408bcbc16f3c3745f, type: 3}
+  m_PrefabInstance: {fileID: 1236722692}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752858946}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &752858951
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 2236204072441660346, guid: 64d14df4e2e72cf408bcbc16f3c3745f, type: 3}
+  m_PrefabInstance: {fileID: 1236722692}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752858946}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &806464474 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1508384181699461972, guid: 320c079c83f59cc498fbb3ba68c6c5c6, type: 3}
@@ -861,11 +1007,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &853084327 stripped
+--- !u!4 &853084327
 Transform:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 6353731208986737482, guid: 64d14df4e2e72cf408bcbc16f3c3745f, type: 3}
   m_PrefabInstance: {fileID: 1236722692}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 341591797}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 752858947}
+  m_Father: {fileID: 679680969}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &868898234
 GameObject:
   m_ObjectHideFlags: 0
@@ -1004,8 +1161,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1338992711
-  m_SortingLayer: -1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 99226758c1596ea42aaf0fc463632b72, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1751,7 +1908,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1929494950}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.8391376, y: 1.4421551, z: -5}
+  m_LocalPosition: {x: -2.8391376, y: 1.4421551, z: -0.09249676}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2243,6 +2400,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8302784786954354168, guid: 320c079c83f59cc498fbb3ba68c6c5c6, type: 3}
+      propertyPath: barracksPrefab
+      value: 
+      objectReference: {fileID: 5164796166580966446, guid: 91b9f184e7b07f246976e2b107ca2e69, type: 3}
     - target: {fileID: 8302784786954354168, guid: 320c079c83f59cc498fbb3ba68c6c5c6, type: 3}
       propertyPath: buttons.Array.size
       value: 7
