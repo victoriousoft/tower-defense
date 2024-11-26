@@ -60,15 +60,17 @@ public abstract class BaseTroop : MonoBehaviour
     {
         GameObject[] enemiesInTroopRange = TowerHelpers.GetEnemiesInRange(transform.position, attackRange);
         GameObject[] enemiesInTowerRange = TowerHelpers.GetEnemiesInRange(homeBase.transform.position, homeBase.GetComponent<BaseTower>().range);
-        GameObject[] enemiesInRange = enemiesInTroopRange.Intersect(enemiesInTowerRange).ToArray();
+        GameObject[] enemiesInRange = enemiesInTroopRange.Intersect(enemiesInTowerRange).Where(enemy => enemy.GetComponent<BaseEnemy>().currentTarget == null).ToArray();
 
         enemiesInRange = enemiesInRange
             .OrderBy(enemy => enemy.GetComponent<BaseEnemy>().currentTarget != null)
             .ThenBy(enemy => Vector3.Distance(transform.position, enemy.transform.position))
             .ToArray();
+
         if (enemiesInRange.Length > 0)
         {
             enemiesInRange[0].GetComponent<BaseEnemy>().isPaused = true;
+            enemiesInRange[0].GetComponent<BaseEnemy>().RequestTarget(gameObject);
             return enemiesInRange[0];
         }
 
