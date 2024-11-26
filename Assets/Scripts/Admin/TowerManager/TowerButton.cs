@@ -12,16 +12,16 @@ public class TowerButton : MonoBehaviour
         switch (towerType)
         {
             case TowerTypes.Barracks:
-                towerHolder.GetComponent<TowerHolder>().BuildTower("BARRACKS");
+                towerHolder.GetComponent<TowerHolder>().BuildTower(TowerTypes.Barracks);
                 break;
             case TowerTypes.Archer:
-                towerHolder.GetComponent<TowerHolder>().BuildTower("ARCHER");
+                towerHolder.GetComponent<TowerHolder>().BuildTower(TowerTypes.Archer);
                 break;
             case TowerTypes.Magic:
-                towerHolder.GetComponent<TowerHolder>().BuildTower("MAGIC");
+                towerHolder.GetComponent<TowerHolder>().BuildTower(TowerTypes.Magic);
                 break;
             case TowerTypes.Bomb:
-                towerHolder.GetComponent<TowerHolder>().BuildTower("BOMB");
+                towerHolder.GetComponent<TowerHolder>().BuildTower(TowerTypes.Bomb);
                 break;
             case TowerTypes.Destroy:
                 towerHolder.GetComponent<TowerHolder>().SellTower();
