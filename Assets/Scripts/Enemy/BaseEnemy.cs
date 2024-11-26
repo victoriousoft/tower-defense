@@ -13,7 +13,7 @@ public abstract class BaseEnemy : MonoBehaviour
     public float speed = 1f;
     public bool isPaused = false;
     public GameObject currentTarget;
-    public float range = 1f;
+    public float attackRange = 1f;
     public float attackCooldown = 1f; // seconds
     private int currentPointIndex = 0;
     private Transform[] points;

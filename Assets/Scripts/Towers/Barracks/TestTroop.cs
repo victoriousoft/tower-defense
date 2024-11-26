@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class TestTroop : BaseTroop
 {
     protected override void Attack()
@@ -22,10 +24,11 @@ public class TestTroop : BaseTroop
 
 
         if (currentEnemy == null || currentEnemy.GetComponent<BaseEnemy>().currentTarget != gameObject) currentEnemy = FindNewEnemy();
+
         if (currentEnemy != null)
         {
             targetLocation = currentEnemy.transform.position;
-            if (canAttack) Attack();
+            if (canAttack && Vector2.Distance(transform.position, currentEnemy.transform.position) < attackRange) Attack();
         }
         else
         {
