@@ -38,7 +38,21 @@ public class TowerHolder : MonoBehaviour
     }
 
     void Update(){
-        if(Input.GetKeyDown(KeyCode.U)) UpgradeTower();
+        if (UIMenu.activeSelf && Input.GetMouseButtonDown(0))
+        {
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Collider2D collider = GetComponent<Collider2D>();
+
+            if (collider != null && !collider.OverlapPoint(mousePosition))
+            {
+                UIMenu.SetActive(false);
+                foreach (TowerButton button in towerButtons)
+                {
+                    button.gameObject.GetComponent<Animator>().SetTrigger("disable");
+                    UIAnimator.SetTrigger("enable");
+                }
+            }
+        }
         
     }
 
