@@ -14,7 +14,7 @@ public class TowerHolder : MonoBehaviour
     public GameObject archerPrefab;
     public GameObject magicPrefab;
     public GameObject bombPrefab;
-    private Dictionary<string, GameObject> towerPrefabs;
+    private Dictionary<TowerTypes, GameObject> towerPrefabs;
     private BaseTower baseTowerScript = null;
     [HideInInspector]public Animator UIAnimator;
     private TowerButton[] towerButtons;
@@ -28,12 +28,12 @@ public class TowerHolder : MonoBehaviour
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
         sprite = GetComponent<SpriteRenderer>();
 
-        towerPrefabs = new Dictionary<string, GameObject>
+        towerPrefabs = new Dictionary<TowerTypes, GameObject>
         {
-            { "BARRACKS", barracksPrefab },
-            { "ARCHER", archerPrefab },
-            { "MAGIC", magicPrefab },
-            { "BOMB", bombPrefab }
+            { TowerTypes.Barracks, barracksPrefab },
+            { TowerTypes.Archer, archerPrefab },
+            { TowerTypes.Magic, magicPrefab },
+            { TowerTypes.Bomb, bombPrefab }
         };
     }
 
@@ -42,14 +42,15 @@ public class TowerHolder : MonoBehaviour
         
     }
 
-    public void BuildTower(string towerName)
+    public void BuildTower(TowerTypes towerType)
     {
-        if (playerStats.SubtractGold(TowerSheet.towerDictionary[towerName].basePrice) && towerInstance == null)
+        if (playerStats.SubtractGold(TowerSheet.towerDictionary[towerType].basePrice) && towerInstance == null)
         {
-            towerInstance = Instantiate(towerPrefabs[towerName], transform.position, Quaternion.identity, transform);
+            towerInstance = Instantiate(towerPrefabs[towerType], transform.position, Quaternion.identity, transform);
             baseTowerScript = towerInstance.GetComponent<BaseTower>();
-            baseTowerScript.towerName = towerName;
-            baseTowerScript.damage = TowerSheet.towerDictionary[towerName].damageValues[0];
+            baseTowerScript.towerType = towerType;
+            baseTowerScript.towerName = TowerSheet.towerDictionary[towerType].towerName;
+            baseTowerScript.damage = TowerSheet.towerDictionary[towerType].damageValues[0];
             sprite.enabled = false;
         }
         else if (!playerStats.SubtractGold(100))
