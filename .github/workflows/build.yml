@@ -14,10 +14,20 @@ jobs:
               with:
                   lfs: true
 
-            - uses: actions/cache@v3
+            - name: Calculate cache key
+              id: cache-key
+              run: |
+                  if [ -d "./Library" ]; then
+                    echo "CACHE_KEY=$(find ./Library -type f -exec sha256sum {} \; | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
+                  else
+                    echo "CACHE_KEY=empty-cache-key" >> $GITHUB_ENV
+                  fi
+
+            - name: Cache Unity Library
+              uses: actions/cache@v3
               with:
                   path: ./Library
-                  key: Library-${{ github.ref }}
+                  key: Library-${{ env.CACHE_KEY }}
                   restore-keys: |
                       Library-
 
