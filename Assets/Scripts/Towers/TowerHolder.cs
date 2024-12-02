@@ -16,7 +16,7 @@ public class TowerHolder : MonoBehaviour
     public GameObject bombPrefab;
     private Dictionary<TowerTypes, GameObject> towerPrefabs;
     private BaseTower baseTowerScript = null;
-    [HideInInspector]public Animator UIAnimator;
+    [HideInInspector] public Animator UIAnimator;
     private TowerButton[] towerButtons;
 
     void Awake()
@@ -37,9 +37,10 @@ public class TowerHolder : MonoBehaviour
         };
     }
 
-    void Update(){
-        if(Input.GetKeyDown(KeyCode.U)) UpgradeTower();
-        
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.U)) UpgradeTower();
+
     }
 
     public void BuildTower(TowerTypes towerType)
@@ -49,7 +50,6 @@ public class TowerHolder : MonoBehaviour
             towerInstance = Instantiate(towerPrefabs[towerType], transform.position, Quaternion.identity, transform);
             baseTowerScript = towerInstance.GetComponent<BaseTower>();
             baseTowerScript.towerType = towerType;
-            baseTowerScript.towerName = TowerSheet.towerDictionary[towerType].towerName;
             baseTowerScript.damage = TowerSheet.towerDictionary[towerType].damageValues[0];
             sprite.enabled = false;
         }
@@ -77,7 +77,8 @@ public class TowerHolder : MonoBehaviour
         baseTowerScript.UpgradeTower();
     }
 
-    public void ChangeTargeting(){
+    public void ChangeTargeting()
+    {
         baseTowerScript.ChangeTargeting();
     }
 
@@ -90,27 +91,35 @@ public class TowerHolder : MonoBehaviour
             {
                 button.gameObject.GetComponent<Animator>().SetTrigger("disable");
             }
-        UIMenu.SetActive(false);
-    }
+            UIMenu.SetActive(false);
+        }
         UIAnimator.SetTrigger("enable");
-        if(UIMenu.activeSelf)StartCoroutine(EnableButtons());
+        if (UIMenu.activeSelf) StartCoroutine(EnableButtons());
     }
     private IEnumerator EnableButtons()
     {
         yield return new WaitForSeconds(0.15f);
         foreach (TowerButton button in towerButtons)
         {
-            if(towerInstance == null){
-                if(button.towerType == TowerTypes.Barracks || button.towerType == TowerTypes.Archer || button.towerType == TowerTypes.Magic || button.towerType == TowerTypes.Bomb){
+            if (towerInstance == null)
+            {
+                if (button.towerType == TowerTypes.Barracks || button.towerType == TowerTypes.Archer || button.towerType == TowerTypes.Magic || button.towerType == TowerTypes.Bomb)
+                {
                     button.gameObject.GetComponent<Animator>().SetTrigger("enable");
-                }else{
-                    button.gameObject.GetComponent<Animator>().SetTrigger("disable");   
+                }
+                else
+                {
+                    button.gameObject.GetComponent<Animator>().SetTrigger("disable");
                 }
             }
-            else{
-                if(button.towerType == TowerTypes.Upgrade || button.towerType == TowerTypes.Destroy || button.towerType == TowerTypes.Retarget){
+            else
+            {
+                if (button.towerType == TowerTypes.Upgrade || button.towerType == TowerTypes.Destroy || button.towerType == TowerTypes.Retarget)
+                {
                     button.gameObject.GetComponent<Animator>().SetTrigger("enable");
-                }else{
+                }
+                else
+                {
                     button.gameObject.GetComponent<Animator>().SetTrigger("disable");
                 }
             }
