@@ -11,23 +11,27 @@ jobs:
         steps:
             - name: Checkout repository
               uses: actions/checkout@v3
-              with:
-                  lfs: true
 
-            - name: Calculate cache key
-              id: cache-key
-              run: |
-                  if [ -d "./Library" ]; then
-                    echo "CACHE_KEY=$(find ./Library -type f -exec sha256sum {} \; | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
-                  else
-                    echo "CACHE_KEY=empty-cache-key" >> $GITHUB_ENV
-                  fi
+            - name: Create LFS file list
+              run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
 
-            - name: Cache Unity Library
+            - name: Restore LFS cache
               uses: actions/cache@v3
+              id: lfs-cache
               with:
-                  path: ./Library
-                  key: Library-${{ env.CACHE_KEY }}
+                  path: .git/lfs
+                  key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+
+            - name: Git LFS Pull
+              run: |
+                  git lfs pull
+                  git add .
+                  git reset --hard
+
+            - uses: actions/cache@v3
+              with:
+                  path: Library
+                  key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
                   restore-keys: |
                       Library-
 
