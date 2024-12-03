@@ -5,6 +5,7 @@ using UnityEngine;
 public class TowerHolder : MonoBehaviour
 {
     public GameObject UIMenu;
+    private bool isMenuActive = false;
 
     private GameObject towerInstance;
     private PlayerStatsManager playerStats;
@@ -24,7 +25,6 @@ public class TowerHolder : MonoBehaviour
         towerButtons = GetComponentsInChildren<TowerButton>();
 
         UIAnimator = GetComponent<Animator>();
-        UIMenu.SetActive(false);
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
         sprite = GetComponent<SpriteRenderer>();
 
@@ -38,19 +38,14 @@ public class TowerHolder : MonoBehaviour
     }
 
     void Update(){
-        if (UIMenu.activeSelf && Input.GetMouseButtonDown(0))
+        if (isMenuActive && Input.GetMouseButtonDown(0))
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Collider2D collider = GetComponent<Collider2D>();
 
             if (collider != null && !collider.OverlapPoint(mousePosition))
             {
-                UIMenu.SetActive(false);
-                foreach (TowerButton button in towerButtons)
-                {
-                    button.gameObject.GetComponent<Animator>().SetTrigger("disable");
-                    UIAnimator.SetTrigger("enable");
-                }
+                DisableMenu();
             }
         }
         
@@ -97,17 +92,21 @@ public class TowerHolder : MonoBehaviour
 
     private void OnMouseDown()
     {
-        UIMenu.SetActive(!UIMenu.activeSelf);
-        if (!UIMenu.activeSelf)
+        isMenuActive = !isMenuActive;
+        if (!isMenuActive)
         {
-            foreach (TowerButton button in towerButtons)
-            {
-                button.gameObject.GetComponent<Animator>().SetTrigger("disable");
-            }
-        UIMenu.SetActive(false);
-    }
+            DisableMenu();
+        }
         UIAnimator.SetTrigger("enable");
-        if(UIMenu.activeSelf)StartCoroutine(EnableButtons());
+        if(isMenuActive)StartCoroutine(EnableButtons());
+    }
+    private void DisableMenu(){
+        isMenuActive = false;
+        foreach (TowerButton button in towerButtons)
+        {
+            button.gameObject.GetComponent<Animator>().Play("disableButton");
+            UIAnimator.SetTrigger("enable");
+        }
     }
     private IEnumerator EnableButtons()
     {
@@ -116,16 +115,16 @@ public class TowerHolder : MonoBehaviour
         {
             if(towerInstance == null){
                 if(button.towerType == TowerTypes.Barracks || button.towerType == TowerTypes.Archer || button.towerType == TowerTypes.Magic || button.towerType == TowerTypes.Bomb){
-                    button.gameObject.GetComponent<Animator>().SetTrigger("enable");
+                    button.gameObject.GetComponent<Animator>().Play("enableButton");
                 }else{
-                    button.gameObject.GetComponent<Animator>().SetTrigger("disable");   
+                    button.gameObject.GetComponent<Animator>().Play("disableButton");   
                 }
             }
             else{
                 if(button.towerType == TowerTypes.Upgrade || button.towerType == TowerTypes.Destroy || button.towerType == TowerTypes.Retarget){
-                    button.gameObject.GetComponent<Animator>().SetTrigger("enable");
+                    button.gameObject.GetComponent<Animator>().Play("enableButton");
                 }else{
-                    button.gameObject.GetComponent<Animator>().SetTrigger("disable");
+                    button.gameObject.GetComponent<Animator>().Play("disableButton");
                 }
             }
             yield return new WaitForSeconds(0.05f);
