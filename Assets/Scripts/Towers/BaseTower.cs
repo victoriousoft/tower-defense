@@ -17,13 +17,12 @@ public abstract class BaseTower : MonoBehaviour
     protected bool canShoot = true;
     protected abstract IEnumerator AnimateProjectile(GameObject enemy);
     protected abstract void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition);
-    protected virtual void ExtendedAwake() { }
 
     void Awake()
     {
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
-        ExtendedAwake();
     }
+
     protected virtual void FixedUpdate()
     {
         if (!canShoot) return;

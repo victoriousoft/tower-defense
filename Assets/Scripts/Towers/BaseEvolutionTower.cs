@@ -16,7 +16,7 @@ public class BaseEvolutionTower : BaseTower
         throw new System.NotImplementedException();
     }
 
-    protected override void ExtendedAwake()
+    void Awake()
     {
         skillLevels = new int[TowerSheet.towerDictionary[towerType].evolutions[evolutionIndex].skills.Length];
     }
