@@ -4,9 +4,9 @@ using UnityEngine;
 
 public static class TowerSheet
 {
-    public static Dictionary<string, TowerData> towerDictionary = new Dictionary<string, TowerData>
+    public static Dictionary<TowerTypes, TowerData> towerDictionary = new Dictionary<TowerTypes, TowerData>
     {
-        { "BARRACKS", new TowerData {
+        { TowerTypes.Barracks, new TowerData {
             towerName = "Barracks",
             basePrice = 100,
             upgradePrices = new int[] { 200, 300, 400 },
@@ -30,7 +30,7 @@ public static class TowerSheet
                     }
                 }
             }
-        }},{ "ARCHER", new TowerData {
+        }},{ TowerTypes.Archer, new TowerData {
             towerName = "Archers Hideout",
             basePrice = 200,
             upgradePrices = new int[] { 200, 300, 400 },
@@ -54,7 +54,7 @@ public static class TowerSheet
                     }
                 }
             }
-        }},{ "MAGIC", new TowerData {
+        }},{ TowerTypes.Magic, new TowerData {
             towerName = "Tech Center",
             basePrice = 300,
             upgradePrices = new int[] { 200, 300, 400 },
@@ -78,8 +78,8 @@ public static class TowerSheet
                     }
                 }
             }
-        }},{ "BOMB", new TowerData {
-            towerName = "Bomb Tower",
+        }},{ TowerTypes.Bomb, new TowerData {
+            towerName = "U.C.M",
             basePrice = 400,
             upgradePrices = new int[] { 200, 300, 400 },
             damageValues = new int[] { 200, 300, 400 },

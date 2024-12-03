@@ -9,12 +9,10 @@ public abstract class BaseTower : MonoBehaviour
     public float damage = 0;
     public int level = 1; 
     public string towerName;
+    public TowerTypes towerType;
     private PlayerStatsManager playerStats;
-
     public TowerHelpers.TowerTargetTypes targetType = TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH;
-
     protected bool canShoot = true;
-
 
     protected abstract IEnumerator AnimateProjectile(GameObject enemy);
     protected abstract void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition);
@@ -42,8 +40,8 @@ public abstract class BaseTower : MonoBehaviour
         canShoot = true;
     }
     public void UpgradeTower(){
-        if(playerStats.SubtractGold(TowerSheet.towerDictionary[towerName].upgradePrices[level])){
-            damage = TowerSheet.towerDictionary[towerName].damageValues[level];
+        if(playerStats.SubtractGold(TowerSheet.towerDictionary[towerType].upgradePrices[level])){
+            damage = TowerSheet.towerDictionary[towerType].damageValues[level];
             level++;
         }
     }
