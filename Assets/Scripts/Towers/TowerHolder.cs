@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro; // Import TextMeshPro namespace
+using TMPro;
 
 public class TowerHolder : MonoBehaviour
 {
