@@ -40,7 +40,7 @@ public abstract class BaseTower : MonoBehaviour
         canShoot = true;
     }
     public void UpgradeTower(){
-        if(playerStats.SubtractGold(TowerSheet.towerDictionary[towerType].upgradePrices[level])){
+        if(playerStats.SubtractGold(TowerSheet.towerDictionary[towerType].prices[level])){
             damage = TowerSheet.towerDictionary[towerType].damageValues[level];
             level++;
         }

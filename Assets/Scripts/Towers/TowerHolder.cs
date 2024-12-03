@@ -20,10 +20,8 @@ public class TowerHolder : MonoBehaviour
     private BaseTower baseTowerScript = null;
     [HideInInspector]public Animator UIAnimator;
     private TowerButton[] towerButtons;
-
-    // Reference to the UI Panel and Text
     [SerializeField] private GameObject infoPanel;
-    [SerializeField] private TextMeshProUGUI infoText; // Use TextMeshProUGUI
+    [SerializeField] private TextMeshProUGUI infoText;
 
     void Awake()
     {
@@ -41,7 +39,6 @@ public class TowerHolder : MonoBehaviour
             { TowerTypes.Bomb, bombPrefab }
         };
 
-        // Initially hide the info panel
         infoPanel.SetActive(false);
     }
 
@@ -65,7 +62,7 @@ public class TowerHolder : MonoBehaviour
         }
         else
         {
-            infoPanel.SetActive(false); // Hide the info panel if not over a button
+            infoPanel.SetActive(false);
         }
     }
 
@@ -88,7 +85,7 @@ public class TowerHolder : MonoBehaviour
 
     public void BuildTower(TowerTypes towerType)
     {
-        if (playerStats.SubtractGold(TowerSheet.towerDictionary[towerType].basePrice) && towerInstance == null)
+        if (playerStats.SubtractGold(TowerSheet.towerDictionary[towerType].prices[0]) && towerInstance == null)
         {
             towerInstance = Instantiate(towerPrefabs[towerType], transform.position, Quaternion.identity, transform);
             baseTowerScript = towerInstance.GetComponent<BaseTower>();
@@ -141,6 +138,7 @@ public class TowerHolder : MonoBehaviour
         isMenuActive = false;
         foreach (TowerButton button in towerButtons)
         {
+            if(!button.isActiveAndEnabled)return;
             button.gameObject.GetComponent<Animator>().Play("disableButton");
             UIAnimator.SetTrigger("enable");
         }
@@ -179,11 +177,17 @@ public class TowerHolder : MonoBehaviour
 
     private void PrintTowerInfo(TowerTypes towerType)
     {
-        if (towerType == TowerTypes.Destroy || towerType == TowerTypes.Upgrade || towerType == TowerTypes.Retarget) return;
+        if (towerType == TowerTypes.Destroy || towerType == TowerTypes.Retarget) return;
         infoPanel.SetActive(true);
-        infoText.text = TowerSheet.towerDictionary[towerType].towerName + "\n" +
+        if(towerType == TowerTypes.Upgrade){
+            infoText.text = "level " + (baseTowerScript.level+1) + "\n" +
+                        "dmg- " + TowerSheet.towerDictionary[baseTowerScript.towerType].damageValues[baseTowerScript.level] + "(+" + (TowerSheet.towerDictionary[baseTowerScript.towerType].damageValues[baseTowerScript.level] -TowerSheet.towerDictionary[baseTowerScript.towerType].damageValues[baseTowerScript.level-1]) +")"+"\n" +
+                        "cost- " + TowerSheet.towerDictionary[baseTowerScript.towerType].prices[baseTowerScript.level];
+        }else{
+            infoText.text = TowerSheet.towerDictionary[towerType].towerName + "\n" +
                         "dmg- " + TowerSheet.towerDictionary[towerType].damageValues[0] + "\n" +
-                        "cost- " + TowerSheet.towerDictionary[towerType].basePrice;
+                        "cost- " + TowerSheet.towerDictionary[towerType].prices[0];
+        }
 
         Vector2 mousePosition = Input.mousePosition;
         infoPanel.transform.position = mousePosition;

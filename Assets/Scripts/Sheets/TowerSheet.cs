@@ -8,8 +8,7 @@ public static class TowerSheet
     {
         { TowerTypes.Barracks, new TowerData {
             towerName = "Barracks",
-            basePrice = 100,
-            upgradePrices = new int[] { 200, 300, 400 },
+            prices = new int[] {200, 200, 300},
             damageValues = new int[] { 1000, 10000, 50000 },
             evolutions = new Evolution[]
             {
@@ -32,8 +31,7 @@ public static class TowerSheet
             }
         }},{ TowerTypes.Archer, new TowerData {
             towerName = "Archers Hideout",
-            basePrice = 200,
-            upgradePrices = new int[] { 200, 300, 400 },
+            prices = new int[] { 200, 200, 300},
             damageValues = new int[] { 200, 300, 400 },
             evolutions = new Evolution[]
             {
@@ -56,8 +54,7 @@ public static class TowerSheet
             }
         }},{ TowerTypes.Magic, new TowerData {
             towerName = "Tech Center",
-            basePrice = 300,
-            upgradePrices = new int[] { 200, 300, 400 },
+            prices = new int[] {200, 200, 300},
             damageValues = new int[] { 200, 300, 400 },
             evolutions = new Evolution[]
             {
@@ -80,8 +77,7 @@ public static class TowerSheet
             }
         }},{ TowerTypes.Bomb, new TowerData {
             towerName = "U.C.M",
-            basePrice = 400,
-            upgradePrices = new int[] { 200, 300, 400 },
+            prices = new int[] {400, 200, 300},
             damageValues = new int[] { 200, 300, 400 },
             evolutions = new Evolution[]
             {
@@ -110,8 +106,7 @@ public static class TowerSheet
 public class TowerData
 {
     public string towerName;
-    public int basePrice;
-    public int[] upgradePrices;
+    public int[] prices;
     public int[] damageValues;
     public Evolution[] evolutions;
 }
