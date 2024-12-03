@@ -18,7 +18,7 @@ public class TowerHolder : MonoBehaviour
     public GameObject bombPrefab;
     private Dictionary<TowerTypes, GameObject> towerPrefabs;
     private BaseTower baseTowerScript = null;
-    [HideInInspector]public Animator UIAnimator;
+    [HideInInspector] public Animator UIAnimator;
     private TowerButton[] towerButtons;
 
     // Reference to the UI Panel and Text

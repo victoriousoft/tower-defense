@@ -15,6 +15,7 @@ public static class TowerSheet
             {
                 new Evolution {
                     specializationName = "Spartan Hoplites",
+                    basePrice = 200,
                     skills = new Skill[]
                     {
                         new Skill { skillName = "skill 1", upgradeCosts = new int[] { 100, 200, 300 } },
@@ -23,6 +24,7 @@ public static class TowerSheet
                 },
                 new Evolution {
                     specializationName = "Musketeer Quarters",
+                    basePrice = 200,
                     skills = new Skill[]
                     {
                         new Skill { skillName = "skill 1", upgradeCosts = new int[] { 100, 200, 300 } },
@@ -39,6 +41,7 @@ public static class TowerSheet
             {
                 new Evolution {
                     specializationName = "MG 42",
+                    basePrice = 200,
                     skills = new Skill[]
                     {
                         new Skill { skillName = "skill 1", upgradeCosts = new int[] { 100, 200, 300 } },
@@ -63,6 +66,7 @@ public static class TowerSheet
             {
                 new Evolution {
                     specializationName = "Anonymous",
+                    basePrice = 200,
                     skills = new Skill[]
                     {
                         new Skill { skillName = "Stack Overflow", upgradeCosts = new int[] { 100, 200, 300 } },
@@ -71,6 +75,7 @@ public static class TowerSheet
                 },
                 new Evolution {
                     specializationName = "IBM",
+                    basePrice = 200,
                     skills = new Skill[]
                     {
                         new Skill { skillName = "1. 1. 1970", upgradeCosts = new int[] { 100, 200, 300 } },
@@ -87,6 +92,7 @@ public static class TowerSheet
             {
                 new Evolution {
                     specializationName = "Suicide Bombers",
+                    basePrice = 200,
                     skills = new Skill[]
                     {
                         new Skill { skillName = "skill 1", upgradeCosts = new int[] { 100, 200, 300 } },
@@ -95,6 +101,7 @@ public static class TowerSheet
                 },
                 new Evolution {
                     specializationName = "Saab JAS-39 Gripen",
+                    basePrice = 200,
                     skills = new Skill[]
                     {
                         new Skill { skillName = "skill 1", upgradeCosts = new int[] { 100, 200, 300 } },
@@ -126,5 +133,6 @@ public class Skill
 public class Evolution
 {
     public string specializationName;
+    public int basePrice;
     public Skill[] skills;
 }
