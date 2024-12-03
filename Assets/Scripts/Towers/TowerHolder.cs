@@ -38,17 +38,18 @@ public class TowerHolder : MonoBehaviour
     }
 
     void Update(){
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
         if (isMenuActive && Input.GetMouseButtonDown(0))
         {
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Collider2D collider = GetComponent<Collider2D>();
-
             if (collider != null && !collider.OverlapPoint(mousePosition))
             {
                 DisableMenu();
             }
         }
-        
+        RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+        if (hit.collider != null) if (hit.collider.gameObject.GetComponent<TowerButton>())PrintTowerInfo(hit.collider.gameObject.GetComponent<TowerButton>().towerType);
     }
 
     public void BuildTower(TowerTypes towerType)
@@ -129,5 +130,13 @@ public class TowerHolder : MonoBehaviour
             }
             yield return new WaitForSeconds(0.05f);
         }
+    }
+
+    private void PrintTowerInfo(TowerTypes towerType){
+        Debug.Log("Tower name: " + TowerSheet.towerDictionary[towerType].towerName);
+        Debug.Log("Tower damage: " + TowerSheet.towerDictionary[towerType].damageValues[0]);
+        /*Debug.Log("Tower range: " + TowerSheet.towerDictionary[towerType].range);
+        Debug.Log("Tower attack speed: " + TowerSheet.towerDictionary[towerType].attackSpeed);*/
+        Debug.Log("Tower price: " + TowerSheet.towerDictionary[towerType].basePrice);
     }
 }
