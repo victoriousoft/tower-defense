@@ -14,6 +14,8 @@ public abstract class BaseTower : MonoBehaviour
 
     public GameObject[] evolutionPrefabs;
 
+    protected int evolutionIndex = -1;
+    protected int[] skillLevels;
     protected bool canShoot = true;
     protected abstract IEnumerator AnimateProjectile(GameObject enemy);
     protected abstract void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition);
@@ -21,6 +23,7 @@ public abstract class BaseTower : MonoBehaviour
     void Awake()
     {
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
+        if (evolutionIndex != -1) skillLevels = new int[TowerSheet.towerDictionary[towerType].evolutions[evolutionIndex].skills.Length];
     }
 
     protected virtual void FixedUpdate()
@@ -53,11 +56,21 @@ public abstract class BaseTower : MonoBehaviour
 
     public void BuyEvolution(int evolutionIndex)
     {
+        if (evolutionIndex != -1) Debug.Log("Cannot buy evolution, evolution index is not -1");
         if (playerStats.SubtractGold(TowerSheet.towerDictionary[towerType].evolutions[evolutionIndex].basePrice))
         {
             canShoot = false;
             Instantiate(evolutionPrefabs[evolutionIndex], transform.position, transform.rotation);
             Destroy(gameObject);
+        }
+    }
+
+    public void BuySkill(int skillIndex)
+    {
+        if (evolutionIndex == -1) Debug.Log("Cannot buy skill, evolution index is -1");
+        if (playerStats.SubtractGold(TowerSheet.towerDictionary[towerType].evolutions[level].skills[skillIndex].upgradeCosts[level]))
+        {
+            skillLevels[skillIndex]++;
         }
     }
 
