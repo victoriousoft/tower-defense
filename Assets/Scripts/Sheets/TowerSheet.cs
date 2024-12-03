@@ -9,6 +9,7 @@ public static class TowerSheet
         { TowerTypes.Barracks, new TowerData {
             towerName = "Barracks",
             prices = new int[] {200, 200, 300},
+            refundValues = new int[] {101, 102, 103},
             damageValues = new int[] { 1000, 10000, 50000 },
             evolutions = new Evolution[]
             {
@@ -32,6 +33,7 @@ public static class TowerSheet
         }},{ TowerTypes.Archer, new TowerData {
             towerName = "Archers Hideout",
             prices = new int[] { 200, 200, 300},
+            refundValues = new int[] {101, 102, 103},
             damageValues = new int[] { 200, 300, 400 },
             evolutions = new Evolution[]
             {
@@ -55,6 +57,7 @@ public static class TowerSheet
         }},{ TowerTypes.Magic, new TowerData {
             towerName = "Tech Center",
             prices = new int[] {200, 200, 300},
+            refundValues = new int[] {101, 102, 103},
             damageValues = new int[] { 200, 300, 400 },
             evolutions = new Evolution[]
             {
@@ -78,6 +81,7 @@ public static class TowerSheet
         }},{ TowerTypes.Bomb, new TowerData {
             towerName = "U.C.M",
             prices = new int[] {400, 200, 300},
+            refundValues = new int[] {101, 102, 103},
             damageValues = new int[] { 200, 300, 400 },
             evolutions = new Evolution[]
             {
@@ -107,6 +111,7 @@ public class TowerData
 {
     public string towerName;
     public int[] prices;
+    public int[] refundValues;
     public int[] damageValues;
     public Evolution[] evolutions;
 }

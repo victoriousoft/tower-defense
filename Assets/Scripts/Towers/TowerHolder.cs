@@ -106,7 +106,7 @@ public class TowerHolder : MonoBehaviour
         {
             Destroy(towerInstance);
             towerInstance = null;
-            playerStats.AddGold(100);
+            playerStats.AddGold(TowerSheet.towerDictionary[baseTowerScript.towerType].refundValues[baseTowerScript.level-1]);
             sprite.enabled = true;
         }
     }
@@ -177,12 +177,14 @@ public class TowerHolder : MonoBehaviour
 
     private void PrintTowerInfo(TowerTypes towerType)
     {
-        if (towerType == TowerTypes.Destroy || towerType == TowerTypes.Retarget) return;
+        if ( towerType == TowerTypes.Retarget) return;
         infoPanel.SetActive(true);
         if(towerType == TowerTypes.Upgrade){
             infoText.text = "level " + (baseTowerScript.level+1) + "\n" +
                         "dmg- " + TowerSheet.towerDictionary[baseTowerScript.towerType].damageValues[baseTowerScript.level] + "(+" + (TowerSheet.towerDictionary[baseTowerScript.towerType].damageValues[baseTowerScript.level] -TowerSheet.towerDictionary[baseTowerScript.towerType].damageValues[baseTowerScript.level-1]) +")"+"\n" +
                         "cost- " + TowerSheet.towerDictionary[baseTowerScript.towerType].prices[baseTowerScript.level];
+        }else if(towerType == TowerTypes.Destroy){
+            infoText.text = "Cashback-  " + (TowerSheet.towerDictionary[baseTowerScript.towerType].refundValues[baseTowerScript.level-1]);
         }else{
             infoText.text = TowerSheet.towerDictionary[towerType].towerName + "\n" +
                         "dmg- " + TowerSheet.towerDictionary[towerType].damageValues[0] + "\n" +
