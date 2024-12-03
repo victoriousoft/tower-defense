@@ -18,8 +18,7 @@ public class TowerHolder : MonoBehaviour
     public GameObject bombPrefab;
     private Dictionary<TowerTypes, GameObject> towerPrefabs;
     private BaseTower baseTowerScript = null;
-    public Animator UIAnimator;
-    private Animator towerHolderAnimator;
+    [HideInInspector] public Animator UIAnimator;
     private TowerButton[] towerButtons;
     [SerializeField] private GameObject infoPanel;
     [SerializeField] private TextMeshProUGUI infoText;
@@ -86,7 +85,7 @@ public class TowerHolder : MonoBehaviour
     public IEnumerator BuildTower(TowerTypes towerType)
     {
         if (playerStats.SubtractGold(TowerSheet.towerDictionary[towerType].prices[0]) && towerInstance == null)
-        { 
+        {
             menuLocked = true;
             towerHolderAnimator.Play("towerHolder_build");
             yield return new WaitForSecondsRealtime(1.5f);
@@ -110,7 +109,7 @@ public class TowerHolder : MonoBehaviour
         {
             Destroy(towerInstance);
             towerInstance = null;
-            playerStats.AddGold(TowerSheet.towerDictionary[baseTowerScript.towerType].refundValues[baseTowerScript.level-1]);
+            playerStats.AddGold(TowerSheet.towerDictionary[baseTowerScript.towerType].refundValues[baseTowerScript.level - 1]);
             towerHolderAnimator.Play("towerHolder_idle");
         }
     }
@@ -127,8 +126,8 @@ public class TowerHolder : MonoBehaviour
     }
 
     private void OnMouseDown()
-    {   
-        if(menuLocked)return;
+    {
+        if (menuLocked) return;
         isMenuActive = !isMenuActive;
         if (!isMenuActive)
         {
@@ -136,7 +135,7 @@ public class TowerHolder : MonoBehaviour
         }
         UIAnimator.SetTrigger("enable");
         if (isMenuActive) StartCoroutine(EnableButtons());
-        if(towerInstance == null)towerHolderAnimator.Play("towerHolder_pop");
+        if (towerInstance == null) towerHolderAnimator.Play("towerHolder_pop");
     }
 
     private void DisableMenu()
@@ -144,7 +143,7 @@ public class TowerHolder : MonoBehaviour
         isMenuActive = false;
         foreach (TowerButton button in towerButtons)
         {
-            if(!button.isActiveAndEnabled)return;
+            if (!button.isActiveAndEnabled) return;
             button.gameObject.GetComponent<Animator>().Play("disableButton");
             UIAnimator.SetTrigger("enable");
         }
@@ -185,13 +184,18 @@ public class TowerHolder : MonoBehaviour
     {
         if (towerType == TowerTypes.Retarget) return;
         infoPanel.SetActive(true);
-        if(towerType == TowerTypes.Upgrade){
-            infoText.text = "level " + (baseTowerScript.level+1) + "\n" +
-                        "dmg- " + TowerSheet.towerDictionary[baseTowerScript.towerType].damageValues[baseTowerScript.level] + "(+" + (TowerSheet.towerDictionary[baseTowerScript.towerType].damageValues[baseTowerScript.level] -TowerSheet.towerDictionary[baseTowerScript.towerType].damageValues[baseTowerScript.level-1]) +")"+"\n" +
+        if (towerType == TowerTypes.Upgrade)
+        {
+            infoText.text = "level " + (baseTowerScript.level + 1) + "\n" +
+                        "dmg- " + TowerSheet.towerDictionary[baseTowerScript.towerType].damageValues[baseTowerScript.level] + "(+" + (TowerSheet.towerDictionary[baseTowerScript.towerType].damageValues[baseTowerScript.level] - TowerSheet.towerDictionary[baseTowerScript.towerType].damageValues[baseTowerScript.level - 1]) + ")" + "\n" +
                         "cost- " + TowerSheet.towerDictionary[baseTowerScript.towerType].prices[baseTowerScript.level];
-        }else if(towerType == TowerTypes.Destroy){
-            infoText.text = "Cashback-  " + (TowerSheet.towerDictionary[baseTowerScript.towerType].refundValues[baseTowerScript.level-1]);
-        }else{
+        }
+        else if (towerType == TowerTypes.Destroy)
+        {
+            infoText.text = "Cashback-  " + (TowerSheet.towerDictionary[baseTowerScript.towerType].refundValues[baseTowerScript.level - 1]);
+        }
+        else
+        {
             infoText.text = TowerSheet.towerDictionary[towerType].towerName + "\n" +
                         "dmg- " + TowerSheet.towerDictionary[towerType].damageValues[0] + "\n" +
                         "cost- " + TowerSheet.towerDictionary[towerType].prices[0];
