@@ -130,6 +130,4 @@ public class TowerHolder : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
         }
     }
-
-
 }
