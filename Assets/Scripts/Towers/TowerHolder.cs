@@ -23,6 +23,9 @@ public class TowerHolder : MonoBehaviour
     [SerializeField] private GameObject infoPanel;
     [SerializeField] private TextMeshProUGUI infoText;
 
+    // provizorní
+    private Animator towerHolderAnimator;
+
     void Awake()
     {
         towerButtons = GetComponentsInChildren<TowerButton>();
@@ -84,7 +87,7 @@ public class TowerHolder : MonoBehaviour
 
     public IEnumerator BuildTower(TowerTypes towerType)
     {
-        if (playerStats.SubtractGold(TowerSheet.towerDictionary[towerType].prices[0]) && towerInstance == null)
+        if (playerStats.SubtractGold(towerPrefabs[towerType].GetComponent<BaseTower>().towerData.levels[0].price) && towerInstance == null)
         {
             menuLocked = true;
             towerHolderAnimator.Play("towerHolder_build");
@@ -92,11 +95,8 @@ public class TowerHolder : MonoBehaviour
             menuLocked = false;
             towerInstance = Instantiate(towerPrefabs[towerType], transform.position, Quaternion.identity, transform);
             baseTowerScript = towerInstance.GetComponent<BaseTower>();
-            baseTowerScript.towerType = towerType;
-            baseTowerScript.towerName = TowerSheet.towerDictionary[towerType].towerName;
-            baseTowerScript.damage = TowerSheet.towerDictionary[towerType].damageValues[0];
         }
-        else if (!playerStats.SubtractGold(100))
+        else
         {
             Debug.Log("nedeostatek peněz");
         }
@@ -108,8 +108,9 @@ public class TowerHolder : MonoBehaviour
         if (towerInstance != null)
         {
             Destroy(towerInstance);
+            BaseTower baseTower = towerInstance.GetComponent<BaseTower>();
+            playerStats.AddGold(baseTower.towerData.levels[baseTower.level].price / 2);
             towerInstance = null;
-            playerStats.AddGold(TowerSheet.towerDictionary[baseTowerScript.towerType].refundValues[baseTowerScript.level - 1]);
             towerHolderAnimator.Play("towerHolder_idle");
         }
     }
@@ -122,7 +123,8 @@ public class TowerHolder : MonoBehaviour
 
     public void ChangeTargeting()
     {
-        baseTowerScript.ChangeTargeting();
+        // TODO: implement actual retargeting
+        baseTowerScript.ChangeTargeting(TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH);
     }
 
     private void OnMouseDown()
@@ -183,22 +185,27 @@ public class TowerHolder : MonoBehaviour
     private void PrintTowerInfo(TowerTypes towerType)
     {
         if (towerType == TowerTypes.Retarget) return;
+
         infoPanel.SetActive(true);
+
         if (towerType == TowerTypes.Upgrade)
         {
             infoText.text = "level " + (baseTowerScript.level + 1) + "\n" +
-                        "dmg- " + TowerSheet.towerDictionary[baseTowerScript.towerType].damageValues[baseTowerScript.level] + "(+" + (TowerSheet.towerDictionary[baseTowerScript.towerType].damageValues[baseTowerScript.level] - TowerSheet.towerDictionary[baseTowerScript.towerType].damageValues[baseTowerScript.level - 1]) + ")" + "\n" +
-                        "cost- " + TowerSheet.towerDictionary[baseTowerScript.towerType].prices[baseTowerScript.level];
+                            "dmg- " + baseTowerScript.towerData.levels[baseTowerScript.level].damage + "(+" + (
+                            baseTowerScript.towerData.levels[baseTowerScript.level].damage - baseTowerScript.towerData.levels[baseTowerScript.level - 1].damage
+                            ) + ")" + "\n" +
+                        "cost- " + baseTowerScript.towerData.levels[baseTowerScript.level].damage;
         }
         else if (towerType == TowerTypes.Destroy)
         {
-            infoText.text = "Cashback-  " + (TowerSheet.towerDictionary[baseTowerScript.towerType].refundValues[baseTowerScript.level - 1]);
+            infoText.text = "Cashback- " + baseTowerScript.towerData.levels[baseTowerScript.level].price / 2;
         }
         else
         {
-            infoText.text = TowerSheet.towerDictionary[towerType].towerName + "\n" +
-                        "dmg- " + TowerSheet.towerDictionary[towerType].damageValues[0] + "\n" +
-                        "cost- " + TowerSheet.towerDictionary[towerType].prices[0];
+            infoText.text = baseTowerScript.towerData.name
+             + "\n" +
+                        "dmg- " + baseTowerScript.towerData.levels[0].damage + "\n" +
+                        "cost- " + baseTowerScript.towerData.levels[0].price;
         }
 
         Vector2 mousePosition = Input.mousePosition;

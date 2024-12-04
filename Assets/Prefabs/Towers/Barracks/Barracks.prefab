@@ -118,14 +118,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c977bb1f84a77684296892f5bc0ad763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 4
-  cooldown: 1
-  damage: 10
   level: 0
-  towerName: 
-  towerType: 0
+  towerData: {fileID: 11400000, guid: 4c2363a6a662e2e48a1672983ee85b4d, type: 2}
   targetType: 0
-  evolutionPrefabs: []
   evolutionIndex: -1
   skillLevels: 
   troopCount: 3

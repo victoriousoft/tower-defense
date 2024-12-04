@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8832788362145444466}
   - component: {fileID: 7377211062515362470}
   - component: {fileID: 7444744001778285249}
-  - component: {fileID: 8934370781848452897}
+  - component: {fileID: 4115849465227333522}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8832788362145444466
 MeshFilter:
@@ -106,7 +106,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8934370781848452897
+--- !u!114 &4115849465227333522
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,7 +118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05d89a09a4b733b49a14c0ece1fe604c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 2
-  cooldown: 1
-  damage: 10
+  level: 0
+  towerData: {fileID: 11400000, guid: ef85b913673b0df4fbbaf94a597b158e, type: 2}
   targetType: 0
+  evolutionIndex: -1
+  skillLevels: 

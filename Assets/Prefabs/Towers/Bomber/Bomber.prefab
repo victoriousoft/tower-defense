@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1605032894873210393
 MeshFilter:
@@ -118,8 +118,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeefb539347ff754fa200950e816ac9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 4
-  cooldown: 1
-  damage: 10
+  level: 0
+  towerData: {fileID: 11400000, guid: 41c3fec0c838e9b4ab41fbae55c6e6d4, type: 2}
   targetType: 0
+  evolutionIndex: -1
+  skillLevels: 
   splashRadius: 1
