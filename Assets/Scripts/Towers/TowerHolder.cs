@@ -10,7 +10,6 @@ public class TowerHolder : MonoBehaviour
 
     private GameObject towerInstance;
     private PlayerStatsManager playerStats;
-    private SpriteRenderer sprite;
 
     public GameObject barracksPrefab;
     public GameObject archerPrefab;
@@ -18,7 +17,8 @@ public class TowerHolder : MonoBehaviour
     public GameObject bombPrefab;
     private Dictionary<TowerTypes, GameObject> towerPrefabs;
     private BaseTower baseTowerScript = null;
-    [HideInInspector]public Animator UIAnimator;
+    public Animator UIAnimator;
+    private Animator towerHolderAnimator;
     private TowerButton[] towerButtons;
     [SerializeField] private GameObject infoPanel;
     [SerializeField] private TextMeshProUGUI infoText;
@@ -27,9 +27,8 @@ public class TowerHolder : MonoBehaviour
     {
         towerButtons = GetComponentsInChildren<TowerButton>();
 
-        UIAnimator = GetComponent<Animator>();
+        towerHolderAnimator = GetComponent<Animator>();
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
-        sprite = GetComponent<SpriteRenderer>();
 
         towerPrefabs = new Dictionary<TowerTypes, GameObject>
         {
@@ -83,21 +82,24 @@ public class TowerHolder : MonoBehaviour
         return null;
     }
 
-    public void BuildTower(TowerTypes towerType)
+    public IEnumerator BuildTower(TowerTypes towerType)
     {
         if (playerStats.SubtractGold(TowerSheet.towerDictionary[towerType].prices[0]) && towerInstance == null)
         {
+            towerHolderAnimator.Play("towerHolder_build");
+            yield return new WaitForSecondsRealtime(1.5f);
+            Debug.Log("postavil jsem towerku");
             towerInstance = Instantiate(towerPrefabs[towerType], transform.position, Quaternion.identity, transform);
             baseTowerScript = towerInstance.GetComponent<BaseTower>();
             baseTowerScript.towerType = towerType;
             baseTowerScript.towerName = TowerSheet.towerDictionary[towerType].towerName;
             baseTowerScript.damage = TowerSheet.towerDictionary[towerType].damageValues[0];
-            sprite.enabled = false;
         }
         else if (!playerStats.SubtractGold(100))
         {
             Debug.Log("nedeostatek peněz");
         }
+        yield return null;
     }
 
     public void SellTower()
@@ -107,7 +109,6 @@ public class TowerHolder : MonoBehaviour
             Destroy(towerInstance);
             towerInstance = null;
             playerStats.AddGold(TowerSheet.towerDictionary[baseTowerScript.towerType].refundValues[baseTowerScript.level-1]);
-            sprite.enabled = true;
         }
     }
 
@@ -177,7 +178,7 @@ public class TowerHolder : MonoBehaviour
 
     private void PrintTowerInfo(TowerTypes towerType)
     {
-        if ( towerType == TowerTypes.Retarget) return;
+        if (towerType == TowerTypes.Retarget) return;
         infoPanel.SetActive(true);
         if(towerType == TowerTypes.Upgrade){
             infoText.text = "level " + (baseTowerScript.level+1) + "\n" +
