@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6811056228192751713
 MeshFilter:
@@ -121,10 +121,13 @@ MonoBehaviour:
   range: 4
   cooldown: 1
   damage: 10
-  level: 1
+  level: 0
   towerName: 
   towerType: 0
   targetType: 0
+  evolutionPrefabs: []
+  evolutionIndex: -1
+  skillLevels: 
   troopCount: 3
   respawnCooldown: 5
   localTroopRandezvousPoint: {x: 0, y: -1, z: 0}

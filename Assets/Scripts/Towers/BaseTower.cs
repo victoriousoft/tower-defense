@@ -7,7 +7,7 @@ public abstract class BaseTower : MonoBehaviour
     public float range = 4;
     public float cooldown = 1;
     public float damage = 0;
-    public int level = 1;
+    public int level = 0;
     public string towerName;
     public TowerTypes towerType;
     private PlayerStatsManager playerStats;

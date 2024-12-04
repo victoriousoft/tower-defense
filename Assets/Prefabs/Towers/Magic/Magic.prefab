@@ -121,4 +121,10 @@ MonoBehaviour:
   range: 4
   cooldown: 1
   damage: 25
+  level: 0
+  towerName: 
+  towerType: 0
   targetType: 0
+  evolutionPrefabs: []
+  evolutionIndex: -1
+  skillLevels: 
