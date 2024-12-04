@@ -22,7 +22,6 @@ public abstract class BaseTower : MonoBehaviour
         if (evolutionIndex != -1) skillLevels = new int[towerData.evolutions[evolutionIndex].skills.Length];
     }
 
-
     protected virtual void FixedUpdate()
     {
         if (!canShoot) return;
