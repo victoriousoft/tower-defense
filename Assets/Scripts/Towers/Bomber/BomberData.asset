@@ -12,7 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a37e16eca6cbeae4f9fa71970b6d3659, type: 3}
   m_Name: BomberData
   m_EditorClassIdentifier: 
-  towerType: 0
-  towerName: 
-  levels: []
+  towerType: 3
+  towerName: U.C.M
+  levels:
+  - price: 100
+    range: 5
+    damage: 50
+    cooldown: 5
+  - price: 200
+    range: 5
+    damage: 50
+    cooldown: 5
+  - price: 300
+    range: 5
+    damage: 50
+    cooldown: 5
+  - price: 400
+    range: 5
+    damage: 50
+    cooldown: 5
   evolutions: []

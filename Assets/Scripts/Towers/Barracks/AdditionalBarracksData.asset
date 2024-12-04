@@ -9,26 +9,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a37e16eca6cbeae4f9fa71970b6d3659, type: 3}
-  m_Name: ArcherData
+  m_Script: {fileID: 11500000, guid: eef4197411b08db4ca67e09f6c2e6eb2, type: 3}
+  m_Name: AdditionalBarracksData
   m_EditorClassIdentifier: 
-  towerType: 1
-  towerName: Archers Hideout
+  towerType: 0
+  towerName: 
   levels:
   - price: 100
     range: 5
     damage: 25
-    cooldown: 2
+    cooldown: 5
   - price: 200
     range: 5
     damage: 25
-    cooldown: 2
+    cooldown: 5
   - price: 300
     range: 5
     damage: 25
-    cooldown: 2
+    cooldown: 5
   - price: 400
     range: 5
     damage: 25
-    cooldown: 2
+    cooldown: 5
   evolutions: []
