@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro; // Import TextMeshPro namespace
+using TMPro;
 
 public class TowerHolder : MonoBehaviour
 {
     public GameObject UIMenu;
     private bool isMenuActive = false;
+    private bool menuLocked = false;
 
     private GameObject towerInstance;
     private PlayerStatsManager playerStats;
-    private SpriteRenderer sprite;
 
     public GameObject barracksPrefab;
     public GameObject archerPrefab;
@@ -20,18 +20,18 @@ public class TowerHolder : MonoBehaviour
     private BaseTower baseTowerScript = null;
     [HideInInspector] public Animator UIAnimator;
     private TowerButton[] towerButtons;
-
-    // Reference to the UI Panel and Text
     [SerializeField] private GameObject infoPanel;
-    [SerializeField] private TextMeshProUGUI infoText; // Use TextMeshProUGUI
+    [SerializeField] private TextMeshProUGUI infoText;
+
+    // provizorní
+    private Animator towerHolderAnimator;
 
     void Awake()
     {
         towerButtons = GetComponentsInChildren<TowerButton>();
 
-        UIAnimator = GetComponent<Animator>();
+        towerHolderAnimator = GetComponent<Animator>();
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
-        sprite = GetComponent<SpriteRenderer>();
 
         towerPrefabs = new Dictionary<TowerTypes, GameObject>
         {
@@ -41,7 +41,6 @@ public class TowerHolder : MonoBehaviour
             { TowerTypes.Bomb, bombPrefab }
         };
 
-        // Initially hide the info panel
         infoPanel.SetActive(false);
     }
 
@@ -65,7 +64,7 @@ public class TowerHolder : MonoBehaviour
         }
         else
         {
-            infoPanel.SetActive(false); // Hide the info panel if not over a button
+            infoPanel.SetActive(false);
         }
     }
 
@@ -86,21 +85,22 @@ public class TowerHolder : MonoBehaviour
         return null;
     }
 
-    public void BuildTower(TowerTypes towerType)
+    public IEnumerator BuildTower(TowerTypes towerType)
     {
-        if (playerStats.SubtractGold(TowerSheet.towerDictionary[towerType].basePrice) && towerInstance == null)
+        if (playerStats.SubtractGold(towerPrefabs[towerType].GetComponent<BaseTower>().towerData.levels[0].price) && towerInstance == null)
         {
+            menuLocked = true;
+            towerHolderAnimator.Play("towerHolder_build");
+            yield return new WaitForSecondsRealtime(1.5f);
+            menuLocked = false;
             towerInstance = Instantiate(towerPrefabs[towerType], transform.position, Quaternion.identity, transform);
             baseTowerScript = towerInstance.GetComponent<BaseTower>();
-            baseTowerScript.towerType = towerType;
-            baseTowerScript.towerName = TowerSheet.towerDictionary[towerType].towerName;
-            baseTowerScript.damage = TowerSheet.towerDictionary[towerType].damageValues[0];
-            sprite.enabled = false;
         }
-        else if (!playerStats.SubtractGold(100))
+        else
         {
             Debug.Log("nedeostatek peněz");
         }
+        yield return null;
     }
 
     public void SellTower()
@@ -108,9 +108,10 @@ public class TowerHolder : MonoBehaviour
         if (towerInstance != null)
         {
             Destroy(towerInstance);
+            BaseTower baseTower = towerInstance.GetComponent<BaseTower>();
+            playerStats.AddGold(baseTower.towerData.levels[baseTower.level].price / 2);
             towerInstance = null;
-            playerStats.AddGold(100);
-            sprite.enabled = true;
+            towerHolderAnimator.Play("towerHolder_idle");
         }
     }
 
@@ -122,11 +123,13 @@ public class TowerHolder : MonoBehaviour
 
     public void ChangeTargeting()
     {
-        baseTowerScript.ChangeTargeting();
+        // TODO: implement actual retargeting
+        baseTowerScript.ChangeTargeting(TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH);
     }
 
     private void OnMouseDown()
     {
+        if (menuLocked) return;
         isMenuActive = !isMenuActive;
         if (!isMenuActive)
         {
@@ -134,6 +137,7 @@ public class TowerHolder : MonoBehaviour
         }
         UIAnimator.SetTrigger("enable");
         if (isMenuActive) StartCoroutine(EnableButtons());
+        if (towerInstance == null) towerHolderAnimator.Play("towerHolder_pop");
     }
 
     private void DisableMenu()
@@ -141,6 +145,7 @@ public class TowerHolder : MonoBehaviour
         isMenuActive = false;
         foreach (TowerButton button in towerButtons)
         {
+            if (!button.isActiveAndEnabled) return;
             button.gameObject.GetComponent<Animator>().Play("disableButton");
             UIAnimator.SetTrigger("enable");
         }
@@ -179,11 +184,29 @@ public class TowerHolder : MonoBehaviour
 
     private void PrintTowerInfo(TowerTypes towerType)
     {
-        if (towerType == TowerTypes.Destroy || towerType == TowerTypes.Upgrade || towerType == TowerTypes.Retarget) return;
+        if (towerType == TowerTypes.Retarget) return;
+
         infoPanel.SetActive(true);
-        infoText.text = TowerSheet.towerDictionary[towerType].towerName + "\n" +
-                        "dmg- " + TowerSheet.towerDictionary[towerType].damageValues[0] + "\n" +
-                        "cost- " + TowerSheet.towerDictionary[towerType].basePrice;
+
+        if (towerType == TowerTypes.Upgrade)
+        {
+            infoText.text = "level " + (baseTowerScript.level + 1) + "\n" +
+                            "dmg- " + baseTowerScript.towerData.levels[baseTowerScript.level].damage + "(+" + (
+                            baseTowerScript.towerData.levels[baseTowerScript.level].damage - baseTowerScript.towerData.levels[baseTowerScript.level - 1].damage
+                            ) + ")" + "\n" +
+                        "cost- " + baseTowerScript.towerData.levels[baseTowerScript.level].damage;
+        }
+        else if (towerType == TowerTypes.Destroy)
+        {
+            infoText.text = "Cashback- " + baseTowerScript.towerData.levels[baseTowerScript.level].price / 2;
+        }
+        else
+        {
+            infoText.text = baseTowerScript.towerData.name
+             + "\n" +
+                        "dmg- " + baseTowerScript.towerData.levels[0].damage + "\n" +
+                        "cost- " + baseTowerScript.towerData.levels[0].price;
+        }
 
         Vector2 mousePosition = Input.mousePosition;
         infoPanel.transform.position = mousePosition;
