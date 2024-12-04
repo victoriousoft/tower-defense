@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using TMPro;
 
 public class TowerHolder : MonoBehaviour
 {
     public GameObject UIMenu;
     private bool isMenuActive = false;
-    private bool menuLocked = false;
     private bool menuLocked = false;
 
     private GameObject towerInstance;
@@ -20,17 +18,18 @@ public class TowerHolder : MonoBehaviour
     public GameObject bombPrefab;
     private Dictionary<TowerTypes, GameObject> towerPrefabs;
     private BaseTower baseTowerScript = null;
-    public Animator UIAnimator;
-    private Animator towerHolderAnimator;
+    [HideInInspector] public Animator UIAnimator;
     private TowerButton[] towerButtons;
     [SerializeField] private GameObject infoPanel;
     [SerializeField] private TextMeshProUGUI infoText;
+
+    // provizorní
+    private Animator towerHolderAnimator;
 
     void Awake()
     {
         towerButtons = GetComponentsInChildren<TowerButton>();
 
-        towerHolderAnimator = GetComponent<Animator>();
         towerHolderAnimator = GetComponent<Animator>();
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
 
@@ -66,7 +65,6 @@ public class TowerHolder : MonoBehaviour
         else
         {
             infoPanel.SetActive(false);
-            infoPanel.SetActive(false);
         }
     }
 
@@ -88,9 +86,8 @@ public class TowerHolder : MonoBehaviour
     }
 
     public IEnumerator BuildTower(TowerTypes towerType)
-    public IEnumerator BuildTower(TowerTypes towerType)
     {
-        if (playerStats.SubtractGold(TowerSheet.towerDictionary[towerType].prices[0]) && towerInstance == null)
+        if (playerStats.SubtractGold(towerPrefabs[towerType].GetComponent<BaseTower>().towerData.levels[0].price) && towerInstance == null)
         {
             menuLocked = true;
             towerHolderAnimator.Play("towerHolder_build");
@@ -103,7 +100,6 @@ public class TowerHolder : MonoBehaviour
         {
             Debug.Log("nedeostatek peněz");
         }
-        yield return null;
         yield return null;
     }
 
