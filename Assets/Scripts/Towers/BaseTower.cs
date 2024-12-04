@@ -18,9 +18,11 @@ public abstract class BaseTower : MonoBehaviour
 
     void Awake()
     {
-        playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
-        if (evolutionIndex != -1) skillLevels = new int[towerData.evolutions[evolutionIndex].skills.Length];
-    }
+        void Awake()
+        {
+            playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
+            if (evolutionIndex != -1) skillLevels = new int[towerData.evolutions[evolutionIndex].skills.Length];
+        }
 
     protected virtual void FixedUpdate()
     {
