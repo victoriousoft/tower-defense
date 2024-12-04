@@ -14,6 +14,9 @@ public class Archer : BaseTower
 
         yield return TowerHelpers.AnimateBezierProjectile(arrow, transform.position, enemy, 2, 1, KillProjectile, TowerHelpers.TowerProjectileRotationTypes.LOOK_AT_TARGET);
     }
+    override protected IEnumerator AnimateLaser(GameObject enemy){ yield return null;}
+    
+    override protected IEnumerator KillLaser(LineRenderer laserRenderer,Transform origin, GameObject enemy, Vector3 enemyPosition){ yield return null;}
 
     protected override void KillProjectile(GameObject projectile, GameObject enemy, Vector3 _enemyPosition)
     {

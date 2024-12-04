@@ -1592,6 +1592,8 @@ MonoBehaviour:
   magicPrefab: {fileID: 8426909288462833975, guid: e3c07a957e799124699f4440dddc0c1e, type: 3}
   bombPrefab: {fileID: 7622415593054892194, guid: 49b9895f227940e44a4f7e36a24d92d8, type: 3}
   UIAnimator: {fileID: 0}
+  infoPanel: {fileID: 0}
+  infoText: {fileID: 0}
 --- !u!61 &7897407578259843312
 BoxCollider2D:
   m_ObjectHideFlags: 0

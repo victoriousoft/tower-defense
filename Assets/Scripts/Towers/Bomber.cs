@@ -15,7 +15,9 @@ public class Bomber : BaseTower
 
         yield return TowerHelpers.AnimateBezierProjectile(bomb, transform.position, enemy, 2, 1, KillProjectile, TowerHelpers.TowerProjectileRotationTypes.SPIN);
     }
+    override protected IEnumerator AnimateLaser(GameObject enemy){ yield return null;}
 
+    override protected IEnumerator KillLaser(LineRenderer laserRenderer,Transform origin, GameObject enemy, Vector3 enemyPosition){ yield return null;}
     override protected void KillProjectile(GameObject bomb, GameObject enemy, Vector3 enemyPosition)
     {
         Destroy(bomb);

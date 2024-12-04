@@ -121,4 +121,23 @@ public static class TowerHelpers
 
         destroyCallback(projectile, target, target != null ? target.transform.position : Vector3.zero);
     }
+    public static IEnumerator AnimateLaser(
+    LineRenderer laserRenderer,
+    Transform startPosition,
+    GameObject target
+)
+{
+    float elapsedTime = 0f;
+    while (elapsedTime < 0.25f)
+    {
+        if (target != null)
+        {
+            laserRenderer.SetPosition(0, startPosition.position);
+            laserRenderer.SetPosition(1, target.transform.position);
+        }
+        elapsedTime += Time.deltaTime;
+        yield return null;
+    }
+    laserRenderer.SetPosition(1, startPosition.position);
+}
 }

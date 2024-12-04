@@ -5,17 +5,18 @@ using UnityEngine;
 public abstract class BaseTower : MonoBehaviour
 {
     public float range = 4;
-    public float cooldown = 1;
-    public float damage = 0;
+    public float cooldown = 10;
+    public float damage = 100;
     public int level = 1; 
-    public string towerName;
     public TowerTypes towerType;
     private PlayerStatsManager playerStats;
     public TowerHelpers.TowerTargetTypes targetType = TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH;
     protected bool canShoot = true;
 
     protected abstract IEnumerator AnimateProjectile(GameObject enemy);
+    protected abstract IEnumerator AnimateLaser(GameObject enemy);
     protected abstract void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition);
+    protected abstract IEnumerator KillLaser(LineRenderer laserRenderer, Transform origin,GameObject enemy, Vector3 enemyPosition);
 
     void Awake(){
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
@@ -23,6 +24,8 @@ public abstract class BaseTower : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         if (!canShoot) return;
+        
+        StartCoroutine(ResetCooldown());
 
         GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, range);
         if (enemies.Length == 0) return;
@@ -30,8 +33,8 @@ public abstract class BaseTower : MonoBehaviour
         GameObject target = TowerHelpers.SelectEnemyToAttack(enemies, targetType);
 
         StartCoroutine(AnimateProjectile(target));
+        StartCoroutine(AnimateLaser(target));
         canShoot = false;
-        StartCoroutine(ResetCooldown());
     }
 
     IEnumerator ResetCooldown()
