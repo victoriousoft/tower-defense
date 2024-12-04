@@ -111,6 +111,7 @@ public class TowerHolder : MonoBehaviour
             Destroy(towerInstance);
             towerInstance = null;
             playerStats.AddGold(TowerSheet.towerDictionary[baseTowerScript.towerType].refundValues[baseTowerScript.level-1]);
+            towerHolderAnimator.Play("towerHolder_idle");
         }
     }
 
@@ -135,6 +136,7 @@ public class TowerHolder : MonoBehaviour
         }
         UIAnimator.SetTrigger("enable");
         if (isMenuActive) StartCoroutine(EnableButtons());
+        if(towerInstance == null)towerHolderAnimator.Play("towerHolder_pop");
     }
 
     private void DisableMenu()
