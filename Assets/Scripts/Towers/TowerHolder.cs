@@ -7,6 +7,7 @@ public class TowerHolder : MonoBehaviour
 {
     public GameObject UIMenu;
     private bool isMenuActive = false;
+    private bool menuLocked = false;
 
     private GameObject towerInstance;
     private PlayerStatsManager playerStats;
@@ -85,10 +86,11 @@ public class TowerHolder : MonoBehaviour
     public IEnumerator BuildTower(TowerTypes towerType)
     {
         if (playerStats.SubtractGold(TowerSheet.towerDictionary[towerType].prices[0]) && towerInstance == null)
-        {
+        { 
+            menuLocked = true;
             towerHolderAnimator.Play("towerHolder_build");
             yield return new WaitForSecondsRealtime(1.5f);
-            Debug.Log("postavil jsem towerku");
+            menuLocked = false;
             towerInstance = Instantiate(towerPrefabs[towerType], transform.position, Quaternion.identity, transform);
             baseTowerScript = towerInstance.GetComponent<BaseTower>();
             baseTowerScript.towerType = towerType;
@@ -124,7 +126,8 @@ public class TowerHolder : MonoBehaviour
     }
 
     private void OnMouseDown()
-    {
+    {   
+        if(menuLocked)return;
         isMenuActive = !isMenuActive;
         if (!isMenuActive)
         {
