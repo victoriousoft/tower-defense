@@ -12,16 +12,16 @@ public class TowerButton : MonoBehaviour
         switch (towerType)
         {
             case TowerTypes.Barracks:
-                towerHolder.GetComponent<TowerHolder>().BuildTower(TowerTypes.Barracks);
+                StartCoroutine(towerHolder.GetComponent<TowerHolder>().BuildTower(TowerTypes.Barracks));
                 break;
             case TowerTypes.Archer:
-                towerHolder.GetComponent<TowerHolder>().BuildTower(TowerTypes.Archer);
+                StartCoroutine(towerHolder.GetComponent<TowerHolder>().BuildTower(TowerTypes.Archer));
                 break;
             case TowerTypes.Magic:
-                towerHolder.GetComponent<TowerHolder>().BuildTower(TowerTypes.Magic);
+                StartCoroutine(towerHolder.GetComponent<TowerHolder>().BuildTower(TowerTypes.Magic));
                 break;
             case TowerTypes.Bomb:
-                towerHolder.GetComponent<TowerHolder>().BuildTower(TowerTypes.Bomb);
+               StartCoroutine(towerHolder.GetComponent<TowerHolder>().BuildTower(TowerTypes.Bomb));
                 break;
             case TowerTypes.Destroy:
                 towerHolder.GetComponent<TowerHolder>().SellTower();
@@ -34,6 +34,5 @@ public class TowerButton : MonoBehaviour
                 break;
         }
         towerHolder.GetComponent<TowerHolder>().UIAnimator.SetTrigger("enable");
-        towerHolder.GetComponent<TowerHolder>().UIMenu.SetActive(!towerHolder.GetComponent<TowerHolder>().UIMenu.activeSelf);
     }
 }
