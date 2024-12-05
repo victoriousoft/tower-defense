@@ -3,44 +3,22 @@ using UnityEngine;
 
 public class Magic : BaseTower
 {
-    private Animator towerAnimator;
-    public Transform origin;
-
-    void Awake()
+    protected override IEnumerator AnimateProjectile(GameObject enemy)
     {
-        towerAnimator = GetComponent<Animator>();
+        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        sphere.transform.SetParent(transform);
+        sphere.transform.position = transform.position;
+        sphere.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        sphere.GetComponent<Renderer>().material.color = Color.blue;
+
+        yield return TowerHelpers.AnimateDirectProjectile(sphere, enemy, 5, KillProjectile);
     }
 
-    protected override IEnumerator AnimateProjectile(GameObject enemy) { yield return null; }
-
-    protected override IEnumerator AnimateLaser(GameObject enemy)
+    protected override void KillProjectile(GameObject sphere, GameObject enemy, Vector3 _enemyPosition)
     {
-        towerAnimator.Play("magic_chargeUp_1");
-        yield return new WaitForSeconds(towerAnimator.GetCurrentAnimatorStateInfo(0).length);
-        yield return TowerHelpers.AnimateLaser(GetComponent<LineRenderer>(), origin, enemy);
+        Destroy(sphere);
+        if (enemy == null) return;
 
-        yield return KillLaser(GetComponent<LineRenderer>(),origin, enemy, enemy.transform.position);
-    }
-
-    protected override void KillProjectile(GameObject sphere, GameObject enemy, Vector3 _enemyPosition) { }
-
-    override protected IEnumerator KillLaser(LineRenderer laserRenderer,Transform origin, GameObject enemy, Vector3 enemyPosition)
-    {
-        laserRenderer.SetPosition(1, origin.position);
-
-        if (enemy == null) yield return null;
-
-        BaseEnemy baseEnemy = enemy.GetComponent<BaseEnemy>();
-        if (baseEnemy != null)
-        {
-            baseEnemy.TakeDamage((int)damage, DamageTypes.MAGIC);
-            Debug.Log("Damage applied to enemy: " + enemy.name);
-        }
-        else
-        {
-            Debug.LogWarning("BaseEnemy component not found on " + enemy.name);
-        }
-
-        yield return null;
+        enemy.GetComponent<BaseEnemy>().TakeDamage((int)damage, DamageTypes.MAGIC);
     }
 }
