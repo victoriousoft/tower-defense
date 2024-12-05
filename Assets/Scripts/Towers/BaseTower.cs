@@ -11,19 +11,26 @@ public abstract class BaseTower : MonoBehaviour
     public TowerTypes towerType;
     private PlayerStatsManager playerStats;
     public TowerHelpers.TowerTargetTypes targetType = TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH;
+    public int evolutionIndex = -1;
+    public int[] skillLevels;
+
     protected bool canShoot = true;
+    private PlayerStatsManager playerStats;
 
     protected abstract IEnumerator AnimateProjectile(GameObject enemy);
     protected abstract void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition);
 
-    void Awake(){
+    void Awake()
+    {
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
+        if (evolutionIndex != -1) skillLevels = new int[towerData.evolutions[evolutionIndex].skills.Length];
     }
+    
     protected virtual void FixedUpdate()
     {
         if (!canShoot) return;
 
-        GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, range);
+        GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range);
         if (enemies.Length == 0) return;
 
         GameObject target = TowerHelpers.SelectEnemyToAttack(enemies, targetType);
@@ -35,17 +42,46 @@ public abstract class BaseTower : MonoBehaviour
 
     IEnumerator ResetCooldown()
     {
-        yield return new WaitForSeconds(cooldown);
+        yield return new WaitForSeconds(towerData.levels[level].cooldown);
         canShoot = true;
     }
-    public void UpgradeTower(){
-        if(playerStats.SubtractGold(TowerSheet.towerDictionary[towerType].prices[level])){
-            damage = TowerSheet.towerDictionary[towerType].damageValues[level];
+
+    public virtual void UpgradeTower()
+    {
+        if (playerStats.SubtractGold(towerData.levels[level].price))
+        {
             level++;
         }
     }
 
-    public void ChangeTargeting(){
-        //změnit targeting
+    public void BuyEvolution(int evolutionIndex)
+    {
+        if (evolutionIndex != -1) Debug.Log("Cannot buy evolution, evolution index is not -1");
+        if (playerStats.SubtractGold(towerData.evolutions[evolutionIndex].price))
+        {
+            canShoot = false;
+            Instantiate(towerData.evolutions[evolutionIndex].prefab, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
+    }
+
+    public void BuySkill(int skillIndex)
+    {
+        if (evolutionIndex == -1) Debug.Log("Cannot buy skill, evolution index is -1");
+        if (playerStats.SubtractGold(towerData.evolutions[evolutionIndex].skills[skillIndex].upgradeCosts[skillLevels[skillIndex]]))
+        {
+            skillLevels[skillIndex]++;
+        }
+    }
+
+    public void SellTower()
+    {
+        playerStats.AddGold(towerData.levels[level].price / 2);
+        Destroy(gameObject);
+    }
+
+    public void ChangeTargeting(TowerHelpers.TowerTargetTypes newTargetType)
+    {
+        targetType = newTargetType;
     }
 }
