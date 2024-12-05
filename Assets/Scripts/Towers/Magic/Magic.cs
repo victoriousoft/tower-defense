@@ -3,7 +3,13 @@ using UnityEngine;
 
 public class Magic : BaseTower
 {
-    protected override IEnumerator AnimateProjectile(GameObject enemy)
+
+    protected override IEnumerator ChargeUp(GameObject enemy)
+    {
+        yield return null;
+    }
+
+    protected override IEnumerator Shoot(GameObject enemy)
     {
         GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         sphere.transform.SetParent(transform);
@@ -19,6 +25,6 @@ public class Magic : BaseTower
         Destroy(sphere);
         if (enemy == null) return;
 
-        enemy.GetComponent<BaseEnemy>().TakeDamage((int)damage, DamageTypes.MAGIC);
+        enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.levels[level].damage, DamageTypes.MAGIC);
     }
 }

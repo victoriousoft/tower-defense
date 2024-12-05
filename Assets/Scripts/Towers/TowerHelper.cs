@@ -10,7 +10,7 @@ public static class TowerHelpers
     public enum TowerTargetTypes { CLOSEST_TO_FINISH, CLOSEST_TO_START, MOST_HP, LEAST_HP };
 
 
-    public static GameObject[] GetEnemiesInRange(Vector3 position, float range)
+    public static GameObject[] GetEnemiesInRange(Vector2 position, float range)
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(position, range);
         List<GameObject> enemies = new List<GameObject>();
@@ -49,7 +49,7 @@ public static class TowerHelpers
     }
 
     // moc nevim co tohle dělá
-    public static Vector3 CalculateBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2)
+    public static Vector2 CalculateBezierPoint(float t, Vector2 p0, Vector2 p1, Vector2 p2)
     {
         return Mathf.Pow(1 - t, 2) * p0 + 2 * (1 - t) * t * p1 + Mathf.Pow(t, 2) * p2;
     }
@@ -57,7 +57,7 @@ public static class TowerHelpers
     // animuje bezier projectile (archers, bomb tower)
     public static IEnumerator AnimateBezierProjectile(
         GameObject projectile,
-        Vector3 startPosition,
+        Vector2 startPosition,
         GameObject target,
         float height,
         float duration,
@@ -65,8 +65,8 @@ public static class TowerHelpers
         TowerProjectileRotationTypes rotationType = TowerProjectileRotationTypes.NONE
         )
     {
-        Vector3 targetPosition = target != null ? target.transform.position : Vector3.zero;
-        Vector3 controlPoint = (startPosition + targetPosition) / 2 + Vector3.up * height;
+        Vector2 targetPosition = target != null ? target.transform.position : Vector3.zero;
+        Vector2 controlPoint = (startPosition + targetPosition) / 2 + Vector2.up * height;
 
         float startTime = Time.time;
 
@@ -78,13 +78,13 @@ public static class TowerHelpers
                 else target = null;
             }
 
-            controlPoint = (startPosition + targetPosition) / 2 + Vector3.up * height;
+            controlPoint = (startPosition + targetPosition) / 2 + Vector2.up * height;
 
             float t = (Time.time - startTime) / duration;
-            Vector3 currentPosition = CalculateBezierPoint(t, startPosition, controlPoint, targetPosition);
+            Vector2 currentPosition = CalculateBezierPoint(t, startPosition, controlPoint, targetPosition);
             projectile.transform.position = currentPosition;
 
-            Vector3 direction = (CalculateBezierPoint(t + 0.01f, startPosition, controlPoint, targetPosition) - currentPosition).normalized;
+            Vector2 direction = (CalculateBezierPoint(t + 0.01f, startPosition, controlPoint, targetPosition) - currentPosition).normalized;
 
             if (rotationType == TowerProjectileRotationTypes.LOOK_AT_TARGET)
             {

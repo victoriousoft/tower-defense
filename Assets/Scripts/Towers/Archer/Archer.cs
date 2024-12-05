@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class Archer : BaseTower
 {
-    protected override IEnumerator AnimateProjectile(GameObject enemy)
+    protected override IEnumerator ChargeUp(GameObject enemy)
+    {
+        yield return null;
+    }
+
+    protected override IEnumerator Shoot(GameObject enemy)
     {
         GameObject arrow = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         arrow.transform.SetParent(transform);
@@ -20,6 +25,6 @@ public class Archer : BaseTower
         Destroy(projectile);
         if (enemy == null) return;
 
-        enemy.GetComponent<BaseEnemy>().TakeDamage((int)damage, DamageTypes.PHYSICAL);
+        enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.levels[level].damage, DamageTypes.PHYSICAL);
     }
 }

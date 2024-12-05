@@ -163,13 +163,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 797a0241fe2889345bd8a20faa3b82d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 4
-  cooldown: 1
-  damage: 25
   level: 1
-  towerType: 0
+  towerData: {fileID: 11400000, guid: 807b62f3fac1db34c9c1e43f4949424a, type: 2}
   targetType: 0
-  origin: {fileID: 7951302426695864144}
 --- !u!95 &8241367639384917471
 Animator:
   serializedVersion: 5

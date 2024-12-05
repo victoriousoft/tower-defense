@@ -5,7 +5,12 @@ public class Bomber : BaseTower
 {
     public float splashRadius = 1;
 
-    override protected IEnumerator AnimateProjectile(GameObject enemy)
+    protected override IEnumerator ChargeUp(GameObject enemy)
+    {
+        yield return null;
+    }
+
+    override protected IEnumerator Shoot(GameObject enemy)
     {
         GameObject bomb = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         bomb.transform.SetParent(transform);
@@ -23,7 +28,7 @@ public class Bomber : BaseTower
         foreach (GameObject e in enemies)
         {
             if (e == null) return;
-            e.GetComponent<BaseEnemy>().TakeDamage((int)damage, DamageTypes.EXPLOSION);
+            e.GetComponent<BaseEnemy>().TakeDamage(towerData.levels[level].damage, DamageTypes.EXPLOSION);
         }
     }
 }
