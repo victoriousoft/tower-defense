@@ -5,7 +5,7 @@ public class Bomber : BaseTower
 {
     public float splashRadius = 1;
 
-    override protected IEnumerator AnimateProjectile(GameObject enemy)
+    override protected IEnumerator Shoot(GameObject enemy)
     {
         GameObject bomb = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         bomb.transform.SetParent(transform);

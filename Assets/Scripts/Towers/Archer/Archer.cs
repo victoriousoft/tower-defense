@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Archer : BaseTower
 {
-    protected override IEnumerator AnimateProjectile(GameObject enemy)
+    protected override IEnumerator Shoot(GameObject enemy)
     {
         GameObject arrow = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         arrow.transform.SetParent(transform);

@@ -10,7 +10,7 @@ public abstract class BaseTower : MonoBehaviour
     public TowerHelpers.TowerTargetTypes targetType = TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH;
     protected bool canShoot = true;
 
-    protected abstract IEnumerator AnimateProjectile(GameObject enemy);
+    protected abstract IEnumerator Shoot(GameObject enemy);
     protected abstract void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition);
 
     void Awake()
@@ -26,9 +26,14 @@ public abstract class BaseTower : MonoBehaviour
 
         GameObject target = TowerHelpers.SelectEnemyToAttack(enemies, targetType);
 
-        StartCoroutine(AnimateProjectile(target));
+        StartCoroutine(ShootAndResetCooldown(target));
         canShoot = false;
-        StartCoroutine(ResetCooldown());
+    }
+
+    private IEnumerator ShootAndResetCooldown(GameObject target)
+    {
+        yield return Shoot(target);
+        canShoot = true;
     }
 
     IEnumerator ResetCooldown()

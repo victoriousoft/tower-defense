@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Magic : BaseTower
 {
-    protected override IEnumerator AnimateProjectile(GameObject enemy)
+    protected override IEnumerator Shoot(GameObject enemy)
     {
         GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         sphere.transform.SetParent(transform);
