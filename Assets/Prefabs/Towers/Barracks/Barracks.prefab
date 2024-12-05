@@ -119,12 +119,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 0
-  towerData: {fileID: 11400000, guid: 4c2363a6a662e2e48a1672983ee85b4d, type: 2}
+  towerData: {fileID: 11400000, guid: 9ea043583d9a7484d81c7b2921c0e75d, type: 2}
+  towerType: 0
   targetType: 0
   evolutionIndex: -1
   skillLevels: 
-  troopCount: 3
-  respawnCooldown: 5
   localTroopRandezvousPoint: {x: 0, y: -1, z: 0}
   troopPrefab: {fileID: 7100516105498062489, guid: 25beaebbad9a4914ea1dc90f9bdfa452, type: 3}
   randezvousOffset: 0.5

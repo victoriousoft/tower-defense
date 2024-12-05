@@ -96,7 +96,6 @@ public class TowerHolder : MonoBehaviour
             towerInstance = Instantiate(towerPrefabs[towerType], transform.position, Quaternion.identity, transform);
             baseTowerScript = towerInstance.GetComponent<BaseTower>();
             baseTowerScript.towerType = towerType;
-            baseTowerScript.damage = TowerSheet.towerDictionary[towerType].damageValues[0];
         }
         else
         {
