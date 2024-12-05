@@ -4,11 +4,8 @@ using UnityEngine;
 
 public abstract class BaseTower : MonoBehaviour
 {
-    public float range = 4;
-    public float cooldown = 1;
-    public float damage = 0;
-    public int level = 1; 
-    public TowerTypes towerType;
+    public int level = 0;
+    public TowerSheetNeo towerData;
     private PlayerStatsManager playerStats;
     public TowerHelpers.TowerTargetTypes targetType = TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH;
     protected bool canShoot = true;
@@ -16,14 +13,15 @@ public abstract class BaseTower : MonoBehaviour
     protected abstract IEnumerator AnimateProjectile(GameObject enemy);
     protected abstract void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition);
 
-    void Awake(){
+    void Awake()
+    {
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
     }
     protected virtual void FixedUpdate()
     {
         if (!canShoot) return;
 
-        GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, range);
+        GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range);
         if (enemies.Length == 0) return;
 
         GameObject target = TowerHelpers.SelectEnemyToAttack(enemies, targetType);
@@ -35,17 +33,20 @@ public abstract class BaseTower : MonoBehaviour
 
     IEnumerator ResetCooldown()
     {
-        yield return new WaitForSeconds(cooldown);
+        yield return new WaitForSeconds(towerData.levels[level].cooldown);
         canShoot = true;
     }
-    public void UpgradeTower(){
-        if(playerStats.SubtractGold(TowerSheet.towerDictionary[towerType].prices[level])){
-            damage = TowerSheet.towerDictionary[towerType].damageValues[level];
+    public void UpgradeTower()
+    {
+        // TODO: fix pro evoluce (level bude asi out of bounds)
+        if (playerStats.SubtractGold(towerData.levels[level + 1].price))
+        {
             level++;
         }
     }
 
-    public void ChangeTargeting(){
+    public void ChangeTargeting()
+    {
         //změnit targeting
     }
 }
