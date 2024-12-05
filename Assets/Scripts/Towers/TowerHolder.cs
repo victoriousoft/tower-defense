@@ -85,7 +85,7 @@ public class TowerHolder : MonoBehaviour
 
     public IEnumerator BuildTower(TowerTypes towerType)
     {
-        if (playerStats.SubtractGold(TowerSheet.towerDictionary[towerType].prices[0]) && towerInstance == null)
+        if (playerStats.SubtractGold(towerPrefabs[towerType].GetComponent<BaseTower>().towerData.levels[0].price) && towerInstance == null)
         {
             menuLocked = true;
             towerHolderAnimator.Play("towerHolder_build");
@@ -182,6 +182,8 @@ public class TowerHolder : MonoBehaviour
     private void PrintTowerInfo(TowerTypes towerType)
     {
         if (towerType == TowerTypes.Retarget) return;
+
+
         infoPanel.SetActive(true);
         if (towerType == TowerTypes.Upgrade)
         {
@@ -195,9 +197,10 @@ public class TowerHolder : MonoBehaviour
         }
         else
         {
-            infoText.text = TowerSheet.towerDictionary[towerType].towerName + "\n" +
-                        "dmg- " + TowerSheet.towerDictionary[towerType].damageValues[0] + "\n" +
-                        "cost- " + TowerSheet.towerDictionary[towerType].prices[0];
+            TowerSheetNeo prefabData = towerPrefabs[towerType].GetComponent<BaseTower>().towerData;
+            infoText.text = prefabData.towerName + "\n" +
+                        "dmg- " + prefabData.levels[0].damage + "\n" +
+                        "cost- " + prefabData.levels[0].price;
         }
 
         Vector2 mousePosition = Input.mousePosition;
