@@ -3,6 +3,12 @@ using UnityEngine;
 
 public class Magic : BaseTower
 {
+
+    protected override IEnumerator ChargeUp(GameObject enemy)
+    {
+        yield return null;
+    }
+
     protected override IEnumerator Shoot(GameObject enemy)
     {
         GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);

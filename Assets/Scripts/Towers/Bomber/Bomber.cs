@@ -5,6 +5,11 @@ public class Bomber : BaseTower
 {
     public float splashRadius = 1;
 
+    protected override IEnumerator ChargeUp(GameObject enemy)
+    {
+        yield return null;
+    }
+
     override protected IEnumerator Shoot(GameObject enemy)
     {
         GameObject bomb = GameObject.CreatePrimitive(PrimitiveType.Sphere);

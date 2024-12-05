@@ -21,6 +21,7 @@ public class Barracks : BaseTower
     protected override void FixedUpdate() { }
     protected override IEnumerator Shoot(GameObject enemy) { yield return null; }
     protected override void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition) { }
+    protected override IEnumerator ChargeUp(GameObject enemy) { yield return null; }
 
     void SpawnTroops(int count)
     {

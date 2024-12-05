@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Archer : BaseTower
 {
+    protected override IEnumerator ChargeUp(GameObject enemy)
+    {
+        yield return null;
+    }
+
     protected override IEnumerator Shoot(GameObject enemy)
     {
         GameObject arrow = GameObject.CreatePrimitive(PrimitiveType.Cylinder);

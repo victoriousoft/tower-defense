@@ -11,12 +11,14 @@ public abstract class BaseTower : MonoBehaviour
     protected bool canShoot = true;
 
     protected abstract IEnumerator Shoot(GameObject enemy);
+    protected abstract IEnumerator ChargeUp(GameObject enemy);
     protected abstract void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition);
 
     void Awake()
     {
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
     }
+
     protected virtual void FixedUpdate()
     {
         if (!canShoot) return;
@@ -32,6 +34,13 @@ public abstract class BaseTower : MonoBehaviour
 
     private IEnumerator ShootAndResetCooldown(GameObject target)
     {
+        yield return ChargeUp(target);
+        if (Vector2.Distance(transform.position, target.transform.position) > towerData.levels[level].range || target == null)
+        {
+            canShoot = true;
+            yield break;
+        }
+
         yield return Shoot(target);
         canShoot = true;
     }
