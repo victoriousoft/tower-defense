@@ -11,6 +11,7 @@ public class Magic : BaseTower
 
     protected override IEnumerator Shoot(GameObject enemy)
     {
+        Debug.Log("Magic tower shooting at " + enemy.name);
         GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         sphere.transform.SetParent(transform);
         sphere.transform.position = transform.position;

@@ -21,12 +21,12 @@ MonoBehaviour:
     cooldown: 3
   - price: 200
     range: 5
-    damage: 25
+    damage: 35
     cooldown: 3
   - price: 300
     range: 5
-    damage: 25
-    cooldown: 3
+    damage: 60
+    cooldown: 1
   - price: 400
     range: 5
     damage: 25
