@@ -185,7 +185,6 @@ public class TowerHolder : MonoBehaviour
         infoPanel.SetActive(true);
         if (towerType == TowerTypes.Upgrade)
         {
-            // TODO: 
             infoText.text = "level " + (baseTowerScript.level + 1) + "\n" +
                         "dmg- " + baseTowerScript.towerData.levels[baseTowerScript.level].damage + "(+" + (baseTowerScript.towerData.levels[baseTowerScript.level + 1].damage - baseTowerScript.towerData.levels[baseTowerScript.level].damage) + ")" + "\n" +
                         "cost- " + baseTowerScript.towerData.levels[baseTowerScript.level + 1].price;
