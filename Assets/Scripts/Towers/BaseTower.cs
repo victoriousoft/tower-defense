@@ -4,9 +4,12 @@ using UnityEngine;
 
 public abstract class BaseTower : MonoBehaviour
 {
-    public int level = 1;
-    public TowerSheetNeo towerData;
+    public float range = 4;
+    public float cooldown = 1;
+    public float damage = 0;
+    public int level = 1; 
     public TowerTypes towerType;
+    private PlayerStatsManager playerStats;
     public TowerHelpers.TowerTargetTypes targetType = TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH;
     public int evolutionIndex = -1;
     public int[] skillLevels;
@@ -22,7 +25,7 @@ public abstract class BaseTower : MonoBehaviour
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
         if (evolutionIndex != -1) skillLevels = new int[towerData.evolutions[evolutionIndex].skills.Length];
     }
-
+    
     protected virtual void FixedUpdate()
     {
         if (!canShoot) return;
