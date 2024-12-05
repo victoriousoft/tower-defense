@@ -18,13 +18,11 @@ public class TowerHolder : MonoBehaviour
     public GameObject bombPrefab;
     private Dictionary<TowerTypes, GameObject> towerPrefabs;
     private BaseTower baseTowerScript = null;
-    [HideInInspector] public Animator UIAnimator;
+    public Animator UIAnimator;
+    private Animator towerHolderAnimator;
     private TowerButton[] towerButtons;
     [SerializeField] private GameObject infoPanel;
     [SerializeField] private TextMeshProUGUI infoText;
-
-    // provizorní
-    private Animator towerHolderAnimator;
 
     void Awake()
     {
@@ -87,8 +85,8 @@ public class TowerHolder : MonoBehaviour
 
     public IEnumerator BuildTower(TowerTypes towerType)
     {
-        if (playerStats.SubtractGold(towerPrefabs[towerType].GetComponent<BaseTower>().towerData.levels[0].price) && towerInstance == null)
-        {
+        if (playerStats.SubtractGold(TowerSheet.towerDictionary[towerType].prices[0]) && towerInstance == null)
+        { 
             menuLocked = true;
             towerHolderAnimator.Play("towerHolder_build");
             yield return new WaitForSecondsRealtime(1.5f);
@@ -98,7 +96,7 @@ public class TowerHolder : MonoBehaviour
             baseTowerScript.towerType = towerType;
             baseTowerScript.damage = TowerSheet.towerDictionary[towerType].damageValues[0];
         }
-        else
+        else if (!playerStats.SubtractGold(100))
         {
             Debug.Log("nedeostatek peněz");
         }
@@ -110,9 +108,8 @@ public class TowerHolder : MonoBehaviour
         if (towerInstance != null)
         {
             Destroy(towerInstance);
-            BaseTower baseTower = towerInstance.GetComponent<BaseTower>();
-            playerStats.AddGold(baseTower.towerData.levels[baseTower.level].price / 2);
             towerInstance = null;
+            playerStats.AddGold(TowerSheet.towerDictionary[baseTowerScript.towerType].refundValues[baseTowerScript.level-1]);
             towerHolderAnimator.Play("towerHolder_idle");
         }
     }
@@ -125,13 +122,12 @@ public class TowerHolder : MonoBehaviour
 
     public void ChangeTargeting()
     {
-        // TODO: implement actual retargeting
-        baseTowerScript.ChangeTargeting(TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH);
+        baseTowerScript.ChangeTargeting();
     }
 
     private void OnMouseDown()
-    {
-        if (menuLocked) return;
+    {   
+        if(menuLocked)return;
         isMenuActive = !isMenuActive;
         if (!isMenuActive)
         {
@@ -139,7 +135,7 @@ public class TowerHolder : MonoBehaviour
         }
         UIAnimator.SetTrigger("enable");
         if (isMenuActive) StartCoroutine(EnableButtons());
-        if (towerInstance == null) towerHolderAnimator.Play("towerHolder_pop");
+        if(towerInstance == null)towerHolderAnimator.Play("towerHolder_pop");
     }
 
     private void DisableMenu()
@@ -147,7 +143,7 @@ public class TowerHolder : MonoBehaviour
         isMenuActive = false;
         foreach (TowerButton button in towerButtons)
         {
-            if (!button.isActiveAndEnabled) return;
+            if(!button.isActiveAndEnabled)return;
             button.gameObject.GetComponent<Animator>().Play("disableButton");
             UIAnimator.SetTrigger("enable");
         }
@@ -187,27 +183,17 @@ public class TowerHolder : MonoBehaviour
     private void PrintTowerInfo(TowerTypes towerType)
     {
         if (towerType == TowerTypes.Retarget) return;
-
         infoPanel.SetActive(true);
-
-        if (towerType == TowerTypes.Upgrade)
-        {
-            infoText.text = "level " + (baseTowerScript.level + 1) + "\n" +
-                            "dmg- " + baseTowerScript.towerData.levels[baseTowerScript.level].damage + "(+" + (
-                            baseTowerScript.towerData.levels[baseTowerScript.level].damage - baseTowerScript.towerData.levels[baseTowerScript.level - 1].damage
-                            ) + ")" + "\n" +
-                        "cost- " + baseTowerScript.towerData.levels[baseTowerScript.level].damage;
-        }
-        else if (towerType == TowerTypes.Destroy)
-        {
-            infoText.text = "Cashback- " + baseTowerScript.towerData.levels[baseTowerScript.level].price / 2;
-        }
-        else
-        {
-            infoText.text = baseTowerScript.towerData.name
-             + "\n" +
-                        "dmg- " + baseTowerScript.towerData.levels[0].damage + "\n" +
-                        "cost- " + baseTowerScript.towerData.levels[0].price;
+        if(towerType == TowerTypes.Upgrade){
+            infoText.text = "level " + (baseTowerScript.level+1) + "\n" +
+                        "dmg- " + TowerSheet.towerDictionary[baseTowerScript.towerType].damageValues[baseTowerScript.level] + "(+" + (TowerSheet.towerDictionary[baseTowerScript.towerType].damageValues[baseTowerScript.level] -TowerSheet.towerDictionary[baseTowerScript.towerType].damageValues[baseTowerScript.level-1]) +")"+"\n" +
+                        "cost- " + TowerSheet.towerDictionary[baseTowerScript.towerType].prices[baseTowerScript.level];
+        }else if(towerType == TowerTypes.Destroy){
+            infoText.text = "Cashback-  " + (TowerSheet.towerDictionary[baseTowerScript.towerType].refundValues[baseTowerScript.level-1]);
+        }else{
+            infoText.text = TowerSheet.towerDictionary[towerType].towerName + "\n" +
+                        "dmg- " + TowerSheet.towerDictionary[towerType].damageValues[0] + "\n" +
+                        "cost- " + TowerSheet.towerDictionary[towerType].prices[0];
         }
 
         Vector2 mousePosition = Input.mousePosition;

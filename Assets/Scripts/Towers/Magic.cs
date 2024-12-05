@@ -19,6 +19,6 @@ public class Magic : BaseTower
         Destroy(sphere);
         if (enemy == null) return;
 
-        enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.levels[level].damage, DamageTypes.MAGIC);
+        enemy.GetComponent<BaseEnemy>().TakeDamage((int)damage, DamageTypes.MAGIC);
     }
 }

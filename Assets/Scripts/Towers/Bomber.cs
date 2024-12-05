@@ -23,7 +23,7 @@ public class Bomber : BaseTower
         foreach (GameObject e in enemies)
         {
             if (e == null) return;
-            e.GetComponent<BaseEnemy>().TakeDamage(towerData.levels[level].damage, DamageTypes.EXPLOSION);
+            e.GetComponent<BaseEnemy>().TakeDamage((int)damage, DamageTypes.EXPLOSION);
         }
     }
 }

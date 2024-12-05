@@ -8,14 +8,13 @@ public static class TowerSheet
     {
         { TowerTypes.Barracks, new TowerData {
             towerName = "Barracks",
-            basePrice = 100,
-            upgradePrices = new int[] { 200, 300, 400 },
+            prices = new int[] {200, 200, 300},
+            refundValues = new int[] {101, 102, 103},
             damageValues = new int[] { 1000, 10000, 50000 },
             evolutions = new Evolution[]
             {
                 new Evolution {
                     specializationName = "Spartan Hoplites",
-                    basePrice = 200,
                     skills = new Skill[]
                     {
                         new Skill { skillName = "skill 1", upgradeCosts = new int[] { 100, 200, 300 } },
@@ -24,7 +23,6 @@ public static class TowerSheet
                 },
                 new Evolution {
                     specializationName = "Musketeer Quarters",
-                    basePrice = 200,
                     skills = new Skill[]
                     {
                         new Skill { skillName = "skill 1", upgradeCosts = new int[] { 100, 200, 300 } },
@@ -34,14 +32,13 @@ public static class TowerSheet
             }
         }},{ TowerTypes.Archer, new TowerData {
             towerName = "Archers Hideout",
-            basePrice = 200,
-            upgradePrices = new int[] { 200, 300, 400 },
+            prices = new int[] { 200, 200, 300},
+            refundValues = new int[] {101, 102, 103},
             damageValues = new int[] { 200, 300, 400 },
             evolutions = new Evolution[]
             {
                 new Evolution {
                     specializationName = "MG 42",
-                    basePrice = 200,
                     skills = new Skill[]
                     {
                         new Skill { skillName = "skill 1", upgradeCosts = new int[] { 100, 200, 300 } },
@@ -59,14 +56,13 @@ public static class TowerSheet
             }
         }},{ TowerTypes.Magic, new TowerData {
             towerName = "Tech Center",
-            basePrice = 300,
-            upgradePrices = new int[] { 200, 300, 400 },
+            prices = new int[] {200, 200, 300},
+            refundValues = new int[] {101, 102, 103},
             damageValues = new int[] { 200, 300, 400 },
             evolutions = new Evolution[]
             {
                 new Evolution {
                     specializationName = "Anonymous",
-                    basePrice = 200,
                     skills = new Skill[]
                     {
                         new Skill { skillName = "Stack Overflow", upgradeCosts = new int[] { 100, 200, 300 } },
@@ -75,7 +71,6 @@ public static class TowerSheet
                 },
                 new Evolution {
                     specializationName = "IBM",
-                    basePrice = 200,
                     skills = new Skill[]
                     {
                         new Skill { skillName = "1. 1. 1970", upgradeCosts = new int[] { 100, 200, 300 } },
@@ -85,14 +80,13 @@ public static class TowerSheet
             }
         }},{ TowerTypes.Bomb, new TowerData {
             towerName = "U.C.M",
-            basePrice = 400,
-            upgradePrices = new int[] { 200, 300, 400 },
+            prices = new int[] {400, 200, 300},
+            refundValues = new int[] {101, 102, 103},
             damageValues = new int[] { 200, 300, 400 },
             evolutions = new Evolution[]
             {
                 new Evolution {
                     specializationName = "Suicide Bombers",
-                    basePrice = 200,
                     skills = new Skill[]
                     {
                         new Skill { skillName = "skill 1", upgradeCosts = new int[] { 100, 200, 300 } },
@@ -101,7 +95,6 @@ public static class TowerSheet
                 },
                 new Evolution {
                     specializationName = "Saab JAS-39 Gripen",
-                    basePrice = 200,
                     skills = new Skill[]
                     {
                         new Skill { skillName = "skill 1", upgradeCosts = new int[] { 100, 200, 300 } },
@@ -117,8 +110,8 @@ public static class TowerSheet
 public class TowerData
 {
     public string towerName;
-    public int basePrice;
-    public int[] upgradePrices;
+    public int[] prices;
+    public int[] refundValues;
     public int[] damageValues;
     public Evolution[] evolutions;
 }
@@ -133,6 +126,5 @@ public class Skill
 public class Evolution
 {
     public string specializationName;
-    public int basePrice;
     public Skill[] skills;
 }

@@ -20,6 +20,6 @@ public class Archer : BaseTower
         Destroy(projectile);
         if (enemy == null) return;
 
-        enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.levels[level].damage, DamageTypes.PHYSICAL);
+        enemy.GetComponent<BaseEnemy>().TakeDamage((int)damage, DamageTypes.PHYSICAL);
     }
 }

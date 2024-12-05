@@ -3,29 +3,24 @@ using UnityEngine;
 
 public class Barracks : BaseTower
 {
+    public int troopCount = 3;
+    public float respawnCooldown = 5; // seconds
     public Vector3 localTroopRandezvousPoint;
     public GameObject troopPrefab;
     public float randezvousOffset = 1;
 
     private GameObject[] troops;
 
+    void Awake()
+    {
+        troops = new GameObject[troopCount];
+        SpawnTroops(troopCount);
+    }
+
     // tohle se neimplementuje v barracks
     protected override void FixedUpdate() { }
     protected override IEnumerator AnimateProjectile(GameObject enemy) { yield return null; }
     protected override void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition) { }
-
-    void Awake()
-    {
-        if (towerData is BarracksSheet barracksData)
-        {
-            troops = new GameObject[barracksData.levels[level].troopCount];
-            SpawnTroops(barracksData.levels[level].troopCount);
-        }
-        else
-        {
-            Debug.LogError("Tower data is not BarracksSheet");
-        }
-    }
 
     void SpawnTroops(int count)
     {
@@ -77,7 +72,7 @@ public class Barracks : BaseTower
 
     private IEnumerator RespawnTroop(int troopId)
     {
-        yield return new WaitForSeconds(towerData.levels[level].cooldown);
+        yield return new WaitForSeconds(respawnCooldown);
         SpawnTroop(troopId);
     }
 }
