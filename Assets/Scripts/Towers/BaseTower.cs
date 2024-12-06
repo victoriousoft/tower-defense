@@ -37,8 +37,8 @@ public abstract class BaseTower : MonoBehaviour
     private IEnumerator ShootAndResetCooldown(GameObject target)
     {   
         towerAnimator.SetTrigger("attack");
+        //fix waiting chargeup time
         yield return new WaitForSeconds(towerAnimator.GetCurrentAnimatorStateInfo(0).length/2);
-
         //yield return ChargeUp(target);
         if (Vector2.Distance(transform.position, target.transform.position) > towerData.levels[level].range || target == null)
         {

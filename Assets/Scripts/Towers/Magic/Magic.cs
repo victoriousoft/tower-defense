@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Magic : BaseTower
 {
-
+    public Transform projectileOrigin;
     protected override IEnumerator ChargeUp(GameObject enemy)
     {
         yield return null;
@@ -11,21 +11,12 @@ public class Magic : BaseTower
 
     protected override IEnumerator Shoot(GameObject enemy)
     {
-        Debug.Log("Magic tower shooting at " + enemy.name);
-        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sphere.transform.SetParent(transform);
-        sphere.transform.position = transform.position;
-        sphere.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-        sphere.GetComponent<Renderer>().material.color = Color.blue;
-
-        yield return TowerHelpers.AnimateDirectProjectile(sphere, enemy, 5, KillProjectile);
+        Debug.Log(projectileOrigin == null);
+        yield return TowerHelpers.AnimateLaser(GetComponent<LineRenderer>(), projectileOrigin, enemy, 1f, KillProjectile);
     }
 
     protected override void KillProjectile(GameObject sphere, GameObject enemy, Vector3 _enemyPosition)
     {
-        Destroy(sphere);
-        if (enemy == null) return;
-
         enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.levels[level].damage, DamageTypes.MAGIC);
     }
 }

@@ -34,7 +34,7 @@ Transform:
   - {fileID: 8132825082480555536}
   - {fileID: 3754848899202580558}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &497877813374218683
 MonoBehaviour:
@@ -51,6 +51,7 @@ MonoBehaviour:
   level: 1
   towerData: {fileID: 11400000, guid: 807b62f3fac1db34c9c1e43f4949424a, type: 2}
   targetType: 0
+  projectileOrigin: {fileID: 3754848899202580558}
 --- !u!95 &6535046628171810363
 Animator:
   serializedVersion: 5
