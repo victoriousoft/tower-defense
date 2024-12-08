@@ -9,14 +9,25 @@ public abstract class BaseTower : MonoBehaviour
     private PlayerStatsManager playerStats;
     public TowerHelpers.TowerTargetTypes targetType = TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH;
     protected bool canShoot = true;
+    protected GameObject paths;
 
     protected abstract IEnumerator Shoot(GameObject enemy);
     protected abstract IEnumerator ChargeUp(GameObject enemy);
     protected abstract void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition);
+    protected virtual void ExtendedAwake() { }
 
     void Awake()
     {
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
+        paths = GameObject.Find("Paths");
+        Debug.Log("BaseTower awake");
+        if (paths == null || playerStats == null)
+        {
+            Debug.LogError("Paths or PlayerStats not found");
+        }
+
+        ExtendedAwake();
+
     }
 
     protected virtual void FixedUpdate()

@@ -123,6 +123,6 @@ MonoBehaviour:
   targetType: 0
   troopCount: 3
   respawnCooldown: 5
-  localTroopRandezvousPoint: {x: 0, y: -1, z: 0}
+  localTroopRandezvousPoint: {x: 0, y: 0}
   troopPrefab: {fileID: 7100516105498062489, guid: 25beaebbad9a4914ea1dc90f9bdfa452, type: 3}
   randezvousOffset: 0.5

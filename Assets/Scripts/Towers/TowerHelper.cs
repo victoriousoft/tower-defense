@@ -121,4 +121,76 @@ public static class TowerHelpers
 
         destroyCallback(projectile, target, target != null ? target.transform.position : Vector3.zero);
     }
+
+    public static bool IsOnPath(Vector2 position, GameObject pathParents, float pathWidth)
+    {
+        GameObject[] paths = new GameObject[pathParents.transform.childCount];
+        for (int i = 0; i < pathParents.transform.childCount; i++)
+        {
+            paths[i] = pathParents.transform.GetChild(i).gameObject;
+        }
+
+        for (int i = 0; i < paths.Length; i++)
+        {
+            GameObject[] pathPoints = new GameObject[paths[i].transform.childCount];
+            for (int j = 0; j < paths[i].transform.childCount; j++)
+            {
+                pathPoints[j] = paths[i].transform.GetChild(j).gameObject;
+            }
+
+            GameObject[] closestPoints = pathPoints.OrderBy(p => Vector2.Distance(position, p.transform.position)).Take(2).ToArray();
+
+            float a = closestPoints[1].transform.position.y - closestPoints[0].transform.position.y;
+            float b = closestPoints[0].transform.position.x - closestPoints[1].transform.position.x;
+            float c = a * closestPoints[0].transform.position.x + b * closestPoints[0].transform.position.y;
+
+            float distance = Mathf.Abs(a * position.x + b * position.y - c) / Mathf.Sqrt(a * a + b * b);
+
+            if (distance < pathWidth / 2) return true;
+        }
+
+        return false;
+    }
+
+    public static Vector2 GetClosesPointOnPath(Vector2 origin, GameObject pathParents)
+    {
+        GameObject[] paths = new GameObject[pathParents.transform.childCount];
+        for (int i = 0; i < pathParents.transform.childCount; i++)
+        {
+            paths[i] = pathParents.transform.GetChild(i).gameObject;
+        }
+
+        List<Vector2> closestPoints = new List<Vector2>();
+
+        foreach (GameObject path in paths)
+        {
+            GameObject[] pathPoints = new GameObject[path.transform.childCount];
+            for (int j = 0; j < path.transform.childCount; j++)
+            {
+                pathPoints[j] = path.transform.GetChild(j).gameObject;
+            }
+
+            GameObject[] closestPointsArray = pathPoints.OrderBy(p => Vector2.Distance(origin, p.transform.position)).Take(2).ToArray();
+
+            Vector2 closestPoint = GetClosestPointOnLineSegment(
+                origin,
+                closestPointsArray[0].transform.position,
+                closestPointsArray[1].transform.position
+            );
+
+            closestPoints.Add(closestPoint);
+        }
+
+        return closestPoints.OrderBy(p => Vector2.Distance(origin, p)).FirstOrDefault();
+    }
+
+    public static Vector2 GetClosestPointOnLineSegment(Vector2 origin, Vector2 lineStart, Vector2 lineEnd)
+    {
+        Vector2 line = lineEnd - lineStart;
+        float lineLength = line.magnitude;
+        Vector2 lineDirection = line / lineLength;
+
+        float t = Mathf.Clamp(Vector2.Dot(origin - lineStart, lineDirection), 0, lineLength);
+        return lineStart + t * lineDirection;
+    }
 }
