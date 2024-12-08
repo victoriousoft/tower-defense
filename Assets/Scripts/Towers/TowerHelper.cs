@@ -154,8 +154,6 @@ public static class TowerHelpers
 
     public static Vector2 GetClosesPointOnPath(Vector2 origin, GameObject pathParents)
     {
-        // from each path, select the 2 closest points to the origin and calculate the closest point on the line between them and return the closest one
-
         GameObject[] paths = new GameObject[pathParents.transform.childCount];
         for (int i = 0; i < pathParents.transform.childCount; i++)
         {
