@@ -21,11 +21,13 @@ public class TowerHolder : MonoBehaviour
     public Animator UIAnimator;
     private Animator towerHolderAnimator;
     private TowerButton[] towerButtons;
+    private LineRenderer rangeRenderer;
     [SerializeField] private GameObject infoPanel;
     [SerializeField] private TextMeshProUGUI infoText;
 
     void Awake()
     {
+        rangeRenderer = GetComponent<LineRenderer>();
         towerButtons = GetComponentsInChildren<TowerButton>();
 
         towerHolderAnimator = GetComponent<Animator>();
@@ -44,6 +46,11 @@ public class TowerHolder : MonoBehaviour
 
     void Update()
     {
+
+        rangeRenderer = GetComponent<LineRenderer>();
+        if (!rangeRenderer) Debug.LogError("Missing LineRenderer component");
+
+
         if (isMenuActive && Input.GetMouseButtonDown(0))
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -93,6 +100,9 @@ public class TowerHolder : MonoBehaviour
             menuLocked = false;
             towerInstance = Instantiate(towerPrefabs[towerType], transform.position, Quaternion.identity, transform);
             baseTowerScript = towerInstance.GetComponent<BaseTower>();
+            TowerHelpers.SetRangeCircle(rangeRenderer, baseTowerScript.towerData.levels[baseTowerScript.level].range, transform.position);
+            rangeRenderer.enabled = false;
+
         }
         else if (!playerStats.SubtractGold(100))
         {
@@ -106,6 +116,7 @@ public class TowerHolder : MonoBehaviour
         if (towerInstance != null)
         {
             Destroy(towerInstance);
+            rangeRenderer.enabled = false;
             BaseTower baseTower = towerInstance.GetComponent<BaseTower>();
             playerStats.AddGold(baseTower.towerData.levels[baseTower.level].price / 2);
             towerInstance = null;
@@ -117,6 +128,8 @@ public class TowerHolder : MonoBehaviour
     {
         //změna vzhledu towerky
         baseTowerScript.UpgradeTower();
+        TowerHelpers.SetRangeCircle(rangeRenderer, baseTowerScript.towerData.levels[baseTowerScript.level].range, transform.position);
+
     }
 
     public void ChangeTargeting()
@@ -132,14 +145,19 @@ public class TowerHolder : MonoBehaviour
         {
             DisableMenu();
         }
-        UIAnimator.SetTrigger("enable");
-        if (isMenuActive) StartCoroutine(EnableButtons());
-        if (towerInstance == null) towerHolderAnimator.Play("towerHolder_pop");
+        else
+        {
+            rangeRenderer.enabled = true;
+            UIAnimator.SetTrigger("enable");
+            StartCoroutine(EnableButtons());
+            if (towerInstance == null) towerHolderAnimator.Play("towerHolder_pop");
+        }
     }
 
     private void DisableMenu()
     {
         isMenuActive = false;
+        rangeRenderer.enabled = false;
         foreach (TowerButton button in towerButtons)
         {
             if (!button.isActiveAndEnabled) return;

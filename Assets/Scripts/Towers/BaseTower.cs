@@ -20,7 +20,6 @@ public abstract class BaseTower : MonoBehaviour
     {
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
         paths = GameObject.Find("Paths");
-        Debug.Log("BaseTower awake");
         if (paths == null || playerStats == null)
         {
             Debug.LogError("Paths or PlayerStats not found");

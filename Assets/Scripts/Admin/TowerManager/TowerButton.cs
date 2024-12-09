@@ -21,7 +21,7 @@ public class TowerButton : MonoBehaviour
                 StartCoroutine(towerHolder.GetComponent<TowerHolder>().BuildTower(TowerTypes.Magic));
                 break;
             case TowerTypes.Bomb:
-               StartCoroutine(towerHolder.GetComponent<TowerHolder>().BuildTower(TowerTypes.Bomb));
+                StartCoroutine(towerHolder.GetComponent<TowerHolder>().BuildTower(TowerTypes.Bomb));
                 break;
             case TowerTypes.Destroy:
                 towerHolder.GetComponent<TowerHolder>().SellTower();

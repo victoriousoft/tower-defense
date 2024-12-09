@@ -193,4 +193,20 @@ public static class TowerHelpers
         float t = Mathf.Clamp(Vector2.Dot(origin - lineStart, lineDirection), 0, lineLength);
         return lineStart + t * lineDirection;
     }
+
+    public static void SetRangeCircle(LineRenderer rangeRendered, float range, Vector2 centerpoint)
+    {
+        float Theta = 0f;
+        float radius = range;
+        float ThetaScale = 0.01f;
+        int Size = (int)((1f / ThetaScale) + 1f);
+        rangeRendered.positionCount = Size;
+        for (int i = 0; i < Size; i++)
+        {
+            Theta += 2.0f * Mathf.PI * ThetaScale;
+            float x = radius * Mathf.Cos(Theta);
+            float y = radius * Mathf.Sin(Theta);
+            rangeRendered.SetPosition(i, new Vector2(x, y) + centerpoint);
+        }
+    }
 }
