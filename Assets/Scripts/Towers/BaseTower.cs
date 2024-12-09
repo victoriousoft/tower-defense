@@ -39,7 +39,7 @@ public abstract class BaseTower : MonoBehaviour
         {
             yield return null;
         }
-        
+
         GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range-1);
         if (enemies.Length == 0) {canShoot = true; yield break;}
         GameObject target = TowerHelpers.SelectEnemyToAttack(TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range-1), targetType);
