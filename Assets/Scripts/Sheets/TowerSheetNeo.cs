@@ -8,7 +8,7 @@ public class TowerSheetNeo : ScriptableObject
     {
         public int price;
         public int range;
-        public int damage;
+        public float damage;
         public int cooldown;
     }
 

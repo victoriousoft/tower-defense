@@ -11,12 +11,14 @@ public class Magic : BaseTower
 
     protected override IEnumerator Shoot(GameObject enemy)
     {
-        Debug.Log(projectileOrigin == null);
-        yield return TowerHelpers.AnimateLaser(GetComponent<LineRenderer>(), projectileOrigin, enemy, 1f, KillProjectile);
+        yield return TowerHelpers.AnimateLaser(GetComponent<LineRenderer>(), projectileOrigin, enemy, 0.5f, KillProjectile);
     }
 
     protected override void KillProjectile(GameObject sphere, GameObject enemy, Vector3 _enemyPosition)
     {
-        enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.levels[level].damage, DamageTypes.MAGIC);
+        if(sphere != null){
+            Destroy(sphere);
+            GetComponent<Animator>().SetTrigger("idle");
+        }else if(enemy != null)enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.levels[level-1].damage, DamageTypes.MAGIC);
     }
 }

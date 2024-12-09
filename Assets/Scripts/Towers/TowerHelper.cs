@@ -134,6 +134,7 @@ public static class TowerHelpers
             if (target != null){
                 laserRenderer.SetPosition(0, origin.position);
                 laserRenderer.SetPosition(1, target.transform.position);
+                destroyCallback(null, target, target != null ? target.transform.position : Vector3.zero);
             }
             else{
                 laserRenderer.SetPosition(1, origin.position);
@@ -142,6 +143,6 @@ public static class TowerHelpers
             yield return null;
         }
         laserRenderer.enabled = false;
-        destroyCallback(null, target, target != null ? target.transform.position : Vector3.zero);
+        destroyCallback(new GameObject(), target, target != null ? target.transform.position : Vector3.zero);
     }
 }

@@ -28,34 +28,32 @@ public abstract class BaseTower : MonoBehaviour
         GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range);
         if (enemies.Length == 0) return;
 
-        GameObject target = TowerHelpers.SelectEnemyToAttack(enemies, targetType);
-
-        StartCoroutine(ShootAndResetCooldown(target));
+        StartCoroutine(ShootAndResetCooldown());
         canShoot = false;
     }
 
-    private IEnumerator ShootAndResetCooldown(GameObject target)
+    private IEnumerator ShootAndResetCooldown()
     {   
         towerAnimator.SetTrigger("attack");
         //fix waiting chargeup time
-        yield return new WaitForSeconds(towerAnimator.GetCurrentAnimatorStateInfo(0).length/2);
-        //yield return ChargeUp(target);
-        if (Vector2.Distance(transform.position, target.transform.position) > towerData.levels[level].range || target == null)
+        while (towerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
         {
-            GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range);
-            if (enemies.Length == 0) {canShoot = true; yield break;}
-            target = TowerHelpers.SelectEnemyToAttack(TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range), targetType);
+            yield return null;
         }
+        //yield return ChargeUp(target);
+        GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range-1);
+        if (enemies.Length == 0) {canShoot = true; yield break;}
+        GameObject target = TowerHelpers.SelectEnemyToAttack(TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range-1), targetType);
 
         yield return Shoot(target);
 
-        yield return new WaitForSeconds(towerData.levels[level].cooldown);
+        yield return new WaitForSeconds(towerData.levels[level].cooldown-1);
         canShoot = true;
     }
 
     IEnumerator ResetCooldown()
     {
-        yield return new WaitForSeconds(towerData.levels[level].cooldown);
+        yield return new WaitForSeconds(towerData.levels[level].cooldown-1);
         canShoot = true;
     }
     public void UpgradeTower()
