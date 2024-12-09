@@ -35,12 +35,11 @@ public abstract class BaseTower : MonoBehaviour
     private IEnumerator ShootAndResetCooldown()
     {   
         towerAnimator.SetTrigger("attack");
-        //fix waiting chargeup time
         while (towerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
         {
             yield return null;
         }
-        //yield return ChargeUp(target);
+        
         GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range-1);
         if (enemies.Length == 0) {canShoot = true; yield break;}
         GameObject target = TowerHelpers.SelectEnemyToAttack(TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range-1), targetType);
