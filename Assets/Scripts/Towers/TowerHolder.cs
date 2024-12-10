@@ -17,11 +17,11 @@ public class TowerHolder : MonoBehaviour
     public GameObject magicPrefab;
     public GameObject bombPrefab;
     private Dictionary<TowerTypes, GameObject> towerPrefabs;
-    private BaseTower baseTowerScript = null;
+    public BaseTower baseTowerScript = null;
     public Animator UIAnimator;
     private Animator towerHolderAnimator;
     private TowerButton[] towerButtons;
-    private LineRenderer rangeRenderer;
+    public LineRenderer rangeRenderer;
     [SerializeField] private GameObject infoPanel;
     [SerializeField] private TextMeshProUGUI infoText;
 
@@ -223,5 +223,10 @@ public class TowerHolder : MonoBehaviour
 
         Vector2 mousePosition = Input.mousePosition;
         infoPanel.transform.position = mousePosition;
+    }
+
+    public GameObject getPrefab(TowerTypes towerType)
+    {
+        return towerPrefabs[towerType];
     }
 }

@@ -7,6 +7,8 @@ public class TowerButton : MonoBehaviour
     public GameObject towerHolder;
     public TowerTypes towerType;
 
+    private LineRenderer tempRangeRenderer;
+
     void OnMouseDown()
     {
         switch (towerType)
@@ -34,5 +36,38 @@ public class TowerButton : MonoBehaviour
                 break;
         }
         towerHolder.GetComponent<TowerHolder>().UIAnimator.SetTrigger("enable");
+    }
+
+    // on hover
+    void OnMouseEnter()
+    {
+        if (towerType == TowerTypes.Upgrade)
+        {
+
+            TowerHolder towerHolderScript = towerHolder.GetComponent<TowerHolder>();
+            ShowTempRangeCircle(towerHolderScript.baseTowerScript.towerData.levels[towerHolderScript.baseTowerScript.level + 1].range);
+        }
+
+        else if (towerType == TowerTypes.Barracks || towerType == TowerTypes.Archer || towerType == TowerTypes.Magic || towerType == TowerTypes.Bomb)
+        {
+            ShowTempRangeCircle(towerHolder.GetComponent<TowerHolder>().getPrefab(towerType).GetComponent<BaseTower>().towerData.levels[0].range);
+        }
+    }
+
+    void OnMouseExit()
+    {
+        if (tempRangeRenderer != null)
+        {
+            Destroy(tempRangeRenderer.gameObject);
+        }
+    }
+
+    void ShowTempRangeCircle(float range)
+    {
+        LineRenderer rangeRenderer = towerHolder.GetComponent<TowerHolder>().rangeRenderer;
+        tempRangeRenderer = Instantiate(rangeRenderer, rangeRenderer.transform.position, rangeRenderer.transform.rotation);
+        tempRangeRenderer.transform.SetParent(rangeRenderer.transform);
+
+        TowerHelpers.SetRangeCircle(tempRangeRenderer, range, towerHolder.transform.position);
     }
 }
