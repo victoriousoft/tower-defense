@@ -65,7 +65,6 @@ public class TowerButton : MonoBehaviour
     {
         tempRangeRenderer = new GameObject().AddComponent<LineRenderer>();
         tempRangeRenderer.transform.SetParent(towerHolder.transform);
-        towerHolder.GetComponent<TowerHolder>().rangeRendererPreset.ApplyTo(tempRangeRenderer);
 
         TowerHelpers.SetRangeCircle(tempRangeRenderer, range, towerHolder.transform.position);
     }

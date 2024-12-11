@@ -196,6 +196,9 @@ public static class TowerHelpers
 
     public static void SetRangeCircle(LineRenderer rangeRendered, float range, Vector2 centerpoint)
     {
+        rangeRendered.startWidth = 0.03f;
+        rangeRendered.endWidth = 0.03f;
+
         float Theta = 0f;
         float radius = range;
         float ThetaScale = 0.01f;

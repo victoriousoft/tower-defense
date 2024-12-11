@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEditor.Presets;
 
+
 public class TowerHolder : MonoBehaviour
 {
     public GameObject UIMenu;
@@ -22,7 +23,6 @@ public class TowerHolder : MonoBehaviour
     public Animator UIAnimator;
     private Animator towerHolderAnimator;
     private TowerButton[] towerButtons;
-    public Preset rangeRendererPreset;
 
     private LineRenderer rangeRenderer;
     [SerializeField] private GameObject infoPanel;
@@ -31,7 +31,6 @@ public class TowerHolder : MonoBehaviour
     void Awake()
     {
         rangeRenderer = gameObject.AddComponent<LineRenderer>();
-        rangeRendererPreset.ApplyTo(rangeRenderer);
         towerButtons = GetComponentsInChildren<TowerButton>();
 
         towerHolderAnimator = GetComponent<Animator>();
