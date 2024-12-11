@@ -9,7 +9,7 @@ public class TowerSheetNeo : ScriptableObject
         public int price;
         public int range;
         public float damage;
-        public int cooldown;
+        public float cooldown;
     }
 
     [System.Serializable]

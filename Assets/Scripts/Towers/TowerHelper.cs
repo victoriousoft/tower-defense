@@ -126,22 +126,28 @@ public static class TowerHelpers
         GameObject target,
         float duration,
         Action<GameObject, GameObject, Vector3> destroyCallback
-        )
+    )
     {
-        float startTime = Time.time;
+        float elapsedTime = 0f;
         laserRenderer.enabled = true;
-        while (Time.time < startTime + duration){
-            if (target != null){
+
+        while (elapsedTime < duration)
+        {
+            if (target != null)
+            {
                 laserRenderer.SetPosition(0, origin.position);
                 laserRenderer.SetPosition(1, target.transform.position);
                 destroyCallback(null, target, target != null ? target.transform.position : Vector3.zero);
             }
-            else{
+            else
+            {
                 laserRenderer.SetPosition(1, origin.position);
             }
 
+            elapsedTime += Time.deltaTime;
             yield return null;
         }
+
         laserRenderer.enabled = false;
         destroyCallback(new GameObject(), target, target != null ? target.transform.position : Vector3.zero);
     }

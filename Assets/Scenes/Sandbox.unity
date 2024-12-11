@@ -1943,10 +1943,6 @@ PrefabInstance:
       propertyPath: infoPanel
       value: 
       objectReference: {fileID: 118801278}
-    - target: {fileID: 4196603439686970449, guid: e49839922acff554ea085117546e6e17, type: 3}
-      propertyPath: magicPrefab
-      value: 
-      objectReference: {fileID: 936277611158800426, guid: 9156912c5685a1840b56cf2e80c823fe, type: 3}
     - target: {fileID: 5953498233132653888, guid: e49839922acff554ea085117546e6e17, type: 3}
       propertyPath: m_RootOrder
       value: -1
