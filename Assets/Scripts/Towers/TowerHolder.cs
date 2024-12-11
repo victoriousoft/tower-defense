@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEditor.Presets;
 
 public class TowerHolder : MonoBehaviour
 {
@@ -21,13 +22,16 @@ public class TowerHolder : MonoBehaviour
     public Animator UIAnimator;
     private Animator towerHolderAnimator;
     private TowerButton[] towerButtons;
-    public LineRenderer rangeRenderer;
+    public Preset rangeRendererPreset;
+
+    private LineRenderer rangeRenderer;
     [SerializeField] private GameObject infoPanel;
     [SerializeField] private TextMeshProUGUI infoText;
 
     void Awake()
     {
-        rangeRenderer = GetComponent<LineRenderer>();
+        rangeRenderer = gameObject.AddComponent<LineRenderer>();
+        rangeRendererPreset.ApplyTo(rangeRenderer);
         towerButtons = GetComponentsInChildren<TowerButton>();
 
         towerHolderAnimator = GetComponent<Animator>();
@@ -121,6 +125,8 @@ public class TowerHolder : MonoBehaviour
             playerStats.AddGold(baseTower.towerData.levels[baseTower.level].price / 2);
             towerInstance = null;
             towerHolderAnimator.Play("towerHolder_idle");
+
+            TowerHelpers.SetRangeCircle(rangeRenderer, 0, transform.position);
         }
     }
 

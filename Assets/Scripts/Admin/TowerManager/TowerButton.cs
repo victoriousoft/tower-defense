@@ -38,7 +38,6 @@ public class TowerButton : MonoBehaviour
         towerHolder.GetComponent<TowerHolder>().UIAnimator.SetTrigger("enable");
     }
 
-    // on hover
     void OnMouseEnter()
     {
         if (towerType == TowerTypes.Upgrade)
@@ -64,9 +63,9 @@ public class TowerButton : MonoBehaviour
 
     void ShowTempRangeCircle(float range)
     {
-        LineRenderer rangeRenderer = towerHolder.GetComponent<TowerHolder>().rangeRenderer;
-        tempRangeRenderer = Instantiate(rangeRenderer, rangeRenderer.transform.position, rangeRenderer.transform.rotation);
-        tempRangeRenderer.transform.SetParent(rangeRenderer.transform);
+        tempRangeRenderer = new GameObject().AddComponent<LineRenderer>();
+        tempRangeRenderer.transform.SetParent(towerHolder.transform);
+        towerHolder.GetComponent<TowerHolder>().rangeRendererPreset.ApplyTo(tempRangeRenderer);
 
         TowerHelpers.SetRangeCircle(tempRangeRenderer, range, towerHolder.transform.position);
     }
