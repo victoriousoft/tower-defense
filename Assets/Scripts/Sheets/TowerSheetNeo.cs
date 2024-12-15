@@ -8,8 +8,8 @@ public class TowerSheetNeo : ScriptableObject
     {
         public int price;
         public int range;
-        public int damage;
-        public int cooldown;
+        public float damage;
+        public float cooldown;
     }
 
     [System.Serializable]

@@ -130,7 +130,6 @@ public class TowerHolder : MonoBehaviour
 
     public void UpgradeTower()
     {
-        //změna vzhledu towerky
         baseTowerScript.UpgradeTower();
         TowerHelpers.SetRangeCircle(rangeRenderer, baseTowerScript.towerData.levels[baseTowerScript.level].range, transform.position);
 
@@ -210,8 +209,8 @@ public class TowerHolder : MonoBehaviour
         if (towerType == TowerTypes.Upgrade)
         {
             infoText.text = "level " + (baseTowerScript.level + 1) + "\n" +
-                        "dmg- " + baseTowerScript.towerData.levels[baseTowerScript.level].damage + "(+" + (baseTowerScript.towerData.levels[baseTowerScript.level + 1].damage - baseTowerScript.towerData.levels[baseTowerScript.level].damage) + ")" + "\n" +
-                        "cost- " + baseTowerScript.towerData.levels[baseTowerScript.level + 1].price;
+                        "dmg- " + baseTowerScript.towerData.levels[baseTowerScript.level].damage + "(+" + (baseTowerScript.towerData.levels[baseTowerScript.level].damage - baseTowerScript.towerData.levels[baseTowerScript.level-1].damage) + ")" + "\n" +
+                        "cost- " + baseTowerScript.towerData.levels[baseTowerScript.level].price;
         }
         else if (towerType == TowerTypes.Destroy)
         {

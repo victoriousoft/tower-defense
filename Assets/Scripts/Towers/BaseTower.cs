@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class BaseTower : MonoBehaviour
@@ -7,26 +6,23 @@ public abstract class BaseTower : MonoBehaviour
     public int level = 0;
     public TowerSheetNeo towerData;
     private PlayerStatsManager playerStats;
+    private Animator towerAnimator;
     public TowerHelpers.TowerTargetTypes targetType = TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH;
     protected bool canShoot = true;
     protected GameObject paths;
+    private Coroutine shootCoroutine;
 
     protected abstract IEnumerator Shoot(GameObject enemy);
     protected abstract IEnumerator ChargeUp(GameObject enemy);
     protected abstract void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition);
+
     protected virtual void ExtendedAwake() { }
 
     void Awake()
     {
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
-        paths = GameObject.Find("Paths");
-        if (paths == null || playerStats == null)
-        {
-            Debug.LogError("Paths or PlayerStats not found");
-        }
-
+        towerAnimator = GetComponent<Animator>();
         ExtendedAwake();
-
     }
 
     protected virtual void FixedUpdate()
@@ -36,41 +32,58 @@ public abstract class BaseTower : MonoBehaviour
         GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range);
         if (enemies.Length == 0) return;
 
-        GameObject target = TowerHelpers.SelectEnemyToAttack(enemies, targetType);
-
-        StartCoroutine(ShootAndResetCooldown(target));
-        canShoot = false;
+        shootCoroutine = StartCoroutine(ShootAndResetCooldown());
     }
 
-    private IEnumerator ShootAndResetCooldown(GameObject target)
+    private IEnumerator ShootAndResetCooldown()
     {
-        yield return ChargeUp(target);
-        if (Vector2.Distance(transform.position, target.transform.position) > towerData.levels[level].range || target == null)
+        canShoot = false;
+        towerAnimator.SetTrigger("attack");
+
+        while (towerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
         {
-            canShoot = true;
-            yield break;
+            yield return null;
         }
+
+        GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level - 1].range);
+        if (enemies.Length == 0) { canShoot = true; Debug.Log("issue"); yield break; }
+        GameObject target = TowerHelpers.SelectEnemyToAttack(TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range - 1), targetType);
 
         yield return Shoot(target);
+
+        yield return new WaitForSeconds(towerData.levels[level - 1].cooldown);
         canShoot = true;
     }
 
-    IEnumerator ResetCooldown()
-    {
-        yield return new WaitForSeconds(towerData.levels[level].cooldown);
-        canShoot = true;
-    }
     public void UpgradeTower()
     {
-        // TODO: fix pro evoluce (level bude asi out of bounds)
-        if (playerStats.SubtractGold(towerData.levels[level + 1].price))
+        StartCoroutine(UpgradeRoutine());
+    }
+
+    private IEnumerator UpgradeRoutine()
+    {
+        canShoot = false;
+
+        if (shootCoroutine != null)
+        {
+            StopCoroutine(shootCoroutine);
+            shootCoroutine = null;
+        }
+
+        // Upgrade the tower
+        if (playerStats.SubtractGold(towerData.levels[level].price))
         {
             level++;
+            towerAnimator.SetTrigger("upgrade");
+
+            yield return null;
         }
+
+        canShoot = true;
     }
 
     public void ChangeTargeting()
     {
-        //změnit targeting
+        // Change targeting logic
     }
 }
