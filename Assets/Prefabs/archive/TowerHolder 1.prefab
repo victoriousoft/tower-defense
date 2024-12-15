@@ -235,7 +235,7 @@ Transform:
   - {fileID: 2001114510438827960}
   - {fileID: 4805612050681508706}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4196603439686970449
 MonoBehaviour:
@@ -254,7 +254,9 @@ MonoBehaviour:
   archerPrefab: {fileID: 4862076369880438747, guid: 67cf76916bea5424b8e120d9a4c915cc, type: 3}
   magicPrefab: {fileID: 936277611158800426, guid: 9156912c5685a1840b56cf2e80c823fe, type: 3}
   bombPrefab: {fileID: 7622415593054892194, guid: 49b9895f227940e44a4f7e36a24d92d8, type: 3}
+  baseTowerScript: {fileID: 0}
   UIAnimator: {fileID: 7125658762090260248}
+  rangeRendererPreset: {fileID: 0}
   infoPanel: {fileID: 0}
   infoText: {fileID: 0}
 --- !u!61 &3139459939935124566

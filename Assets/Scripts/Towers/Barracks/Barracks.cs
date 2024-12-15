@@ -5,23 +5,27 @@ public class Barracks : BaseTower
 {
     public int troopCount = 3;
     public float respawnCooldown = 5; // seconds
-    public Vector3 localTroopRandezvousPoint;
+    [HideInInspector]
+    public Vector2 localTroopRandezvousPoint;
     public GameObject troopPrefab;
     public float randezvousOffset = 1;
 
     private GameObject[] troops;
-
-    void Awake()
-    {
-        troops = new GameObject[troopCount];
-        SpawnTroops(troopCount);
-    }
 
     // tohle se neimplementuje v barracks
     protected override void FixedUpdate() { }
     protected override IEnumerator Shoot(GameObject enemy) { yield return null; }
     protected override void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition) { }
     protected override IEnumerator ChargeUp(GameObject enemy) { yield return null; }
+
+    override protected void ExtendedAwake()
+    {
+        troops = new GameObject[troopCount];
+        Vector2 globalTroopRandezvous = TowerHelpers.GetClosesPointOnPath(transform.position, paths);
+        localTroopRandezvousPoint = globalTroopRandezvous - (Vector2)transform.position;
+
+        SpawnTroops(troopCount);
+    }
 
     void SpawnTroops(int count)
     {
@@ -52,15 +56,42 @@ public class Barracks : BaseTower
         return aliveTroops;
     }
 
-    public Vector3 RequestTroopRandezvousPoint(int troopId)
+    public Vector2 RequestTroopRandezvousPoint(int troopId)
     {
-        Vector3 position = transform.position + localTroopRandezvousPoint;
-        float angle = 120 * troopId;
-        float radians = angle * Mathf.Deg2Rad;
-        position.x += randezvousOffset * Mathf.Cos(radians);
-        position.y += randezvousOffset * Mathf.Sin(radians);
+        Vector2 basePosition = (Vector2)transform.position + localTroopRandezvousPoint;
+        int aliveTroops = GetAliveTroopCount();
 
-        return position;
+        if (aliveTroops == 1)
+        {
+            return basePosition;
+        }
+        else if (aliveTroops == 2)
+        {
+            float offset = troopId == 0 ? -randezvousOffset : randezvousOffset;
+            return basePosition + new Vector2(offset, 0);
+        }
+        else
+        {
+            float angle = 120 * troopId;
+            float radians = angle * Mathf.Deg2Rad;
+            return basePosition + new Vector2(
+                randezvousOffset * Mathf.Cos(radians),
+                randezvousOffset * Mathf.Sin(radians)
+            );
+        }
+    }
+
+    public void SetTroopRandezvousPoint(Vector2 point)
+    {
+        localTroopRandezvousPoint = point - (Vector2)transform.position;
+
+        for (int i = 0; i < troopCount; i++)
+        {
+            if (troops[i] != null)
+            {
+                troops[i].GetComponent<BaseTroop>().ForceReposition(RequestTroopRandezvousPoint(i));
+            }
+        }
     }
 
     public void RequestTroopRevive(int troopId)
