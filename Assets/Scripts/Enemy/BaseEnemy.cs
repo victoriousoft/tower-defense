@@ -4,17 +4,14 @@ using UnityEngine;
 
 public abstract class BaseEnemy : MonoBehaviour
 {
+    public EnemySheet enemyData;
+    [HideInInspector]
     public float health = 100;
-    public float maxHealth = 100;
-    public int damage = 10;
-    public int cashDrop = 2;
-    [Range(0, 4)] public int physicalResistance;
-    [Range(0, 4)] public int magicResistance;
-    public float speed = 1f;
+    [HideInInspector]
     public bool isPaused = false;
+    [HideInInspector]
     public GameObject currentTarget;
-    public float attackRange = 1f;
-    public float attackCooldown = 1f; // seconds
+
     private int currentPointIndex = 0;
     private Transform[] points;
 
@@ -29,7 +26,7 @@ public abstract class BaseEnemy : MonoBehaviour
 
     void Awake()
     {
-        health = maxHealth;
+        health = enemyData.stats.maxHealth;
         healthBar = GetComponentInChildren<HealthBar>();
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
     }
@@ -67,7 +64,7 @@ public abstract class BaseEnemy : MonoBehaviour
             }
         }
 
-        transform.position = Vector2.MoveTowards(transform.position, points[currentPointIndex].position, speed * Time.fixedDeltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, points[currentPointIndex].position, enemyData.stats.speed * Time.fixedDeltaTime);
     }
 
     public float GetDistanceToFinish()
@@ -93,23 +90,23 @@ public abstract class BaseEnemy : MonoBehaviour
 
     public void TakeDamage(float damage, DamageTypes damageType)
     {
-        health -= (damageType == DamageTypes.PHYSICAL) ? damage * resistanceValues[physicalResistance] :
-             (damageType == DamageTypes.MAGIC) ? damage * resistanceValues[magicResistance] :
-             (damageType == DamageTypes.EXPLOSION) ? damage * (resistanceValues[physicalResistance] / 2) : damage;
+        health -= (damageType == DamageTypes.PHYSICAL) ? damage * resistanceValues[enemyData.stats.physicalResistance] :
+             (damageType == DamageTypes.MAGIC) ? damage * resistanceValues[enemyData.stats.magicResistance] :
+             (damageType == DamageTypes.EXPLOSION) ? damage * (resistanceValues[enemyData.stats.physicalResistance] / 2) : damage;
 
-        healthBar.SetHealth(health / maxHealth);
+        healthBar.SetHealth(health / enemyData.stats.maxHealth);
 
         if (health <= 0)
         {
             Destroy(gameObject);
-            playerStats.AddGold(cashDrop);//random??
+            playerStats.AddGold(enemyData.stats.cashDrop);//random??
         }
     }
 
     public void Heal(float amount)
     {
-        health = Mathf.Min(health += amount, maxHealth);
-        healthBar.SetHealth(health / maxHealth);
+        health = Mathf.Min(health += amount, enemyData.stats.maxHealth);
+        healthBar.SetHealth(health / enemyData.stats.maxHealth);
     }
 
     public void RequestTarget(GameObject target)
@@ -119,7 +116,7 @@ public abstract class BaseEnemy : MonoBehaviour
 
     protected IEnumerator ResetAttackCooldown()
     {
-        yield return new WaitForSeconds(attackCooldown);
+        yield return new WaitForSeconds(enemyData.stats.attackCooldown);
         canAttack = true;
     }
 }

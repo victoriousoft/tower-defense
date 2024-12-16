@@ -143,18 +143,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dcea8b3382dd364fafc898896eeb586, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyData: {fileID: 11400000, guid: 6e4c047b9bb843747b30cc9a2c9053e6, type: 2}
   health: 100
-  maxHealth: 100
-  damage: 10
-  cashDrop: 2
-  physicalResistance: 0
-  magicResistance: 0
-  pathParent: {fileID: 0}
-  speed: 2
   isPaused: 0
   currentTarget: {fileID: 0}
-  range: 1
-  attackCooldown: 1
 --- !u!1001 &5007395829321720595
 PrefabInstance:
   m_ObjectHideFlags: 0
