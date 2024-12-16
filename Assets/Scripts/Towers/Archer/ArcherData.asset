@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerType: 1
   towerName: Archers
+  description: 
+  enemyTypes: 0000000001000000
   levels:
   - price: 100
     range: 1

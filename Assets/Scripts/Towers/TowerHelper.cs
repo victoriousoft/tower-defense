@@ -10,13 +10,14 @@ public static class TowerHelpers
     public enum TowerTargetTypes { CLOSEST_TO_FINISH, CLOSEST_TO_START, MOST_HP, LEAST_HP };
 
 
-    public static GameObject[] GetEnemiesInRange(Vector2 position, float range)
+    public static GameObject[] GetEnemiesInRange(Vector2 position, float range, EnemyTypes[] includedTypes)
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(position, range);
         List<GameObject> enemies = new List<GameObject>();
         foreach (Collider2D collider in colliders)
         {
-            if (collider.CompareTag("Enemy")) enemies.Add(collider.gameObject);
+            if (collider.CompareTag("Enemy") && includedTypes.Contains(collider.GetComponent<BaseEnemy>().enemyData.enemyType)
+            ) enemies.Add(collider.gameObject);
         }
         return enemies.ToArray();
     }
@@ -120,7 +121,8 @@ public static class TowerHelpers
         }
 
         destroyCallback(projectile, target, target != null ? target.transform.position : Vector3.zero);
-    }public static IEnumerator AnimateLaser(
+    }
+    public static IEnumerator AnimateLaser(
         LineRenderer laserRenderer,
         Transform origin,
         GameObject target,

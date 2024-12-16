@@ -27,4 +27,5 @@ public class EnemySheet : ScriptableObject
     public GameObject prefab;
     public Stats stats;
     public Info info;
+    public EnemyTypes enemyType;
 }

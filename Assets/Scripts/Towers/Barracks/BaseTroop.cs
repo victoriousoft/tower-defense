@@ -61,8 +61,8 @@ public abstract class BaseTroop : MonoBehaviour
 
     protected GameObject FindNewEnemy()
     {
-        GameObject[] enemiesInTroopRange = TowerHelpers.GetEnemiesInRange(transform.position, visRange);
-        GameObject[] enemiesInTowerRange = TowerHelpers.GetEnemiesInRange(homeBase.transform.position, homeBase.GetComponent<BaseTower>().towerData.levels[homeBase.GetComponent<BaseTower>().level].range);
+        GameObject[] enemiesInTroopRange = TowerHelpers.GetEnemiesInRange(transform.position, visRange, new EnemyTypes[] { EnemyTypes.GROUND });
+        GameObject[] enemiesInTowerRange = TowerHelpers.GetEnemiesInRange(homeBase.transform.position, homeBase.GetComponent<BaseTower>().towerData.levels[homeBase.GetComponent<BaseTower>().level].range, new EnemyTypes[] { EnemyTypes.GROUND });
         GameObject[] enemiesInRange = enemiesInTroopRange.Intersect(enemiesInTowerRange).Where(enemy => enemy.GetComponent<BaseEnemy>().currentTarget == null).ToArray();
 
         enemiesInRange = enemiesInRange

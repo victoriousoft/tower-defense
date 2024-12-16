@@ -6,7 +6,7 @@ public abstract class BaseEnemy : MonoBehaviour
 {
     public EnemySheet enemyData;
     [HideInInspector]
-    public float health = 100;
+    public float health;
     [HideInInspector]
     public bool isPaused = false;
     [HideInInspector]
@@ -14,7 +14,7 @@ public abstract class BaseEnemy : MonoBehaviour
 
     private int currentPointIndex = 0;
     private Transform[] points;
-
+    private Vector2 positionOffset;
 
     private readonly float[] resistanceValues = new float[] { 1, 0.5f, 0.35f, 0.2f, 0 };
     private HealthBar healthBar;
@@ -29,6 +29,10 @@ public abstract class BaseEnemy : MonoBehaviour
         health = enemyData.stats.maxHealth;
         healthBar = GetComponentInChildren<HealthBar>();
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
+
+        positionOffset = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
+        if (enemyData.enemyType == EnemyTypes.FLYING) positionOffset.y += 1f;
+        if (enemyData.enemyType == EnemyTypes.GROUND) Debug.Log("offset: " + positionOffset);
     }
 
     void FixedUpdate()
@@ -47,14 +51,14 @@ public abstract class BaseEnemy : MonoBehaviour
             points[i] = pathParent.GetChild(i);
         }
 
-        transform.position = points[currentPointIndex].position;
+        transform.position = (Vector2)points[currentPointIndex].position + positionOffset;
     }
 
     void Move()
     {
         if (points == null) return;
 
-        if (Vector2.Distance(transform.position, points[currentPointIndex].position) < 0.1f)
+        if (Vector2.Distance(transform.position, (Vector2)points[currentPointIndex].position + positionOffset) < 0.1f)
         {
             currentPointIndex++;
             if (currentPointIndex >= points.Length)
@@ -64,12 +68,13 @@ public abstract class BaseEnemy : MonoBehaviour
             }
         }
 
-        transform.position = Vector2.MoveTowards(transform.position, points[currentPointIndex].position, enemyData.stats.speed * Time.fixedDeltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, (Vector2)points[currentPointIndex].position + positionOffset, enemyData.stats.speed * Time.fixedDeltaTime);
     }
 
     public float GetDistanceToFinish()
     {
-        float distance = 0;
+        float distance = Vector2.Distance((Vector2)transform.position - positionOffset, points[currentPointIndex].position);
+
         for (int i = currentPointIndex; i < points.Length - 1; i++)
         {
             distance += Vector2.Distance(points[i].position, points[i + 1].position);
@@ -79,7 +84,7 @@ public abstract class BaseEnemy : MonoBehaviour
 
     public float GetDistanceToStart()
     {
-        float distance = 0;
+        float distance = Vector2.Distance((Vector2)transform.position - positionOffset, points[currentPointIndex].position);
         for (int i = currentPointIndex; i >= 0; i--)
         {
             distance += Vector2.Distance(points[i].position, points[i - 1].position);
