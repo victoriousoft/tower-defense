@@ -7,7 +7,7 @@ public class TestTroop : BaseTroop
         if (currentEnemy == null) return;
         if (currentEnemy.GetComponent<BaseEnemy>().currentTarget == null) currentEnemy.GetComponent<BaseEnemy>().RequestTarget(gameObject);
 
-        currentEnemy.GetComponent<BaseEnemy>().TakeDamage(damage, DamageTypes.PHYSICAL);
+        currentEnemy.GetComponent<BaseEnemy>().TakeDamage(troopData.stats.damage, DamageTypes.PHYSICAL);
         canAttack = false;
         StartCoroutine(ResetAttackCooldown());
     }
@@ -31,7 +31,7 @@ public class TestTroop : BaseTroop
             if (currentEnemy != null)
             {
                 targetLocation = currentEnemy.transform.position;
-                if (canAttack && Vector2.Distance(transform.position, currentEnemy.transform.position) < attackRange) Attack();
+                if (canAttack && Vector2.Distance(transform.position, currentEnemy.transform.position) < troopData.stats.attackRange) Attack();
             }
             else
             {

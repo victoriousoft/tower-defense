@@ -119,14 +119,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b4ca37bafe98a04d98f30c1b55069f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  troopData: {fileID: 11400000, guid: d4fecdeff226b4e47b4d5d0e2ee545b0, type: 2}
   health: 100
-  maxHealth: 100
-  speed: 1
-  damage: 10
-  attackCooldown: 1
-  visRange: 1
-  attackRange: 0.2
-  targetLocation: {x: 0, y: 0, z: 0}
+  targetLocation: {x: 0, y: 0}
   id: -1
   homeBase: {fileID: 0}
 --- !u!1001 &7596330086438579085

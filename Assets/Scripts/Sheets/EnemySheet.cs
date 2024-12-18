@@ -7,7 +7,7 @@ public class EnemySheet : ScriptableObject
     public class Info
     {
         public string name;
-        public string dessciption;
+        public string description;
     }
 
     [System.Serializable]
@@ -20,11 +20,11 @@ public class EnemySheet : ScriptableObject
         [Range(0, 4)] public int physicalResistance;
         [Range(0, 4)] public int magicResistance;
         public float attackRange;
+        public float visRange;
         public float attackCooldown;
         public int playerLives;
     }
 
-    public GameObject prefab;
     public Stats stats;
     public Info info;
     public EnemyTypes enemyType;
