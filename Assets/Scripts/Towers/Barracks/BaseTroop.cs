@@ -4,16 +4,15 @@ using UnityEngine;
 
 public abstract class BaseTroop : MonoBehaviour
 {
-    public float health;
-    public float maxHealth;
-    public float speed;
-    public float damage;
-    public float attackCooldown;
-    public float visRange;
-    public float attackRange;
-    public Vector2 targetLocation;
-    public int id = -1;
+    public TroopSheet troopData;
 
+    [HideInInspector]
+    public float health;
+    [HideInInspector]
+    public Vector2 targetLocation;
+    [HideInInspector]
+    public int id = -1;
+    [HideInInspector]
     public GameObject homeBase = null;
 
     protected HealthBar healthBar;
@@ -27,22 +26,22 @@ public abstract class BaseTroop : MonoBehaviour
 
     void Awake()
     {
-        health = maxHealth;
+        health = troopData.stats.maxHealth;
         healthBar = GetComponentInChildren<HealthBar>();
     }
 
     public void TakeDamage(float damage)
     {
         health -= damage;
-        healthBar.SetHealth(health / maxHealth);
+        healthBar.SetHealth(health / troopData.stats.maxHealth);
         if (health <= 0) Die();
     }
 
     public void Heal(float amount)
     {
         health += amount;
-        health = Mathf.Min(health, maxHealth);
-        healthBar.SetHealth(health / maxHealth);
+        health = Mathf.Min(health, troopData.stats.maxHealth);
+        healthBar.SetHealth(health / troopData.stats.maxHealth);
     }
 
 
@@ -56,14 +55,16 @@ public abstract class BaseTroop : MonoBehaviour
 
     public void WalkTo(Vector3 target)
     {
-        transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.fixedDeltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, target, troopData.stats.speed * Time.fixedDeltaTime);
     }
 
     protected GameObject FindNewEnemy()
     {
-        GameObject[] enemiesInTroopRange = TowerHelpers.GetEnemiesInRange(transform.position, visRange);
-        GameObject[] enemiesInTowerRange = TowerHelpers.GetEnemiesInRange(homeBase.transform.position, homeBase.GetComponent<BaseTower>().towerData.levels[homeBase.GetComponent<BaseTower>().level].range);
+        GameObject[] enemiesInTroopRange = TowerHelpers.GetEnemiesInRange(transform.position, troopData.stats.visRange, new EnemyTypes[] { EnemyTypes.GROUND });
+        GameObject[] enemiesInTowerRange = TowerHelpers.GetEnemiesInRange(homeBase.transform.position, homeBase.GetComponent<BaseTower>().towerData.levels[homeBase.GetComponent<BaseTower>().level].range, new EnemyTypes[] { EnemyTypes.GROUND });
+
         GameObject[] enemiesInRange = enemiesInTroopRange.Intersect(enemiesInTowerRange).Where(enemy => enemy.GetComponent<BaseEnemy>().currentTarget == null).ToArray();
+        enemiesInRange = enemiesInRange.Where(enemy => troopData.enemyTypes.Contains(enemy.GetComponent<BaseEnemy>().enemyData.enemyType)).ToArray();
 
         enemiesInRange = enemiesInRange
             .OrderBy(enemy => enemy.GetComponent<BaseEnemy>().currentTarget != null)
@@ -108,7 +109,7 @@ public abstract class BaseTroop : MonoBehaviour
 
     protected IEnumerator ResetAttackCooldown()
     {
-        yield return new WaitForSeconds(attackCooldown);
+        yield return new WaitForSeconds(troopData.stats.attackCooldown);
         canAttack = true;
     }
 }

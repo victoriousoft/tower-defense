@@ -10,10 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca53cba1e615b1441b518fd66c8a3ad7, type: 3}
-  m_Name: ArcherData
+  m_Name: BarracksData
   m_EditorClassIdentifier: 
-  towerType: 1
-  towerName: Archers
+  towerType: 0
+  towerName: Barracks
+  description: 
+  enemyTypes: 00000000
   levels:
   - price: 100
     range: 1

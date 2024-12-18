@@ -21,6 +21,7 @@ public class Barracks : BaseTower
     override protected void ExtendedAwake()
     {
         troops = new GameObject[troopCount];
+        paths = GameObject.Find("Paths");
         Vector2 globalTroopRandezvous = TowerHelpers.GetClosesPointOnPath(transform.position, paths);
         localTroopRandezvousPoint = globalTroopRandezvous - (Vector2)transform.position;
 

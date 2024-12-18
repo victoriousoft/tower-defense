@@ -30,6 +30,11 @@ public class TowerSheetNeo : ScriptableObject
 
     public TowerTypes towerType;
     public string towerName;
+    public string description;
+
+    [SerializeField]
+    public EnemyTypes[] enemyTypes;
+
     public Level[] levels;
     public Evolution[] evolutions;
 }
