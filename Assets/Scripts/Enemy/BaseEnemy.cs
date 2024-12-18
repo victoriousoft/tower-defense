@@ -73,21 +73,21 @@ public abstract class BaseEnemy : MonoBehaviour
 
     public float GetDistanceToFinish()
     {
-        float distance = Vector2.Distance((Vector2)transform.position - positionOffset, points[currentPointIndex].position);
+        float distance = Vector2.Distance(transform.position, (Vector2)points[currentPointIndex].position + positionOffset);
 
         for (int i = currentPointIndex; i < points.Length - 1; i++)
         {
-            distance += Vector2.Distance(points[i].position, points[i + 1].position);
+            distance += Vector2.Distance((Vector2)points[i].position + positionOffset, (Vector2)points[i + 1].position + positionOffset);
         }
         return distance;
     }
 
     public float GetDistanceToStart()
     {
-        float distance = Vector2.Distance((Vector2)transform.position - positionOffset, points[currentPointIndex].position);
+        float distance = Vector2.Distance(transform.position, (Vector2)points[currentPointIndex].position + positionOffset);
         for (int i = currentPointIndex; i >= 0; i--)
         {
-            distance += Vector2.Distance(points[i].position, points[i - 1].position);
+            distance += Vector2.Distance((Vector2)points[i].position + positionOffset, (Vector2)points[i - 1].position + positionOffset);
         }
 
         return distance;
