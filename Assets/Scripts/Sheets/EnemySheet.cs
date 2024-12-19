@@ -20,7 +20,6 @@ public class EnemySheet : ScriptableObject
         [Range(0, 4)] public int physicalResistance;
         [Range(0, 4)] public int magicResistance;
         public float attackRange;
-        public float visRange;
         public float attackCooldown;
         public int playerLives;
     }

@@ -32,7 +32,6 @@ public abstract class BaseEnemy : MonoBehaviour
 
         positionOffset = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
         if (enemyData.enemyType == EnemyTypes.FLYING) positionOffset.y += 1f;
-        if (enemyData.enemyType == EnemyTypes.GROUND) Debug.Log("offset: " + positionOffset);
     }
 
     void FixedUpdate()
@@ -106,6 +105,15 @@ public abstract class BaseEnemy : MonoBehaviour
             Destroy(gameObject);
             playerStats.AddGold(enemyData.stats.cashDrop);//random??
         }
+    }
+
+    public Vector2 GetAttackLocation(float troopAttackRange)
+    {
+        Vector2 direction = ((Vector2)points[currentPointIndex].position + positionOffset) - (Vector2)transform.position;
+
+        float minAttackRange = Mathf.Min(troopAttackRange, enemyData.stats.attackRange);
+        return (Vector2)transform.position + direction.normalized * minAttackRange;
+
     }
 
     public void Heal(float amount)

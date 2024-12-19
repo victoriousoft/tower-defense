@@ -75,6 +75,7 @@ public abstract class BaseTroop : MonoBehaviour
         {
             enemiesInRange[0].GetComponent<BaseEnemy>().isPaused = true;
             enemiesInRange[0].GetComponent<BaseEnemy>().RequestTarget(gameObject);
+            targetLocation = enemiesInRange[0].GetComponent<BaseEnemy>().GetAttackLocation(troopData.stats.attackRange);
             return enemiesInRange[0];
         }
 

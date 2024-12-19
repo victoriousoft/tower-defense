@@ -30,8 +30,7 @@ public class TestTroop : BaseTroop
 
             if (currentEnemy != null)
             {
-                targetLocation = currentEnemy.transform.position;
-                if (canAttack && Vector2.Distance(transform.position, currentEnemy.transform.position) < troopData.stats.attackRange) Attack();
+                if (canAttack && Vector2.Distance(transform.position, currentEnemy.transform.position) <= troopData.stats.attackRange) Attack();
             }
             else
             {
