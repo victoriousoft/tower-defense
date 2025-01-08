@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 public class WebGLMessageHandler : MonoBehaviour
 {
     [DllImport("__Internal")]
-    private static extern void SendMessageToJS(string message);
+    private static extern void SendMessageToJS(object message);
 
     [DllImport("__Internal")]
     private static extern void InitMessageListener();
@@ -12,15 +12,15 @@ public class WebGLMessageHandler : MonoBehaviour
     void Start()
     {
         InitMessageListener();
-        SendMessageToJS("Hello from Unity");
+        SendMessageToJS(new { action = "ready", args = new { } });
     }
 
-    public void SendToJavaScript(string message)
+    public void SendToJavaScript(object message)
     {
         SendMessageToJS(message);
     }
 
-    public void ReceiveFromJavaScript(string message)
+    public void ReceiveFromJavaScript(object message)
     {
         Debug.Log("UNITY - Received message from JavaScript: " + message);
     }

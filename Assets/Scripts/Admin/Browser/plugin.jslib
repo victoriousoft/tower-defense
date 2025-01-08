@@ -1,6 +1,6 @@
 mergeInto(LibraryManager.library, {
-	SendMessageToJS: function (str) {
-		var message = UTF8ToString(str);
+	SendMessageToJS: function (data) {
+		var message = UTF8ToString(data);
 
 		window.parent.postMessage(
 			{
