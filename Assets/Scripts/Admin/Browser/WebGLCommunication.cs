@@ -3,21 +3,38 @@ using System.Runtime.InteropServices;
 
 public class WebGLMessageHandler : MonoBehaviour
 {
+
     [DllImport("__Internal")]
-    private static extern void SendMessageToJS(object message);
+    private static extern void SendMessageToJS(string message);
 
     [DllImport("__Internal")]
     private static extern void InitMessageListener();
 
+    [System.Serializable]
+    public class BrowserMessage
+    {
+        public string action;
+        public object args;
+    }
+
+
     void Start()
     {
         InitMessageListener();
-        SendMessageToJS(new { action = "ready", args = new { } });
+        BrowserMessage message = new BrowserMessage
+        {
+            action = "ready",
+            args = null
+        };
+
+        string jsonMessage = JsonUtility.ToJson(message);
+        Debug.Log("UNITY - Sending message to JavaScript: " + jsonMessage);
+        SendToJavaScript(message);
     }
 
-    public void SendToJavaScript(object message)
+    public void SendToJavaScript(BrowserMessage message)
     {
-        SendMessageToJS(message);
+        SendMessageToJS(JsonUtility.ToJson(message));
     }
 
     public void ReceiveFromJavaScript(object message)
