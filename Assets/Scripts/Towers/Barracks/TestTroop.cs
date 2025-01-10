@@ -5,6 +5,9 @@ public class TestTroop : BaseTroop
     protected override void Attack()
     {
         if (currentEnemy == null) return;
+
+        isFigtning = true;
+
         if (currentEnemy.GetComponent<BaseEnemy>().currentTarget == null) currentEnemy.GetComponent<BaseEnemy>().RequestTarget(gameObject);
 
         currentEnemy.GetComponent<BaseEnemy>().TakeDamage(troopData.stats.damage, DamageTypes.PHYSICAL);
@@ -22,16 +25,16 @@ public class TestTroop : BaseTroop
         }
 
         if (targetLocation != null) WalkTo(targetLocation);
+        if (currentEnemy == null) isFigtning = false;
 
 
         if (!ignoreEnemies)
         {
-            if (currentEnemy == null || currentEnemy.GetComponent<BaseEnemy>().currentTarget != gameObject) currentEnemy = FindNewEnemy();
+            if (currentEnemy == null || currentEnemy.GetComponent<BaseEnemy>().currentTarget != gameObject) FindNewEnemy();
 
             if (currentEnemy != null)
             {
-                targetLocation = currentEnemy.transform.position;
-                if (canAttack && Vector2.Distance(transform.position, currentEnemy.transform.position) < troopData.stats.attackRange) Attack();
+                if (canAttack && Vector2.Distance(transform.position, currentEnemy.transform.position) <= troopData.stats.attackRange) Attack();
             }
             else
             {

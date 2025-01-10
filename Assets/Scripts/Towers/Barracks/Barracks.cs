@@ -103,6 +103,19 @@ public class Barracks : BaseTower
         StartCoroutine(RespawnTroop(troopId));
     }
 
+    public GameObject FindFightingEnemy()
+    {
+        foreach (GameObject troop in troops)
+        {
+            if (troop != null && troop.GetComponent<BaseTroop>().currentEnemy != null)
+            {
+                return troop.GetComponent<BaseTroop>().currentEnemy;
+            }
+        }
+
+        return null;
+    }
+
     private IEnumerator RespawnTroop(int troopId)
     {
         yield return new WaitForSeconds(respawnCooldown);
