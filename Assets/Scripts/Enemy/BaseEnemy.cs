@@ -36,10 +36,24 @@ public abstract class BaseEnemy : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (currentTarget == null) isPaused = false;
+        if (currentTarget == null)
+        {
+            isPaused = false;
+            currentTarget = FindEnemyInRange();
 
-        if (!isPaused) Move();
-        if (currentTarget != null && canAttack) Attack();
+            if (!isPaused) Move();
+            if (currentTarget != null && canAttack) Attack();
+        }
+    }
+
+    GameObject FindEnemyInRange()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, enemyData.stats.visRange);
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.gameObject.CompareTag("Troop")) return collider.gameObject;
+        }
+        return null;
     }
 
     public void SetPathParent(Transform pathParent)

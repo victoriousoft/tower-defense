@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9751f8ef079f9d43a7683ae5fb17a5b, type: 3}
   m_Name: TestEnemyData
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
   stats:
     maxHealth: 100
     damage: 10
@@ -22,7 +21,9 @@ MonoBehaviour:
     magicResistance: 0
     attackRange: 0.5
     attackCooldown: 1
+    visRange: 1
     playerLives: 1
   info:
     name: "Testovac\xED enem\xE1k"
-    dessciption: lowkey just a chill guy
+    description: 
+  enemyType: 0
