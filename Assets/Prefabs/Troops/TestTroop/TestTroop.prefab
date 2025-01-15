@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -6173776700801129253}
   m_Layer: 0
   m_Name: TestTroop
-  m_TagString: Untagged
+  m_TagString: Troop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,6 +124,7 @@ MonoBehaviour:
   targetLocation: {x: 0, y: 0}
   id: -1
   homeBase: {fileID: 0}
+  currentEnemy: {fileID: 0}
 --- !u!1001 &7596330086438579085
 PrefabInstance:
   m_ObjectHideFlags: 0
