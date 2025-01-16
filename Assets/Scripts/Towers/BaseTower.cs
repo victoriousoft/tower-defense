@@ -55,12 +55,12 @@ public abstract class BaseTower : MonoBehaviour
         canShoot = true;
     }
 
-    public void UpgradeTower()
+    public void UpgradeTower(int evolutionIndex = -1)
     {
-        StartCoroutine(UpgradeRoutine());
+        StartCoroutine(UpgradeRoutine(evolutionIndex));
     }
 
-    private IEnumerator UpgradeRoutine()
+    private IEnumerator UpgradeRoutine(int evolutionIndex)
     {
         canShoot = false;
 
@@ -70,13 +70,35 @@ public abstract class BaseTower : MonoBehaviour
             shootCoroutine = null;
         }
 
-        // Upgrade the tower
-        if (playerStats.SubtractGold(towerData.levels[level].price))
+        Debug.Log($"Level: {level}, max level: {towerData.levels.Length - 1}");
+        if (towerData.levels.Length > level + 1)
         {
-            level++;
-            towerAnimator.SetTrigger("upgrade");
+            // upgrade level
+            if (playerStats.SubtractGold(towerData.levels[level + 1].price))
+            {
+                level++;
+                towerAnimator.SetTrigger("upgrade");
 
-            yield return null;
+                yield return null;
+            }
+        }
+        else
+        {
+            // upgrade to evolution
+            if (evolutionIndex == -1 || evolutionIndex >= towerData.evolutions.Length)
+            {
+                Debug.LogError($"Invalid evolution index: {evolutionIndex}, max index: {towerData.evolutions.Length - 1}");
+                canShoot = true;
+                yield break;
+            }
+            if (playerStats.SubtractGold(towerData.evolutions[evolutionIndex].price))
+            {
+                towerAnimator.SetTrigger("upgrade");
+
+                Instantiate(towerData.evolutions[evolutionIndex].prefab, transform.position, Quaternion.identity);
+
+                Destroy(gameObject);
+            }
         }
 
         canShoot = true;
