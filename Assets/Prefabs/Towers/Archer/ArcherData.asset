@@ -15,6 +15,7 @@ MonoBehaviour:
   towerType: 1
   towerName: Archers
   description: 
+  damageType: 0
   enemyTypes: 0000000001000000
   levels:
   - price: 100

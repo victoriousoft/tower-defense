@@ -15,6 +15,7 @@ MonoBehaviour:
   towerType: 2
   towerName: Magic
   description: 
+  damageType: 1
   enemyTypes: 0000000001000000
   levels:
   - price: 100
