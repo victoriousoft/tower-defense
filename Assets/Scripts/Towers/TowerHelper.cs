@@ -129,9 +129,12 @@ public static class TowerHelpers
     )
     {
         float elapsedTime = 0f;
+        //pri 0.5s laseru se da damage padesatkrat, duration je hardcoded (nikde neni storenutej)
+        float fixedLoopTime = 0.01f;
+        int loops = Mathf.CeilToInt(duration / fixedLoopTime);
         laserRenderer.enabled = true;
 
-        while (elapsedTime < duration)
+        for(int i = 0; i < loops; i++)
         {
             if (target != null)
             {
@@ -144,8 +147,8 @@ public static class TowerHelpers
                 laserRenderer.SetPosition(1, origin.position);
             }
 
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            elapsedTime += fixedLoopTime;
+            yield return new WaitForSeconds(fixedLoopTime);
         }
 
         laserRenderer.enabled = false;

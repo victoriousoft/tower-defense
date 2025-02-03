@@ -6,5 +6,6 @@ public enum TowerTypes
     Bomb,
     Destroy,
     Upgrade,
-    Retarget
+    Retarget, 
+    None
 }

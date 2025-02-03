@@ -10,6 +10,7 @@ public class TowerHolder : MonoBehaviour
     private bool menuLocked = false;
 
     private GameObject towerInstance;
+    private TowerTypes towerInstanceType = TowerTypes.None;
     private PlayerStatsManager playerStats;
 
     public GameObject barracksPrefab;
@@ -92,6 +93,7 @@ public class TowerHolder : MonoBehaviour
             yield return new WaitForSecondsRealtime(1.5f);
             menuLocked = false;
             towerInstance = Instantiate(towerPrefabs[towerType], transform.position, Quaternion.identity, transform);
+            towerInstanceType = towerType;
             baseTowerScript = towerInstance.GetComponent<BaseTower>();
         }
         else if (!playerStats.SubtractGold(100))
@@ -109,6 +111,7 @@ public class TowerHolder : MonoBehaviour
             BaseTower baseTower = towerInstance.GetComponent<BaseTower>();
             playerStats.AddGold(baseTower.towerData.levels[baseTower.level].price / 2);
             towerInstance = null;
+            towerInstanceType = TowerTypes.None;
             towerHolderAnimator.Play("towerHolder_idle");
         }
     }
@@ -186,8 +189,9 @@ public class TowerHolder : MonoBehaviour
         infoPanel.SetActive(true);
         if (towerType == TowerTypes.Upgrade)
         {
+            Debug.Log(baseTowerScript.level);
             infoText.text = "level " + (baseTowerScript.level + 1) + "\n" +
-                        "dmg- " + baseTowerScript.towerData.levels[baseTowerScript.level].damage + "(+" + (baseTowerScript.towerData.levels[baseTowerScript.level].damage - baseTowerScript.towerData.levels[baseTowerScript.level-1].damage) + ")" + "\n" +
+                        "dmg- " + getTowerDamage(towerType, baseTowerScript.level) + "(+" + (getTowerDamage(towerType, baseTowerScript.level) - getTowerDamage(towerType, baseTowerScript.level-1)) + ")" + "\n" +
                         "cost- " + baseTowerScript.towerData.levels[baseTowerScript.level].price;
         }
         else if (towerType == TowerTypes.Destroy)
@@ -197,12 +201,40 @@ public class TowerHolder : MonoBehaviour
         else
         {
             TowerSheetNeo prefabData = towerPrefabs[towerType].GetComponent<BaseTower>().towerData;
+
             infoText.text = prefabData.towerName + "\n" +
-                        "dmg- " + prefabData.levels[0].damage + "\n" +
+                        "dmg- " + getTowerDamage(towerType, 0) + "\n" +
                         "cost- " + prefabData.levels[0].price;
         }
 
         Vector2 mousePosition = Input.mousePosition;
         infoPanel.transform.position = mousePosition;
+    }
+    private float getTowerDamage(TowerTypes towerType, int level)
+    {
+        //pri upgradu neni towerType magic nebo tak, ale upgrade, takze se musi towertype vzit odjinad
+        if(baseTowerScript != null)
+        {
+            if (towerInstanceType == TowerTypes.Magic)
+            {
+                //laser duration/fixedLoopTime (ani jedno nejsou nikde storenutý)
+                return baseTowerScript.towerData.levels[level].damage * (0.5f/0.01f);
+            }
+            else
+            {
+                return baseTowerScript.towerData.levels[level].damage;
+            }
+        }else{
+            TowerSheetNeo prefabData = towerPrefabs[towerType].GetComponent<BaseTower>().towerData;
+            if (towerType == TowerTypes.Magic)
+            {
+                //laser duration/fixedLoopTime (ani jedno nejsou nikde storenutý)
+                return prefabData.levels[level].damage * (0.5f/0.01f);
+            }
+            else
+            {
+                return prefabData.levels[level].damage;
+            }
+        }
     }
 }
