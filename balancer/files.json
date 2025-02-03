@@ -1,0 +1,8 @@
+{
+	"enemies": ["../Assets/Prefabs/Enemies/TestEnemy/TestEnemyData.asset", "../Assets/Prefabs/Enemies/TestFlyingEnemy/TestFlyingEnemyData.asset"],
+	"towers": [
+		"../Assets/Prefabs/Towers/Archer/ArcherData.asset",
+		"../Assets/Prefabs/Towers/Bomber/BomberData.asset",
+		"../Assets/Prefabs/Towers/Magic/MagicData.asset"
+	]
+}
