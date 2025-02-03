@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+
 public class TowerHolder : MonoBehaviour
 {
     public GameObject UIMenu;
@@ -18,15 +19,18 @@ public class TowerHolder : MonoBehaviour
     public GameObject magicPrefab;
     public GameObject bombPrefab;
     private Dictionary<TowerTypes, GameObject> towerPrefabs;
-    private BaseTower baseTowerScript = null;
+    public BaseTower baseTowerScript = null;
     public Animator UIAnimator;
     private Animator towerHolderAnimator;
     private TowerButton[] towerButtons;
+
+    private LineRenderer rangeRenderer;
     [SerializeField] private GameObject infoPanel;
     [SerializeField] private TextMeshProUGUI infoText;
 
     void Awake()
     {
+        rangeRenderer = gameObject.AddComponent<LineRenderer>();
         towerButtons = GetComponentsInChildren<TowerButton>();
 
         towerHolderAnimator = GetComponent<Animator>();
@@ -45,6 +49,11 @@ public class TowerHolder : MonoBehaviour
 
     void Update()
     {
+
+        rangeRenderer = GetComponent<LineRenderer>();
+        if (!rangeRenderer) Debug.LogError("Missing LineRenderer component");
+
+
         if (isMenuActive && Input.GetMouseButtonDown(0))
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -95,6 +104,9 @@ public class TowerHolder : MonoBehaviour
             towerInstance = Instantiate(towerPrefabs[towerType], transform.position, Quaternion.identity, transform);
             towerInstanceType = towerType;
             baseTowerScript = towerInstance.GetComponent<BaseTower>();
+            TowerHelpers.SetRangeCircle(rangeRenderer, baseTowerScript.towerData.levels[baseTowerScript.level].range, transform.position);
+            rangeRenderer.enabled = false;
+
         }
         else if (!playerStats.SubtractGold(100))
         {
@@ -108,17 +120,22 @@ public class TowerHolder : MonoBehaviour
         if (towerInstance != null)
         {
             Destroy(towerInstance);
+            rangeRenderer.enabled = false;
             BaseTower baseTower = towerInstance.GetComponent<BaseTower>();
             playerStats.AddGold(baseTower.towerData.levels[baseTower.level].price / 2);
             towerInstance = null;
             towerInstanceType = TowerTypes.None;
             towerHolderAnimator.Play("towerHolder_idle");
+
+            TowerHelpers.SetRangeCircle(rangeRenderer, 0, transform.position);
         }
     }
 
     public void UpgradeTower()
     {
         baseTowerScript.UpgradeTower();
+        TowerHelpers.SetRangeCircle(rangeRenderer, baseTowerScript.towerData.levels[baseTowerScript.level].range, transform.position);
+
     }
 
     public void ChangeTargeting()
@@ -134,14 +151,19 @@ public class TowerHolder : MonoBehaviour
         {
             DisableMenu();
         }
-        UIAnimator.SetTrigger("enable");
-        if (isMenuActive) StartCoroutine(EnableButtons());
-        if (towerInstance == null) towerHolderAnimator.Play("towerHolder_pop");
+        else
+        {
+            rangeRenderer.enabled = true;
+            UIAnimator.SetTrigger("enable");
+            StartCoroutine(EnableButtons());
+            if (towerInstance == null) towerHolderAnimator.Play("towerHolder_pop");
+        }
     }
 
     private void DisableMenu()
     {
         isMenuActive = false;
+        rangeRenderer.enabled = false;
         foreach (TowerButton button in towerButtons)
         {
             if (!button.isActiveAndEnabled) return;
@@ -201,7 +223,6 @@ public class TowerHolder : MonoBehaviour
         else
         {
             TowerSheetNeo prefabData = towerPrefabs[towerType].GetComponent<BaseTower>().towerData;
-
             infoText.text = prefabData.towerName + "\n" +
                         "dmg- " + getTowerDamage(towerType, 0) + "\n" +
                         "cost- " + prefabData.levels[0].price;
@@ -212,29 +233,17 @@ public class TowerHolder : MonoBehaviour
     }
     private float getTowerDamage(TowerTypes towerType, int level)
     {
-        //pri upgradu neni towerType magic nebo tak, ale upgrade, takze se musi towertype vzit odjinad
         if(baseTowerScript != null)
         {
-            if (towerInstanceType == TowerTypes.Magic)
-            {
-                //laser duration/fixedLoopTime (ani jedno nejsou nikde storenutý)
-                return baseTowerScript.towerData.levels[level].damage * (0.5f/0.01f);
-            }
-            else
-            {
-                return baseTowerScript.towerData.levels[level].damage;
-            }
+            return baseTowerScript.towerData.levels[level].damage * (towerInstanceType == TowerTypes.Magic ? (0.5f / 0.01f) : 1f);
         }else{
             TowerSheetNeo prefabData = towerPrefabs[towerType].GetComponent<BaseTower>().towerData;
-            if (towerType == TowerTypes.Magic)
-            {
-                //laser duration/fixedLoopTime (ani jedno nejsou nikde storenutý)
-                return prefabData.levels[level].damage * (0.5f/0.01f);
-            }
-            else
-            {
-                return prefabData.levels[level].damage;
-            }
+            return prefabData.levels[level].damage * (towerType == TowerTypes.Magic ? (0.5f / 0.01f) : 1f);
         }
+    }
+
+    public GameObject getPrefab(TowerTypes towerType)
+    {
+        return towerPrefabs[towerType];
     }
 }

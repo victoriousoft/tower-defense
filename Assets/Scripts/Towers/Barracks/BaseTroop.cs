@@ -11,7 +11,7 @@ public abstract class BaseTroop : MonoBehaviour
     public float attackCooldown;
     public float visRange;
     public float attackRange;
-    public Vector3 targetLocation;
+    public Vector2 targetLocation;
     public int id = -1;
 
     public GameObject homeBase = null;
@@ -19,6 +19,8 @@ public abstract class BaseTroop : MonoBehaviour
     protected HealthBar healthBar;
     protected GameObject currentEnemy;
     protected bool canAttack = true;
+    protected bool ignoreEnemies = false;
+
 
     protected abstract void Attack();
     protected abstract void FixedUpdate();
@@ -76,6 +78,32 @@ public abstract class BaseTroop : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void ForceReposition()
+    {
+        ForceReposition(new Vector2(0, 0));
+    }
+
+    public void ForceReposition(Vector2 position)
+    {
+        ignoreEnemies = true;
+
+        if (currentEnemy != null && currentEnemy.GetComponent<BaseEnemy>().currentTarget == gameObject)
+        {
+            currentEnemy.GetComponent<BaseEnemy>().currentTarget = null;
+        }
+
+        currentEnemy = null;
+
+        if (position != null)
+        {
+            targetLocation = position;
+        }
+        else
+        {
+            targetLocation = homeBase.GetComponent<Barracks>().RequestTroopRandezvousPoint(id);
+        }
     }
 
     protected IEnumerator ResetAttackCooldown()

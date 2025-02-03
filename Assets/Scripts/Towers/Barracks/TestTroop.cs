@@ -20,20 +20,31 @@ public class TestTroop : BaseTroop
             canAttack = false;
             StartCoroutine(ResetAttackCooldown());
         }
+
         if (targetLocation != null) WalkTo(targetLocation);
 
 
-        if (currentEnemy == null || currentEnemy.GetComponent<BaseEnemy>().currentTarget != gameObject) currentEnemy = FindNewEnemy();
-
-        if (currentEnemy != null)
+        if (!ignoreEnemies)
         {
-            targetLocation = currentEnemy.transform.position;
-            if (canAttack && Vector2.Distance(transform.position, currentEnemy.transform.position) < attackRange) Attack();
+            if (currentEnemy == null || currentEnemy.GetComponent<BaseEnemy>().currentTarget != gameObject) currentEnemy = FindNewEnemy();
+
+            if (currentEnemy != null)
+            {
+                targetLocation = currentEnemy.transform.position;
+                if (canAttack && Vector2.Distance(transform.position, currentEnemy.transform.position) < attackRange) Attack();
+            }
+            else
+            {
+                targetLocation = homeBase.GetComponent<Barracks>().RequestTroopRandezvousPoint(id);
+            }
         }
         else
         {
-            targetLocation = homeBase.GetComponent<Barracks>().RequestTroopRandezvousPoint(id);
+            if (Vector2.Distance(transform.position, targetLocation) < 0.1f)
+            {
+                ignoreEnemies = false;
+                targetLocation = homeBase.GetComponent<Barracks>().RequestTroopRandezvousPoint(id);
+            }
         }
     }
-
 }
