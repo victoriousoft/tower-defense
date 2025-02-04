@@ -1,3 +1,12 @@
 #!/usr/bin/env bash
 
-echo "hi"
+if ! command -v dotnet-csharpier &> /dev/null
+then
+    echo "Installing dotnet-csharpier..."
+    dotnet tool install --global csharpier
+fi
+
+echo "Running dotnet-csharpier..."
+dotnet-csharpier ./Assets/Scripts/
+
+echo "dotnet-csharpier completed successfully."
