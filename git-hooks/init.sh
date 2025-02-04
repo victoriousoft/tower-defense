@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 for file in $(ls ./git-hooks | grep -v '\.sh$'); do
     chmod +x ./git-hooks/$file
     [ -L ".git/hooks/$file" ] && rm .git/hooks/$file
