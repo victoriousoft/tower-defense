@@ -1,0 +1,71 @@
+name: Update balancer sheet
+
+on:
+    push:
+        branches:
+            - main
+        paths:
+            - Assets/Prefabs/Towers/**
+            - Assets/Prefabs/Enemies/**
+    workflow_dispatch:
+
+jobs:
+    compile-and-upload:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+
+            - name: Create LFS file list
+              run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
+
+            - name: Restore LFS cache
+              uses: actions/cache@v3
+              id: lfs-cache
+              with:
+                  path: .git/lfs
+                  key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+
+            - name: Git LFS Pull
+              run: |
+                  git lfs pull
+                  git add .
+                  git reset --hard
+
+            - uses: actions/cache@v3
+              with:
+                  path: Library
+                  key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+                  restore-keys: |
+                      Library-
+
+            - name: Setup python
+              uses: actions/setup-python@v5
+              with:
+                  python-version: "3.x"
+
+            - name: Setup environment
+              working-directory: ./balancer
+              run: |
+                  python3 -m pip install --upgrade pip
+                  python3 -m pip install -r requirements.txt
+
+            - name: Compile yaml data
+              working-directory: ./balancer
+              run: |
+                  python3 main.py
+
+            - name: Upload yaml data
+              uses: actions/upload-artifact@v4
+              with:
+                  name: combined-data.csv
+                  path: ./balancer/out/combined.csv
+                  retention-days: 7
+
+            - name: Upload to google sheet
+              working-directory: ./balancer
+              run: |
+                  python3 uploader.py
+              env:
+                  GOOGLE_SERVICE_ACCOUNT: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
+                  GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}

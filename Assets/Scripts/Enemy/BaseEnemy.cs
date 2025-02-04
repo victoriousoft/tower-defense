@@ -4,20 +4,17 @@ using UnityEngine;
 
 public abstract class BaseEnemy : MonoBehaviour
 {
-    public float health = 100;
-    public float maxHealth = 100;
-    public int damage = 10;
-    public int cashDrop = 2;
-    [Range(0, 4)] public int physicalResistance;
-    [Range(0, 4)] public int magicResistance;
-    public float speed = 1f;
+    public EnemySheet enemyData;
+    [HideInInspector]
+    public float health;
+    [HideInInspector]
     public bool isPaused = false;
+    [HideInInspector]
     public GameObject currentTarget;
-    public float attackRange = 1f;
-    public float attackCooldown = 1f; // seconds
+
     private int currentPointIndex = 0;
     private Transform[] points;
-
+    private Vector2 positionOffset;
 
     private readonly float[] resistanceValues = new float[] { 1, 0.5f, 0.35f, 0.2f, 0 };
     private HealthBar healthBar;
@@ -29,17 +26,34 @@ public abstract class BaseEnemy : MonoBehaviour
 
     void Awake()
     {
-        health = maxHealth;
+        health = enemyData.stats.maxHealth;
         healthBar = GetComponentInChildren<HealthBar>();
         playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
+
+        positionOffset = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
+        if (enemyData.enemyType == EnemyTypes.FLYING) positionOffset.y += 1f;
     }
 
     void FixedUpdate()
     {
-        if (currentTarget == null) isPaused = false;
+        if (currentTarget == null)
+        {
+            isPaused = false;
+            currentTarget = FindEnemyInRange();
 
-        if (!isPaused) Move();
-        if (currentTarget != null && canAttack) Attack();
+            if (!isPaused) Move();
+            if (currentTarget != null && canAttack) Attack();
+        }
+    }
+
+    GameObject FindEnemyInRange()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, enemyData.stats.visRange);
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.gameObject.CompareTag("Troop")) return collider.gameObject;
+        }
+        return null;
     }
 
     public void SetPathParent(Transform pathParent)
@@ -50,14 +64,14 @@ public abstract class BaseEnemy : MonoBehaviour
             points[i] = pathParent.GetChild(i);
         }
 
-        transform.position = points[currentPointIndex].position;
+        transform.position = (Vector2)points[currentPointIndex].position + positionOffset;
     }
 
     void Move()
     {
         if (points == null) return;
 
-        if (Vector2.Distance(transform.position, points[currentPointIndex].position) < 0.1f)
+        if (Vector2.Distance(transform.position, (Vector2)points[currentPointIndex].position + positionOffset) < 0.1f)
         {
             currentPointIndex++;
             if (currentPointIndex >= points.Length)
@@ -67,25 +81,26 @@ public abstract class BaseEnemy : MonoBehaviour
             }
         }
 
-        transform.position = Vector2.MoveTowards(transform.position, points[currentPointIndex].position, speed * Time.fixedDeltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, (Vector2)points[currentPointIndex].position + positionOffset, enemyData.stats.speed * Time.fixedDeltaTime);
     }
 
     public float GetDistanceToFinish()
     {
-        float distance = 0;
+        float distance = Vector2.Distance(transform.position, (Vector2)points[currentPointIndex].position + positionOffset);
+
         for (int i = currentPointIndex; i < points.Length - 1; i++)
         {
-            distance += Vector2.Distance(points[i].position, points[i + 1].position);
+            distance += Vector2.Distance((Vector2)points[i].position + positionOffset, (Vector2)points[i + 1].position + positionOffset);
         }
         return distance;
     }
 
     public float GetDistanceToStart()
     {
-        float distance = 0;
+        float distance = Vector2.Distance(transform.position, (Vector2)points[currentPointIndex].position + positionOffset);
         for (int i = currentPointIndex; i >= 0; i--)
         {
-            distance += Vector2.Distance(points[i].position, points[i - 1].position);
+            distance += Vector2.Distance((Vector2)points[i].position + positionOffset, (Vector2)points[i - 1].position + positionOffset);
         }
 
         return distance;
@@ -93,23 +108,32 @@ public abstract class BaseEnemy : MonoBehaviour
 
     public void TakeDamage(float damage, DamageTypes damageType)
     {
-        health -= (damageType == DamageTypes.PHYSICAL) ? damage * resistanceValues[physicalResistance] :
-             (damageType == DamageTypes.MAGIC) ? damage * resistanceValues[magicResistance] :
-             (damageType == DamageTypes.EXPLOSION) ? damage * (resistanceValues[physicalResistance] / 2) : damage;
+        health -= (damageType == DamageTypes.PHYSICAL) ? damage * resistanceValues[enemyData.stats.physicalResistance] :
+             (damageType == DamageTypes.MAGIC) ? damage * resistanceValues[enemyData.stats.magicResistance] :
+             (damageType == DamageTypes.EXPLOSION) ? damage * (resistanceValues[enemyData.stats.physicalResistance] / 2) : damage;
 
-        healthBar.SetHealth(health / maxHealth);
+        healthBar.SetHealth(health / enemyData.stats.maxHealth);
 
         if (health <= 0)
         {
             Destroy(gameObject);
-            playerStats.AddGold(cashDrop);//random??
+            playerStats.AddGold(enemyData.stats.cashDrop);//random??
         }
+    }
+
+    public Vector2 GetAttackLocation(float troopAttackRange)
+    {
+        Vector2 direction = ((Vector2)points[currentPointIndex].position + positionOffset) - (Vector2)transform.position;
+
+        float minAttackRange = Mathf.Min(troopAttackRange, enemyData.stats.attackRange);
+        return (Vector2)transform.position + direction.normalized * minAttackRange;
+
     }
 
     public void Heal(float amount)
     {
-        health = Mathf.Min(health += amount, maxHealth);
-        healthBar.SetHealth(health / maxHealth);
+        health = Mathf.Min(health += amount, enemyData.stats.maxHealth);
+        healthBar.SetHealth(health / enemyData.stats.maxHealth);
     }
 
     public void RequestTarget(GameObject target)
@@ -119,7 +143,7 @@ public abstract class BaseEnemy : MonoBehaviour
 
     protected IEnumerator ResetAttackCooldown()
     {
-        yield return new WaitForSeconds(attackCooldown);
+        yield return new WaitForSeconds(enemyData.stats.attackCooldown);
         canAttack = true;
     }
 }

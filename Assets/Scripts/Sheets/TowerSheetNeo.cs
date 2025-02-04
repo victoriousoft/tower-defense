@@ -18,6 +18,9 @@ public class TowerSheetNeo : ScriptableObject
         public string name;
         public GameObject prefab;
         public int price;
+        public int damage;
+        public int range;
+        public int cooldown;
         public Skill[] skills;
     }
 
@@ -30,6 +33,12 @@ public class TowerSheetNeo : ScriptableObject
 
     public TowerTypes towerType;
     public string towerName;
+    public string description;
+    public DamageTypes damageType;
+
+    [SerializeField]
+    public EnemyTypes[] enemyTypes;
+
     public Level[] levels;
     public Evolution[] evolutions;
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6324347410508317063}
   - component: {fileID: 3528937960336872651}
   m_Layer: 0
-  m_Name: TestEnemy
+  m_Name: TestFlyingEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,18 +143,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dcea8b3382dd364fafc898896eeb586, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyData: {fileID: 11400000, guid: cab4f8d826cb5744c92f05786ec6aabd, type: 2}
   health: 100
-  maxHealth: 100
-  damage: 10
-  cashDrop: 2
-  physicalResistance: 0
-  magicResistance: 0
-  pathParent: {fileID: 0}
-  speed: 2
   isPaused: 0
   currentTarget: {fileID: 0}
-  range: 1
-  attackCooldown: 1
 --- !u!1001 &5007395829321720595
 PrefabInstance:
   m_ObjectHideFlags: 0

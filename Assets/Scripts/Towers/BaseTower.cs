@@ -29,7 +29,7 @@ public abstract class BaseTower : MonoBehaviour
     {
         if (!canShoot) return;
 
-        GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range);
+        GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range, towerData.enemyTypes);
         if (enemies.Length == 0) return;
 
         shootCoroutine = StartCoroutine(ShootAndResetCooldown());
@@ -45,9 +45,9 @@ public abstract class BaseTower : MonoBehaviour
             yield return null;
         }
 
-        GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level - 1].range);
+        GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level - 1].range, towerData.enemyTypes);
         if (enemies.Length == 0) { canShoot = true; Debug.Log("issue"); yield break; }
-        GameObject target = TowerHelpers.SelectEnemyToAttack(TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range - 1), targetType);
+        GameObject target = TowerHelpers.SelectEnemyToAttack(TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range - 1, towerData.enemyTypes), targetType);
 
         yield return Shoot(target);
 

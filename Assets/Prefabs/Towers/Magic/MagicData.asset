@@ -10,25 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca53cba1e615b1441b518fd66c8a3ad7, type: 3}
-  m_Name: ArcherData
+  m_Name: MagicData
   m_EditorClassIdentifier: 
-  towerType: 1
-  towerName: Archers
+  towerType: 2
+  towerName: Magic
+  description: 
+  damageType: 1
+  enemyTypes: 0000000001000000
   levels:
   - price: 100
-    range: 1
-    damage: 25
+    range: 5
+    damage: 0.05
     cooldown: 3
   - price: 200
-    range: 2
-    damage: 25
-    cooldown: 3
+    range: 5
+    damage: 0.1
+    cooldown: 2
   - price: 300
-    range: 3
-    damage: 25
-    cooldown: 3
+    range: 5
+    damage: 0.3
+    cooldown: 0.5
   - price: 400
-    range: 4
-    damage: 25
-    cooldown: 3
+    range: 5
+    damage: 100
+    cooldown: 0
   evolutions: []

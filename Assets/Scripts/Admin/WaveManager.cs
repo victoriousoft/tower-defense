@@ -10,12 +10,13 @@ public class WaveSheet : MonoBehaviour
         public float initialDelay; // in seconds, delay before the first spawn
         public WaveEnemy[] enemies;
 
-        public IEnumerator SpawnWave()
+        public IEnumerator SpawnWave(MonoBehaviour instance)
         {
             foreach (WaveEnemy enemy in enemies)
             {
-                yield return enemy.SpawnWaveEnemy();
+                instance.StartCoroutine(enemy.SpawnWaveEnemy());
             }
+            yield return null;
         }
     }
 
@@ -53,7 +54,7 @@ public class WaveSheet : MonoBehaviour
         foreach (Wave wave in waves)
         {
             yield return new WaitForSeconds(wave.initialDelay);
-            yield return wave.SpawnWave();
+            yield return wave.SpawnWave(this);
         }
     }
 }

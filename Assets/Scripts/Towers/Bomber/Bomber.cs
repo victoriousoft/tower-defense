@@ -24,7 +24,7 @@ public class Bomber : BaseTower
     override protected void KillProjectile(GameObject bomb, GameObject enemy, Vector3 enemyPosition)
     {
         Destroy(bomb);
-        GameObject[] enemies = TowerHelpers.GetEnemiesInRange(enemyPosition, splashRadius);
+        GameObject[] enemies = TowerHelpers.GetEnemiesInRange(enemyPosition, splashRadius, towerData.enemyTypes);
         foreach (GameObject e in enemies)
         {
             if (e == null) return;

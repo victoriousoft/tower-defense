@@ -10,13 +10,14 @@ public static class TowerHelpers
     public enum TowerTargetTypes { CLOSEST_TO_FINISH, CLOSEST_TO_START, MOST_HP, LEAST_HP };
 
 
-    public static GameObject[] GetEnemiesInRange(Vector2 position, float range)
+    public static GameObject[] GetEnemiesInRange(Vector2 position, float range, EnemyTypes[] includedTypes)
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(position, range);
         List<GameObject> enemies = new List<GameObject>();
         foreach (Collider2D collider in colliders)
         {
-            if (collider.CompareTag("Enemy")) enemies.Add(collider.gameObject);
+            if (collider.CompareTag("Enemy") && includedTypes.Contains(collider.GetComponent<BaseEnemy>().enemyData.enemyType)
+            ) enemies.Add(collider.gameObject);
         }
         return enemies.ToArray();
     }
@@ -120,7 +121,9 @@ public static class TowerHelpers
         }
 
         destroyCallback(projectile, target, target != null ? target.transform.position : Vector3.zero);
-    }public static IEnumerator AnimateLaser(
+    }
+
+    public static IEnumerator AnimateLaser(
         LineRenderer laserRenderer,
         Transform origin,
         GameObject target,
@@ -129,12 +132,9 @@ public static class TowerHelpers
     )
     {
         float elapsedTime = 0f;
-        //pri 0.5s laseru se da damage padesatkrat, duration je hardcoded (nikde neni storenutej)
-        float fixedLoopTime = 0.01f;
-        int loops = Mathf.CeilToInt(duration / fixedLoopTime);
         laserRenderer.enabled = true;
 
-        for(int i = 0; i < loops; i++)
+        while (elapsedTime < duration)
         {
             if (target != null)
             {
@@ -147,8 +147,8 @@ public static class TowerHelpers
                 laserRenderer.SetPosition(1, origin.position);
             }
 
-            elapsedTime += fixedLoopTime;
-            yield return new WaitForSeconds(fixedLoopTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
 
         laserRenderer.enabled = false;

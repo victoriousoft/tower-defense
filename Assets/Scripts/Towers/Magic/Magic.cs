@@ -17,11 +17,13 @@ public class Magic : BaseTower
 
     protected override void KillProjectile(GameObject sphere, GameObject enemy, Vector3 _enemyPosition)
     {
-        if(sphere != null){
+        if (sphere != null)
+        {
             Destroy(sphere);
             GetComponent<Animator>().SetTrigger("idle");
-        }else if(enemy != null)enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.levels[level-1].damage, DamageTypes.MAGIC);
-        damageDealt += towerData.levels[level-1].damage;
+        }
+        else if (enemy != null) enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.levels[level - 1].damage, DamageTypes.MAGIC);
+        damageDealt += towerData.levels[level - 1].damage;
         Debug.Log("Damage dealt: " + damageDealt);
     }
 }

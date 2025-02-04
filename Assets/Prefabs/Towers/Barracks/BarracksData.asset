@@ -14,21 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerType: 0
   towerName: Barracks
+  description: 
+  enemyTypes: 00000000
   levels:
   - price: 100
-    range: 1
-    damage: 25
+    range: 5
+    damage: 0.25
     cooldown: 3
   - price: 200
-    range: 2
-    damage: 25
-    cooldown: 3
+    range: 5
+    damage: 0.5
+    cooldown: 2
   - price: 300
-    range: 3
-    damage: 25
-    cooldown: 3
+    range: 5
+    damage: 1
+    cooldown: 0.5
   - price: 400
-    range: 4
-    damage: 25
-    cooldown: 3
+    range: 5
+    damage: 100
+    cooldown: 0
   evolutions: []

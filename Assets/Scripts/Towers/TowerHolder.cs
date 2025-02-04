@@ -213,7 +213,7 @@ public class TowerHolder : MonoBehaviour
         {
             Debug.Log(baseTowerScript.level);
             infoText.text = "level " + (baseTowerScript.level + 1) + "\n" +
-                        "dmg- " + getTowerDamage(towerType, baseTowerScript.level) + "(+" + (getTowerDamage(towerType, baseTowerScript.level) - getTowerDamage(towerType, baseTowerScript.level-1)) + ")" + "\n" +
+                        "dmg- " + getTowerDamage(towerType, baseTowerScript.level) + "(+" + (getTowerDamage(towerType, baseTowerScript.level) - getTowerDamage(towerType, baseTowerScript.level - 1)) + ")" + "\n" +
                         "cost- " + baseTowerScript.towerData.levels[baseTowerScript.level].price;
         }
         else if (towerType == TowerTypes.Destroy)
@@ -233,10 +233,12 @@ public class TowerHolder : MonoBehaviour
     }
     private float getTowerDamage(TowerTypes towerType, int level)
     {
-        if(baseTowerScript != null)
+        if (baseTowerScript != null)
         {
             return baseTowerScript.towerData.levels[level].damage * (towerInstanceType == TowerTypes.Magic ? (0.5f / 0.01f) : 1f);
-        }else{
+        }
+        else
+        {
             TowerSheetNeo prefabData = towerPrefabs[towerType].GetComponent<BaseTower>().towerData;
             return prefabData.levels[level].damage * (towerType == TowerTypes.Magic ? (0.5f / 0.01f) : 1f);
         }

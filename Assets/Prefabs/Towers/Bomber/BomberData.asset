@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerType: 3
   towerName: Bomber
+  description: 
+  damageType: 0
+  enemyTypes: 00000000
   levels:
   - price: 100
     range: 1
