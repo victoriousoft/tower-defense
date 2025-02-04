@@ -131,10 +131,11 @@ public static class TowerHelpers
         Action<GameObject, GameObject, Vector3> destroyCallback
     )
     {
-        float elapsedTime = 0f;
+        float iterationStep = 0.01f;
+        float iterations = duration / iterationStep;
         laserRenderer.enabled = true;
 
-        while (elapsedTime < duration)
+        for (int i = 0; i < iterations; i++)
         {
             if (target != null)
             {
@@ -147,12 +148,10 @@ public static class TowerHelpers
                 laserRenderer.SetPosition(1, origin.position);
             }
 
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            yield return new WaitForSeconds(iterationStep);
         }
 
         laserRenderer.enabled = false;
-        destroyCallback(new GameObject(), target, target != null ? target.transform.position : Vector3.zero);
     }
 
     public static bool IsOnPath(Vector2 position, GameObject pathParents, float pathWidth)

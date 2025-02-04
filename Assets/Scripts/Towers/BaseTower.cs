@@ -51,6 +51,8 @@ public abstract class BaseTower : MonoBehaviour
 
         yield return Shoot(target);
 
+        towerAnimator.SetTrigger("idle");
+
         yield return new WaitForSeconds(towerData.levels[level - 1].cooldown);
         canShoot = true;
     }

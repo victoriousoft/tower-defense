@@ -214,9 +214,10 @@ public class TowerHolder : MonoBehaviour
         infoPanel.SetActive(true);
         if (towerType == TowerTypes.Upgrade)
         {
-            Debug.Log(baseTowerScript.level);
+            float damageChange = baseTowerScript.towerData.levels[baseTowerScript.level].damage - baseTowerScript.towerData.levels[baseTowerScript.level - 1].damage;
+            string damageSign = Mathf.Sign(damageChange) > 0 ? "+" : "-";
             infoText.text = "level " + (baseTowerScript.level + 1) + "\n" +
-                        "dmg- " + getTowerDamage(towerType, baseTowerScript.level) + "(+" + (getTowerDamage(towerType, baseTowerScript.level) - getTowerDamage(towerType, baseTowerScript.level - 1)) + ")" + "\n" +
+                        "dmg- " + baseTowerScript.towerData.levels[baseTowerScript.level].damage + "(" + damageSign + damageChange + ")" + "\n" +
                         "cost- " + baseTowerScript.towerData.levels[baseTowerScript.level].price;
         }
         else if (towerType == TowerTypes.Destroy)
@@ -227,24 +228,12 @@ public class TowerHolder : MonoBehaviour
         {
             TowerSheetNeo prefabData = towerPrefabs[towerType].GetComponent<BaseTower>().towerData;
             infoText.text = prefabData.towerName + "\n" +
-                        "dmg- " + getTowerDamage(towerType, 0) + "\n" +
+                        "dmg- " + prefabData.levels[0].damage + "\n" +
                         "cost- " + prefabData.levels[0].price;
         }
 
         Vector2 mousePosition = Input.mousePosition;
         infoPanel.transform.position = mousePosition;
-    }
-    private float getTowerDamage(TowerTypes towerType, int level)
-    {
-        if (baseTowerScript != null)
-        {
-            return baseTowerScript.towerData.levels[level].damage * (towerInstanceType == TowerTypes.Magic ? (0.5f / 0.01f) : 1f);
-        }
-        else
-        {
-            TowerSheetNeo prefabData = towerPrefabs[towerType].GetComponent<BaseTower>().towerData;
-            return prefabData.levels[level].damage * (towerType == TowerTypes.Magic ? (0.5f / 0.01f) : 1f);
-        }
     }
 
     public GameObject getPrefab(TowerTypes towerType)
