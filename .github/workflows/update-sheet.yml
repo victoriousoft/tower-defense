@@ -62,15 +62,10 @@ jobs:
                   path: ./balancer/out/combined.csv
                   retention-days: 7
 
-            - name: Create service account config file
-              working-directory: ./balancer
-              run: |
-                  echo "${{ secrets.GOOGLE_SERVICE_ACCOUNT }}" > service_account.json
-
             - name: Upload to google sheet
               working-directory: ./balancer
               run: |
                   python3 uploader.py
               env:
-                  GOOGLE_SERVICE_ACCOUNT_PATH: service_account.json
+                  GOOGLE_SERVICE_ACCOUNT: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
                   GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}

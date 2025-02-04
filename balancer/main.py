@@ -250,13 +250,16 @@ if __name__ == "__main__":
     combined_enemies_csv = combined_enemies.to_csv(index=False).replace("\r", "").split("\n")
 
     combined_csv = ""
-    max_lines = max(len(combined_towers_csv), len(combined_enemies_csv))
+    max_lines = max(len(combined_towers_csv), len(combined_enemies_csv)) - 1
     tower_indent_length = len(combined_towers_csv[0].split(",")) - 1
     for i in range(max_lines):
         tower_line = combined_towers_csv[i] if i < len(combined_towers_csv) else "," * tower_indent_length
         enemy_line = combined_enemies_csv[i] if i < len(combined_enemies_csv) else ""
-        combined_csv += f"{tower_line},,{enemy_line}\n"
-        
+        if enemy_line:
+            combined_csv += f"{tower_line},,{enemy_line}\n"
+        else:
+            combined_csv += f"{tower_line}\n"
+
     with open("./out/combined.csv", "w", encoding='utf-8') as file:
         file.write(combined_csv)
 
