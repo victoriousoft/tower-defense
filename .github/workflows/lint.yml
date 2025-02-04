@@ -25,3 +25,7 @@ jobs:
               uses: super-linter/super-linter@v7
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  VALIDATE_ALL_CODEBASE: true
+                  VALIDATE_CSHARP: true
+                  FILTER_REGEX_INCLUDE: .*\.cs$
+                  EDITORCONFIG_CODE_FIX: true
