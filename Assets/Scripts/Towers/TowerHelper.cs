@@ -21,11 +21,7 @@ public static class TowerHelpers
 		LEAST_HP,
 	};
 
-	public static GameObject[] GetEnemiesInRange(
-		Vector2 position,
-		float range,
-		EnemyTypes[] includedTypes
-	)
+	public static GameObject[] GetEnemiesInRange(Vector2 position, float range, EnemyTypes[] includedTypes)
 	{
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(position, range);
 		List<GameObject> enemies = new List<GameObject>();
@@ -47,28 +43,20 @@ public static class TowerHelpers
 		switch (targetType)
 		{
 			case TowerTargetTypes.CLOSEST_TO_FINISH:
-				target = enemies
-					.OrderBy(e => e.GetComponent<BaseEnemy>().GetDistanceToFinish())
-					.FirstOrDefault();
+				target = enemies.OrderBy(e => e.GetComponent<BaseEnemy>().GetDistanceToFinish()).FirstOrDefault();
 				break;
 			case TowerTargetTypes.CLOSEST_TO_START:
-				target = enemies
-					.OrderBy(e => e.GetComponent<BaseEnemy>().GetDistanceToStart())
-					.FirstOrDefault();
+				target = enemies.OrderBy(e => e.GetComponent<BaseEnemy>().GetDistanceToStart()).FirstOrDefault();
 				break;
 			case TowerTargetTypes.MOST_HP:
-				target = enemies
-					.OrderByDescending(e => e.GetComponent<BaseEnemy>().health)
-					.FirstOrDefault();
+				target = enemies.OrderByDescending(e => e.GetComponent<BaseEnemy>().health).FirstOrDefault();
 				break;
 			case TowerTargetTypes.LEAST_HP:
 				target = enemies.OrderBy(e => e.GetComponent<BaseEnemy>().health).FirstOrDefault();
 				break;
 			default:
 				Debug.LogWarning("Invalid target type, fallback to closest to finish");
-				target = enemies
-					.OrderBy(e => e.GetComponent<BaseEnemy>().GetDistanceToFinish())
-					.FirstOrDefault();
+				target = enemies.OrderBy(e => e.GetComponent<BaseEnemy>().GetDistanceToFinish()).FirstOrDefault();
 				break;
 		}
 
@@ -110,23 +98,16 @@ public static class TowerHelpers
 			controlPoint = (startPosition + targetPosition) / 2 + Vector2.up * height;
 
 			float t = (Time.time - startTime) / duration;
-			Vector2 currentPosition = CalculateBezierPoint(
-				t,
-				startPosition,
-				controlPoint,
-				targetPosition
-			);
+			Vector2 currentPosition = CalculateBezierPoint(t, startPosition, controlPoint, targetPosition);
 			projectile.transform.position = currentPosition;
 
 			Vector2 direction = (
-				CalculateBezierPoint(t + 0.01f, startPosition, controlPoint, targetPosition)
-				- currentPosition
+				CalculateBezierPoint(t + 0.01f, startPosition, controlPoint, targetPosition) - currentPosition
 			).normalized;
 
 			if (rotationType == TowerProjectileRotationTypes.LOOK_AT_TARGET)
 			{
-				projectile.transform.rotation =
-					Quaternion.LookRotation(direction) * Quaternion.Euler(90, 0, 0);
+				projectile.transform.rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(90, 0, 0);
 			}
 			else if (rotationType == TowerProjectileRotationTypes.SPIN)
 			{
@@ -136,11 +117,7 @@ public static class TowerHelpers
 			yield return null;
 		}
 
-		destroyCallback(
-			projectile,
-			target,
-			target != null ? target.transform.position : Vector3.zero
-		);
+		destroyCallback(projectile, target, target != null ? target.transform.position : Vector3.zero);
 	}
 
 	public static IEnumerator AnimateDirectProjectile(
@@ -150,14 +127,9 @@ public static class TowerHelpers
 		Action<GameObject, GameObject, Vector3> destroyCallback
 	)
 	{
-		while (
-			target != null
-			&& Vector3.Distance(projectile.transform.position, target.transform.position) > 0.1f
-		)
+		while (target != null && Vector3.Distance(projectile.transform.position, target.transform.position) > 0.1f)
 		{
-			Vector3 direction = (
-				target.transform.position - projectile.transform.position
-			).normalized;
+			Vector3 direction = (target.transform.position - projectile.transform.position).normalized;
 			projectile.transform.position += speed * Time.fixedDeltaTime * direction;
 
 			projectile.transform.LookAt(target.transform);
@@ -165,11 +137,7 @@ public static class TowerHelpers
 			yield return null;
 		}
 
-		destroyCallback(
-			projectile,
-			target,
-			target != null ? target.transform.position : Vector3.zero
-		);
+		destroyCallback(projectile, target, target != null ? target.transform.position : Vector3.zero);
 	}
 
 	public static IEnumerator AnimateLaser(
@@ -190,11 +158,7 @@ public static class TowerHelpers
 			{
 				laserRenderer.SetPosition(0, origin.position);
 				laserRenderer.SetPosition(1, target.transform.position);
-				destroyCallback(
-					null,
-					target,
-					target != null ? target.transform.position : Vector3.zero
-				);
+				destroyCallback(null, target, target != null ? target.transform.position : Vector3.zero);
 			}
 			else
 			{
@@ -230,12 +194,9 @@ public static class TowerHelpers
 
 			float a = closestPoints[1].transform.position.y - closestPoints[0].transform.position.y;
 			float b = closestPoints[0].transform.position.x - closestPoints[1].transform.position.x;
-			float c =
-				a * closestPoints[0].transform.position.x
-				+ b * closestPoints[0].transform.position.y;
+			float c = a * closestPoints[0].transform.position.x + b * closestPoints[0].transform.position.y;
 
-			float distance =
-				Mathf.Abs(a * position.x + b * position.y - c) / Mathf.Sqrt(a * a + b * b);
+			float distance = Mathf.Abs(a * position.x + b * position.y - c) / Mathf.Sqrt(a * a + b * b);
 
 			if (distance < pathWidth / 2)
 				return true;
@@ -279,11 +240,7 @@ public static class TowerHelpers
 		return closestPoints.OrderBy(p => Vector2.Distance(origin, p)).FirstOrDefault();
 	}
 
-	public static Vector2 GetClosestPointOnLineSegment(
-		Vector2 origin,
-		Vector2 lineStart,
-		Vector2 lineEnd
-	)
+	public static Vector2 GetClosestPointOnLineSegment(Vector2 origin, Vector2 lineStart, Vector2 lineEnd)
 	{
 		Vector2 line = lineEnd - lineStart;
 		float lineLength = line.magnitude;

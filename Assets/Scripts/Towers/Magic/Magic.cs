@@ -22,11 +22,7 @@ public class Magic : BaseTower
 		);
 	}
 
-	protected override void KillProjectile(
-		GameObject sphere,
-		GameObject enemy,
-		Vector3 _enemyPosition
-	)
+	protected override void KillProjectile(GameObject sphere, GameObject enemy, Vector3 _enemyPosition)
 	{
 		if (sphere != null)
 		{
@@ -34,9 +30,7 @@ public class Magic : BaseTower
 			GetComponent<Animator>().SetTrigger("idle");
 		}
 		else if (enemy != null)
-			enemy
-				.GetComponent<BaseEnemy>()
-				.TakeDamage(towerData.levels[level - 1].damage / 50, DamageTypes.MAGIC);
+			enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.levels[level - 1].damage / 50, DamageTypes.MAGIC);
 		damageDealt += towerData.levels[level - 1].damage / 50;
 	}
 }

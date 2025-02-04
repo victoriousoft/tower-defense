@@ -6,10 +6,7 @@ public class TestEnemy : BaseEnemy
 	{
 		if (currentTarget == null)
 			return;
-		if (
-			Vector3.Distance(transform.position, currentTarget.transform.position)
-			> enemyData.stats.attackRange
-		)
+		if (Vector3.Distance(transform.position, currentTarget.transform.position) > enemyData.stats.attackRange)
 			return;
 
 		currentTarget.GetComponent<BaseTroop>().TakeDamage(enemyData.stats.damage);

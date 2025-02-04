@@ -28,18 +28,12 @@ public class Archer : BaseTower
 		);
 	}
 
-	protected override void KillProjectile(
-		GameObject projectile,
-		GameObject enemy,
-		Vector3 _enemyPosition
-	)
+	protected override void KillProjectile(GameObject projectile, GameObject enemy, Vector3 _enemyPosition)
 	{
 		Destroy(projectile);
 		if (enemy == null)
 			return;
 
-		enemy
-			.GetComponent<BaseEnemy>()
-			.TakeDamage(towerData.levels[level].damage, DamageTypes.PHYSICAL);
+		enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.levels[level].damage, DamageTypes.PHYSICAL);
 	}
 }

@@ -32,17 +32,12 @@ public class Bomber : BaseTower
 	protected override void KillProjectile(GameObject bomb, GameObject enemy, Vector3 enemyPosition)
 	{
 		Destroy(bomb);
-		GameObject[] enemies = TowerHelpers.GetEnemiesInRange(
-			enemyPosition,
-			splashRadius,
-			towerData.enemyTypes
-		);
+		GameObject[] enemies = TowerHelpers.GetEnemiesInRange(enemyPosition, splashRadius, towerData.enemyTypes);
 		foreach (GameObject e in enemies)
 		{
 			if (e == null)
 				return;
-			e.GetComponent<BaseEnemy>()
-				.TakeDamage(towerData.levels[level].damage, DamageTypes.EXPLOSION);
+			e.GetComponent<BaseEnemy>().TakeDamage(towerData.levels[level].damage, DamageTypes.EXPLOSION);
 		}
 	}
 }

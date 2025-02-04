@@ -53,10 +53,7 @@ public abstract class BaseEnemy : MonoBehaviour
 
 	GameObject FindEnemyInRange()
 	{
-		Collider2D[] colliders = Physics2D.OverlapCircleAll(
-			transform.position,
-			enemyData.stats.visRange
-		);
+		Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, enemyData.stats.visRange);
 		foreach (Collider2D collider in colliders)
 		{
 			if (collider.gameObject.CompareTag("Troop"))
@@ -81,12 +78,7 @@ public abstract class BaseEnemy : MonoBehaviour
 		if (points == null)
 			return;
 
-		if (
-			Vector2.Distance(
-				transform.position,
-				(Vector2)points[currentPointIndex].position + positionOffset
-			) < 0.1f
-		)
+		if (Vector2.Distance(transform.position, (Vector2)points[currentPointIndex].position + positionOffset) < 0.1f)
 		{
 			currentPointIndex++;
 			if (currentPointIndex >= points.Length)
@@ -140,10 +132,8 @@ public abstract class BaseEnemy : MonoBehaviour
 	public void TakeDamage(float damage, DamageTypes damageType)
 	{
 		health -=
-			(damageType == DamageTypes.PHYSICAL)
-				? damage * resistanceValues[enemyData.stats.physicalResistance]
-			: (damageType == DamageTypes.MAGIC)
-				? damage * resistanceValues[enemyData.stats.magicResistance]
+			(damageType == DamageTypes.PHYSICAL) ? damage * resistanceValues[enemyData.stats.physicalResistance]
+			: (damageType == DamageTypes.MAGIC) ? damage * resistanceValues[enemyData.stats.magicResistance]
 			: (damageType == DamageTypes.EXPLOSION)
 				? damage * (resistanceValues[enemyData.stats.physicalResistance] / 2)
 			: damage;
@@ -160,8 +150,7 @@ public abstract class BaseEnemy : MonoBehaviour
 	public Vector2 GetAttackLocation(float troopAttackRange)
 	{
 		Vector2 direction =
-			((Vector2)points[currentPointIndex].position + positionOffset)
-			- (Vector2)transform.position;
+			((Vector2)points[currentPointIndex].position + positionOffset) - (Vector2)transform.position;
 
 		float minAttackRange = Mathf.Min(troopAttackRange, enemyData.stats.attackRange);
 		return (Vector2)transform.position + direction.normalized * minAttackRange;

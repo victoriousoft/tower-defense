@@ -21,11 +21,7 @@ public class Barracks : BaseTower
 		yield return null;
 	}
 
-	protected override void KillProjectile(
-		GameObject projectile,
-		GameObject enemy,
-		Vector3 enemyPosition
-	) { }
+	protected override void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition) { }
 
 	protected override IEnumerator ChargeUp(GameObject enemy)
 	{
@@ -36,10 +32,7 @@ public class Barracks : BaseTower
 	{
 		troops = new GameObject[troopCount];
 		paths = GameObject.Find("Paths");
-		Vector2 globalTroopRandezvous = TowerHelpers.GetClosesPointOnPath(
-			transform.position,
-			paths
-		);
+		Vector2 globalTroopRandezvous = TowerHelpers.GetClosesPointOnPath(transform.position, paths);
 		localTroopRandezvousPoint = globalTroopRandezvous - (Vector2)transform.position;
 
 		SpawnTroops(troopCount);
@@ -58,12 +51,7 @@ public class Barracks : BaseTower
 		if (troops[id] != null)
 			return;
 
-		GameObject troop = Instantiate(
-			troopPrefab,
-			transform.position,
-			Quaternion.identity,
-			transform
-		);
+		GameObject troop = Instantiate(troopPrefab, transform.position, Quaternion.identity, transform);
 		troop.GetComponent<BaseTroop>().homeBase = gameObject;
 		troop.GetComponent<BaseTroop>().targetLocation = RequestTroopRandezvousPoint(id);
 		troop.GetComponent<BaseTroop>().id = id;
@@ -100,10 +88,7 @@ public class Barracks : BaseTower
 			float angle = 120 * troopId;
 			float radians = angle * Mathf.Deg2Rad;
 			return basePosition
-				+ new Vector2(
-					randezvousOffset * Mathf.Cos(radians),
-					randezvousOffset * Mathf.Sin(radians)
-				);
+				+ new Vector2(randezvousOffset * Mathf.Cos(radians), randezvousOffset * Mathf.Sin(radians));
 		}
 	}
 

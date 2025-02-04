@@ -7,20 +7,14 @@ public abstract class BaseTower : MonoBehaviour
 	public TowerSheetNeo towerData;
 	private PlayerStatsManager playerStats;
 	private Animator towerAnimator;
-	public TowerHelpers.TowerTargetTypes targetType = TowerHelpers
-		.TowerTargetTypes
-		.CLOSEST_TO_FINISH;
+	public TowerHelpers.TowerTargetTypes targetType = TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH;
 	protected bool canShoot = true;
 	protected GameObject paths;
 	private Coroutine shootCoroutine;
 
 	protected abstract IEnumerator Shoot(GameObject enemy);
 	protected abstract IEnumerator ChargeUp(GameObject enemy);
-	protected abstract void KillProjectile(
-		GameObject projectile,
-		GameObject enemy,
-		Vector3 enemyPosition
-	);
+	protected abstract void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition);
 
 	protected virtual void ExtendedAwake() { }
 
@@ -69,11 +63,7 @@ public abstract class BaseTower : MonoBehaviour
 			yield break;
 		}
 		GameObject target = TowerHelpers.SelectEnemyToAttack(
-			TowerHelpers.GetEnemiesInRange(
-				transform.position,
-				towerData.levels[level].range - 1,
-				towerData.enemyTypes
-			),
+			TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range - 1, towerData.enemyTypes),
 			targetType
 		);
 

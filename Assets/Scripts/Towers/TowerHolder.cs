@@ -97,9 +97,7 @@ public class TowerHolder : MonoBehaviour
 	public IEnumerator BuildTower(TowerTypes towerType)
 	{
 		if (
-			playerStats.SubtractGold(
-				towerPrefabs[towerType].GetComponent<BaseTower>().towerData.levels[0].price
-			)
+			playerStats.SubtractGold(towerPrefabs[towerType].GetComponent<BaseTower>().towerData.levels[0].price)
 			&& towerInstance == null
 		)
 		{
@@ -107,12 +105,7 @@ public class TowerHolder : MonoBehaviour
 			towerHolderAnimator.Play("towerHolder_build");
 			yield return new WaitForSecondsRealtime(1.5f);
 			menuLocked = false;
-			towerInstance = Instantiate(
-				towerPrefabs[towerType],
-				transform.position,
-				Quaternion.identity,
-				transform
-			);
+			towerInstance = Instantiate(towerPrefabs[towerType], transform.position, Quaternion.identity, transform);
 			towerInstanceType = towerType;
 			baseTowerScript = towerInstance.GetComponent<BaseTower>();
 			TowerHelpers.SetRangeCircle(
@@ -260,8 +253,7 @@ public class TowerHolder : MonoBehaviour
 		}
 		else if (towerType == TowerTypes.Destroy)
 		{
-			infoText.text =
-				"Cashback-  " + (baseTowerScript.towerData.levels[baseTowerScript.level].price / 2);
+			infoText.text = "Cashback-  " + (baseTowerScript.towerData.levels[baseTowerScript.level].price / 2);
 		}
 		else
 		{

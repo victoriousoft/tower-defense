@@ -14,19 +14,13 @@ public class TowerButton : MonoBehaviour
 		switch (towerType)
 		{
 			case TowerTypes.Barracks:
-				StartCoroutine(
-					towerHolder.GetComponent<TowerHolder>().BuildTower(TowerTypes.Barracks)
-				);
+				StartCoroutine(towerHolder.GetComponent<TowerHolder>().BuildTower(TowerTypes.Barracks));
 				break;
 			case TowerTypes.Archer:
-				StartCoroutine(
-					towerHolder.GetComponent<TowerHolder>().BuildTower(TowerTypes.Archer)
-				);
+				StartCoroutine(towerHolder.GetComponent<TowerHolder>().BuildTower(TowerTypes.Archer));
 				break;
 			case TowerTypes.Magic:
-				StartCoroutine(
-					towerHolder.GetComponent<TowerHolder>().BuildTower(TowerTypes.Magic)
-				);
+				StartCoroutine(towerHolder.GetComponent<TowerHolder>().BuildTower(TowerTypes.Magic));
 				break;
 			case TowerTypes.Bomb:
 				StartCoroutine(towerHolder.GetComponent<TowerHolder>().BuildTower(TowerTypes.Bomb));
@@ -50,11 +44,7 @@ public class TowerButton : MonoBehaviour
 		{
 			TowerHolder towerHolderScript = towerHolder.GetComponent<TowerHolder>();
 			ShowTempRangeCircle(
-				towerHolderScript
-					.baseTowerScript
-					.towerData
-					.levels[towerHolderScript.baseTowerScript.level + 1]
-					.range
+				towerHolderScript.baseTowerScript.towerData.levels[towerHolderScript.baseTowerScript.level + 1].range
 			);
 		}
 		else if (
