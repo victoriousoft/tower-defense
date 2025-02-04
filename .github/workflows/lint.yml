@@ -17,5 +17,15 @@ jobs:
               run: |
                   dotnet tool install --global csharpier
 
-            - name: Format C# Code
+            - name: Format C# Code (Push)
+              if: github.event_name == 'push'
+              run: |
+                  dotnet-csharpier .
+                  git config user.name "github-actions[bot]"
+                  git config user.email "github-actions[bot]@users.noreply.github.com"
+                  git commit -am "chore: format C# code"
+                  git push
+
+            - name: Check C# Format (Pull Request)
+              if: github.event_name == 'pull_request'
               run: dotnet-csharpier --check .
