@@ -21,11 +21,14 @@ jobs:
               with:
                   fetch-depth: 0
 
-            - name: Super-linter
-              uses: super-linter/super-linter@v7
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  VALIDATE_ALL_CODEBASE: true
-                  VALIDATE_CSHARP: true
-                  FILTER_REGEX_INCLUDE: .*\.cs$
-                  EDITORCONFIG_CODE_FIX: true
+            - name: Run editorconfig fix
+              run: npx editorconfig-checker --fix
+
+            - name: push changes to branch
+              uses: stefanzweifel/git-auto-commit-action@v4
+              with:
+                  commit_message: "Fix EditorConfig issues"
+                  commit_user_name: "github-actions[bot]"
+                  commit_user_email: "github-actions[bot]@users.noreply.github.com"
+                  branch: ${{ github.head_ref }}
+                  token: ${{ secrets.GITHUB_TOKEN }}
