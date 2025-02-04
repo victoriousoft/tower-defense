@@ -4,27 +4,42 @@ using UnityEngine;
 
 public class Archer : BaseTower
 {
-    protected override IEnumerator ChargeUp(GameObject enemy)
-    {
-        yield return null;
-    }
+	protected override IEnumerator ChargeUp(GameObject enemy)
+	{
+		yield return null;
+	}
 
-    protected override IEnumerator Shoot(GameObject enemy)
-    {
-        GameObject arrow = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-        arrow.transform.SetParent(transform);
-        arrow.transform.position = transform.position;
-        arrow.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-        arrow.GetComponent<Renderer>().material.color = Color.red;
+	protected override IEnumerator Shoot(GameObject enemy)
+	{
+		GameObject arrow = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+		arrow.transform.SetParent(transform);
+		arrow.transform.position = transform.position;
+		arrow.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+		arrow.GetComponent<Renderer>().material.color = Color.red;
 
-        yield return TowerHelpers.AnimateBezierProjectile(arrow, transform.position, enemy, 2, 1, KillProjectile, TowerHelpers.TowerProjectileRotationTypes.LOOK_AT_TARGET);
-    }
+		yield return TowerHelpers.AnimateBezierProjectile(
+			arrow,
+			transform.position,
+			enemy,
+			2,
+			1,
+			KillProjectile,
+			TowerHelpers.TowerProjectileRotationTypes.LOOK_AT_TARGET
+		);
+	}
 
-    protected override void KillProjectile(GameObject projectile, GameObject enemy, Vector3 _enemyPosition)
-    {
-        Destroy(projectile);
-        if (enemy == null) return;
+	protected override void KillProjectile(
+		GameObject projectile,
+		GameObject enemy,
+		Vector3 _enemyPosition
+	)
+	{
+		Destroy(projectile);
+		if (enemy == null)
+			return;
 
-        enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.levels[level].damage, DamageTypes.PHYSICAL);
-    }
+		enemy
+			.GetComponent<BaseEnemy>()
+			.TakeDamage(towerData.levels[level].damage, DamageTypes.PHYSICAL);
+	}
 }

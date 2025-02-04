@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    public Image foregroundImage;
+	public Image foregroundImage;
 
-    public void SetHealth(float healthNormalized)
-    {
-        foregroundImage.fillAmount = healthNormalized;
-    }
+	public void SetHealth(float healthNormalized)
+	{
+		foregroundImage.fillAmount = healthNormalized;
+	}
 }

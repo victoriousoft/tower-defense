@@ -1,5 +1,5 @@
 public enum EnemyTypes
 {
-    GROUND,
-    FLYING,
+	GROUND,
+	FLYING,
 }

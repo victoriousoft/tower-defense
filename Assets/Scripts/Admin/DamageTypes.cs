@@ -1,2 +1,6 @@
-public enum DamageTypes { PHYSICAL, MAGIC, EXPLOSION }
-
+public enum DamageTypes
+{
+	PHYSICAL,
+	MAGIC,
+	EXPLOSION,
+}

@@ -4,125 +4,155 @@ using UnityEngine;
 
 public abstract class BaseTroop : MonoBehaviour
 {
-    public TroopSheet troopData;
+	public TroopSheet troopData;
 
-    [HideInInspector]
-    public float health;
-    [HideInInspector]
-    public Vector2 targetLocation;
-    [HideInInspector]
-    public int id = -1;
-    [HideInInspector]
-    public GameObject homeBase = null;
-    [HideInInspector]
-    public GameObject currentEnemy;
+	[HideInInspector]
+	public float health;
 
-    protected HealthBar healthBar;
-    protected bool canAttack = true;
-    protected bool ignoreEnemies = false;
-    protected bool isFigtning = false;
+	[HideInInspector]
+	public Vector2 targetLocation;
 
+	[HideInInspector]
+	public int id = -1;
 
-    protected abstract void Attack();
-    protected abstract void FixedUpdate();
+	[HideInInspector]
+	public GameObject homeBase = null;
 
-    void Awake()
-    {
-        health = troopData.stats.maxHealth;
-        healthBar = GetComponentInChildren<HealthBar>();
-    }
+	[HideInInspector]
+	public GameObject currentEnemy;
 
-    public void TakeDamage(float damage)
-    {
-        health -= damage;
-        healthBar.SetHealth(health / troopData.stats.maxHealth);
-        if (health <= 0) Die();
-    }
+	protected HealthBar healthBar;
+	protected bool canAttack = true;
+	protected bool ignoreEnemies = false;
+	protected bool isFigtning = false;
 
-    public void Heal(float amount)
-    {
-        health += amount;
-        health = Mathf.Min(health, troopData.stats.maxHealth);
-        healthBar.SetHealth(health / troopData.stats.maxHealth);
-    }
+	protected abstract void Attack();
+	protected abstract void FixedUpdate();
 
+	void Awake()
+	{
+		health = troopData.stats.maxHealth;
+		healthBar = GetComponentInChildren<HealthBar>();
+	}
 
-    public void Die()
-    {
-        currentEnemy.GetComponent<BaseEnemy>().currentTarget = null;
-        homeBase.GetComponent<Barracks>().RequestTroopRevive(id);
-        Destroy(gameObject);
+	public void TakeDamage(float damage)
+	{
+		health -= damage;
+		healthBar.SetHealth(health / troopData.stats.maxHealth);
+		if (health <= 0)
+			Die();
+	}
 
-    }
+	public void Heal(float amount)
+	{
+		health += amount;
+		health = Mathf.Min(health, troopData.stats.maxHealth);
+		healthBar.SetHealth(health / troopData.stats.maxHealth);
+	}
 
-    public void WalkTo(Vector3 target)
-    {
-        transform.position = Vector2.MoveTowards(transform.position, target, troopData.stats.speed * Time.fixedDeltaTime);
-    }
+	public void Die()
+	{
+		currentEnemy.GetComponent<BaseEnemy>().currentTarget = null;
+		homeBase.GetComponent<Barracks>().RequestTroopRevive(id);
+		Destroy(gameObject);
+	}
 
-    protected void FindNewEnemy()
-    {
-        GameObject[] enemiesInTroopRange = TowerHelpers.GetEnemiesInRange(transform.position, troopData.stats.visRange, new EnemyTypes[] { EnemyTypes.GROUND });
-        GameObject[] enemiesInTowerRange = TowerHelpers.GetEnemiesInRange(homeBase.transform.position, homeBase.GetComponent<BaseTower>().towerData.levels[homeBase.GetComponent<BaseTower>().level].range, new EnemyTypes[] { EnemyTypes.GROUND });
+	public void WalkTo(Vector3 target)
+	{
+		transform.position = Vector2.MoveTowards(
+			transform.position,
+			target,
+			troopData.stats.speed * Time.fixedDeltaTime
+		);
+	}
 
-        GameObject[] enemiesInRange = enemiesInTroopRange.Intersect(enemiesInTowerRange).Where(enemy => enemy.GetComponent<BaseEnemy>().currentTarget == null).ToArray();
-        enemiesInRange = enemiesInRange.Where(enemy => troopData.enemyTypes.Contains(enemy.GetComponent<BaseEnemy>().enemyData.enemyType)).ToArray();
+	protected void FindNewEnemy()
+	{
+		GameObject[] enemiesInTroopRange = TowerHelpers.GetEnemiesInRange(
+			transform.position,
+			troopData.stats.visRange,
+			new EnemyTypes[] { EnemyTypes.GROUND }
+		);
+		GameObject[] enemiesInTowerRange = TowerHelpers.GetEnemiesInRange(
+			homeBase.transform.position,
+			homeBase
+				.GetComponent<BaseTower>()
+				.towerData.levels[homeBase.GetComponent<BaseTower>().level]
+				.range,
+			new EnemyTypes[] { EnemyTypes.GROUND }
+		);
 
-        enemiesInRange = enemiesInRange
-            .OrderBy(enemy => enemy.GetComponent<BaseEnemy>().currentTarget != null)
-            .ThenBy(enemy => Vector3.Distance(transform.position, enemy.transform.position))
-            .ToArray();
+		GameObject[] enemiesInRange = enemiesInTroopRange
+			.Intersect(enemiesInTowerRange)
+			.Where(enemy => enemy.GetComponent<BaseEnemy>().currentTarget == null)
+			.ToArray();
+		enemiesInRange = enemiesInRange
+			.Where(enemy =>
+				troopData.enemyTypes.Contains(enemy.GetComponent<BaseEnemy>().enemyData.enemyType)
+			)
+			.ToArray();
 
-        if (enemiesInRange.Length > 0) SetEnemy(enemiesInRange[0]);
+		enemiesInRange = enemiesInRange
+			.OrderBy(enemy => enemy.GetComponent<BaseEnemy>().currentTarget != null)
+			.ThenBy(enemy => Vector3.Distance(transform.position, enemy.transform.position))
+			.ToArray();
 
-        else
-        {
-            if (!isFigtning)
-            {
-                GameObject fightingEnemy = homeBase.GetComponent<Barracks>().FindFightingEnemy();
-                if (fightingEnemy != null) SetEnemy(fightingEnemy);
-            }
-        }
-    }
+		if (enemiesInRange.Length > 0)
+			SetEnemy(enemiesInRange[0]);
+		else
+		{
+			if (!isFigtning)
+			{
+				GameObject fightingEnemy = homeBase.GetComponent<Barracks>().FindFightingEnemy();
+				if (fightingEnemy != null)
+					SetEnemy(fightingEnemy);
+			}
+		}
+	}
 
-    private void SetEnemy(GameObject enemy)
-    {
-        enemy.GetComponent<BaseEnemy>().isPaused = true;
-        enemy.GetComponent<BaseEnemy>().RequestTarget(gameObject);
-        targetLocation = enemy.GetComponent<BaseEnemy>().GetAttackLocation(troopData.stats.attackRange);
-        currentEnemy = enemy;
-    }
+	private void SetEnemy(GameObject enemy)
+	{
+		enemy.GetComponent<BaseEnemy>().isPaused = true;
+		enemy.GetComponent<BaseEnemy>().RequestTarget(gameObject);
+		targetLocation = enemy
+			.GetComponent<BaseEnemy>()
+			.GetAttackLocation(troopData.stats.attackRange);
+		currentEnemy = enemy;
+	}
 
-    public void ForceReposition()
-    {
-        ForceReposition(Vector2.zero);
-    }
+	public void ForceReposition()
+	{
+		ForceReposition(Vector2.zero);
+	}
 
-    public void ForceReposition(Vector2 position)
-    {
-        isFigtning = false;
-        ignoreEnemies = true;
+	public void ForceReposition(Vector2 position)
+	{
+		isFigtning = false;
+		ignoreEnemies = true;
 
-        if (currentEnemy != null && currentEnemy.GetComponent<BaseEnemy>().currentTarget == gameObject)
-        {
-            currentEnemy.GetComponent<BaseEnemy>().currentTarget = null;
-        }
+		if (
+			currentEnemy != null
+			&& currentEnemy.GetComponent<BaseEnemy>().currentTarget == gameObject
+		)
+		{
+			currentEnemy.GetComponent<BaseEnemy>().currentTarget = null;
+		}
 
-        currentEnemy = null;
+		currentEnemy = null;
 
-        if (position != Vector2.zero)
-        {
-            targetLocation = position;
-        }
-        else
-        {
-            targetLocation = homeBase.GetComponent<Barracks>().RequestTroopRandezvousPoint(id);
-        }
-    }
+		if (position != Vector2.zero)
+		{
+			targetLocation = position;
+		}
+		else
+		{
+			targetLocation = homeBase.GetComponent<Barracks>().RequestTroopRandezvousPoint(id);
+		}
+	}
 
-    protected IEnumerator ResetAttackCooldown()
-    {
-        yield return new WaitForSeconds(troopData.stats.attackCooldown);
-        canAttack = true;
-    }
+	protected IEnumerator ResetAttackCooldown()
+	{
+		yield return new WaitForSeconds(troopData.stats.attackCooldown);
+		canAttack = true;
+	}
 }
