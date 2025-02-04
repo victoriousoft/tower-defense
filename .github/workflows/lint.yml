@@ -16,10 +16,6 @@ jobs:
             - name: Install CSharpier
               run: |
                   dotnet tool install --global csharpier
-                  echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
-
-            - name: Verify Installation
-              run: csharpier --version
 
             - name: Format C# Code
-              run: csharpier --check .
+              run: dotnet-csharpier --check .
