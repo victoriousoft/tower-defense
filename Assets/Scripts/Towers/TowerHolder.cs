@@ -25,11 +25,14 @@ public class TowerHolder : MonoBehaviour
     private TowerButton[] towerButtons;
 
     private LineRenderer rangeRenderer;
-    [SerializeField] private GameObject infoPanel;
-    [SerializeField] private TextMeshProUGUI infoText;
+    private GameObject infoPanel;
+    private TextMeshProUGUI infoText;
 
     void Awake()
     {
+        infoPanel = GameObject.Find("InfoPanel");
+        infoText = GameObject.Find("InfoText").GetComponent<TextMeshProUGUI>();
+
         rangeRenderer = gameObject.AddComponent<LineRenderer>();
         towerButtons = GetComponentsInChildren<TowerButton>();
 
