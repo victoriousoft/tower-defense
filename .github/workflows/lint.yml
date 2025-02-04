@@ -3,6 +3,7 @@ name: Unity C# Format
 on:
     push:
         branches: ["main"]
+    workflow_dispatch:
 
 jobs:
     unity-csharp-format:
