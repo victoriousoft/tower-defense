@@ -19,19 +19,19 @@ MonoBehaviour:
   enemyTypes: 0000000001000000
   levels:
   - price: 100
-    range: 1
-    damage: 25
-    cooldown: 3
-  - price: 200
     range: 2
     damage: 25
     cooldown: 3
-  - price: 300
+  - price: 200
     range: 3
     damage: 25
     cooldown: 3
-  - price: 400
+  - price: 300
     range: 4
+    damage: 25
+    cooldown: 3
+  - price: 400
+    range: 5
     damage: 25
     cooldown: 3
   evolutions: []

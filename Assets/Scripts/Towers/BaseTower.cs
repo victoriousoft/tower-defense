@@ -51,16 +51,18 @@ public abstract class BaseTower : MonoBehaviour
 
         yield return Shoot(target);
 
+        towerAnimator.SetTrigger("idle");
+
         yield return new WaitForSeconds(towerData.levels[level - 1].cooldown);
         canShoot = true;
     }
 
-    public void UpgradeTower(int evolutionIndex = -1)
+    public void UpgradeTower()
     {
-        StartCoroutine(UpgradeRoutine(evolutionIndex));
+        StartCoroutine(UpgradeRoutine());
     }
 
-    private IEnumerator UpgradeRoutine(int evolutionIndex)
+    private IEnumerator UpgradeRoutine()
     {
         canShoot = false;
 
@@ -70,35 +72,13 @@ public abstract class BaseTower : MonoBehaviour
             shootCoroutine = null;
         }
 
-        Debug.Log($"Level: {level}, max level: {towerData.levels.Length - 1}");
-        if (towerData.levels.Length > level + 1)
+        // Upgrade the tower
+        if (playerStats.SubtractGold(towerData.levels[level].price))
         {
-            // upgrade level
-            if (playerStats.SubtractGold(towerData.levels[level + 1].price))
-            {
-                level++;
-                towerAnimator.SetTrigger("upgrade");
+            level++;
+            towerAnimator.SetTrigger("upgrade");
 
-                yield return null;
-            }
-        }
-        else
-        {
-            // upgrade to evolution
-            if (evolutionIndex == -1 || evolutionIndex >= towerData.evolutions.Length)
-            {
-                Debug.LogError($"Invalid evolution index: {evolutionIndex}, max index: {towerData.evolutions.Length - 1}");
-                canShoot = true;
-                yield break;
-            }
-            if (playerStats.SubtractGold(towerData.evolutions[evolutionIndex].price))
-            {
-                towerAnimator.SetTrigger("upgrade");
-
-                Instantiate(towerData.evolutions[evolutionIndex].prefab, transform.position, Quaternion.identity);
-
-                Destroy(gameObject);
-            }
+            yield return null;
         }
 
         canShoot = true;

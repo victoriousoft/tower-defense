@@ -11,6 +11,7 @@ public class TowerHolder : MonoBehaviour
     private bool menuLocked = false;
 
     private GameObject towerInstance;
+    private TowerTypes towerInstanceType = TowerTypes.None;
     private PlayerStatsManager playerStats;
 
     public GameObject barracksPrefab;
@@ -24,11 +25,14 @@ public class TowerHolder : MonoBehaviour
     private TowerButton[] towerButtons;
 
     private LineRenderer rangeRenderer;
-    [SerializeField] private GameObject infoPanel;
-    [SerializeField] private TextMeshProUGUI infoText;
+    private GameObject infoPanel;
+    private TextMeshProUGUI infoText;
 
     void Awake()
     {
+        infoPanel = GameObject.Find("InfoPanel");
+        infoText = GameObject.Find("InfoText").GetComponent<TextMeshProUGUI>();
+
         rangeRenderer = gameObject.AddComponent<LineRenderer>();
         towerButtons = GetComponentsInChildren<TowerButton>();
 
@@ -101,6 +105,7 @@ public class TowerHolder : MonoBehaviour
             yield return new WaitForSecondsRealtime(1.5f);
             menuLocked = false;
             towerInstance = Instantiate(towerPrefabs[towerType], transform.position, Quaternion.identity, transform);
+            towerInstanceType = towerType;
             baseTowerScript = towerInstance.GetComponent<BaseTower>();
             TowerHelpers.SetRangeCircle(rangeRenderer, baseTowerScript.towerData.levels[baseTowerScript.level].range, transform.position);
             rangeRenderer.enabled = false;
@@ -122,6 +127,7 @@ public class TowerHolder : MonoBehaviour
             BaseTower baseTower = towerInstance.GetComponent<BaseTower>();
             playerStats.AddGold(baseTower.towerData.levels[baseTower.level].price / 2);
             towerInstance = null;
+            towerInstanceType = TowerTypes.None;
             towerHolderAnimator.Play("towerHolder_idle");
 
             TowerHelpers.SetRangeCircle(rangeRenderer, 0, transform.position);
@@ -208,8 +214,10 @@ public class TowerHolder : MonoBehaviour
         infoPanel.SetActive(true);
         if (towerType == TowerTypes.Upgrade)
         {
+            float damageChange = baseTowerScript.towerData.levels[baseTowerScript.level].damage - baseTowerScript.towerData.levels[baseTowerScript.level - 1].damage;
+            string damageSign = Mathf.Sign(damageChange) > 0 ? "+" : "-";
             infoText.text = "level " + (baseTowerScript.level + 1) + "\n" +
-                        "dmg- " + baseTowerScript.towerData.levels[baseTowerScript.level].damage + "(+" + (baseTowerScript.towerData.levels[baseTowerScript.level].damage - baseTowerScript.towerData.levels[baseTowerScript.level-1].damage) + ")" + "\n" +
+                        "dmg- " + baseTowerScript.towerData.levels[baseTowerScript.level].damage + "(" + damageSign + damageChange + ")" + "\n" +
                         "cost- " + baseTowerScript.towerData.levels[baseTowerScript.level].price;
         }
         else if (towerType == TowerTypes.Destroy)
