@@ -1,34 +1,20 @@
----
-name: Lint
+name: .NET format
 
-on: # yamllint disable-line rule:truthy
-    push: null
-    pull_request: null
+on:
+    push:
+        branches: ["main"]
+    pull_request:
+        branches: ["main"]
 
 jobs:
-    build:
-        name: Lint
+    dotnet-format:
         runs-on: ubuntu-latest
 
-        permissions:
-            contents: read
-            packages: read
-            statuses: write
-
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
+            - uses: actions/checkout@v4
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v3
               with:
-                  fetch-depth: 0
-
-            - name: Run editorconfig fix
-              run: npx editorconfig-checker --fix
-
-            - name: push changes to branch
-              uses: stefanzweifel/git-auto-commit-action@v4
-              with:
-                  commit_message: "Fix EditorConfig issues"
-                  commit_user_name: "github-actions[bot]"
-                  commit_user_email: "github-actions[bot]@users.noreply.github.com"
-                  branch: ${{ github.head_ref }}
-                  token: ${{ secrets.GITHUB_TOKEN }}
+                  dotnet-version: 9.x.x
+            - name: Format
+              run: dotnet format --verify-no-changes --verbosity diagnostic
