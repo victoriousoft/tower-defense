@@ -16,8 +16,9 @@ mergeInto(LibraryManager.library, {
 		}
 	},
 	InitMessageListener: function () {
-		if (window.parent === window) {
-			console.error("Game is not running in an iframe");
+		try {
+			return window.self !== window.top;
+		} catch (e) {
 			return false;
 		}
 		if (typeof window !== "undefined") {
