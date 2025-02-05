@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 797a0241fe2889345bd8a20faa3b82d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 1
+  level: 0
   towerData: {fileID: 11400000, guid: 807b62f3fac1db34c9c1e43f4949424a, type: 2}
   targetType: 0
   projectileOrigin: {fileID: 3754848899202580558}

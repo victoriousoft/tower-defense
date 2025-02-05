@@ -234,22 +234,22 @@ public class TowerHolder : MonoBehaviour
 		if (towerType == TowerTypes.Upgrade)
 		{
 			float damageChange =
-				baseTowerScript.towerData.levels[baseTowerScript.level].damage
-				- baseTowerScript.towerData.levels[baseTowerScript.level - 1].damage;
+				baseTowerScript.towerData.levels[baseTowerScript.level + 1].damage
+				- baseTowerScript.towerData.levels[baseTowerScript.level].damage;
 			string damageSign = Mathf.Sign(damageChange) > 0 ? "+" : "-";
 			infoText.text =
 				"level "
 				+ (baseTowerScript.level + 1)
 				+ "\n"
 				+ "dmg- "
-				+ baseTowerScript.towerData.levels[baseTowerScript.level].damage
+				+ baseTowerScript.towerData.levels[baseTowerScript.level + 1].damage
 				+ "("
 				+ damageSign
 				+ damageChange
 				+ ")"
 				+ "\n"
 				+ "cost- "
-				+ baseTowerScript.towerData.levels[baseTowerScript.level].price;
+				+ baseTowerScript.towerData.levels[baseTowerScript.level + 1].price;
 		}
 		else if (towerType == TowerTypes.Destroy)
 		{

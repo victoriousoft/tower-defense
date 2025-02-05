@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c977bb1f84a77684296892f5bc0ad763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 1
+  level: 0
   towerData: {fileID: 11400000, guid: 486ff5c4b199b964b8a8b93c0ca3038c, type: 2}
   targetType: 0
   troopCount: 3

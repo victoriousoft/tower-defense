@@ -3,6 +3,7 @@ using UnityEngine;
 
 public abstract class BaseTower : MonoBehaviour
 {
+	[HideInInspector]
 	public int level = 0;
 	public TowerSheetNeo towerData;
 	private PlayerStatsManager playerStats;
@@ -53,7 +54,7 @@ public abstract class BaseTower : MonoBehaviour
 
 		GameObject[] enemies = TowerHelpers.GetEnemiesInRange(
 			transform.position,
-			towerData.levels[level - 1].range,
+			towerData.levels[level].range,
 			towerData.enemyTypes
 		);
 		if (enemies.Length == 0)
@@ -63,7 +64,7 @@ public abstract class BaseTower : MonoBehaviour
 			yield break;
 		}
 		GameObject target = TowerHelpers.SelectEnemyToAttack(
-			TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range - 1, towerData.enemyTypes),
+			TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range, towerData.enemyTypes),
 			targetType
 		);
 
@@ -71,7 +72,7 @@ public abstract class BaseTower : MonoBehaviour
 
 		towerAnimator.SetTrigger("idle");
 
-		yield return new WaitForSeconds(towerData.levels[level - 1].cooldown);
+		yield return new WaitForSeconds(towerData.levels[level].cooldown);
 		canShoot = true;
 	}
 
@@ -91,7 +92,7 @@ public abstract class BaseTower : MonoBehaviour
 		}
 
 		// Upgrade the tower
-		if (playerStats.SubtractGold(towerData.levels[level].price))
+		if (playerStats.SubtractGold(towerData.levels[level + 1].price))
 		{
 			level++;
 			towerAnimator.SetTrigger("upgrade");
