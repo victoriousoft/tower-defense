@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 
+if [[ "$OSTYPE" != "msys" ]]; then
+    echo "Skipping dotnet-csharpier because platform is not windows."
+    exit 0
+fi
+
+
 if ! command -v dotnet &> /dev/null
 then
     echo "dotnet command could not be found. Please install dotnet."
-    read -p "Do you want to continue? (y/n) " -n 1 -r
-    if [[ ! $REPLY =~ ^[Yy]$ ]]
-    then
-        echo "Exiting..."
-        exit 1
-    fi
+    exit 1
 fi
 
 if ! command -v dotnet-csharpier &> /dev/null
@@ -18,6 +19,9 @@ then
 fi
 
 echo "Running dotnet-csharpier..."
-dotnet-csharpier ./Assets/Scripts/
+if ! dotnet-csharpier ./Assets/Scripts/; then
+    echo "dotnet-csharpier failed!"
+    exit 1
+fi
 
 echo "dotnet-csharpier completed successfully."
