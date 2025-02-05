@@ -3,7 +3,12 @@
 if ! command -v dotnet &> /dev/null
 then
     echo "dotnet command could not be found. Please install dotnet."
-    exit 0
+    read -p "Do you want to continue? (y/n) " -n 1 -r
+    if [[ ! $REPLY =~ ^[Yy]$ ]]
+    then
+        echo "Exiting..."
+        exit 1
+    fi
 fi
 
 if ! command -v dotnet-csharpier &> /dev/null
