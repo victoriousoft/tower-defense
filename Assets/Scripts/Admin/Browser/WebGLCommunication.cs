@@ -31,7 +31,6 @@ public class WebGLMessageHandler : MonoBehaviour
 		string jsonMessage = JsonUtility.ToJson(message);
 		Debug.Log("UNITY - Sending message to JavaScript: " + jsonMessage);
 		SendToJavaScript(message);
-
 	}
 
 	public void SendToJavaScript(BrowserMessage message)
