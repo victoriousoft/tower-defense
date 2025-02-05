@@ -16,6 +16,10 @@ mergeInto(LibraryManager.library, {
 		}
 	},
 	InitMessageListener: function () {
+		if (window.parent === window) {
+			console.error("Game is not running in an iframe");
+			return false;
+		}
 		if (typeof window !== "undefined") {
 			window.addEventListener("message", function (event) {
 				if (event.data.type !== "jsToUnity") return;

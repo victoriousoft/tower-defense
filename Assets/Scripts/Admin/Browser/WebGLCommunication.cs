@@ -7,7 +7,7 @@ public class WebGLMessageHandler : MonoBehaviour
 	private static extern void SendMessageToJS(string message);
 
 	[DllImport("__Internal")]
-	private static extern void InitMessageListener();
+	private static extern bool InitMessageListener();
 
 	[System.Serializable]
 	public class BrowserMessage
@@ -18,12 +18,20 @@ public class WebGLMessageHandler : MonoBehaviour
 
 	void Start()
 	{
-		InitMessageListener();
+		bool initRes = InitMessageListener();
+		if (!initRes)
+		{
+			Debug.LogError("Failed to initialize message listener, game is not running in a browser, terminating");
+			Time.timeScale = 0;
+			return;
+		}
+
 		BrowserMessage message = new BrowserMessage { action = "ready", args = null };
 
 		string jsonMessage = JsonUtility.ToJson(message);
 		Debug.Log("UNITY - Sending message to JavaScript: " + jsonMessage);
 		SendToJavaScript(message);
+
 	}
 
 	public void SendToJavaScript(BrowserMessage message)
