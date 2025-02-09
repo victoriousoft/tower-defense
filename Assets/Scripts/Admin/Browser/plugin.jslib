@@ -16,11 +16,6 @@ mergeInto(LibraryManager.library, {
 		}
 	},
 	InitMessageListener: function () {
-		try {
-			return window.self !== window.top;
-		} catch (e) {
-			return false;
-		}
 		if (typeof window !== "undefined") {
 			window.addEventListener("message", function (event) {
 				if (event.data.type !== "jsToUnity") return;
@@ -32,6 +27,12 @@ mergeInto(LibraryManager.library, {
 					console.error("Error sending message to Unity:", e);
 				}
 			});
+		}
+
+		try {
+			return window.self !== window.top || window.location.hostname === "localhost";
+		} catch (e) {
+			return false;
 		}
 	},
 });
