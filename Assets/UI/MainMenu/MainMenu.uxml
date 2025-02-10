@@ -1,0 +1,24 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/MainMenu/MainMenu.uss?fileID=7433441132597879392&amp;guid=6ab355a200b950a43a5930d06acaf1c0&amp;type=3#MainMenu" />
+    <ui:VisualElement name="VisualElement" class="main-menu">
+        <ui:VisualElement>
+            <ui:Label tabindex="-1" text="Ratar TD" display-tooltip-when-elided="true" style="color: rgb(255, 255, 255); font-size: 80%;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="LevelsContainer" class="levels-container">
+            <ui:VisualElement class="levels-row">
+                <ui:Button text="Level 1" display-tooltip-when-elided="true" enable-rich-text="true" class="level-btn" />
+                <ui:Button text="Level 2" display-tooltip-when-elided="true" enable-rich-text="true" class="level-btn" />
+                <ui:Button text="Level 3" display-tooltip-when-elided="true" enable-rich-text="true" class="level-btn" />
+                <ui:Button text="Level 4" display-tooltip-when-elided="true" enable-rich-text="true" class="level-btn" />
+                <ui:Button text="Level 5" display-tooltip-when-elided="true" enable-rich-text="true" class="level-btn" />
+            </ui:VisualElement>
+            <ui:VisualElement class="levels-row">
+                <ui:Button text="Level 6" display-tooltip-when-elided="true" enable-rich-text="true" class="level-btn" />
+                <ui:Button text="Level 7" display-tooltip-when-elided="true" enable-rich-text="true" class="level-btn" />
+                <ui:Button text="Level 8" display-tooltip-when-elided="true" enable-rich-text="true" class="level-btn" />
+                <ui:Button text="Level 9" display-tooltip-when-elided="true" enable-rich-text="true" class="level-btn" />
+                <ui:Button text="Level 10" display-tooltip-when-elided="true" enable-rich-text="true" class="level-btn" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
