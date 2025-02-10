@@ -8,9 +8,7 @@ public class MainMenuController : MonoBehaviour
 	private VisualElement ui;
 	private List<Button> buttons = new();
 
-	private readonly string[] levelScenes = {
-		"Assets/Scenes/Levels/Sandbox.unity",
-	};
+	private readonly string[] levelScenes = { "Assets/Scenes/Levels/Sandbox.unity" };
 
 	void Awake()
 	{
@@ -27,9 +25,9 @@ public class MainMenuController : MonoBehaviour
 			}
 
 			buttons[i].clicked += () => LoadLevel(levelScenes[index]);
-
 		}
 	}
+
 	void LoadLevel(string levelPath)
 	{
 		string sceneName = levelPath.Replace("Assets/", "").Replace(".unity", "");
