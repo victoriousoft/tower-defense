@@ -19,10 +19,42 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    margin-top: 20px;
 }
 
 .level-btn {
     width: 150px;
     height: 100px;
     font-size: 200%;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    background-color: rgb(196, 164, 132);
+    color: rgb(59, 31, 10);
+    border-width: 4px;
+    border-color: rgb(90, 62, 27);
+    border-radius: 8px;
+    transition-property: background-color, scale;
+    transition-duration: 0.2s, 0.1s;
+    transition-timing-function: ease-in-out;
+}
+
+.level-btn:hover {
+    background-color: rgb(179, 139, 103);
+    border-color: rgb(74, 47, 20);
+    scale: 1.05 1.05;
+}
+
+.level-btn:active {
+    background-color: rgb(140, 95, 61);
+    border-color: rgb(59, 31, 10);
+    scale: 0.95 0.95;
+}
+
+.title {
+    font-size: 1000%;
+    -unity-font-style: bold;
+    color: rgb(150, 140, 130);
+    margin-bottom: 40px;
+    letter-spacing: 4px;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
 }
