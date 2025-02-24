@@ -1,0 +1,59 @@
+name: Test Docker Build
+
+on:
+    pull_request:
+        branches: [main]
+
+jobs:
+    test-build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+
+            - name: Create LFS file list
+              run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
+
+            - name: Restore LFS cache
+              uses: actions/cache@v3
+              id: lfs-cache
+              with:
+                  path: .git/lfs
+                  key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+
+            - name: Git LFS Pull
+              run: |
+                  git lfs pull
+                  git add .
+                  git reset --hard
+
+            - name: Restore Unity Library Cache
+              uses: actions/cache@v3
+              with:
+                  path: Library
+                  key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+                  restore-keys: |
+                      Library-
+
+            - name: Build Unity project
+              uses: game-ci/unity-builder@v4
+              env:
+                  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+                  UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+                  UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+              with:
+                  targetPlatform: WebGL
+                  buildsPath: Build
+
+            - name: Build Docker image
+              uses: docker/build-push-action@v4
+              with:
+                  context: .
+                  push: false
+                  tags: pr-test:latest
+                  cache-from: type=gha
+                  cache-to: type=gha,mode=max
+                  load: true
+
+            - name: Inspect Docker image
+              run: docker inspect pr-test:latest
