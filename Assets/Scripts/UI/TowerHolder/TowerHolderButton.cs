@@ -56,6 +56,7 @@ public class TowerHolderButton : MonoBehaviour
 {
 	[HideInInspector]
 	public ButtonAction buttonAction;
+
 	[HideInInspector]
 	public GameObject towerHolder;
 	public SpriteRenderer iconSpriteRenderer;
@@ -67,6 +68,7 @@ public class TowerHolderButton : MonoBehaviour
 		lineRenderer = gameObject.AddComponent<LineRenderer>();
 		lineRenderer.enabled = false;
 	}
+
 	public void OnMouseDown()
 	{
 		TooltipManager.Hide();
@@ -86,7 +88,11 @@ public class TowerHolderButton : MonoBehaviour
 				tower = towerHolder.GetComponent<TowerHolderNeo>().GetBaseTowerScript(buttonAction.GetTowerType());
 				string stats = tower.towerData.GetBuyStats();
 				TooltipManager.Show(tower.towerData.towerName, stats);
-				TowerHelpers.SetRangeCircle(lineRenderer, tower.towerData.levels[0].range, towerHolder.transform.position);
+				TowerHelpers.SetRangeCircle(
+					lineRenderer,
+					tower.towerData.levels[0].range,
+					towerHolder.transform.position
+				);
 				lineRenderer.enabled = true;
 
 				break;
@@ -95,13 +101,20 @@ public class TowerHolderButton : MonoBehaviour
 				tower = towerHolder.GetComponent<TowerHolderNeo>().GetBaseTowerScript(null);
 				string upgradeStats = tower.towerData.GetUpgradeStats(tower.level);
 				TooltipManager.Show(tower.towerData.towerName + " " + (tower.level + 2), upgradeStats);
-				TowerHelpers.SetRangeCircle(lineRenderer, tower.towerData.levels[tower.level + 1].range, towerHolder.transform.position);
+				TowerHelpers.SetRangeCircle(
+					lineRenderer,
+					tower.towerData.levels[tower.level + 1].range,
+					towerHolder.transform.position
+				);
 				lineRenderer.enabled = true;
 				break;
 
 			case ButtonAction.SELL:
 				tower = towerHolder.GetComponent<TowerHolderNeo>().GetBaseTowerScript(null);
-				TooltipManager.Show("Sell " + tower.towerData.towerName, "Sell for " + tower.towerData.levels[0].price / 2);
+				TooltipManager.Show(
+					"Sell " + tower.towerData.towerName,
+					"Sell for " + tower.towerData.levels[0].price / 2
+				);
 				break;
 
 			case ButtonAction.BUY_EVOLUTION_1:

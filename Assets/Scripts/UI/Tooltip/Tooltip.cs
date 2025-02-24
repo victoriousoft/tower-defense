@@ -29,7 +29,6 @@ public class Tooltip : MonoBehaviour
 		position.x += tooltipWidth / 4; // + Screen.width / 100;
 		position.y -= tooltipHeight / 4; // + Screen.height / 100;
 
-
 		transform.position = position;
 	}
 

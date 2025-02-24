@@ -92,12 +92,10 @@ public abstract class BaseTower : MonoBehaviour
 			shootCoroutine = null;
 		}
 
-
 		level++;
 		towerAnimator.SetTrigger("upgrade");
 
 		yield return null;
-
 
 		canShoot = true;
 	}

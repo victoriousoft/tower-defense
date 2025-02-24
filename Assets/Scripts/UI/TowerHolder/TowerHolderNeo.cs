@@ -7,8 +7,9 @@ public enum MenuState
 	Initial,
 	UpgradeTowerBase,
 	UpgradeTowerFinal,
-	EvolutionTower
+	EvolutionTower,
 }
+
 public enum ButtonIndex
 {
 	TOP_LEFT = 0,
@@ -46,7 +47,7 @@ public class TowerHolderNeo : MonoBehaviour
 			{ TowerTypes.Archer, archerPrefab },
 			{ TowerTypes.Barracks, barracksPrefab },
 			{ TowerTypes.Magic, magicPrefab },
-			{ TowerTypes.Bomb, bombPrefab }
+			{ TowerTypes.Bomb, bombPrefab },
 		};
 
 		rangeRenderer = gameObject.AddComponent<LineRenderer>();
@@ -70,10 +71,7 @@ public class TowerHolderNeo : MonoBehaviour
 		ChangeState(MenuState.Initial);
 	}
 
-	void Update()
-	{
-
-	}
+	void Update() { }
 
 	void OnMouseEnter()
 	{
@@ -82,8 +80,10 @@ public class TowerHolderNeo : MonoBehaviour
 
 	void OnMouseDown()
 	{
-		if (isMenuActive) HideButtons();
-		else ShowButtons();
+		if (isMenuActive)
+			HideButtons();
+		else
+			ShowButtons();
 	}
 
 	public void ButtonClicked(ButtonAction buttonAction)
@@ -123,13 +123,14 @@ public class TowerHolderNeo : MonoBehaviour
 	private void ShowButtons()
 	{
 		isMenuActive = true;
-		if (towerInstance != null) rangeRenderer.enabled = true;
+		if (towerInstance != null)
+			rangeRenderer.enabled = true;
 
 		for (int i = 0; i < menuButtons.Length; i++)
 		{
-			if (menuButtons[i].GetComponent<TowerHolderButton>().buttonAction != ButtonAction.NONE) menuButtons[i].SetActive(true);
+			if (menuButtons[i].GetComponent<TowerHolderButton>().buttonAction != ButtonAction.NONE)
+				menuButtons[i].SetActive(true);
 		}
-
 	}
 
 	private void HideButtons()
@@ -155,20 +156,38 @@ public class TowerHolderNeo : MonoBehaviour
 		switch (newState)
 		{
 			case MenuState.Initial:
-				menuButtons[(int)ButtonIndex.TOP_LEFT].GetComponent<TowerHolderButton>().SetAction(ButtonAction.BUILD_ARCHER);
-				menuButtons[(int)ButtonIndex.TOP_RIGHT].GetComponent<TowerHolderButton>().SetAction(ButtonAction.BUILD_BARRACKS);
-				menuButtons[(int)ButtonIndex.BOTTOM_LEFT].GetComponent<TowerHolderButton>().SetAction(ButtonAction.BUILD_MAGIC);
-				menuButtons[(int)ButtonIndex.BOTTOM_RIGHT].GetComponent<TowerHolderButton>().SetAction(ButtonAction.BUILD_BOMB);
+				menuButtons[(int)ButtonIndex.TOP_LEFT]
+					.GetComponent<TowerHolderButton>()
+					.SetAction(ButtonAction.BUILD_ARCHER);
+				menuButtons[(int)ButtonIndex.TOP_RIGHT]
+					.GetComponent<TowerHolderButton>()
+					.SetAction(ButtonAction.BUILD_BARRACKS);
+				menuButtons[(int)ButtonIndex.BOTTOM_LEFT]
+					.GetComponent<TowerHolderButton>()
+					.SetAction(ButtonAction.BUILD_MAGIC);
+				menuButtons[(int)ButtonIndex.BOTTOM_RIGHT]
+					.GetComponent<TowerHolderButton>()
+					.SetAction(ButtonAction.BUILD_BOMB);
 				break;
 
 			case MenuState.UpgradeTowerBase:
-				menuButtons[(int)ButtonIndex.TOP_CENTER].GetComponent<TowerHolderButton>().SetAction(ButtonAction.UPGRADE_LEVEL);
-				menuButtons[(int)ButtonIndex.BOTTOM_CENTER].GetComponent<TowerHolderButton>().SetAction(ButtonAction.SELL);
+				menuButtons[(int)ButtonIndex.TOP_CENTER]
+					.GetComponent<TowerHolderButton>()
+					.SetAction(ButtonAction.UPGRADE_LEVEL);
+				menuButtons[(int)ButtonIndex.BOTTOM_CENTER]
+					.GetComponent<TowerHolderButton>()
+					.SetAction(ButtonAction.SELL);
 				break;
 			case MenuState.UpgradeTowerFinal:
-				menuButtons[(int)ButtonIndex.TOP_LEFT].GetComponent<TowerHolderButton>().SetAction(ButtonAction.BUY_EVOLUTION_1);
-				menuButtons[(int)ButtonIndex.TOP_RIGHT].GetComponent<TowerHolderButton>().SetAction(ButtonAction.BUY_EVOLUTION_2);
-				menuButtons[(int)ButtonIndex.BOTTOM_CENTER].GetComponent<TowerHolderButton>().SetAction(ButtonAction.SELL);
+				menuButtons[(int)ButtonIndex.TOP_LEFT]
+					.GetComponent<TowerHolderButton>()
+					.SetAction(ButtonAction.BUY_EVOLUTION_1);
+				menuButtons[(int)ButtonIndex.TOP_RIGHT]
+					.GetComponent<TowerHolderButton>()
+					.SetAction(ButtonAction.BUY_EVOLUTION_2);
+				menuButtons[(int)ButtonIndex.BOTTOM_CENTER]
+					.GetComponent<TowerHolderButton>()
+					.SetAction(ButtonAction.SELL);
 				break;
 			case MenuState.EvolutionTower:
 				break;
@@ -179,7 +198,6 @@ public class TowerHolderNeo : MonoBehaviour
 
 	private void BuyTower(GameObject towerPrefab)
 	{
-
 		if (!PlayerStatsManager.SubtractGold(towerPrefab.GetComponent<BaseTower>().towerData.levels[0].price))
 		{
 			Debug.Log("Not enough gold");
@@ -203,7 +221,8 @@ public class TowerHolderNeo : MonoBehaviour
 
 	private void SellTower()
 	{
-		if (towerInstance == null) return;
+		if (towerInstance == null)
+			return;
 
 		BaseTower baseTower = towerInstance.GetComponent<BaseTower>();
 		PlayerStatsManager.AddGold(baseTower.towerData.levels[baseTower.level].price / 2);
@@ -218,7 +237,8 @@ public class TowerHolderNeo : MonoBehaviour
 
 	private void UpgradeTower()
 	{
-		if (towerInstance == null) return;
+		if (towerInstance == null)
+			return;
 
 		BaseTower baseTower = towerInstance.GetComponent<BaseTower>();
 		if (!PlayerStatsManager.SubtractGold(baseTower.towerData.levels[baseTower.level + 1].price))
@@ -236,6 +256,7 @@ public class TowerHolderNeo : MonoBehaviour
 		);
 
 		HideButtons();
-		if (baseTower.level == 2) ChangeState(MenuState.UpgradeTowerFinal);
+		if (baseTower.level == 2)
+			ChangeState(MenuState.UpgradeTowerFinal);
 	}
 }
