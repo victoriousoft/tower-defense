@@ -21,7 +21,6 @@ public abstract class BaseEnemy : MonoBehaviour
 
 	private readonly float[] resistanceValues = new float[] { 1, 0.5f, 0.35f, 0.2f, 0 };
 	private HealthBar healthBar;
-	private PlayerStatsManager playerStats;
 
 	protected bool canAttack = true;
 	protected abstract void Attack();
@@ -30,8 +29,6 @@ public abstract class BaseEnemy : MonoBehaviour
 	{
 		health = enemyData.stats.maxHealth;
 		healthBar = GetComponentInChildren<HealthBar>();
-		playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
-
 		positionOffset = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
 		if (enemyData.enemyType == EnemyTypes.FLYING)
 			positionOffset.y += 1f;
@@ -143,7 +140,7 @@ public abstract class BaseEnemy : MonoBehaviour
 		if (health <= 0)
 		{
 			Destroy(gameObject);
-			playerStats.AddGold(enemyData.stats.cashDrop); //random??
+			PlayerStatsManager.AddGold(enemyData.stats.cashDrop);
 		}
 	}
 

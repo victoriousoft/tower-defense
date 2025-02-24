@@ -121,4 +121,5 @@ MonoBehaviour:
   level: 0
   towerData: {fileID: 11400000, guid: 849027f545f0d6f41a9e7670b7134e78, type: 2}
   targetType: 0
+  towerType: 3
   splashRadius: 1
