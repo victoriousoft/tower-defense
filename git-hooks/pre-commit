@@ -24,4 +24,6 @@ if ! dotnet-csharpier ./Assets/Scripts/; then
     exit 1
 fi
 
+git add ./Assets/Scripts/
+
 echo "dotnet-csharpier completed successfully."
