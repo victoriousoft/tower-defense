@@ -50,7 +50,7 @@ jobs:
 
             - name: Build Docker image
               run: |
-                  docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/tower-defense:{{ github.sha }} .
+                  docker buildx build --platform linux/amd64 -t ${{ secrets.DOCKERHUB_USERNAME }}/tower-defense:${{ github.sha }} .
 
             - name: Inspect Docker image
               run: docker inspect pr-test:latest
