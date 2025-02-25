@@ -53,4 +53,4 @@ jobs:
                   docker buildx build --platform linux/amd64 -t ${{ secrets.DOCKERHUB_USERNAME }}/tower-defense:${{ github.sha }} .
 
             - name: Inspect Docker image
-              run: docker inspect pr-test:latest
+              run: docker inspect ${{ secrets.DOCKERHUB_USERNAME }}/tower-defense:${{ github.sha }}
