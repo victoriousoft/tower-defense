@@ -39,6 +39,7 @@ public class TowerHolderNeo : MonoBehaviour
 	private GameObject towerInstance;
 	private LineRenderer rangeRenderer;
 	private bool isMenuActive = false;
+	private Animator animator;
 
 	void Awake()
 	{
@@ -49,6 +50,8 @@ public class TowerHolderNeo : MonoBehaviour
 			{ TowerTypes.Magic, magicPrefab },
 			{ TowerTypes.Bomb, bombPrefab },
 		};
+
+		animator = GetComponent<Animator>();
 
 		rangeRenderer = gameObject.AddComponent<LineRenderer>();
 		rangeRenderer.enabled = false;
@@ -92,7 +95,7 @@ public class TowerHolderNeo : MonoBehaviour
 
 		if (towerType != null)
 		{
-			BuyTower(towerPrefabs[(TowerTypes)towerType]);
+			StartCoroutine(BuyTower(towerPrefabs[(TowerTypes)towerType]));
 			return;
 		}
 
@@ -196,18 +199,23 @@ public class TowerHolderNeo : MonoBehaviour
 		}
 	}
 
-	private void BuyTower(GameObject towerPrefab)
+	private IEnumerator BuyTower(GameObject towerPrefab)
 	{
 		if (!PlayerStatsManager.SubtractGold(towerPrefab.GetComponent<BaseTower>().towerData.levels[0].price))
 		{
 			Debug.Log("Not enough gold");
-			return;
+			HideButtons();
+			yield break;
 		}
 
 		backgroundSprite.enabled = false;
 
 		HideButtons();
 		ChangeState(MenuState.UpgradeTowerBase);
+
+		animator.SetTrigger("BuildStart");
+		yield return StartCoroutine(AnimationHelper.WaitForAnimationCompletion(animator, "Build", 5));
+		animator.SetTrigger("BuildEnd");
 
 		towerInstance = Instantiate(towerPrefab, transform.position, Quaternion.identity);
 
