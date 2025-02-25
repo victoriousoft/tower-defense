@@ -46,11 +46,11 @@ jobs:
                   buildsPath: Build
 
             - name: Set up Docker Buildx
-              uses: docker/setup-buildx-action@v3
+              uses: docker/setup-buildx-action@v2
 
             - name: Build Docker image
               run: |
-                  docker buildx build --platform linux/amd64 -t ${{ secrets.DOCKERHUB_USERNAME }}/tower-defense:${{ github.sha }} .
+                  docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/tower-defense:${{ github.sha }} .
 
             - name: Inspect Docker image
               run: docker inspect ${{ secrets.DOCKERHUB_USERNAME }}/tower-defense:${{ github.sha }}
