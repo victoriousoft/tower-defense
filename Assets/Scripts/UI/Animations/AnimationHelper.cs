@@ -23,6 +23,7 @@ public class AnimationHelper : MonoBehaviour
 
 			if (stateInfo.normalizedTime >= completedLoops + 1)
 			{
+				Debug.Log("Completed loop " + completedLoops);
 				completedLoops++;
 			}
 		}

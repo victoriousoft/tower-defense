@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +28,7 @@ public class TowerHolderNeo : MonoBehaviour
 	public GameObject magicPrefab;
 	public GameObject bombPrefab;
 	public SpriteRenderer backgroundSprite;
+	public GameObject statusBar;
 
 	private Dictionary<TowerTypes, GameObject> towerPrefabs;
 
@@ -39,7 +41,10 @@ public class TowerHolderNeo : MonoBehaviour
 	private GameObject towerInstance;
 	private LineRenderer rangeRenderer;
 	private bool isMenuActive = false;
+	private bool isMenuLocked = true;
 	private Animator animator;
+
+	private GameObject prefabToBuild;
 
 	void Awake()
 	{
@@ -57,7 +62,6 @@ public class TowerHolderNeo : MonoBehaviour
 		rangeRenderer.enabled = false;
 
 		Transform buttons = transform.Find("Buttons");
-
 		if (buttons.childCount != menuButtons.Length)
 		{
 			Debug.LogError("menuButtons length does not match child count");
@@ -125,6 +129,9 @@ public class TowerHolderNeo : MonoBehaviour
 
 	private void ShowButtons()
 	{
+		if (!isMenuLocked)
+			return;
+
 		isMenuActive = true;
 		if (towerInstance != null)
 			rangeRenderer.enabled = true;
@@ -208,16 +215,20 @@ public class TowerHolderNeo : MonoBehaviour
 			yield break;
 		}
 
-		backgroundSprite.enabled = false;
-
+		isMenuLocked = false;
 		HideButtons();
 		ChangeState(MenuState.UpgradeTowerBase);
 
-		animator.SetTrigger("BuildStart");
-		yield return StartCoroutine(AnimationHelper.WaitForAnimationCompletion(animator, "Build", 5));
-		animator.SetTrigger("BuildEnd");
+		backgroundSprite.enabled = false;
 
-		towerInstance = Instantiate(towerPrefab, transform.position, Quaternion.identity);
+		animator.SetTrigger("BuildStart");
+
+		prefabToBuild = towerPrefab;
+	}
+
+	private void BuyTowerAnimationCompletion()
+	{
+		towerInstance = Instantiate(prefabToBuild, transform.position, Quaternion.identity);
 
 		BaseTower baseTowerScript = towerInstance.GetComponent<BaseTower>();
 		TowerHelpers.SetRangeCircle(
@@ -225,6 +236,8 @@ public class TowerHolderNeo : MonoBehaviour
 			baseTowerScript.towerData.levels[baseTowerScript.level].range,
 			transform.position
 		);
+
+		isMenuLocked = true;
 	}
 
 	private void SellTower()
