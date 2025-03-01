@@ -121,3 +121,4 @@ MonoBehaviour:
   level: 0
   towerData: {fileID: 11400000, guid: 24ec6c097a61e2e4fadb4503f4a7677b, type: 2}
   targetType: 0
+  towerType: 1

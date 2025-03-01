@@ -9,6 +9,7 @@ public abstract class BaseTower : MonoBehaviour
 	private PlayerStatsManager playerStats;
 	private Animator towerAnimator;
 	public TowerHelpers.TowerTargetTypes targetType = TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH;
+	public TowerTypes towerType;
 	protected bool canShoot = true;
 	protected GameObject paths;
 	private Coroutine shootCoroutine;
@@ -91,14 +92,10 @@ public abstract class BaseTower : MonoBehaviour
 			shootCoroutine = null;
 		}
 
-		// Upgrade the tower
-		if (playerStats.SubtractGold(towerData.levels[level + 1].price))
-		{
-			level++;
-			towerAnimator.SetTrigger("upgrade");
+		level++;
+		towerAnimator.SetTrigger("upgrade");
 
-			yield return null;
-		}
+		yield return null;
 
 		canShoot = true;
 	}

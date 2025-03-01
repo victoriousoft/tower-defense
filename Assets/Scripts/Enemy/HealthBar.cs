@@ -11,4 +11,20 @@ public class HealthBar : MonoBehaviour
 	{
 		foregroundImage.fillAmount = healthNormalized;
 	}
+
+	public IEnumerator Animate(float start, float end, float duration)
+	{
+		transform.gameObject.SetActive(true);
+		float elapsed = 0f;
+
+		while (elapsed < duration)
+		{
+			elapsed += Time.deltaTime;
+			foregroundImage.fillAmount = Mathf.Lerp(start, end, elapsed / duration);
+			yield return null;
+		}
+
+		foregroundImage.fillAmount = end;
+		transform.gameObject.SetActive(false);
+	}
 }

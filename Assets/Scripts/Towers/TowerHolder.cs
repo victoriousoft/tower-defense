@@ -11,7 +11,6 @@ public class TowerHolder : MonoBehaviour
 
 	private GameObject towerInstance;
 	private TowerTypes towerInstanceType = TowerTypes.None;
-	private PlayerStatsManager playerStats;
 
 	public GameObject barracksPrefab;
 	public GameObject archerPrefab;
@@ -36,7 +35,6 @@ public class TowerHolder : MonoBehaviour
 		towerButtons = GetComponentsInChildren<TowerButton>();
 
 		towerHolderAnimator = GetComponent<Animator>();
-		playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
 
 		towerPrefabs = new Dictionary<TowerTypes, GameObject>
 		{
@@ -97,7 +95,7 @@ public class TowerHolder : MonoBehaviour
 	public IEnumerator BuildTower(TowerTypes towerType)
 	{
 		if (
-			playerStats.SubtractGold(towerPrefabs[towerType].GetComponent<BaseTower>().towerData.levels[0].price)
+			PlayerStatsManager.SubtractGold(towerPrefabs[towerType].GetComponent<BaseTower>().towerData.levels[0].price)
 			&& towerInstance == null
 		)
 		{
@@ -115,7 +113,7 @@ public class TowerHolder : MonoBehaviour
 			);
 			rangeRenderer.enabled = false;
 		}
-		else if (!playerStats.SubtractGold(100))
+		else if (!PlayerStatsManager.SubtractGold(100))
 		{
 			Debug.Log("nedeostatek peněz");
 		}
@@ -129,7 +127,7 @@ public class TowerHolder : MonoBehaviour
 			Destroy(towerInstance);
 			rangeRenderer.enabled = false;
 			BaseTower baseTower = towerInstance.GetComponent<BaseTower>();
-			playerStats.AddGold(baseTower.towerData.levels[baseTower.level].price / 2);
+			PlayerStatsManager.AddGold(baseTower.towerData.levels[baseTower.level].price / 2);
 			towerInstance = null;
 			towerInstanceType = TowerTypes.None;
 			towerHolderAnimator.Play("towerHolder_idle");

@@ -2,21 +2,15 @@ using UnityEngine;
 
 public class PlayerStatsManager : MonoBehaviour
 {
-	public int lives;
-	public int gold;
-	private GameObject[] exits;
+	public static int lives = 20;
+	public static int gold = 1000;
 
-	void Awake()
-	{
-		exits = GameObject.FindGameObjectsWithTag("Exit");
-	}
-
-	public void AddGold(int value)
+	public static void AddGold(int value)
 	{
 		gold += value;
 	}
 
-	public bool SubtractGold(int value)
+	public static bool SubtractGold(int value)
 	{
 		if (gold >= value)
 		{
@@ -27,14 +21,14 @@ public class PlayerStatsManager : MonoBehaviour
 			return false;
 	}
 
-	public void SubtractLives(int value)
+	public static void SubtractLives(int value)
 	{
 		lives -= value;
 		if (lives <= 0)
 			GameOver();
 	}
 
-	void GameOver()
+	static void GameOver()
 	{
 		Debug.Log("take the L");
 	}
