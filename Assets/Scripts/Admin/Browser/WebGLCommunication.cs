@@ -18,6 +18,9 @@ public class WebGLMessageHandler : MonoBehaviour
 
 	void Start()
 	{
+		if (Application.isEditor)
+			return;
+
 		bool initRes = InitMessageListener();
 		if (!initRes)
 		{
