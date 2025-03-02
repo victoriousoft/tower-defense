@@ -27,10 +27,16 @@ public class TowerHolderNeo : MonoBehaviour
 	public GameObject barracksPrefab;
 	public GameObject magicPrefab;
 	public GameObject bombPrefab;
+	public Sprite archerIcon;
+	public Sprite barracksIcon;
+	public Sprite magicIcon;
+	public Sprite bombIcon;
+
 	public SpriteRenderer backgroundSprite;
 	public GameObject statusBar;
 
 	private Dictionary<TowerTypes, GameObject> towerPrefabs;
+	public Dictionary<ButtonAction, Sprite> towerIcons;
 
 	[HideInInspector]
 	public MenuState menuState;
@@ -54,6 +60,14 @@ public class TowerHolderNeo : MonoBehaviour
 			{ TowerTypes.Barracks, barracksPrefab },
 			{ TowerTypes.Magic, magicPrefab },
 			{ TowerTypes.Bomb, bombPrefab },
+		};
+
+		towerIcons = new Dictionary<ButtonAction, Sprite>
+		{
+			{ ButtonAction.BUILD_ARCHER, archerIcon },
+			{ ButtonAction.BUILD_BARRACKS, barracksIcon },
+			{ ButtonAction.BUILD_MAGIC, magicIcon },
+			{ ButtonAction.BUILD_BOMB, bombIcon },
 		};
 
 		animator = GetComponent<Animator>();
