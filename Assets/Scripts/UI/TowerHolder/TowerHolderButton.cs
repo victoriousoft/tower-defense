@@ -59,12 +59,15 @@ public class TowerHolderButton : MonoBehaviour
 
 	[HideInInspector]
 	public GameObject towerHolder;
+
 	public SpriteRenderer iconSpriteRenderer;
 
 	private LineRenderer lineRenderer;
+	private SpriteRenderer backgroundSpriteRenderer;
 
 	public void Awake()
 	{
+		backgroundSpriteRenderer = GetComponent<SpriteRenderer>();
 		lineRenderer = gameObject.AddComponent<LineRenderer>();
 		lineRenderer.enabled = false;
 	}
@@ -137,6 +140,26 @@ public class TowerHolderButton : MonoBehaviour
 	public void SetAction(ButtonAction action)
 	{
 		buttonAction = action;
-		// TODO: set icon
+
+		try
+		{
+			Sprite buttonSprite = towerHolder.GetComponent<TowerHolderNeo>().towerIcons[action];
+			iconSpriteRenderer.sprite = buttonSprite;
+
+			float buttonWidth = backgroundSpriteRenderer.bounds.size.x;
+			float buttonHeight = backgroundSpriteRenderer.bounds.size.y;
+
+			float iconWidth = buttonSprite.bounds.size.x;
+			float iconHeight = buttonSprite.bounds.size.y;
+
+			float xScale = buttonWidth / iconWidth;
+			float yScale = buttonHeight / iconHeight;
+
+			iconSpriteRenderer.transform.localScale = new Vector2(xScale, yScale);
+		}
+		catch (Exception e)
+		{
+			Debug.LogError("Error setting icon sprite for " + action + ": " + e.Message);
+		}
 	}
 }
