@@ -64,17 +64,28 @@ public class TowerHolderNeo : MonoBehaviour
 
 		towerIcons = new Dictionary<ButtonAction, Sprite>
 		{
+			{ ButtonAction.NONE, null },
 			{ ButtonAction.BUILD_ARCHER, archerIcon },
 			{ ButtonAction.BUILD_BARRACKS, barracksIcon },
 			{ ButtonAction.BUILD_MAGIC, magicIcon },
 			{ ButtonAction.BUILD_BOMB, bombIcon },
+			{ ButtonAction.SELL, null },
+			{ ButtonAction.UPGRADE_LEVEL, null },
+			{ ButtonAction.BUY_EVOLUTION_1, null },
+			{ ButtonAction.BUY_EVOLUTION_2, null },
+			{ ButtonAction.UPGRADE_EVOLUTION_0, null },
+			{ ButtonAction.UPGRADE_EVOLUTION_1, null },
+			{ ButtonAction.UPGRADE_EVOLUTION_2, null },
 		};
 
 		animator = GetComponent<Animator>();
 
 		rangeRenderer = gameObject.AddComponent<LineRenderer>();
 		rangeRenderer.enabled = false;
+	}
 
+	void Start()
+	{
 		Transform buttons = transform.Find("Buttons");
 		if (buttons.childCount != menuButtons.Length)
 		{
@@ -91,8 +102,6 @@ public class TowerHolderNeo : MonoBehaviour
 		HideButtons();
 		ChangeState(MenuState.Initial);
 	}
-
-	void Update() { }
 
 	void OnMouseEnter()
 	{

@@ -141,25 +141,22 @@ public class TowerHolderButton : MonoBehaviour
 	{
 		buttonAction = action;
 
-		try
-		{
-			Sprite buttonSprite = towerHolder.GetComponent<TowerHolderNeo>().towerIcons[action];
-			iconSpriteRenderer.sprite = buttonSprite;
+		Sprite buttonSprite = towerHolder.GetComponent<TowerHolderNeo>().towerIcons[action];
 
-			float buttonWidth = backgroundSpriteRenderer.bounds.size.x;
-			float buttonHeight = backgroundSpriteRenderer.bounds.size.y;
+		if (buttonSprite == null)
+			return;
 
-			float iconWidth = buttonSprite.bounds.size.x;
-			float iconHeight = buttonSprite.bounds.size.y;
+		iconSpriteRenderer.sprite = buttonSprite;
 
-			float xScale = buttonWidth / iconWidth;
-			float yScale = buttonHeight / iconHeight;
+		float buttonWidth = backgroundSpriteRenderer.bounds.size.x;
+		float buttonHeight = backgroundSpriteRenderer.bounds.size.y;
 
-			iconSpriteRenderer.transform.localScale = new Vector2(xScale, yScale);
-		}
-		catch (Exception e)
-		{
-			Debug.LogError("Error setting icon sprite for " + action + ": " + e.Message);
-		}
+		float iconWidth = buttonSprite.bounds.size.x;
+		float iconHeight = buttonSprite.bounds.size.y;
+
+		float xScale = buttonWidth / iconWidth;
+		float yScale = buttonHeight / iconHeight;
+
+		iconSpriteRenderer.transform.localScale = new Vector2(xScale, yScale);
 	}
 }
