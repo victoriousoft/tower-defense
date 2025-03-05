@@ -7,8 +7,8 @@ Ročníková práce 3.E š. r. 2024/2025
 </div>
 
 ## Členové týmu
- - Kristián Kunc (Web, Deployment, Unity)
- - Viktor Jakovec (Unity, Web)
+ - Kristián Kunc (Web, Unity)
+ - Viktor Jakovec (Unity)
  - Leon Kubota (Textury, Animace)
 
 ## Co kde najdu?
