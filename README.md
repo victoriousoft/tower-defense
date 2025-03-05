@@ -4,6 +4,7 @@ Ročníková práce 3.E š. r. 2024/2025
 
 <div>
     <img src="https://github.com/victoriousoft/tower-defense/actions/workflows/build.yml/badge.svg" alt="build status badge"/>
+    <img src="https://github.com/victoriousoft/tower-defense/actions/workflows/update-sheet.yml/badge.svg" alt="balancer sheet status badge"/>
 </div>
 
 ## Členové týmu
