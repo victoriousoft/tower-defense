@@ -18,7 +18,9 @@ jobs:
             - name: Check if repository is a fork
               id: check_fork
               run: |
-                  IS_FORK=$(jq -r .fork < "${GITHUB_EVENT_PATH}")
+                  REPO_FULL_NAME="${GITHUB_REPOSITORY}"
+                  REPO_INFO=$(curl -s "https://api.github.com/repos/${REPO_FULL_NAME}")
+                  IS_FORK=$(echo "$REPO_INFO" | jq -r '.fork')
                   echo "Is Fork: $IS_FORK"
                   if [[ "$IS_FORK" != "true" ]]; then
                     echo "Not a fork. Exiting."
