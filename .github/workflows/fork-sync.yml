@@ -39,7 +39,9 @@ jobs:
 
             - name: Add upstream remote
               run: |
-                  git remote add upstream https://github.com/$UPSTREAM_REPO.git
+                  PARENT_REPO=$(curl -s "https://api.github.com/repos/${GITHUB_REPOSITORY}" | jq -r '.parent.full_name')
+                  echo "Parent repository: $PARENT_REPO"
+                  git remote add upstream https://github.com/$PARENT_REPO.git
                   git fetch upstream
 
             - name: Check for additional commits
