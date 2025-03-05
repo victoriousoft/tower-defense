@@ -1,0 +1,57 @@
+name: Sync Fork
+on:
+    schedule:
+        - cron: "0 0 * * *"
+    workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+    sync:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0 # Ensure we fetch all branches and history
+
+            - name: Check if repository is a fork
+              id: check_fork
+              run: |
+                  IS_FORK=$(jq -r .fork < "${GITHUB_EVENT_PATH}")
+                  echo "Is Fork: $IS_FORK"
+                  if [[ "$IS_FORK" != "true" ]]; then
+                    echo "Not a fork. Exiting."
+                    exit 1
+                  fi
+
+            - name: Set upstream repository
+              run: |
+                  UPSTREAM_URL=$(git remote get-url origin | sed 's|github.com|github.com:|' | sed 's|\.git$||')
+                  UPSTREAM_URL=${UPSTREAM_URL/https:\/\//git@}
+                  UPSTREAM_URL=${UPSTREAM_URL/git@github.com:/https://github.com/}
+                  OWNER_REPO=$(basename $(dirname "$UPSTREAM_URL"))/$(basename "$UPSTREAM_URL")
+                  echo "Upstream: $OWNER_REPO"
+                  echo "UPSTREAM_REPO=$OWNER_REPO" >> $GITHUB_ENV
+
+            - name: Add upstream remote
+              run: |
+                  git remote add upstream https://github.com/$UPSTREAM_REPO.git
+                  git fetch upstream
+
+            - name: Check for additional commits
+              id: check_commits
+              run: |
+                  UPSTREAM_DEFAULT=$(git remote show upstream | awk '/HEAD branch/ {print $NF}')
+                  LOCAL_COMMITS=$(git rev-list HEAD --not upstream/$UPSTREAM_DEFAULT)
+                  if [[ -n "$LOCAL_COMMITS" ]]; then
+                    echo "Local repository has additional commits. Exiting."
+                    exit 1
+                  fi
+                  echo "No additional commits found. Proceeding with sync."
+
+            - name: Sync with upstream
+              run: |
+                  git checkout main
+                  git reset --hard upstream/main
+                  git push origin main --force
