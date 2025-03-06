@@ -6,5 +6,7 @@ COPY nginx.conf default.conf
 WORKDIR /etc/nginx/html
 COPY Build/WebGL/WebGL .
 
-CMD mkdir -p ./static
+RUN mkdir -p ./static
 COPY balancer/out/combined.csv ./static/balancer-data.csv
+
+CMD ["nginx", "-g", "daemon off;"]
