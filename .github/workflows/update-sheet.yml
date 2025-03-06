@@ -55,7 +55,7 @@ jobs:
               run: |
                   python3 main.py
 
-            - name: Create yaml data artifact
+            - name: Create csv data artifact
               uses: actions/upload-artifact@v4
               with:
                   name: combined-data.csv

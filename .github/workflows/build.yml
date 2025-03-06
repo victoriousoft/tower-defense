@@ -45,11 +45,21 @@ jobs:
                   targetPlatform: WebGL
                   buildsPath: Build
 
-            - name: Download the combined-data artifact
-              uses: actions/download-artifact@v4
+            - name: Setup python
+              uses: actions/setup-python@v5
               with:
-                  name: combined-data.csv
-                  path: ./balancer-data.csv
+                  python-version: "3.x"
+
+            - name: Setup environment
+              working-directory: ./balancer
+              run: |
+                  python3 -m pip install --upgrade pip
+                  python3 -m pip install -r requirements.txt
+
+            - name: Compile yaml data
+              working-directory: ./balancer
+              run: |
+                  python3 main.py
 
             - name: Log in to Docker Hub
               uses: docker/login-action@v2
