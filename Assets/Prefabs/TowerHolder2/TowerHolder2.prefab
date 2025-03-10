@@ -38,7 +38,7 @@ Transform:
   - {fileID: 8129972182241863298}
   - {fileID: 4894866830666887507}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &634776866727042202
 MonoBehaviour:
@@ -729,6 +729,14 @@ PrefabInstance:
       propertyPath: m_PresetInfoIsWorld
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5193364286744201451, guid: 0d3d90602d2a7264f81b08b50564e331, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5193364286744201451, guid: 0d3d90602d2a7264f81b08b50564e331, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5370220308771563766, guid: 0d3d90602d2a7264f81b08b50564e331, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -816,6 +824,10 @@ PrefabInstance:
     - target: {fileID: 5856153330307799117, guid: 0d3d90602d2a7264f81b08b50564e331, type: 3}
       propertyPath: m_text
       value: Closest to finish
+      objectReference: {fileID: 0}
+    - target: {fileID: 7351356474313737147, guid: 0d3d90602d2a7264f81b08b50564e331, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.00002670288
       objectReference: {fileID: 0}
     - target: {fileID: 8958549286718262462, guid: 0d3d90602d2a7264f81b08b50564e331, type: 3}
       propertyPath: m_Name
