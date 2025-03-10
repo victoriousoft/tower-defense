@@ -115,7 +115,7 @@ public abstract class BaseEnemy : MonoBehaviour
 			transform.position,
 			(Vector2)points[currentPointIndex].position + positionOffset
 		);
-		for (int i = currentPointIndex; i >= 0; i--)
+		for (int i = currentPointIndex; i > 0; i--)
 		{
 			distance += Vector2.Distance(
 				(Vector2)points[i].position + positionOffset,

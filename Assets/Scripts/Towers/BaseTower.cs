@@ -61,7 +61,7 @@ public abstract class BaseTower : MonoBehaviour
 		if (enemies.Length == 0)
 		{
 			canShoot = true;
-			Debug.Log("issue");
+			towerAnimator.SetTrigger("idle");
 			yield break;
 		}
 		GameObject target = TowerHelpers.SelectEnemyToAttack(

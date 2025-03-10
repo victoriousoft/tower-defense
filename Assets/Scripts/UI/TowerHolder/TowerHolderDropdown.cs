@@ -11,7 +11,7 @@ public class TowerHolderDropdown : MonoBehaviour
 	public void OnValueChanged(int value)
 	{
 		TowerHelpers.TowerTargetTypes targetType = TowerHelpers.GetTargetTypeByIndex(value);
-		Debug.Log("Selected target type: " + targetType);
 		towerHolder.GetComponent<TowerHolderNeo>().towerInstance.GetComponent<BaseTower>().targetType = targetType;
+		towerHolder.GetComponent<TowerHolderNeo>().HideButtons();
 	}
 }

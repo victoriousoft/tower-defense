@@ -59,7 +59,7 @@ MonoBehaviour:
   archerIcon: {fileID: 21300000, guid: d2958b5e3a2f83948837eda53fd0bd9b, type: 3}
   barracksIcon: {fileID: 21300000, guid: 56143a7aa5da5cc4793db5fc40a43cff, type: 3}
   magicIcon: {fileID: 21300000, guid: 24b3bc512aa00f14aa3c500476625dcf, type: 3}
-  bombIcon: {fileID: 21300000, guid: b760c0ec9b1483348aa7b3e7a053fc03, type: 3}
+  bombIcon: {fileID: 21300000, guid: 9268d56183b82c843aa390d3ab82e98e, type: 3}
   backgroundSprite: {fileID: 2996678705780294222}
   statusBar: {fileID: 6069531162304824463}
   menuState: 0
@@ -712,6 +712,10 @@ PrefabInstance:
     - target: {fileID: 2144088973198781654, guid: 0d3d90602d2a7264f81b08b50564e331, type: 3}
       propertyPath: m_Options.m_Options.Array.data[3].m_Text
       value: Least HP
+      objectReference: {fileID: 0}
+    - target: {fileID: 3414763306726008275, guid: 0d3d90602d2a7264f81b08b50564e331, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 3414763306726008275, guid: 0d3d90602d2a7264f81b08b50564e331, type: 3}
       propertyPath: m_AnchoredPosition.x

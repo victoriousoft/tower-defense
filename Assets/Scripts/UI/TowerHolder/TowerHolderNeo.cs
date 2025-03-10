@@ -174,7 +174,7 @@ public class TowerHolderNeo : MonoBehaviour
 			targetTypesDropdown.SetActive(true);
 	}
 
-	private void HideButtons()
+	public void HideButtons()
 	{
 		isMenuActive = false;
 		rangeRenderer.enabled = false;
