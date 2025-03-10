@@ -8,6 +8,11 @@ public class TowerHolderDropdown : MonoBehaviour
 	[HideInInspector]
 	public GameObject towerHolder;
 
+	public void Reset()
+	{
+		GetComponent<TMP_Dropdown>().value = 0;
+	}
+
 	public void OnValueChanged(int value)
 	{
 		TowerHelpers.TowerTargetTypes targetType = TowerHelpers.GetTargetTypeByIndex(value);
