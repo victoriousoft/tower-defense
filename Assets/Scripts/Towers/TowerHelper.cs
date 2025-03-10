@@ -21,6 +21,15 @@ public static class TowerHelpers
 		LEAST_HP,
 	};
 
+	public static TowerTargetTypes GetTargetTypeByIndex(int index)
+	{
+		if (index >= 0 && index < Enum.GetValues(typeof(TowerTargetTypes)).Length)
+		{
+			return (TowerTargetTypes)index;
+		}
+		return TowerTargetTypes.CLOSEST_TO_FINISH;
+	}
+
 	public static GameObject[] GetEnemiesInRange(Vector2 position, float range, EnemyTypes[] includedTypes)
 	{
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(position, range);

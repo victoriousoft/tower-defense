@@ -99,9 +99,4 @@ public abstract class BaseTower : MonoBehaviour
 
 		canShoot = true;
 	}
-
-	public void ChangeTargeting()
-	{
-		// Change targeting logic
-	}
 }
