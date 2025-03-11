@@ -10,6 +10,7 @@ public enum ButtonAction
 	BUILD_BARRACKS,
 	BUILD_MAGIC,
 	BUILD_BOMB,
+	CYCLE_RETARGET,
 	SELL,
 	UPGRADE_LEVEL,
 	BUY_EVOLUTION_1,
@@ -60,10 +61,19 @@ public class TowerHolderButton : MonoBehaviour
 	[HideInInspector]
 	public GameObject towerHolder;
 
+	[HideInInspector]
+	public LineRenderer lineRenderer;
+
 	public SpriteRenderer iconSpriteRenderer;
 
-	private LineRenderer lineRenderer;
 	private SpriteRenderer backgroundSpriteRenderer;
+	private readonly TowerHelpers.TowerTargetTypes[] targetTypes =
+	{
+		TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH,
+		TowerHelpers.TowerTargetTypes.CLOSEST_TO_START,
+		TowerHelpers.TowerTargetTypes.MOST_HP,
+		TowerHelpers.TowerTargetTypes.LEAST_HP,
+	};
 
 	public void Awake()
 	{
@@ -100,6 +110,18 @@ public class TowerHolderButton : MonoBehaviour
 
 				break;
 
+			case ButtonAction.CYCLE_RETARGET:
+				int targetTypeIndex = towerHolder.GetComponent<TowerHolderNeo>().targetTypeIndex;
+
+				TooltipManager.Show(
+					"Cycle targeting strategy",
+					"Current: "
+						+ targetTypes[targetTypeIndex].GetString()
+						+ "\nChange to: "
+						+ targetTypes[(targetTypeIndex + 1) % targetTypes.Length].GetString()
+				);
+				break;
+
 			case ButtonAction.UPGRADE_LEVEL:
 				tower = towerHolder.GetComponent<TowerHolderNeo>().GetBaseTowerScript(null);
 				string upgradeStats = tower.towerData.GetUpgradeStats(tower.level);
@@ -123,6 +145,16 @@ public class TowerHolderButton : MonoBehaviour
 			case ButtonAction.BUY_EVOLUTION_1:
 			case ButtonAction.BUY_EVOLUTION_2:
 				int evolutionIndex = buttonAction.GetEvolutionIndex();
+				tower = towerHolder.GetComponent<TowerHolderNeo>().GetBaseTowerScript(null);
+				string EvolutionStats = tower.towerData.GetEvolutionBuyStats(evolutionIndex);
+				TooltipManager.Show(tower.towerData.evolutions[evolutionIndex].name, EvolutionStats);
+
+				TowerHelpers.SetRangeCircle(
+					lineRenderer,
+					tower.towerData.evolutions[evolutionIndex].range,
+					towerHolder.transform.position
+				);
+				lineRenderer.enabled = true;
 				break;
 
 			default:
@@ -143,20 +175,6 @@ public class TowerHolderButton : MonoBehaviour
 
 		Sprite buttonSprite = towerHolder.GetComponent<TowerHolderNeo>().towerIcons[action];
 
-		if (buttonSprite == null)
-			return;
-
 		iconSpriteRenderer.sprite = buttonSprite;
-
-		float buttonWidth = backgroundSpriteRenderer.bounds.size.x;
-		float buttonHeight = backgroundSpriteRenderer.bounds.size.y;
-
-		float iconWidth = buttonSprite.bounds.size.x;
-		float iconHeight = buttonSprite.bounds.size.y;
-
-		float xScale = buttonWidth / iconWidth;
-		float yScale = buttonHeight / iconHeight;
-
-		iconSpriteRenderer.transform.localScale = new Vector2(xScale, yScale);
 	}
 }

@@ -16,9 +16,10 @@ public enum ButtonIndex
 	TOP_LEFT = 0,
 	TOP_CENTER = 1,
 	TOP_RIGHT = 2,
-	BOTTOM_LEFT = 3,
-	BOTTOM_CENTER = 4,
-	BOTTOM_RIGHT = 5,
+	CENTER_LEFT = 3,
+	BOTTOM_LEFT = 4,
+	BOTTOM_CENTER = 5,
+	BOTTOM_RIGHT = 6,
 }
 
 public class TowerHolderNeo : MonoBehaviour
@@ -41,13 +42,18 @@ public class TowerHolderNeo : MonoBehaviour
 	[HideInInspector]
 	public MenuState menuState;
 
-	// top left to right, bottom left to right
-	private GameObject[] menuButtons = new GameObject[6];
+	// top left to right, center left to right, bottom left to right
+	private GameObject[] menuButtons = new GameObject[7];
 
-	private GameObject towerInstance;
+	[HideInInspector]
+	public int targetTypeIndex = 0;
+
+	[HideInInspector]
+	public GameObject towerInstance;
+
 	private LineRenderer rangeRenderer;
 	private bool isMenuActive = false;
-	private bool isMenuLocked = true;
+	private bool isMenuLocked = false;
 	private Animator animator;
 
 	private GameObject prefabToBuild;
@@ -69,6 +75,7 @@ public class TowerHolderNeo : MonoBehaviour
 			{ ButtonAction.BUILD_BARRACKS, barracksIcon },
 			{ ButtonAction.BUILD_MAGIC, magicIcon },
 			{ ButtonAction.BUILD_BOMB, bombIcon },
+			{ ButtonAction.CYCLE_RETARGET, null },
 			{ ButtonAction.SELL, null },
 			{ ButtonAction.UPGRADE_LEVEL, null },
 			{ ButtonAction.BUY_EVOLUTION_1, null },
@@ -128,12 +135,25 @@ public class TowerHolderNeo : MonoBehaviour
 
 		switch (buttonAction)
 		{
+			case ButtonAction.CYCLE_RETARGET:
+				targetTypeIndex = (targetTypeIndex + 1) % Enum.GetNames(typeof(EnemyTypes)).Length;
+				towerInstance.GetComponent<BaseTower>().targetType = (TowerHelpers.TowerTargetTypes)targetTypeIndex;
+				HideButtons();
+				break;
+
 			case ButtonAction.SELL:
 				SellTower();
 				break;
+
 			case ButtonAction.UPGRADE_LEVEL:
 				UpgradeTower();
 				break;
+
+			case ButtonAction.BUY_EVOLUTION_1:
+			case ButtonAction.BUY_EVOLUTION_2:
+				BuildEvolutionTower(buttonAction.GetEvolutionIndex());
+				break;
+
 			default:
 				Debug.LogError("not implemented");
 				break;
@@ -152,7 +172,7 @@ public class TowerHolderNeo : MonoBehaviour
 
 	private void ShowButtons()
 	{
-		if (!isMenuLocked)
+		if (isMenuLocked)
 			return;
 
 		isMenuActive = true;
@@ -166,7 +186,7 @@ public class TowerHolderNeo : MonoBehaviour
 		}
 	}
 
-	private void HideButtons()
+	public void HideButtons()
 	{
 		isMenuActive = false;
 		rangeRenderer.enabled = false;
@@ -184,6 +204,7 @@ public class TowerHolderNeo : MonoBehaviour
 		for (int i = 0; i < menuButtons.Length; i++)
 		{
 			menuButtons[i].GetComponent<TowerHolderButton>().buttonAction = ButtonAction.NONE;
+			menuButtons[i].GetComponent<TowerHolderButton>().lineRenderer.enabled = false;
 		}
 
 		switch (newState)
@@ -210,7 +231,11 @@ public class TowerHolderNeo : MonoBehaviour
 				menuButtons[(int)ButtonIndex.BOTTOM_CENTER]
 					.GetComponent<TowerHolderButton>()
 					.SetAction(ButtonAction.SELL);
+				menuButtons[(int)ButtonIndex.CENTER_LEFT]
+					.GetComponent<TowerHolderButton>()
+					.SetAction(ButtonAction.CYCLE_RETARGET);
 				break;
+
 			case MenuState.UpgradeTowerFinal:
 				menuButtons[(int)ButtonIndex.TOP_LEFT]
 					.GetComponent<TowerHolderButton>()
@@ -221,7 +246,11 @@ public class TowerHolderNeo : MonoBehaviour
 				menuButtons[(int)ButtonIndex.BOTTOM_CENTER]
 					.GetComponent<TowerHolderButton>()
 					.SetAction(ButtonAction.SELL);
+				menuButtons[(int)ButtonIndex.CENTER_LEFT]
+					.GetComponent<TowerHolderButton>()
+					.SetAction(ButtonAction.CYCLE_RETARGET);
 				break;
+
 			case MenuState.EvolutionTower:
 				break;
 			default:
@@ -238,7 +267,7 @@ public class TowerHolderNeo : MonoBehaviour
 			yield break;
 		}
 
-		isMenuLocked = false;
+		isMenuLocked = true;
 		HideButtons();
 		ChangeState(MenuState.UpgradeTowerBase);
 
@@ -251,7 +280,7 @@ public class TowerHolderNeo : MonoBehaviour
 
 	private void BuyTowerAnimationCompletion()
 	{
-		towerInstance = Instantiate(prefabToBuild, transform.position, Quaternion.identity);
+		towerInstance = Instantiate(prefabToBuild, transform.position, Quaternion.identity, transform);
 
 		BaseTower baseTowerScript = towerInstance.GetComponent<BaseTower>();
 		TowerHelpers.SetRangeCircle(
@@ -260,7 +289,7 @@ public class TowerHolderNeo : MonoBehaviour
 			transform.position
 		);
 
-		isMenuLocked = true;
+		isMenuLocked = false;
 	}
 
 	private void SellTower()
@@ -274,6 +303,7 @@ public class TowerHolderNeo : MonoBehaviour
 
 		HideButtons();
 		ChangeState(MenuState.Initial);
+		TowerHelpers.SetRangeCircle(rangeRenderer, 0, transform.position);
 		towerInstance = null;
 		rangeRenderer.enabled = false;
 		backgroundSprite.enabled = true;
@@ -302,5 +332,35 @@ public class TowerHolderNeo : MonoBehaviour
 		HideButtons();
 		if (baseTower.level == 2)
 			ChangeState(MenuState.UpgradeTowerFinal);
+	}
+
+	void BuildEvolutionTower(int evolutionIndex)
+	{
+		if (
+			!PlayerStatsManager.SubtractGold(
+				towerInstance.GetComponent<BaseTower>().towerData.evolutions[evolutionIndex].price
+			)
+		)
+		{
+			Debug.Log("Not enough gold");
+			HideButtons();
+			return;
+		}
+
+		GameObject evolutionPrefab = towerInstance
+			.GetComponent<BaseTower>()
+			.towerData.evolutions[evolutionIndex]
+			.prefab;
+
+		Destroy(towerInstance);
+		towerInstance = Instantiate(evolutionPrefab, transform.position, Quaternion.identity, transform);
+		towerInstance.GetComponent<BaseEvolutionTower>().evolutionIndex = evolutionIndex;
+
+		TowerHelpers.SetRangeCircle(
+			rangeRenderer,
+			towerInstance.GetComponent<BaseTower>().towerData.evolutions[evolutionIndex].range,
+			transform.position
+		);
+		HideButtons();
 	}
 }

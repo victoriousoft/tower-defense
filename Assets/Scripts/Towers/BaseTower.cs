@@ -8,6 +8,8 @@ public abstract class BaseTower : MonoBehaviour
 	public TowerSheetNeo towerData;
 	private PlayerStatsManager playerStats;
 	private Animator towerAnimator;
+
+	[HideInInspector]
 	public TowerHelpers.TowerTargetTypes targetType = TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH;
 	public TowerTypes towerType;
 	protected bool canShoot = true;
@@ -61,7 +63,7 @@ public abstract class BaseTower : MonoBehaviour
 		if (enemies.Length == 0)
 		{
 			canShoot = true;
-			Debug.Log("issue");
+			towerAnimator.SetTrigger("idle");
 			yield break;
 		}
 		GameObject target = TowerHelpers.SelectEnemyToAttack(
@@ -98,10 +100,5 @@ public abstract class BaseTower : MonoBehaviour
 		yield return null;
 
 		canShoot = true;
-	}
-
-	public void ChangeTargeting()
-	{
-		// Change targeting logic
 	}
 }
