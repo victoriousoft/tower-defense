@@ -137,6 +137,7 @@ public class TowerHolderNeo : MonoBehaviour
 		{
 			case ButtonAction.CYCLE_RETARGET:
 				targetTypeIndex = (targetTypeIndex + 1) % Enum.GetNames(typeof(EnemyTypes)).Length;
+				towerInstance.GetComponent<BaseTower>().targetType = (TowerHelpers.TowerTargetTypes)targetTypeIndex;
 				HideButtons();
 				break;
 
@@ -237,6 +238,9 @@ public class TowerHolderNeo : MonoBehaviour
 				menuButtons[(int)ButtonIndex.BOTTOM_CENTER]
 					.GetComponent<TowerHolderButton>()
 					.SetAction(ButtonAction.SELL);
+				menuButtons[(int)ButtonIndex.CENTER_LEFT]
+					.GetComponent<TowerHolderButton>()
+					.SetAction(ButtonAction.CYCLE_RETARGET);
 				break;
 
 			case MenuState.EvolutionTower:
