@@ -53,7 +53,7 @@ public class TowerHolderNeo : MonoBehaviour
 
 	private LineRenderer rangeRenderer;
 	private bool isMenuActive = false;
-	private bool isMenuLocked = true;
+	private bool isMenuLocked = false;
 	private Animator animator;
 
 	private GameObject prefabToBuild;
@@ -172,7 +172,7 @@ public class TowerHolderNeo : MonoBehaviour
 
 	private void ShowButtons()
 	{
-		if (!isMenuLocked)
+		if (isMenuLocked)
 			return;
 
 		isMenuActive = true;
@@ -267,7 +267,7 @@ public class TowerHolderNeo : MonoBehaviour
 			yield break;
 		}
 
-		isMenuLocked = false;
+		isMenuLocked = true;
 		HideButtons();
 		ChangeState(MenuState.UpgradeTowerBase);
 
@@ -289,7 +289,7 @@ public class TowerHolderNeo : MonoBehaviour
 			transform.position
 		);
 
-		isMenuLocked = true;
+		isMenuLocked = false;
 	}
 
 	private void SellTower()
@@ -354,6 +354,7 @@ public class TowerHolderNeo : MonoBehaviour
 
 		Destroy(towerInstance);
 		towerInstance = Instantiate(evolutionPrefab, transform.position, Quaternion.identity, transform);
+		towerInstance.GetComponent<BaseEvolutionTower>().evolutionIndex = evolutionIndex;
 
 		TowerHelpers.SetRangeCircle(
 			rangeRenderer,

@@ -4,7 +4,11 @@ using UnityEngine;
 
 public abstract class BaseEvolutionTower : BaseTower
 {
-	protected int[] skillLevels = new int[2] { 0, 0 };
+	[HideInInspector]
+	public int[] skillLevels = new int[2] { 0, 0 };
+
+	[HideInInspector]
+	public int evolutionIndex = -1;
 
 	void Start()
 	{
