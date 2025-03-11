@@ -61,9 +61,11 @@ public class TowerHolderButton : MonoBehaviour
 	[HideInInspector]
 	public GameObject towerHolder;
 
+	[HideInInspector]
+	public LineRenderer lineRenderer;
+
 	public SpriteRenderer iconSpriteRenderer;
 
-	private LineRenderer lineRenderer;
 	private SpriteRenderer backgroundSpriteRenderer;
 	private readonly TowerHelpers.TowerTargetTypes[] targetTypes =
 	{
@@ -143,6 +145,16 @@ public class TowerHolderButton : MonoBehaviour
 			case ButtonAction.BUY_EVOLUTION_1:
 			case ButtonAction.BUY_EVOLUTION_2:
 				int evolutionIndex = buttonAction.GetEvolutionIndex();
+				tower = towerHolder.GetComponent<TowerHolderNeo>().GetBaseTowerScript(null);
+				string EvolutionStats = tower.towerData.GetEvolutionBuyStats(evolutionIndex);
+				TooltipManager.Show(tower.towerData.evolutions[evolutionIndex].name, EvolutionStats);
+
+				TowerHelpers.SetRangeCircle(
+					lineRenderer,
+					tower.towerData.evolutions[evolutionIndex].range,
+					towerHolder.transform.position
+				);
+				lineRenderer.enabled = true;
 				break;
 
 			default:
@@ -162,9 +174,6 @@ public class TowerHolderButton : MonoBehaviour
 		buttonAction = action;
 
 		Sprite buttonSprite = towerHolder.GetComponent<TowerHolderNeo>().towerIcons[action];
-
-		if (buttonSprite == null)
-			return;
 
 		iconSpriteRenderer.sprite = buttonSprite;
 	}

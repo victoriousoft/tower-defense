@@ -144,9 +144,16 @@ public class TowerHolderNeo : MonoBehaviour
 			case ButtonAction.SELL:
 				SellTower();
 				break;
+
 			case ButtonAction.UPGRADE_LEVEL:
 				UpgradeTower();
 				break;
+
+			case ButtonAction.BUY_EVOLUTION_1:
+			case ButtonAction.BUY_EVOLUTION_2:
+				BuildEvolutionTower(buttonAction.GetEvolutionIndex());
+				break;
+
 			default:
 				Debug.LogError("not implemented");
 				break;
@@ -197,6 +204,7 @@ public class TowerHolderNeo : MonoBehaviour
 		for (int i = 0; i < menuButtons.Length; i++)
 		{
 			menuButtons[i].GetComponent<TowerHolderButton>().buttonAction = ButtonAction.NONE;
+			menuButtons[i].GetComponent<TowerHolderButton>().lineRenderer.enabled = false;
 		}
 
 		switch (newState)
@@ -272,7 +280,7 @@ public class TowerHolderNeo : MonoBehaviour
 
 	private void BuyTowerAnimationCompletion()
 	{
-		towerInstance = Instantiate(prefabToBuild, transform.position, Quaternion.identity);
+		towerInstance = Instantiate(prefabToBuild, transform.position, Quaternion.identity, transform);
 
 		BaseTower baseTowerScript = towerInstance.GetComponent<BaseTower>();
 		TowerHelpers.SetRangeCircle(
@@ -295,6 +303,7 @@ public class TowerHolderNeo : MonoBehaviour
 
 		HideButtons();
 		ChangeState(MenuState.Initial);
+		TowerHelpers.SetRangeCircle(rangeRenderer, 0, transform.position);
 		towerInstance = null;
 		rangeRenderer.enabled = false;
 		backgroundSprite.enabled = true;
@@ -323,5 +332,34 @@ public class TowerHolderNeo : MonoBehaviour
 		HideButtons();
 		if (baseTower.level == 2)
 			ChangeState(MenuState.UpgradeTowerFinal);
+	}
+
+	void BuildEvolutionTower(int evolutionIndex)
+	{
+		if (
+			!PlayerStatsManager.SubtractGold(
+				towerInstance.GetComponent<BaseTower>().towerData.evolutions[evolutionIndex].price
+			)
+		)
+		{
+			Debug.Log("Not enough gold");
+			HideButtons();
+			return;
+		}
+
+		GameObject evolutionPrefab = towerInstance
+			.GetComponent<BaseTower>()
+			.towerData.evolutions[evolutionIndex]
+			.prefab;
+
+		Destroy(towerInstance);
+		towerInstance = Instantiate(evolutionPrefab, transform.position, Quaternion.identity, transform);
+
+		TowerHelpers.SetRangeCircle(
+			rangeRenderer,
+			towerInstance.GetComponent<BaseTower>().towerData.evolutions[evolutionIndex].range,
+			transform.position
+		);
+		HideButtons();
 	}
 }

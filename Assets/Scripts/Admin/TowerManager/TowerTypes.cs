@@ -4,8 +4,4 @@ public enum TowerTypes
 	Archer,
 	Magic,
 	Bomb,
-	Destroy,
-	Upgrade,
-	Retarget,
-	None,
 }

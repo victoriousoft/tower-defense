@@ -52,6 +52,16 @@ public class TowerSheetNeo : ScriptableObject
 		return stats;
 	}
 
+	public string GetEvolutionBuyStats(int evolutionIndex)
+	{
+		Evolution e = evolutions[evolutionIndex];
+		string stats = "Damage: " + e.damage + "\n";
+		stats += "Range: " + e.range + "\n";
+		stats += "Cooldown: " + e.cooldown + "\n";
+		stats += "Price: " + e.price + "\n";
+		return stats;
+	}
+
 	public string GetUpgradeStats(int currentLevel)
 	{
 		Level l = levels[currentLevel];

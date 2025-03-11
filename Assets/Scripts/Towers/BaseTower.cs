@@ -8,6 +8,8 @@ public abstract class BaseTower : MonoBehaviour
 	public TowerSheetNeo towerData;
 	private PlayerStatsManager playerStats;
 	private Animator towerAnimator;
+
+	[HideInInspector]
 	public TowerHelpers.TowerTargetTypes targetType = TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH;
 	public TowerTypes towerType;
 	protected bool canShoot = true;
