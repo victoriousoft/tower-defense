@@ -10,6 +10,7 @@ public enum ButtonAction
 	BUILD_BARRACKS,
 	BUILD_MAGIC,
 	BUILD_BOMB,
+	CYCLE_RETARGET,
 	SELL,
 	UPGRADE_LEVEL,
 	BUY_EVOLUTION_1,
@@ -64,6 +65,13 @@ public class TowerHolderButton : MonoBehaviour
 
 	private LineRenderer lineRenderer;
 	private SpriteRenderer backgroundSpriteRenderer;
+	private readonly TowerHelpers.TowerTargetTypes[] targetTypes =
+	{
+		TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH,
+		TowerHelpers.TowerTargetTypes.CLOSEST_TO_START,
+		TowerHelpers.TowerTargetTypes.MOST_HP,
+		TowerHelpers.TowerTargetTypes.LEAST_HP,
+	};
 
 	public void Awake()
 	{
@@ -98,6 +106,18 @@ public class TowerHolderButton : MonoBehaviour
 				);
 				lineRenderer.enabled = true;
 
+				break;
+
+			case ButtonAction.CYCLE_RETARGET:
+				int targetTypeIndex = towerHolder.GetComponent<TowerHolderNeo>().targetTypeIndex;
+
+				TooltipManager.Show(
+					"Cycle targeting strategy",
+					"Current: "
+						+ targetTypes[targetTypeIndex].GetString()
+						+ "\nChange to: "
+						+ targetTypes[(targetTypeIndex + 1) % targetTypes.Length].GetString()
+				);
 				break;
 
 			case ButtonAction.UPGRADE_LEVEL:

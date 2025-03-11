@@ -16,9 +16,10 @@ public enum ButtonIndex
 	TOP_LEFT = 0,
 	TOP_CENTER = 1,
 	TOP_RIGHT = 2,
-	BOTTOM_LEFT = 3,
-	BOTTOM_CENTER = 4,
-	BOTTOM_RIGHT = 5,
+	CENTER_LEFT = 3,
+	BOTTOM_LEFT = 4,
+	BOTTOM_CENTER = 5,
+	BOTTOM_RIGHT = 6,
 }
 
 public class TowerHolderNeo : MonoBehaviour
@@ -41,9 +42,11 @@ public class TowerHolderNeo : MonoBehaviour
 	[HideInInspector]
 	public MenuState menuState;
 
-	// top left to right, bottom left to right
-	private GameObject[] menuButtons = new GameObject[6];
-	public GameObject targetTypesDropdown;
+	// top left to right, center left to right, bottom left to right
+	private GameObject[] menuButtons = new GameObject[7];
+
+	[HideInInspector]
+	public int targetTypeIndex = 0;
 
 	[HideInInspector]
 	public GameObject towerInstance;
@@ -72,6 +75,7 @@ public class TowerHolderNeo : MonoBehaviour
 			{ ButtonAction.BUILD_BARRACKS, barracksIcon },
 			{ ButtonAction.BUILD_MAGIC, magicIcon },
 			{ ButtonAction.BUILD_BOMB, bombIcon },
+			{ ButtonAction.CYCLE_RETARGET, null },
 			{ ButtonAction.SELL, null },
 			{ ButtonAction.UPGRADE_LEVEL, null },
 			{ ButtonAction.BUY_EVOLUTION_1, null },
@@ -102,8 +106,6 @@ public class TowerHolderNeo : MonoBehaviour
 			menuButtons[i].GetComponent<TowerHolderButton>().towerHolder = gameObject;
 		}
 
-		targetTypesDropdown.GetComponent<TowerHolderDropdown>().towerHolder = gameObject;
-
 		HideButtons();
 		ChangeState(MenuState.Initial);
 	}
@@ -133,6 +135,11 @@ public class TowerHolderNeo : MonoBehaviour
 
 		switch (buttonAction)
 		{
+			case ButtonAction.CYCLE_RETARGET:
+				targetTypeIndex = (targetTypeIndex + 1) % Enum.GetNames(typeof(EnemyTypes)).Length;
+				HideButtons();
+				break;
+
 			case ButtonAction.SELL:
 				SellTower();
 				break;
@@ -169,9 +176,6 @@ public class TowerHolderNeo : MonoBehaviour
 			if (menuButtons[i].GetComponent<TowerHolderButton>().buttonAction != ButtonAction.NONE)
 				menuButtons[i].SetActive(true);
 		}
-
-		if (towerInstance != null)
-			targetTypesDropdown.SetActive(true);
 	}
 
 	public void HideButtons()
@@ -183,8 +187,6 @@ public class TowerHolderNeo : MonoBehaviour
 		{
 			menuButtons[i].SetActive(false);
 		}
-
-		targetTypesDropdown.SetActive(false);
 	}
 
 	private void ChangeState(MenuState newState)
@@ -220,6 +222,9 @@ public class TowerHolderNeo : MonoBehaviour
 				menuButtons[(int)ButtonIndex.BOTTOM_CENTER]
 					.GetComponent<TowerHolderButton>()
 					.SetAction(ButtonAction.SELL);
+				menuButtons[(int)ButtonIndex.CENTER_LEFT]
+					.GetComponent<TowerHolderButton>()
+					.SetAction(ButtonAction.CYCLE_RETARGET);
 				break;
 
 			case MenuState.UpgradeTowerFinal:

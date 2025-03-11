@@ -21,6 +21,18 @@ public static class TowerHelpers
 		LEAST_HP,
 	};
 
+	public static string GetString(this TowerTargetTypes targetType)
+	{
+		return targetType switch
+		{
+			TowerTargetTypes.CLOSEST_TO_FINISH => "Closest to Finish",
+			TowerTargetTypes.CLOSEST_TO_START => "Closest to Start",
+			TowerTargetTypes.MOST_HP => "Most HP",
+			TowerTargetTypes.LEAST_HP => "Least HP",
+			_ => "Unknown",
+		};
+	}
+
 	public static TowerTargetTypes GetTargetTypeByIndex(int index)
 	{
 		if (index >= 0 && index < Enum.GetValues(typeof(TowerTargetTypes)).Length)
