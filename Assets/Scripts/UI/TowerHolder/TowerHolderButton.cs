@@ -167,16 +167,5 @@ public class TowerHolderButton : MonoBehaviour
 			return;
 
 		iconSpriteRenderer.sprite = buttonSprite;
-
-		float buttonWidth = backgroundSpriteRenderer.bounds.size.x;
-		float buttonHeight = backgroundSpriteRenderer.bounds.size.y;
-
-		float iconWidth = buttonSprite.bounds.size.x;
-		float iconHeight = buttonSprite.bounds.size.y;
-
-		float xScale = buttonWidth / iconWidth;
-		float yScale = buttonHeight / iconHeight;
-
-		iconSpriteRenderer.transform.localScale = new Vector2(xScale, yScale);
 	}
 }
