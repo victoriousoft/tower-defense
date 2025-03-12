@@ -41,11 +41,17 @@ MonoBehaviour:
     damage: 100
     range: 6
     cooldown: 1
-    skills: []
+    skillName: "posledn\xED sout"
+    skillLevels:
+    - cooldown: 10
+      upragdeCost: 100
+    - cooldown: 5
+      upragdeCost: 200
   - name: Hackerman
     prefab: {fileID: 6574171007775079891, guid: 57698a17fcd0b9f4985e45f05413ed83, type: 3}
     price: 400
     damage: 100
     range: 6
     cooldown: 1
-    skills: []
+    skillName: 
+    skillLevels: []

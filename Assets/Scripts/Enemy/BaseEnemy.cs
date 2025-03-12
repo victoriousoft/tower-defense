@@ -6,12 +6,15 @@ public abstract class BaseEnemy : MonoBehaviour
 {
 	public EnemySheet enemyData;
 
+	[System.NonSerialized]
 	[HideInInspector]
 	public float health;
 
+	[System.NonSerialized]
 	[HideInInspector]
 	public bool isPaused = false;
 
+	[System.NonSerialized]
 	[HideInInspector]
 	public GameObject currentTarget;
 

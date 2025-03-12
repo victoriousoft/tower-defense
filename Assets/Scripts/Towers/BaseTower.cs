@@ -3,14 +3,18 @@ using UnityEngine;
 
 public abstract class BaseTower : MonoBehaviour
 {
+	[System.NonSerialized]
 	[HideInInspector]
 	public int level = 0;
+
 	public TowerSheetNeo towerData;
 	private PlayerStatsManager playerStats;
 	private Animator towerAnimator;
 
+	[System.NonSerialized]
 	[HideInInspector]
 	public TowerHelpers.TowerTargetTypes targetType = TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH;
+
 	public TowerTypes towerType;
 	protected bool canShoot = true;
 	protected GameObject paths;
@@ -100,5 +104,15 @@ public abstract class BaseTower : MonoBehaviour
 		yield return null;
 
 		canShoot = true;
+	}
+
+	public virtual int CalculateSellPrice()
+	{
+		int price = 0;
+		for (int i = 0; i < level + 1; i++)
+		{
+			price += towerData.levels[i].price;
+		}
+		return price / 2;
 	}
 }

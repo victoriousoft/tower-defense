@@ -21,14 +21,15 @@ public class TowerSheetNeo : ScriptableObject
 		public int damage;
 		public int range;
 		public int cooldown;
-		public Skill[] skills;
+		public string skillName;
+		public Skill[] skillLevels;
 	}
 
 	[System.Serializable]
 	public class Skill
 	{
-		public string name;
-		public int[] upgradeCosts;
+		public int cooldown;
+		public int upragdeCost;
 	}
 
 	public TowerTypes towerType;
@@ -59,6 +60,23 @@ public class TowerSheetNeo : ScriptableObject
 		stats += "Range: " + e.range + "\n";
 		stats += "Cooldown: " + e.cooldown + "\n";
 		stats += "Price: " + e.price + "\n";
+		return stats;
+	}
+
+	public string GetEvolutionSkillStats(int evolutionIndex, int skillLevel)
+	{
+		Skill s = evolutions[evolutionIndex].skillLevels[skillLevel];
+		string stats = "Cooldown: " + s.cooldown + "\n";
+		stats += "Price: " + s.upragdeCost + "\n";
+		return stats;
+	}
+
+	public string GetEvolutionSkillUpgradeStats(int evolutionIndex, int currentLevel)
+	{
+		Skill s = evolutions[evolutionIndex].skillLevels[currentLevel];
+		Skill s2 = evolutions[evolutionIndex].skillLevels[currentLevel + 1];
+		string stats = "Cooldown: " + s.cooldown + " -> " + s2.cooldown + "\n";
+		stats += "Price: " + s2.upragdeCost + "\n";
 		return stats;
 	}
 

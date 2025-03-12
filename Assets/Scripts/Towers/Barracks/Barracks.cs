@@ -6,8 +6,10 @@ public class Barracks : BaseTower
 	public int troopCount = 3;
 	public float respawnCooldown = 5; // seconds
 
+	[System.NonSerialized]
 	[HideInInspector]
 	public Vector2 localTroopRandezvousPoint;
+
 	public GameObject troopPrefab;
 	public float randezvousOffset = 1;
 

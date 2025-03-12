@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,24 +8,26 @@ public class HealthBar : MonoBehaviour
 {
 	public Image foregroundImage;
 
+	// accept a float value between 0 and 1
 	public void SetHealth(float healthNormalized)
 	{
 		foregroundImage.fillAmount = healthNormalized;
 	}
 
-	public IEnumerator Animate(float start, float end, float duration)
+	// accept a float value between 0 and 1
+	public IEnumerator Animate(float start, float end, float durationInSeconds, Action callback = null)
 	{
-		transform.gameObject.SetActive(true);
 		float elapsed = 0f;
 
-		while (elapsed < duration)
+		while (elapsed < durationInSeconds)
 		{
 			elapsed += Time.deltaTime;
-			foregroundImage.fillAmount = Mathf.Lerp(start, end, elapsed / duration);
+			foregroundImage.fillAmount = Mathf.Lerp(start, end, elapsed / durationInSeconds);
 			yield return null;
 		}
 
 		foregroundImage.fillAmount = end;
-		transform.gameObject.SetActive(false);
+
+		callback?.Invoke();
 	}
 }

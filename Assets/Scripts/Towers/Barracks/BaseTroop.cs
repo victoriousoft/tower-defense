@@ -6,18 +6,23 @@ public abstract class BaseTroop : MonoBehaviour
 {
 	public TroopSheet troopData;
 
+	[System.NonSerialized]
 	[HideInInspector]
 	public float health;
 
+	[System.NonSerialized]
 	[HideInInspector]
 	public Vector2 targetLocation;
 
+	[System.NonSerialized]
 	[HideInInspector]
 	public int id = -1;
 
+	[System.NonSerialized]
 	[HideInInspector]
 	public GameObject homeBase = null;
 
+	[System.NonSerialized]
 	[HideInInspector]
 	public GameObject currentEnemy;
 

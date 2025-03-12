@@ -80,9 +80,7 @@ public class TowerHolderNeo : MonoBehaviour
 			{ ButtonAction.UPGRADE_LEVEL, null },
 			{ ButtonAction.BUY_EVOLUTION_1, null },
 			{ ButtonAction.BUY_EVOLUTION_2, null },
-			{ ButtonAction.UPGRADE_EVOLUTION_0, null },
-			{ ButtonAction.UPGRADE_EVOLUTION_1, null },
-			{ ButtonAction.UPGRADE_EVOLUTION_2, null },
+			{ ButtonAction.UPGRADE_EVOLUTION, null },
 		};
 
 		animator = GetComponent<Animator>();
@@ -154,6 +152,9 @@ public class TowerHolderNeo : MonoBehaviour
 				BuildEvolutionTower(buttonAction.GetEvolutionIndex());
 				break;
 
+			case ButtonAction.UPGRADE_EVOLUTION:
+				UpgradeEvolutionSkillLevel();
+				break;
 			default:
 				Debug.LogError("not implemented");
 				break;
@@ -168,6 +169,11 @@ public class TowerHolderNeo : MonoBehaviour
 		}
 
 		return towerInstance.GetComponent<BaseTower>();
+	}
+
+	public BaseEvolutionTower GetBaseEvolutionTowerScript()
+	{
+		return towerInstance.GetComponent<BaseEvolutionTower>();
 	}
 
 	private void ShowButtons()
@@ -252,7 +258,17 @@ public class TowerHolderNeo : MonoBehaviour
 				break;
 
 			case MenuState.EvolutionTower:
+				menuButtons[(int)ButtonIndex.TOP_CENTER]
+					.GetComponent<TowerHolderButton>()
+					.SetAction(ButtonAction.UPGRADE_EVOLUTION);
+				menuButtons[(int)ButtonIndex.BOTTOM_CENTER]
+					.GetComponent<TowerHolderButton>()
+					.SetAction(ButtonAction.SELL);
+				menuButtons[(int)ButtonIndex.CENTER_LEFT]
+					.GetComponent<TowerHolderButton>()
+					.SetAction(ButtonAction.CYCLE_RETARGET);
 				break;
+
 			default:
 				break;
 		}
@@ -297,8 +313,17 @@ public class TowerHolderNeo : MonoBehaviour
 		if (towerInstance == null)
 			return;
 
-		BaseTower baseTower = towerInstance.GetComponent<BaseTower>();
-		PlayerStatsManager.AddGold(baseTower.towerData.levels[baseTower.level].price / 2);
+		if (isEvolutionTower())
+		{
+			BaseEvolutionTower evolutionTower = GetBaseEvolutionTowerScript();
+			PlayerStatsManager.AddGold(evolutionTower.CalculateSellPrice());
+		}
+		else if (towerInstance.GetComponent<BaseTower>() != null)
+		{
+			BaseTower baseTower = towerInstance.GetComponent<BaseTower>();
+			PlayerStatsManager.AddGold(baseTower.CalculateSellPrice());
+		}
+
 		Destroy(towerInstance);
 
 		HideButtons();
@@ -361,6 +386,27 @@ public class TowerHolderNeo : MonoBehaviour
 			towerInstance.GetComponent<BaseTower>().towerData.evolutions[evolutionIndex].range,
 			transform.position
 		);
+
 		HideButtons();
+		ChangeState(MenuState.EvolutionTower);
+	}
+
+	void UpgradeEvolutionSkillLevel()
+	{
+		BaseEvolutionTower evolutionTower = GetBaseEvolutionTowerScript();
+
+		if (
+			evolutionTower.skillLevel + 1
+			>= evolutionTower.towerData.evolutions[evolutionTower.evolutionIndex].skillLevels.Length
+		)
+			return;
+
+		evolutionTower.UpgradeSkill();
+		HideButtons();
+	}
+
+	public bool isEvolutionTower()
+	{
+		return towerInstance != null && towerInstance.GetComponent<BaseEvolutionTower>() != null;
 	}
 }

@@ -15,9 +15,7 @@ public enum ButtonAction
 	UPGRADE_LEVEL,
 	BUY_EVOLUTION_1,
 	BUY_EVOLUTION_2,
-	UPGRADE_EVOLUTION_0,
-	UPGRADE_EVOLUTION_1,
-	UPGRADE_EVOLUTION_2,
+	UPGRADE_EVOLUTION,
 }
 
 public static class ButtonActionExtensions
@@ -91,6 +89,7 @@ public class TowerHolderButton : MonoBehaviour
 	void OnMouseEnter()
 	{
 		BaseTower tower = null;
+		BaseEvolutionTower evolutionTower = null;
 
 		switch (buttonAction)
 		{
@@ -123,7 +122,7 @@ public class TowerHolderButton : MonoBehaviour
 				break;
 
 			case ButtonAction.UPGRADE_LEVEL:
-				tower = towerHolder.GetComponent<TowerHolderNeo>().GetBaseTowerScript(null);
+				tower = towerHolder.GetComponent<TowerHolderNeo>().GetBaseTowerScript();
 				string upgradeStats = tower.towerData.GetUpgradeStats(tower.level);
 				TooltipManager.Show(tower.towerData.towerName + " " + (tower.level + 2), upgradeStats);
 				TowerHelpers.SetRangeCircle(
@@ -135,17 +134,30 @@ public class TowerHolderButton : MonoBehaviour
 				break;
 
 			case ButtonAction.SELL:
-				tower = towerHolder.GetComponent<TowerHolderNeo>().GetBaseTowerScript(null);
-				TooltipManager.Show(
-					"Sell " + tower.towerData.towerName,
-					"Sell for " + tower.towerData.levels[0].price / 2
-				);
+				if (!towerHolder.GetComponent<TowerHolderNeo>().isEvolutionTower())
+				{
+					tower = towerHolder.GetComponent<TowerHolderNeo>().GetBaseTowerScript();
+					TooltipManager.Show(
+						"Sell " + tower.towerData.towerName,
+						"Sell for " + tower.CalculateSellPrice() + " gold"
+					);
+					break;
+				}
+				else
+				{
+					evolutionTower = towerHolder.GetComponent<TowerHolderNeo>().GetBaseEvolutionTowerScript();
+					TooltipManager.Show(
+						"Sell " + evolutionTower.towerData.evolutions[evolutionTower.evolutionIndex].name,
+						"Sell for " + evolutionTower.CalculateSellPrice() + " gold"
+					);
+				}
+
 				break;
 
 			case ButtonAction.BUY_EVOLUTION_1:
 			case ButtonAction.BUY_EVOLUTION_2:
 				int evolutionIndex = buttonAction.GetEvolutionIndex();
-				tower = towerHolder.GetComponent<TowerHolderNeo>().GetBaseTowerScript(null);
+				tower = towerHolder.GetComponent<TowerHolderNeo>().GetBaseTowerScript();
 				string EvolutionStats = tower.towerData.GetEvolutionBuyStats(evolutionIndex);
 				TooltipManager.Show(tower.towerData.evolutions[evolutionIndex].name, EvolutionStats);
 
@@ -155,6 +167,33 @@ public class TowerHolderButton : MonoBehaviour
 					towerHolder.transform.position
 				);
 				lineRenderer.enabled = true;
+				break;
+
+			case ButtonAction.UPGRADE_EVOLUTION:
+				evolutionTower = towerHolder.GetComponent<TowerHolderNeo>().GetBaseEvolutionTowerScript();
+				if (
+					evolutionTower.skillLevel + 1
+					>= evolutionTower.towerData.evolutions[evolutionTower.evolutionIndex].skillLevels.Length
+				)
+				{
+					TooltipManager.Show("Max level reached", "No more upgrades available");
+					return;
+				}
+
+				string skillStats =
+					evolutionTower.skillLevel == -1
+						? evolutionTower.towerData.GetEvolutionSkillStats(evolutionTower.evolutionIndex, 0)
+						: evolutionTower.towerData.GetEvolutionSkillUpgradeStats(
+							evolutionTower.evolutionIndex,
+							evolutionTower.skillLevel
+						);
+
+				TooltipManager.Show(
+					evolutionTower.towerData.evolutions[evolutionTower.evolutionIndex].skillName
+						+ " "
+						+ (evolutionTower.skillLevel + 2),
+					skillStats
+				);
 				break;
 
 			default:
