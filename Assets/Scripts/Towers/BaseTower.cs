@@ -53,6 +53,8 @@ public abstract class BaseTower : MonoBehaviour
 	{
 		canShoot = false;
 		towerAnimator.SetTrigger("attack");
+		
+		yield return null;
 
 		while (towerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
 		{
@@ -68,6 +70,7 @@ public abstract class BaseTower : MonoBehaviour
 		{
 			canShoot = true;
 			towerAnimator.SetTrigger("idle");
+			//zahrat nejakej soundeffect deloadu protoze jinak to vypada jenom jako bug
 			yield break;
 		}
 		GameObject target = TowerHelpers.SelectEnemyToAttack(
@@ -92,16 +95,16 @@ public abstract class BaseTower : MonoBehaviour
 	{
 		canShoot = false;
 
-		if (shootCoroutine != null)
-		{
-			StopCoroutine(shootCoroutine);
-			shootCoroutine = null;
-		}
+		StopCoroutine(shootCoroutine);
+		shootCoroutine = null;
+		
+		if(GetComponent<LineRenderer>() != null) GetComponent<LineRenderer>().SetPosition(1,transform.Find("shotOrigin").position);
 
 		level++;
+
 		towerAnimator.SetTrigger("upgrade");
 
-		yield return null;
+		yield return new WaitForSeconds(0.5f);
 
 		canShoot = true;
 	}
