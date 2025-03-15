@@ -102,7 +102,7 @@ public abstract class BaseTower : MonoBehaviour
 
 		yield return new WaitForSeconds(0.5f);
 
-		shootCoroutine = StartCoroutine(ChargeShootAndResetCooldown());
+		if(shootCoroutine == null) shootCoroutine = StartCoroutine(ChargeShootAndResetCooldown());
 	}
 
 	public virtual int CalculateSellPrice()
