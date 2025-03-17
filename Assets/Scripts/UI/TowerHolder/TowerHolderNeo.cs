@@ -134,7 +134,9 @@ public class TowerHolderNeo : MonoBehaviour
 		switch (buttonAction)
 		{
 			case ButtonAction.CYCLE_RETARGET:
-				targetTypeIndex = (targetTypeIndex + 1) % Enum.GetNames(typeof(EnemyTypes)).Length;
+				targetTypeIndex =
+					(targetTypeIndex + 1)
+					% TowerHelpers.TowerTargetTypes.GetValues(typeof(TowerHelpers.TowerTargetTypes)).Length;
 				towerInstance.GetComponent<BaseTower>().targetType = (TowerHelpers.TowerTargetTypes)targetTypeIndex;
 				HideButtons();
 				break;

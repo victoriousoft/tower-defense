@@ -111,6 +111,8 @@ public class TowerHolderButton : MonoBehaviour
 
 			case ButtonAction.CYCLE_RETARGET:
 				int targetTypeIndex = towerHolder.GetComponent<TowerHolderNeo>().targetTypeIndex;
+				Debug.Log(targetTypeIndex);
+				Debug.Log(targetTypes[targetTypeIndex].GetString());
 
 				TooltipManager.Show(
 					"Cycle targeting strategy",
