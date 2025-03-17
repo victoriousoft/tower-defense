@@ -122,14 +122,6 @@ public class TowerHolderNeo : MonoBehaviour
 			ShowButtons();
 	}
 
-	void OnGUI()
-	{
-		if (isMenuActive && Input.GetMouseButtonDown(0) && !IsMouseOverAnyButton())
-		{
-			HideButtons();
-		}
-	}
-
 	public void ButtonClicked(ButtonAction buttonAction)
 	{
 		TowerTypes? towerType = buttonAction.GetTowerType();
@@ -324,7 +316,7 @@ public class TowerHolderNeo : MonoBehaviour
 		if (towerInstance == null)
 			return;
 
-		if (IsEvolutionTower())
+		if (isEvolutionTower())
 		{
 			BaseEvolutionTower evolutionTower = GetBaseEvolutionTowerScript();
 			PlayerStatsManager.AddGold(evolutionTower.CalculateSellPrice());
@@ -416,19 +408,8 @@ public class TowerHolderNeo : MonoBehaviour
 		HideButtons();
 	}
 
-	public bool IsEvolutionTower()
+	public bool isEvolutionTower()
 	{
 		return towerInstance != null && towerInstance.GetComponent<BaseEvolutionTower>() != null;
-	}
-
-	public bool IsMouseOverAnyButton()
-	{
-		foreach (GameObject button in menuButtons)
-		{
-			if (button.GetComponent<TowerHolderButton>().isMouseOver)
-				return true;
-		}
-
-		return false;
 	}
 }
