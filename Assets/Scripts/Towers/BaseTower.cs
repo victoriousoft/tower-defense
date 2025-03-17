@@ -37,7 +37,7 @@ public abstract class BaseTower : MonoBehaviour
 		shootCoroutine = StartCoroutine(ChargeShootAndResetCooldown());
 	}
 
-	protected virtual void FixedUpdate(){} //mozna zbytecny
+	protected virtual void FixedUpdate() { } //mozna zbytecny
 
 	private IEnumerator ChargeShootAndResetCooldown()
 	{
@@ -50,7 +50,8 @@ public abstract class BaseTower : MonoBehaviour
 			yield return null;
 		}
 
-		while(!enemiesInRange()){
+		while (!enemiesInRange())
+		{
 			yield return null;
 			//charged up, waiting for enemies
 		}
@@ -78,7 +79,8 @@ public abstract class BaseTower : MonoBehaviour
 			towerData.enemyTypes
 		);
 
-		if(enemies.Length == 0){
+		if (enemies.Length == 0)
+		{
 			return false;
 		}
 		return true;
@@ -93,8 +95,9 @@ public abstract class BaseTower : MonoBehaviour
 	{
 		StopCoroutine(shootCoroutine);
 		shootCoroutine = null;
-		
-		if(GetComponent<LineRenderer>() != null) GetComponent<LineRenderer>().SetPosition(1,transform.Find("shotOrigin").position);
+
+		if (GetComponent<LineRenderer>() != null)
+			GetComponent<LineRenderer>().SetPosition(1, transform.Find("shotOrigin").position);
 
 		level++;
 
@@ -102,7 +105,8 @@ public abstract class BaseTower : MonoBehaviour
 
 		yield return new WaitForSeconds(0.5f);
 
-		if(shootCoroutine == null) shootCoroutine = StartCoroutine(ChargeShootAndResetCooldown());
+		if (shootCoroutine == null)
+			shootCoroutine = StartCoroutine(ChargeShootAndResetCooldown());
 	}
 
 	public virtual int CalculateSellPrice()
