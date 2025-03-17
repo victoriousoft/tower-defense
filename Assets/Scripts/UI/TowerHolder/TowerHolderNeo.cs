@@ -101,6 +101,7 @@ public class TowerHolderNeo : MonoBehaviour
 		for (int i = 0; i < buttons.childCount; i++)
 		{
 			menuButtons[i] = buttons.GetChild(i).gameObject;
+			menuButtons[i].SetActive(true);
 			menuButtons[i].GetComponent<TowerHolderButton>().towerHolder = gameObject;
 		}
 

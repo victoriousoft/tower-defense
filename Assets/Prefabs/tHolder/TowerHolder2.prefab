@@ -37,7 +37,7 @@ Transform:
   - {fileID: 8129972182241863298}
   - {fileID: 4894866830666887507}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &634776866727042202
 MonoBehaviour:
@@ -425,7 +425,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4648710641579391456}
   - component: {fileID: 9135355891139380821}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Buttons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -468,6 +468,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonAction: 0
   towerHolder: {fileID: 0}
+  lineRenderer: {fileID: 0}
   iconSpriteRenderer: {fileID: 0}
 --- !u!1 &6472236061326610451
 GameObject:
@@ -609,6 +610,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 3_TopRight
       objectReference: {fileID: 0}
+    - target: {fileID: 8277057280443757450, guid: 27b2e3196c671de4f9d6be9f362e5c96, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -674,6 +679,10 @@ PrefabInstance:
     - target: {fileID: 8277057280443757450, guid: 27b2e3196c671de4f9d6be9f362e5c96, type: 3}
       propertyPath: m_Name
       value: 1_TopLeft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8277057280443757450, guid: 27b2e3196c671de4f9d6be9f362e5c96, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -741,6 +750,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 5_CenterLeft
       objectReference: {fileID: 0}
+    - target: {fileID: 8277057280443757450, guid: 27b2e3196c671de4f9d6be9f362e5c96, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -807,6 +820,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 2_TopCenter
       objectReference: {fileID: 0}
+    - target: {fileID: 8277057280443757450, guid: 27b2e3196c671de4f9d6be9f362e5c96, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -872,6 +889,10 @@ PrefabInstance:
     - target: {fileID: 8277057280443757450, guid: 27b2e3196c671de4f9d6be9f362e5c96, type: 3}
       propertyPath: m_Name
       value: 9_BottomRight
+      objectReference: {fileID: 0}
+    - target: {fileID: 8277057280443757450, guid: 27b2e3196c671de4f9d6be9f362e5c96, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1062,6 +1083,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 8_BottomCenter
       objectReference: {fileID: 0}
+    - target: {fileID: 8277057280443757450, guid: 27b2e3196c671de4f9d6be9f362e5c96, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1127,6 +1152,10 @@ PrefabInstance:
     - target: {fileID: 8277057280443757450, guid: 27b2e3196c671de4f9d6be9f362e5c96, type: 3}
       propertyPath: m_Name
       value: 7_BottomLeft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8277057280443757450, guid: 27b2e3196c671de4f9d6be9f362e5c96, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
