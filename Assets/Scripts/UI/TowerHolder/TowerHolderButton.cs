@@ -62,6 +62,9 @@ public class TowerHolderButton : MonoBehaviour
 	[HideInInspector]
 	public LineRenderer lineRenderer;
 
+	[HideInInspector]
+	public bool isMouseOver;
+
 	public SpriteRenderer iconSpriteRenderer;
 
 	private SpriteRenderer backgroundSpriteRenderer;
@@ -83,11 +86,13 @@ public class TowerHolderButton : MonoBehaviour
 	public void OnMouseDown()
 	{
 		TooltipManager.Hide();
+		isMouseOver = false;
 		towerHolder.GetComponent<TowerHolderNeo>().ButtonClicked(buttonAction);
 	}
 
 	void OnMouseEnter()
 	{
+		isMouseOver = true;
 		BaseTower tower = null;
 		BaseEvolutionTower evolutionTower = null;
 
@@ -111,8 +116,6 @@ public class TowerHolderButton : MonoBehaviour
 
 			case ButtonAction.CYCLE_RETARGET:
 				int targetTypeIndex = towerHolder.GetComponent<TowerHolderNeo>().targetTypeIndex;
-				Debug.Log(targetTypeIndex);
-				Debug.Log(targetTypes[targetTypeIndex].GetString());
 
 				TooltipManager.Show(
 					"Cycle targeting strategy",
@@ -136,7 +139,7 @@ public class TowerHolderButton : MonoBehaviour
 				break;
 
 			case ButtonAction.SELL:
-				if (!towerHolder.GetComponent<TowerHolderNeo>().isEvolutionTower())
+				if (!towerHolder.GetComponent<TowerHolderNeo>().IsEvolutionTower())
 				{
 					tower = towerHolder.GetComponent<TowerHolderNeo>().GetBaseTowerScript();
 					TooltipManager.Show(
@@ -206,6 +209,7 @@ public class TowerHolderButton : MonoBehaviour
 
 	void OnMouseExit()
 	{
+		isMouseOver = false;
 		TooltipManager.Hide();
 		lineRenderer.enabled = false;
 	}
