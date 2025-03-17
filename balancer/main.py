@@ -71,7 +71,7 @@ class TowerData:
     evolutions: list[Evolution]
 
     def generate_csv(self) -> str:
-        out = "Name,"
+        out = "name,"
 
         for i in range(len(self.levels)):
             out += f"{self.name} {i+1},"
