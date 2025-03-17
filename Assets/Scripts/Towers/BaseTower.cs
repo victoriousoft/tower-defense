@@ -16,7 +16,6 @@ public abstract class BaseTower : MonoBehaviour
 	public TowerHelpers.TowerTargetTypes targetType = TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH;
 
 	public TowerTypes towerType;
-	protected bool canShoot = true;
 	protected GameObject paths;
 	private Coroutine shootCoroutine;
 
@@ -33,43 +32,31 @@ public abstract class BaseTower : MonoBehaviour
 		ExtendedAwake();
 	}
 
-	protected virtual void FixedUpdate()
+	void Start()
 	{
-		if (!canShoot)
-			return;
-
-		GameObject[] enemies = TowerHelpers.GetEnemiesInRange(
-			transform.position,
-			towerData.levels[level].range,
-			towerData.enemyTypes
-		);
-		if (enemies.Length == 0)
-			return;
-
-		shootCoroutine = StartCoroutine(ShootAndResetCooldown());
+		shootCoroutine = StartCoroutine(ChargeShootAndResetCooldown());
 	}
 
-	private IEnumerator ShootAndResetCooldown()
+	protected virtual void FixedUpdate(){} //mozna zbytecny
+
+	private IEnumerator ChargeShootAndResetCooldown()
 	{
-		canShoot = false;
-		towerAnimator.SetTrigger("attack");
+		towerAnimator.SetTrigger("charge");
+
+		yield return null;
 
 		while (towerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
 		{
 			yield return null;
 		}
 
-		GameObject[] enemies = TowerHelpers.GetEnemiesInRange(
-			transform.position,
-			towerData.levels[level].range,
-			towerData.enemyTypes
-		);
-		if (enemies.Length == 0)
-		{
-			canShoot = true;
-			towerAnimator.SetTrigger("idle");
-			yield break;
+		while(!enemiesInRange()){
+			yield return null;
+			//charged up, waiting for enemies
 		}
+
+		towerAnimator.SetTrigger("attack");
+
 		GameObject target = TowerHelpers.SelectEnemyToAttack(
 			TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range, towerData.enemyTypes),
 			targetType
@@ -80,7 +67,21 @@ public abstract class BaseTower : MonoBehaviour
 		towerAnimator.SetTrigger("idle");
 
 		yield return new WaitForSeconds(towerData.levels[level].cooldown);
-		canShoot = true;
+		StartCoroutine(ChargeShootAndResetCooldown());
+	}
+
+	bool enemiesInRange()
+	{
+		GameObject[] enemies = TowerHelpers.GetEnemiesInRange(
+			transform.position,
+			towerData.levels[level].range,
+			towerData.enemyTypes
+		);
+
+		if(enemies.Length == 0){
+			return false;
+		}
+		return true;
 	}
 
 	public void UpgradeTower()
@@ -90,20 +91,18 @@ public abstract class BaseTower : MonoBehaviour
 
 	private IEnumerator UpgradeRoutine()
 	{
-		canShoot = false;
-
-		if (shootCoroutine != null)
-		{
-			StopCoroutine(shootCoroutine);
-			shootCoroutine = null;
-		}
+		StopCoroutine(shootCoroutine);
+		shootCoroutine = null;
+		
+		if(GetComponent<LineRenderer>() != null) GetComponent<LineRenderer>().SetPosition(1,transform.Find("shotOrigin").position);
 
 		level++;
+
 		towerAnimator.SetTrigger("upgrade");
 
-		yield return null;
+		yield return new WaitForSeconds(0.5f);
 
-		canShoot = true;
+		if(shootCoroutine == null) shootCoroutine = StartCoroutine(ChargeShootAndResetCooldown());
 	}
 
 	public virtual int CalculateSellPrice()
