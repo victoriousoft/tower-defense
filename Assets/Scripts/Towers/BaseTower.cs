@@ -35,6 +35,8 @@ public abstract class BaseTower : MonoBehaviour
 	void Start()
 	{
 		shootCoroutine = StartCoroutine(ChargeShootAndResetCooldown());
+		if (GetComponent<LineRenderer>() != null)
+			ResetLaserPosition();
 	}
 
 	protected virtual void FixedUpdate() { } //mozna zbytecny
@@ -97,7 +99,7 @@ public abstract class BaseTower : MonoBehaviour
 		shootCoroutine = null;
 
 		if (GetComponent<LineRenderer>() != null)
-			GetComponent<LineRenderer>().SetPosition(1, transform.Find("shotOrigin").position);
+			ResetLaserPosition();
 
 		level++;
 
@@ -107,6 +109,12 @@ public abstract class BaseTower : MonoBehaviour
 
 		if (shootCoroutine == null)
 			shootCoroutine = StartCoroutine(ChargeShootAndResetCooldown());
+	}
+
+	private void ResetLaserPosition()
+	{
+		GetComponent<LineRenderer>().SetPosition(0, transform.Find("shotOrigin").position);
+		GetComponent<LineRenderer>().SetPosition(1, transform.Find("shotOrigin").position);
 	}
 
 	public virtual int CalculateSellPrice()
