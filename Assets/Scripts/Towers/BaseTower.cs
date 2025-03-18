@@ -34,6 +34,7 @@ public abstract class BaseTower : MonoBehaviour
 
 	void Start()
 	{
+		Debug.Log("No enemies in range");
 		shootCoroutine = StartCoroutine(ChargeShootAndResetCooldown());
 	}
 
