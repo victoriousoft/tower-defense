@@ -7,11 +7,13 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
 	public Image foregroundImage;
+	public float progress = 0f;
 
 	// accept a float value between 0 and 1
 	public void SetHealth(float healthNormalized)
 	{
 		foregroundImage.fillAmount = healthNormalized;
+		progress = healthNormalized;
 	}
 
 	// accept a float value between 0 and 1
@@ -23,10 +25,12 @@ public class HealthBar : MonoBehaviour
 		{
 			elapsed += Time.deltaTime;
 			foregroundImage.fillAmount = Mathf.Lerp(start, end, elapsed / durationInSeconds);
+			progress = foregroundImage.fillAmount;
 			yield return null;
 		}
 
 		foregroundImage.fillAmount = end;
+		progress = end;
 
 		callback?.Invoke();
 	}
