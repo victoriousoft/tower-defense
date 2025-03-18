@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -26,6 +27,24 @@ public class WaveSheet : MonoBehaviour
 			}
 
 			yield return null;
+		}
+
+		public string GetWaveInfo()
+		{
+			string info = "";
+
+			foreach (WaveEnemy enemy in enemies)
+			{
+				info += enemy.count + "x " + enemy.enemyPrefab.name + "\n";
+			}
+
+			return info;
+		}
+
+		public int GetEarlyCallCashback(float progress)
+		{
+			// TODO: Tahle kalkulace je sketchy af
+			return Mathf.Min((int)Mathf.Ceil((initialDelay / progress) - initialDelay), 200);
 		}
 	}
 
@@ -58,6 +77,8 @@ public class WaveSheet : MonoBehaviour
 		}
 	}
 
+	public WaveTriggerButton waveTriggerButton;
+
 	[SerializeField]
 	public Wave[] waves;
 
@@ -65,27 +86,66 @@ public class WaveSheet : MonoBehaviour
 	[HideInInspector]
 	public int currentWave = -1;
 
+	[System.NonSerialized]
+	[HideInInspector]
+	public bool showNextWaveButton = true;
+
+	private Coroutine waveCountdownRoutine;
+
 	public void Awake()
 	{
-		StartCoroutine(SpawnWaves());
+		// StartCoroutine(SpawnWaves());
 	}
 
-	public IEnumerator SpawnWaves(int startWaveOverride = 0)
+	public void TriggerWaveSpawn()
 	{
-		yield return new WaitForSeconds(waves[0].initialDelay);
-		currentWave++;
-
-		for (int i = startWaveOverride; i < waves.Length; i++)
+		if (waveCountdownRoutine != null)
 		{
-			Wave wave = waves[i];
+			StopCoroutine(waveCountdownRoutine);
+			waveCountdownRoutine = null;
+		}
 
-			yield return StartCoroutine(wave.SpawnWave(this));
+		Debug.Log("running wave " + (currentWave + 1));
 
-			if (i < waves.Length - 1)
-			{
-				yield return new WaitForSeconds(waves[i + 1].initialDelay);
-				currentWave++;
-			}
+		waveTriggerButton.gameObject.SetActive(false);
+		StartCoroutine(SpawnWave(currentWave + 1));
+	}
+
+	public IEnumerator SpawnWave(int waveIndex)
+	{
+		if (waveIndex >= waves.Length)
+		{
+			Debug.LogError(
+				"Wave index out of range, requested wave index: " + waveIndex + ", total waves: " + waves.Length
+			);
+			yield break;
+		}
+
+		currentWave = waveIndex;
+
+		yield return StartCoroutine(waves[waveIndex].SpawnWave(this));
+
+		if (waveIndex + 1 < waves.Length)
+		{
+			waveTriggerButton.gameObject.SetActive(true);
+			waveTriggerButton.statusBar.gameObject.SetActive(true);
+
+			waveCountdownRoutine = StartCoroutine(
+				waveTriggerButton.statusBar.Animate(
+					0,
+					1,
+					waves[waveIndex + 1].initialDelay,
+					() =>
+					{
+						waveTriggerButton.gameObject.SetActive(false);
+						waveTriggerButton.statusBar.gameObject.SetActive(false);
+						waveCountdownRoutine = null;
+						TriggerWaveSpawn();
+					}
+				)
+			);
+
+			yield return waveCountdownRoutine;
 		}
 	}
 }
