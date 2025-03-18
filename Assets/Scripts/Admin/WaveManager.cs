@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WaveSheet : MonoBehaviour
@@ -12,10 +13,18 @@ public class WaveSheet : MonoBehaviour
 
 		public IEnumerator SpawnWave(MonoBehaviour instance)
 		{
+			List<Coroutine> spawnRoutines = new List<Coroutine>();
+
 			foreach (WaveEnemy enemy in enemies)
 			{
-				instance.StartCoroutine(enemy.SpawnWaveEnemy());
+				spawnRoutines.Add(instance.StartCoroutine(enemy.SpawnWaveEnemy()));
 			}
+
+			foreach (Coroutine routine in spawnRoutines)
+			{
+				yield return routine;
+			}
+
 			yield return null;
 		}
 	}
@@ -31,12 +40,20 @@ public class WaveSheet : MonoBehaviour
 
 		public IEnumerator SpawnWaveEnemy()
 		{
+			yield return null;
+
+			yield return new WaitForSeconds(initialDelay);
+
 			for (int i = 0; i < count; i++)
 			{
 				GameObject enemy = Instantiate(enemyPrefab);
 				enemy.GetComponent<BaseEnemy>().SetPathParent(pathParent);
 				enemy.transform.SetParent(GameObject.Find("Enemies").transform);
-				yield return new WaitForSeconds(spawnDelay);
+
+				if (i < count - 1)
+				{
+					yield return new WaitForSeconds(spawnDelay);
+				}
 			}
 		}
 	}
@@ -44,17 +61,31 @@ public class WaveSheet : MonoBehaviour
 	[SerializeField]
 	public Wave[] waves;
 
+	[System.NonSerialized]
+	[HideInInspector]
+	public int currentWave = -1;
+
 	public void Awake()
 	{
 		StartCoroutine(SpawnWaves());
 	}
 
-	public IEnumerator SpawnWaves()
+	public IEnumerator SpawnWaves(int startWaveOverride = 0)
 	{
-		foreach (Wave wave in waves)
+		yield return new WaitForSeconds(waves[0].initialDelay);
+		currentWave++;
+
+		for (int i = startWaveOverride; i < waves.Length; i++)
 		{
-			yield return new WaitForSeconds(wave.initialDelay);
-			yield return wave.SpawnWave(this);
+			Wave wave = waves[i];
+
+			yield return StartCoroutine(wave.SpawnWave(this));
+
+			if (i < waves.Length - 1)
+			{
+				yield return new WaitForSeconds(waves[i + 1].initialDelay);
+				currentWave++;
+			}
 		}
 	}
 }
