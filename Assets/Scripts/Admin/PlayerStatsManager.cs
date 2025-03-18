@@ -28,8 +28,25 @@ public class PlayerStatsManager : MonoBehaviour
 			GameOver();
 	}
 
-	static void GameOver()
+	public static void GameOver()
 	{
-		Debug.Log("take the L");
+		Overlay.PauseGame("Game Over", "press f5 to restart (I'm a lazy developer)");
+	}
+
+	public static void WinGame()
+	{
+		int stars = 0;
+
+		if (lives <= 10)
+			stars = 1;
+		else if (lives <= 15)
+			stars = 2;
+		else
+			stars = 3;
+
+		Overlay.PauseGame("You Win, " + stars + " stars", "press f5 to go to menu (I'm a lazy developer)");
+		WebGLMessageHandler.SendToJavaScript(
+			new WebGLMessageHandler.BrowserMessage { action = "levelPass", args = new { stars = stars } }
+		);
 	}
 }

@@ -16,10 +16,14 @@ public class WebGLMessageHandler : MonoBehaviour
 		public object args;
 	}
 
+	private static WebGLMessageHandler instance;
+
 	void Start()
 	{
 		if (Application.isEditor)
 			return;
+
+		instance = this;
 
 		bool initRes = InitMessageListener();
 		if (!initRes)
@@ -36,12 +40,12 @@ public class WebGLMessageHandler : MonoBehaviour
 		SendToJavaScript(message);
 	}
 
-	public void SendToJavaScript(BrowserMessage message)
+	public static void SendToJavaScript(BrowserMessage message)
 	{
 		SendMessageToJS(JsonUtility.ToJson(message));
 	}
 
-	public void ReceiveFromJavaScript(object message)
+	public static void ReceiveFromJavaScript(object message)
 	{
 		Debug.Log("UNITY - Received message from JavaScript: " + message);
 	}

@@ -111,6 +111,16 @@ public class WaveSheet : MonoBehaviour
 		StartCoroutine(SpawnWave(currentWave + 1));
 	}
 
+	private IEnumerator AwaitAllEnemyDeath()
+	{
+		while (GameObject.Find("Enemies").transform.childCount > 0)
+		{
+			yield return new WaitForSeconds(0.5f);
+		}
+
+		PlayerStatsManager.WinGame();
+	}
+
 	public IEnumerator SpawnWave(int waveIndex)
 	{
 		if (waveIndex >= waves.Length)
@@ -146,6 +156,10 @@ public class WaveSheet : MonoBehaviour
 			);
 
 			yield return waveCountdownRoutine;
+		}
+		else
+		{
+			StartCoroutine(AwaitAllEnemyDeath());
 		}
 	}
 }

@@ -39,10 +39,10 @@ public class Overlay : MonoBehaviour
 			PauseGame();
 	}
 
-	public static void PauseGame()
+	public static void PauseGame(string title = "Paused", string description = "Press ESC to resume")
 	{
 		isGamePaused = true;
-		FullscreenOverlayManager.Show("Paused", "Press ESC to resume");
+		FullscreenOverlayManager.Show(title, description);
 		Time.timeScale = 0;
 	}
 
