@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Archer : BaseTower
 {
+	private bool facingLeft = true;
+	[SerializeField]private SpriteRenderer spriteRendererLeft,spriteRendererRight;
+
 	protected override IEnumerator ChargeUp(GameObject enemy)
 	{
 		yield return null;
@@ -11,6 +14,19 @@ public class Archer : BaseTower
 
 	protected override IEnumerator Shoot(GameObject enemy)
 	{
+		if(enemy != null){
+			if(facingLeft && enemy.transform.position.x > transform.position.x)
+			{
+				spriteRendererLeft.enabled = false;
+				spriteRendererRight.enabled = true;
+				facingLeft = false;
+			}else if(!facingLeft && enemy.transform.position.x < transform.position.x)
+			{
+				spriteRendererLeft.enabled = true;
+				spriteRendererRight.enabled = false;
+				facingLeft = true;
+			}
+		}
 		GameObject arrow = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
 		arrow.transform.SetParent(transform);
 		arrow.transform.position = transform.position;
