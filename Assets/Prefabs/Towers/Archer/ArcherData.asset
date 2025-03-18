@@ -30,4 +30,12 @@ MonoBehaviour:
     range: 4
     damage: 25
     cooldown: 0
-  evolutions: []
+  evolutions:
+  - name: Kittengun
+    prefab: {fileID: 0}
+    price: 400
+    damage: 10
+    range: 3
+    cooldown: 2
+    skillName: mad mf spin
+    skillLevels: []
