@@ -8,7 +8,6 @@ public abstract class BaseTower : MonoBehaviour
 	public int level = 0;
 
 	public TowerSheetNeo towerData;
-	private PlayerStatsManager playerStats;
 	private Animator towerAnimator;
 
 	[System.NonSerialized]
@@ -27,7 +26,6 @@ public abstract class BaseTower : MonoBehaviour
 
 	void Awake()
 	{
-		playerStats = GameObject.Find("PlayerStats").GetComponent<PlayerStatsManager>();
 		towerAnimator = GetComponent<Animator>();
 		ExtendedAwake();
 	}
