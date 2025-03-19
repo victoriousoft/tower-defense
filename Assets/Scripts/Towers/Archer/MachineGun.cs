@@ -15,14 +15,11 @@ public class MachineGun : BaseEvolutionTower
 		Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		Vector2 direction = mousePos - (Vector2)transform.position;
 
-		// Calculate the target angle in degrees
 		targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 180;
 
-		// Normalize the angles to the range [0, 360)
 		currentAngle = NormalizeAngle(currentAngle);
 		targetAngle = NormalizeAngle(targetAngle);
 
-		// Start rotating if not already rotating
 		if (rotationCoroutine == null && Mathf.Abs(targetAngle - currentAngle) > 22.5f)
 		{
 			rotationCoroutine = StartCoroutine(RotateStepByStep());
