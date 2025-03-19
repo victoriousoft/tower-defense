@@ -289,4 +289,15 @@ public static class TowerHelpers
 			rangeRendered.SetPosition(i, new Vector2(x, y) + centerpoint);
 		}
 	}
+
+	public static float GetAngleBetweenPoints(Vector2 origin, float originAngle, Vector2 target)
+	{
+		Vector2 direction = target - origin;
+		float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+		float angleDifference = targetAngle - originAngle;
+
+		angleDifference = (angleDifference + 180) % 360 - 180;
+
+		return angleDifference;
+	}
 }
