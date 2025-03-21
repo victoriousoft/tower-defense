@@ -10,6 +10,13 @@ public class MachineGun : BaseEvolutionTower
 	private float targetAngle = 135f;
 	private Coroutine rotationCoroutine;
 
+	protected override void Start()
+	{
+		base.Start();
+
+		spinAnimationAnimator = GetComponent<Animator>();
+	}
+
 	void Update()
 	{
 		Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -61,11 +68,6 @@ public class MachineGun : BaseEvolutionTower
 		while (angle > 360)
 			angle -= 360;
 		return angle;
-	}
-
-	protected override void ExtendedAwake()
-	{
-		spinAnimationAnimator = GetComponent<Animator>();
 	}
 
 	protected override IEnumerator Shoot(GameObject enemy)

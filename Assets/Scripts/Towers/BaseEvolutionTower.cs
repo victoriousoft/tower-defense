@@ -16,13 +16,16 @@ public abstract class BaseEvolutionTower : BaseTower
 	private bool isSkillCharged = false;
 	private Coroutine skillCoroutine;
 
-	void Awake()
+	protected override void Awake()
 	{
-		level = towerData.levels.Length - 1;
+		base.Awake();
 	}
 
-	void Start()
+	protected override void Start()
 	{
+		base.Start();
+
+		level = towerData.levels.Length - 1;
 		healthBar = GetComponentInChildren<HealthBar>();
 		healthBar.gameObject.SetActive(false);
 	}

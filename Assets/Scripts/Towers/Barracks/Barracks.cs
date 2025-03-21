@@ -18,6 +18,18 @@ public class Barracks : BaseTower
 	// tohle se neimplementuje v barracks
 	protected override void FixedUpdate() { }
 
+	protected override void Start()
+	{
+		base.Start();
+
+		troops = new GameObject[troopCount];
+		paths = GameObject.Find("Paths");
+		Vector2 globalTroopRandezvous = TowerHelpers.GetClosesPointOnPath(transform.position, paths);
+		localTroopRandezvousPoint = globalTroopRandezvous - (Vector2)transform.position;
+
+		SpawnTroops(troopCount);
+	}
+
 	protected override IEnumerator Shoot(GameObject enemy)
 	{
 		yield return null;
@@ -28,16 +40,6 @@ public class Barracks : BaseTower
 	protected override IEnumerator ChargeUp(GameObject enemy)
 	{
 		yield return null;
-	}
-
-	protected override void ExtendedAwake()
-	{
-		troops = new GameObject[troopCount];
-		paths = GameObject.Find("Paths");
-		Vector2 globalTroopRandezvous = TowerHelpers.GetClosesPointOnPath(transform.position, paths);
-		localTroopRandezvousPoint = globalTroopRandezvous - (Vector2)transform.position;
-
-		SpawnTroops(troopCount);
 	}
 
 	void SpawnTroops(int count)
