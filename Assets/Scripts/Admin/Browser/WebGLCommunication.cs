@@ -45,6 +45,11 @@ public class WebGLMessageHandler : MonoBehaviour
 		}
 	}
 
+	void _ReceiveFromJavaScript(object message)
+	{
+		ReceiveFromJavaScript(message.ToString());
+	}
+
 	public static void SendToJavaScript(BrowserMessage message)
 	{
 		SendMessageToJS(JsonUtility.ToJson(message));

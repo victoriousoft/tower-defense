@@ -22,7 +22,7 @@ mergeInto(LibraryManager.library, {
 
 				try {
 					const message = JSON.stringify(event.data.data);
-					SendMessage("BrowserMessanger", "ReceiveFromJavaScript", message);
+					SendMessage("BrowserMessanger", "_ReceiveFromJavaScript", message);
 				} catch (e) {
 					console.error("Error sending message to Unity:", e);
 				}
