@@ -20,6 +20,8 @@ public class WebGLMessageHandler : MonoBehaviour
 
 	void Start()
 	{
+		Debug.Log("UNITY - Current scene name: " + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+
 		if (Application.isEditor)
 			return;
 
@@ -33,11 +35,14 @@ public class WebGLMessageHandler : MonoBehaviour
 			return;
 		}
 
-		BrowserMessage message = new BrowserMessage { action = "ready", args = null };
+		if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.ToLower() == "mainmenu")
+		{
+			BrowserMessage message = new BrowserMessage { action = "ready", args = null };
 
-		string jsonMessage = JsonUtility.ToJson(message);
-		Debug.Log("UNITY - Sending message to JavaScript: " + jsonMessage);
-		SendToJavaScript(message);
+			string jsonMessage = JsonUtility.ToJson(message);
+			Debug.Log("UNITY - Sending message to JavaScript: " + jsonMessage);
+			SendToJavaScript(message);
+		}
 	}
 
 	public static void SendToJavaScript(BrowserMessage message)

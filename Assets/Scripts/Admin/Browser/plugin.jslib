@@ -30,8 +30,15 @@ mergeInto(LibraryManager.library, {
 		}
 
 		try {
-			return window.self !== window.top || window.location.hostname === "localhost";
+			isIframe = window.self !== window.top; // || window.location.hostname === "localhost";
+			if (!isIframe) {
+				window.location.href = "https://td.kristn.co.uk/";
+				return false;
+			}
+
+			return true;
 		} catch (e) {
+			window.location.href = "https://td.kristn.co.uk/";
 			return false;
 		}
 	},
