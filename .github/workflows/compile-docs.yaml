@@ -22,17 +22,13 @@ jobs:
             - name: Compile LaTeX document
               uses: xu-cheng/latex-action@v3
               with:
-                  root_file: docs/main.tex
+                  root_file: main.tex
+                  working_directory: docs
 
             - name: Set up Git
               run: |
                   git config --global user.name "GitHub Actions [bot]"
                   git config --global user.email "noreply@github.com"
-
-            - name: Move PDF to docs directory
-              run: |
-                  mkdir -p docs/pdf
-                  mv main.pdf docs/pdf/
 
             - name: Commit and push changes
               run: |
