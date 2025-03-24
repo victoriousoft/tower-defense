@@ -19,11 +19,17 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
 
+            - name: Install LaTeX dependencies
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install -y texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-bibtex-extra
+
             - name: Compile LaTeX document
               uses: xu-cheng/latex-action@v3
               with:
                   root_file: main.tex
                   working_directory: docs
+                  latexmk_args: -pdf -bibtex -f
 
             - name: Set up Git
               run: |
