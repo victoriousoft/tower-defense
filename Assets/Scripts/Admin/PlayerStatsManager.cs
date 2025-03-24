@@ -46,7 +46,7 @@ public class PlayerStatsManager : MonoBehaviour
 
 		Overlay.PauseGame("You Win, " + stars + " stars", "press f5 to go to menu (I'm a lazy developer)");
 		WebGLMessageHandler.SendToJavaScript(
-			new WebGLMessageHandler.BrowserMessage { action = "levelPass", args = new { stars = stars } }
+			new WebGLMessageHandler.OutBrowserMessage { action = "levelPass", args = new { stars = stars } }
 		);
 	}
 }

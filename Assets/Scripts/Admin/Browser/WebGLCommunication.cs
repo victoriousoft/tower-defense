@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+using System.Data;
 using System.Runtime.InteropServices;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 public class WebGLMessageHandler : MonoBehaviour
@@ -10,10 +13,16 @@ public class WebGLMessageHandler : MonoBehaviour
 	private static extern bool InitMessageListener();
 
 	[System.Serializable]
-	public class BrowserMessage
+	public class OutBrowserMessage
 	{
 		public string action;
 		public object args;
+	}
+
+	public class InBrowserMessage
+	{
+		public string action;
+		public Dictionary<string, object> args;
 	}
 
 	private static WebGLMessageHandler instance;
@@ -37,7 +46,7 @@ public class WebGLMessageHandler : MonoBehaviour
 
 		if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.ToLower() == "mainmenu")
 		{
-			BrowserMessage message = new BrowserMessage { action = "ready", args = null };
+			OutBrowserMessage message = new() { action = "ready", args = null };
 
 			string jsonMessage = JsonUtility.ToJson(message);
 			Debug.Log("UNITY - Sending message to JavaScript: " + jsonMessage);
@@ -45,18 +54,44 @@ public class WebGLMessageHandler : MonoBehaviour
 		}
 	}
 
-	void _ReceiveFromJavaScript(object message)
+	public void _ReceiveFromJavaScript(string jsonMessage)
 	{
-		ReceiveFromJavaScript(message.ToString());
+		JObject jsonObject = JObject.Parse(jsonMessage);
+
+		InBrowserMessage message = new InBrowserMessage
+		{
+			action = jsonObject["action"].ToString(),
+			args = jsonObject["args"].ToObject<Dictionary<string, object>>(),
+		};
+
+		// log the message nicely to the console
+		Debug.Log("UNITY - Received message from JavaScript: " + message.action);
+		return;
+		foreach (var arg in message.args)
+		{
+			Debug.Log("UNITY - " + arg.Key + ": " + arg.Value);
+		}
+		ReceiveFromJavaScript(message);
 	}
 
-	public static void SendToJavaScript(BrowserMessage message)
+	public static void SendToJavaScript(OutBrowserMessage message)
 	{
 		SendMessageToJS(JsonUtility.ToJson(message));
 	}
 
-	public static void ReceiveFromJavaScript(object message)
+	public static void ReceiveFromJavaScript(InBrowserMessage message)
 	{
-		Debug.Log("UNITY - Received message from JavaScript: " + message);
+		Debug.Log("UNITY - Received message from JavaScript: " + message.action);
+
+		switch (message.action)
+		{
+			case "loadSave":
+				Debug.Log("UNITY - Loading save data: " + message.args["levels"]);
+				break;
+
+			default:
+				Debug.Log("UNITY - Unknown action: " + message);
+				break;
+		}
 	}
 }

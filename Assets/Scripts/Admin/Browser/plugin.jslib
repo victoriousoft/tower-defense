@@ -2,7 +2,6 @@ mergeInto(LibraryManager.library, {
 	SendMessageToJS: function (data) {
 		try {
 			const message = JSON.parse(UTF8ToString(data));
-			console.log("(internal) JS - Message from Unity:", message);
 
 			window.parent.postMessage(
 				{
@@ -30,7 +29,7 @@ mergeInto(LibraryManager.library, {
 		}
 
 		try {
-			isIframe = window.self !== window.top; // || window.location.hostname === "localhost";
+			isIframe = window.self !== window.top || window.location.hostname === "localhost";
 			if (!isIframe) {
 				window.location.href = "https://td.kristn.co.uk/";
 				return false;
