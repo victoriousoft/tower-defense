@@ -3,6 +3,14 @@ on:
     push:
         branches:
             - main
+        paths-ignore:
+            - "*.md"
+            - "docs/**"
+            - ".vscode/**"
+            - "LICENSE"
+            - ".editorconfig"
+            - "git-hooks/**"
+
     workflow_dispatch:
 
 jobs:
