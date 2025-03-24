@@ -1,0 +1,168 @@
+\documentclass{article}[12pt]
+\usepackage{graphicx}
+\usepackage{lipsum}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{lmodern}
+\usepackage{minted}
+\usepackage{svg}
+\usepackage{amsmath}
+\usepackage[a4paper, left=3.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage{lipsum}
+\usepackage[T1]{fontenc}
+\usepackage[czech]{babel}
+\selectlanguage{czech}
+\usepackage{csquotes}
+\usepackage{wrapfig}
+\usepackage{cleveref}
+\usepackage[justification=centering]{caption}
+\usepackage[%
+  backend=biber      % biber or bibtex
+ ,style=numeric  % numerical-compressed
+ ,sorting=none        % no sorting
+ ,sortcites=true      % some other example options ...
+ ,block=none
+ ,indexing=true
+ ,citereset=none
+ ,isbn=true
+ ,url=true
+ ,doi=true            % prints doi
+ ,natbib=true         % if you need natbib functions
+]{biblatex}
+\addbibresource{refs.bib}
+\usepackage{indentfirst}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{titlesec} % Used to customize the \section command
+\titleformat{\section}{\Large\scshape\raggedright}{}{0em}{}[\titlerule] % Text formatting of sections
+\titlespacing{\section}{0pt}{3pt}{3pt} % Spacing around sections
+\raggedright
+
+\hypersetup{
+    colorlinks=true,
+    citecolor=black,
+    linkcolor=black,
+    filecolor=black,
+    urlcolor=black,
+}
+
+\newcommand{\tr}{(přeloženo) }
+\crefname{figure}{Obr.}{Obr.}
+\crefname{appendix}{Příloha}{Přílohy}
+\setlength{\parindent}{1.25cm}
+
+\begin{document}
+\onehalfspacing
+
+\begin{titlepage}
+	\centering
+
+	{\LARGE\bfseries Gymnázium, Praha 6, Arabská 14\par}
+	{\large předmět Programování, vyučující Daniel Kahoun}
+
+	\vspace{4cm}
+	\includegraphics[width=7cm]{img/gyarab_logo.png} \par\vspace{1cm}
+	\vspace{0.5cm}
+
+	{\Huge\bfseries Ratar TD\par}
+	\vspace{0.2cm}
+	{\huge ročníková práce}
+
+	\vfill
+
+	\begin{flushleft}
+		\textbf{\large Kristián Kunc, 3.E} \\
+		\textbf{\large Viktor Jakovec, 3.E} \\
+		\textbf{\large Leon Kubota, 3.E} \hfill \textbf{\large 2024}
+	\end{flushleft}
+
+
+
+\end{titlepage}
+
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+
+\noindent \emph{Prohlašuji, jsme jedinými autory  tohoto projektu, všechny citace jsou řádně označené a všechna použitá literatura a další zdroje jsou v práci uvedené.
+	Tímto dle zákona 121/2000 Sb. (tzv. Autorský zákon) ve znění pozdějších předpisů uděluji
+	bezúplatně škole Gymnázium, Praha 6, Arabská 14 oprávnění k výkonu práva na rozmnožování díla
+	(§ 13) a práva na sdělování díla veřejnosti (§ 18) na dobu časově neomezenou a bez omezení
+	územního rozsahu.}
+
+\vspace{1cm}
+\hfill \dotfill
+\pagebreak
+
+
+\textbf{{\Large Anotace}} \linebreak
+
+\vspace{1cm}
+\textbf{{\Large Abstract}}\linebreak
+
+\vspace{1cm}
+\textbf{{\Large Abstrakt}}\linebreak
+
+
+\pagebreak
+
+\tableofcontents
+
+\pagebreak
+
+\section{Zadání}
+\lipsum[10]
+
+\section{Ůvod}
+\subsection{Co je to tower defense?}
+Tower defense je známý žánr videoher ve kterém je hlavním cíle ubránit hráčovo území od přicházejících nepřátel. Tito nepřátelé chodí po různých cestách kolem kterých hráč staví různé obrané prvky, typicky věže, které na nepřátele sami střílí a tím jim zabrání v postupu.
+
+Tento žánr her se řadí do kategorie strategických her, protože je na hráči jaké věže, kdy a kde postaví. Rozložení je klíčové pro vítězství a správné strategie mohou vést k lepšímu skóre.
+
+\subsection{Inspirace}
+|name| je volně inspirovaná herní sérií Kingdom Rush od společnosti Ironhide, která byla vyvíjena pro dnes již nepodporovaný engine Flash.
+
+\subsection{Unikátní prvky}
+Samozřejmě jsme pouze neokopírovali již existující herní mechaniky. Při vývoji |name| jsme přidali uniátní prvky, které hru vylepšují a dělají ji zajímavější. Mezi ně se řadí například možnost nastavení typu algoritmu, podle kterého si věž vybírá nepřátele, na kterého vystřelí, což mnoho ostatních her tohoto žánru nepodporují.
+
+Pro každou věž lze kdykoliv v průběhu hry nastavit tyto možnosti výběru nepřátel.
+\begin{enumerate}
+	\item Nepřítel s největším počtem životů.
+	\item Nepřítel s nejmenším počtem životů.
+	\item Nepřítel nejblíže k cílu své trasy.
+	\item Nepřítel nejblíže k začátku své trasy.
+\end{enumerate}
+Tato možnost dodává hráči další strategický prvek, který musí vzít v potaz při sestavování své obrany.
+
+Dalším zajímavým dodatkem je speciální schopnost plně vylepšených věží. Jakmile hráč vylepší svojí věž na maximální úroveň, odemkne speciální útok, který se nabíjí periodicky a aktivuje se kliknutím, což hráče nutí být stále ve střehu a ještě více taktizovat pro jejich optimální využití.
+
+\section{Implementace}
+
+Implementace je rozdělena na dvě části, webovou stránku a videohru samotnou.
+
+\subsubsection{Webová stránka}
+Webová stránka je implementovaná ve frameworku SvelteKit \cite{sveltekit}, který disponuje možnostmi pro jak front-end, tak back-end kód.
+
+
+\subsubsection{Videhora}
+
+\section{Produkční spuštění}
+
+Pro spuštění na produkčním serveru používáme technologie Docker \cite{docker} a Docker compose \cite{docker-compose}. Docker nabízí zabalení a spuštění různých aplikací v izolovaném prostředí, podobně jako virutální počítače, takovému balíčku se říká \verb|Docker image|. Tento image se pak spustí a stane se z něj \verb|Docker container|, který lze individuálně ovládat. Docker compose pak umožňuje kombinovat a spravovat tyto kontejnery pomocí jednoho konfiguračního souboru.
+
+Celý compose stack se pak skládá ze tří, na sobě závislých, kontejnerů:
+\begin{enumerate}
+	\item Webserver webové stránky
+	\item Webserver videohry
+	\item MySQL databáze
+\end{enumerate}
+
+\subsection{CI/CD}
+Zdrojový kód obou části práce je přístupný na platformě \verb|GitHub|, což nám umožňuje přístup k zadarmo hostovaným akcím. Tyto akce používáme pro automatickou kompilaci Docker images, která se spustí po každých změnách v kódu, potom se image automaticky nahraje na produkční server a restartuje. Tímto se zjednoduší celý proces aktualizací, protože jsou plně automatizované a po prvotním nastavení nevyžadují žádnou další pozornost.
+
+
+\newpage
+
+\printbibliography[title=Zdroje]
+
+\end{document}
