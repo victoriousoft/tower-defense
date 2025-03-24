@@ -1,0 +1,42 @@
+name: Compile LaTeX to PDF
+
+on:
+    push:
+        paths:
+            - "docs/**"
+        branches:
+            - main
+
+    workflow_dispatch:
+
+permissions:
+    contents: write
+
+jobs:
+    build_latex:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Compile LaTeX document
+              uses: xu-cheng/latex-action@v3
+              with:
+                  root_file: docs/main.tex
+
+            - name: Set up Git
+              run: |
+                  git config --global user.name "GitHub Actions [bot]"
+                  git config --global user.email "noreply@github.com"
+
+            - name: Move PDF to docs directory
+              run: |
+                  mkdir -p docs/pdf
+                  mv main.pdf docs/pdf/
+
+            - name: Commit and push changes
+              run: |
+                  git add docs/pdf/main.pdf
+                  COMMIT_MSG="Auto-update PDF documentation from commit ${GITHUB_SHA::8}"
+                  git commit -m "$COMMIT_MSG" || echo "No changes to commit"
+                  git push
