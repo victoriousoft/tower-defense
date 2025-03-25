@@ -26,10 +26,14 @@ public abstract class BaseEnemy : MonoBehaviour
 	private HealthBar healthBar;
 
 	protected bool canAttack = true;
+
+	[HideInInspector]
+	public float currentSpeed;
 	protected abstract void Attack();
 
 	void Awake()
 	{
+		currentSpeed = enemyData.stats.speed;
 		health = enemyData.stats.maxHealth;
 		healthBar = GetComponentInChildren<HealthBar>();
 		positionOffset = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
@@ -91,7 +95,7 @@ public abstract class BaseEnemy : MonoBehaviour
 		transform.position = Vector2.MoveTowards(
 			transform.position,
 			(Vector2)points[currentPointIndex].position + positionOffset,
-			enemyData.stats.speed * Time.fixedDeltaTime
+			currentSpeed * Time.fixedDeltaTime
 		);
 	}
 
@@ -166,6 +170,23 @@ public abstract class BaseEnemy : MonoBehaviour
 	{
 		if (currentTarget == null)
 			currentTarget = target;
+	}
+
+	public void Slowdown(float slowdownFactor, float duration)
+	{
+		if (!(enemyData.stats.speed / slowdownFactor >= currentSpeed))
+		{
+			StopCoroutine(GetSlowedDown(slowdownFactor, duration));
+			StartCoroutine(GetSlowedDown(slowdownFactor, duration));
+		}
+	}
+
+	private IEnumerator GetSlowedDown(float slowdownFactor, float duration)
+	{
+		float originalSpeed = currentSpeed;
+		currentSpeed /= slowdownFactor;
+		yield return new WaitForSeconds(duration);
+		currentSpeed = originalSpeed;
 	}
 
 	protected IEnumerator ResetAttackCooldown()

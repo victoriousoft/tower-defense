@@ -9,6 +9,7 @@ public class MachineGun : BaseEvolutionTower
 	private float currentAngle = 135f;
 	private float targetAngle = 135f;
 	private Coroutine rotationCoroutine;
+	private GameObject currentEnemy;
 
 	protected override void Start()
 	{
@@ -19,22 +20,29 @@ public class MachineGun : BaseEvolutionTower
 
 	void Update()
 	{
-		Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		Vector2 direction = mousePos - (Vector2)transform.position;
-
-		targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 180;
-
-		currentAngle = NormalizeAngle(currentAngle);
-		targetAngle = NormalizeAngle(targetAngle);
-
-		if (rotationCoroutine == null && Mathf.Abs(targetAngle - currentAngle) > 22.5f)
+		if (currentEnemy != null)
 		{
-			rotationCoroutine = StartCoroutine(RotateStepByStep());
+			Vector2 direction = (Vector2)currentEnemy.transform.position - (Vector2)transform.position;
+
+			targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 225;
+
+			currentAngle = NormalizeAngle(currentAngle);
+			targetAngle = NormalizeAngle(targetAngle);
+
+			if (rotationCoroutine == null && Mathf.Abs(targetAngle - currentAngle) > 22.5f)
+			{
+				rotationCoroutine = StartCoroutine(RotateStepByStep());
+			}
 		}
 	}
 
 	private IEnumerator RotateStepByStep()
 	{
+		if (currentEnemy == null)
+		{
+			rotationCoroutine = null;
+			yield break;
+		}
 		yield return new WaitForSeconds(0.1f);
 		while (Mathf.Abs(targetAngle - currentAngle) > 22.5f)
 		{
@@ -72,6 +80,9 @@ public class MachineGun : BaseEvolutionTower
 
 	protected override IEnumerator Shoot(GameObject enemy)
 	{
+		Debug.Log(towerData.evolutions[0].damage);
+		currentEnemy = enemy;
+		enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.evolutions[0].damage, DamageTypes.PHYSICAL);
 		yield return null;
 	}
 

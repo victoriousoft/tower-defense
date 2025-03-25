@@ -20,7 +20,7 @@ public class TowerSheetNeo : ScriptableObject
 		public int price;
 		public int damage;
 		public int range;
-		public int cooldown;
+		public float cooldown;
 		public string skillName;
 		public Skill[] skillLevels;
 	}
