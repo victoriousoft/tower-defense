@@ -58,3 +58,7 @@
     letter-spacing: 4px;
     text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
 }
+
+.lock-overlay {
+    background-image: url('project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=8228938214290033325&guid=5d9da5b71279ac940926f09c078e91a0&type=3#console.erroricon');
+}

@@ -1,9 +1,15 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerStatsManager : MonoBehaviour
 {
-	public static int lives = 20;
-	public static int gold = 999999999;
+	public static int currentLevel = -1;
+	public static int lives = 0;
+	public static int gold = 0;
+
+	[System.NonSerialized]
+	[HideInInspector]
+	public static List<int> levelStars = new List<int>();
 
 	public static void AddGold(int value)
 	{
@@ -28,6 +34,13 @@ public class PlayerStatsManager : MonoBehaviour
 			GameOver();
 	}
 
+	public static void ResetStats()
+	{
+		currentLevel = -1;
+		lives = 20;
+		gold = 999999999;
+	}
+
 	public static void GameOver()
 	{
 		Overlay.PauseGame("Game Over", "press f5 to restart (I'm a lazy developer)");
@@ -44,9 +57,15 @@ public class PlayerStatsManager : MonoBehaviour
 		else
 			stars = 3;
 
-		Overlay.PauseGame("You Win, " + stars + " stars", "press f5 to go to menu (I'm a lazy developer)");
+		Overlay.PauseGame("You Win, " + stars + " stars", "wait for the save to upload, then go back to the main menu");
 		WebGLMessageHandler.SendToJavaScript(
-			new WebGLMessageHandler.BrowserMessage { action = "levelPass", args = new { stars = stars } }
+			new WebGLMessageHandler.OutBrowserMessage
+			{
+				action = "levelPass",
+				args = new { level = currentLevel, stars = stars },
+			}
 		);
+		currentLevel = -1;
+		lives = 20;
 	}
 }

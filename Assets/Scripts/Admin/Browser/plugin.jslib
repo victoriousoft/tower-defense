@@ -2,7 +2,6 @@ mergeInto(LibraryManager.library, {
 	SendMessageToJS: function (data) {
 		try {
 			const message = JSON.parse(UTF8ToString(data));
-			console.log("(internal) JS - Message from Unity:", message);
 
 			window.parent.postMessage(
 				{
@@ -22,7 +21,7 @@ mergeInto(LibraryManager.library, {
 
 				try {
 					const message = JSON.stringify(event.data.data);
-					SendMessage("BrowserMessanger", "ReceiveFromJavaScript", message);
+					SendMessage("BrowserMessanger", "_ReceiveFromJavaScript", message);
 				} catch (e) {
 					console.error("Error sending message to Unity:", e);
 				}
@@ -30,8 +29,15 @@ mergeInto(LibraryManager.library, {
 		}
 
 		try {
-			return window.self !== window.top || window.location.hostname === "localhost";
+			isIframe = window.self !== window.top || window.location.hostname === "localhost";
+			if (!isIframe) {
+				window.location.href = "https://td.kristn.co.uk/";
+				return false;
+			}
+
+			return true;
 		} catch (e) {
+			window.location.href = "https://td.kristn.co.uk/";
 			return false;
 		}
 	},
