@@ -7,7 +7,7 @@ public class TowerSheetNeo : ScriptableObject
 	public class Level
 	{
 		public int price;
-		public int range;
+		public float range;
 		public float damage;
 		public float cooldown;
 	}
@@ -18,8 +18,8 @@ public class TowerSheetNeo : ScriptableObject
 		public string name;
 		public GameObject prefab;
 		public int price;
-		public int damage;
-		public int range;
+		public float damage;
+		public float range;
 		public float cooldown;
 		public string skillName;
 		public Skill[] skillLevels;

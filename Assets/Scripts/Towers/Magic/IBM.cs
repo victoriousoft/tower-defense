@@ -25,7 +25,7 @@ public class IBM : BaseEvolutionTower
 			yield return new WaitForSeconds(0.1f);
 			BaseEnemy enemyScript = targetEnemy.GetComponent<BaseEnemy>();
 			enemyScript.TakeDamage(towerData.evolutions[1].damage, DamageTypes.MAGIC);
-			enemyScript.Slowdown(3, towerData.evolutions[1].cooldown - 0.5f);
+			enemyScript.Slowdown(3, towerData.evolutions[1].cooldown);
 		}
 		yield return null;
 	}
