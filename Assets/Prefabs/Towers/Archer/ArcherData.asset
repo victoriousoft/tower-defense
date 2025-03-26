@@ -37,5 +37,13 @@ MonoBehaviour:
     damage: 1
     range: 3
     cooldown: 0.2
-    skillName: mad mf spin
+    skillName: Spin des Todes
+    skillLevels: []
+  - name: Vietcong
+    prefab: {fileID: 6699204228030432529, guid: f08277f4443d0a04ebb20027867967ec, type: 3}
+    price: 400
+    damage: 1
+    range: 3
+    cooldown: 0.2
+    skillName: Paint It Black
     skillLevels: []

@@ -41,7 +41,7 @@ MonoBehaviour:
     damage: 100
     range: 6
     cooldown: 1
-    skillName: 
+    skillName: DDOS
     skillLevels: []
   - name: IBM
     prefab: {fileID: 6574171007775079891, guid: 448f1ab62ef5c0748b22aaaf9bc98fed, type: 3}
@@ -49,7 +49,7 @@ MonoBehaviour:
     damage: 25
     range: 6
     cooldown: 1
-    skillName: "posledn\xED sout"
+    skillName: The Last SOUT
     skillLevels:
     - cooldown: 10
       upragdeCost: 100
