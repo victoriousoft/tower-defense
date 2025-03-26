@@ -28,6 +28,22 @@ public class MainMenuController : MonoBehaviour
 		}
 	}
 
+	public void LockLevels()
+	{
+		for (int i = 0; i < buttons.Count; i++)
+		{
+			if (i >= levelScenes.Length)
+			{
+				buttons[i].SetEnabled(false);
+			}
+		}
+
+		for (int i = PlayerStatsManager.levelStars.Count - 1; i < buttons.Count; i++)
+		{
+			buttons[i].AddToClassList("lock-overlay");
+		}
+	}
+
 	void LoadLevel(string levelPath)
 	{
 		string sceneName = levelPath.Replace("Assets/", "").Replace(".unity", "");

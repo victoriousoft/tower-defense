@@ -1,9 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerStatsManager : MonoBehaviour
 {
 	public static int lives = 20;
 	public static int gold = 999999999;
+
+	[System.NonSerialized]
+	[HideInInspector]
+	public static List<int> levelStars = new List<int>();
 
 	public static void AddGold(int value)
 	{

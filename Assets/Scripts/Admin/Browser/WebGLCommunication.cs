@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Runtime.InteropServices;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
@@ -24,6 +25,8 @@ public class WebGLMessageHandler : MonoBehaviour
 		public string action;
 		public Dictionary<string, object> args;
 	}
+
+	public MainMenuController mainMenuController;
 
 	private static WebGLMessageHandler instance;
 
@@ -56,21 +59,25 @@ public class WebGLMessageHandler : MonoBehaviour
 
 	public void _ReceiveFromJavaScript(string jsonMessage)
 	{
+		Debug.Log("UNITY - Received raw message: " + jsonMessage);
+
 		JObject jsonObject = JObject.Parse(jsonMessage);
 
 		InBrowserMessage message = new InBrowserMessage
 		{
 			action = jsonObject["action"].ToString(),
-			args = jsonObject["args"].ToObject<Dictionary<string, object>>(),
+			args = new Dictionary<string, object>(),
 		};
 
-		// log the message nicely to the console
-		Debug.Log("UNITY - Received message from JavaScript: " + message.action);
-		return;
-		foreach (var arg in message.args)
+		if (jsonObject["args"] != null)
 		{
-			Debug.Log("UNITY - " + arg.Key + ": " + arg.Value);
+			JObject argsObject = (JObject)jsonObject["args"];
+			foreach (var property in argsObject.Properties())
+			{
+				message.args[property.Name] = property.Value.ToString();
+			}
 		}
+
 		ReceiveFromJavaScript(message);
 	}
 
@@ -86,7 +93,11 @@ public class WebGLMessageHandler : MonoBehaviour
 		switch (message.action)
 		{
 			case "loadSave":
-				Debug.Log("UNITY - Loading save data: " + message.args["levels"]);
+				Debug.Log("UNITY - Loading save data: " + message.args["levels"]); // UNITY - Loading save data: [3,3,3,3]
+				string levelsString = message.args["levels"].ToString().Trim('[', ']');
+				PlayerStatsManager.levelStars = levelsString.Split(',').Select(int.Parse).ToList();
+				Debug.Log("UNITY - Loaded save data: " + string.Join(", ", PlayerStatsManager.levelStars));
+				instance.mainMenuController.LockLevels();
 				break;
 
 			default:
