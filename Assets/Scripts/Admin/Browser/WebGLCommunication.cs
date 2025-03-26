@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
@@ -55,6 +56,8 @@ public class WebGLMessageHandler : MonoBehaviour
 			Debug.Log("UNITY - Sending message to JavaScript: " + jsonMessage);
 			SendToJavaScript(message);
 		}
+
+		DontDestroyOnLoad(this.gameObject);
 	}
 
 	public void _ReceiveFromJavaScript(string jsonMessage)
@@ -83,7 +86,8 @@ public class WebGLMessageHandler : MonoBehaviour
 
 	public static void SendToJavaScript(OutBrowserMessage message)
 	{
-		SendMessageToJS(JsonUtility.ToJson(message));
+		Debug.Log("UNITY - Sending message to JavaScript: " + JsonConvert.SerializeObject(message));
+		SendMessageToJS(JsonConvert.SerializeObject(message));
 	}
 
 	public static void ReceiveFromJavaScript(InBrowserMessage message)
@@ -95,7 +99,9 @@ public class WebGLMessageHandler : MonoBehaviour
 			case "loadSave":
 				Debug.Log("UNITY - Loading save data: " + message.args["levels"]); // UNITY - Loading save data: [3,3,3,3]
 				string levelsString = message.args["levels"].ToString().Trim('[', ']');
-				PlayerStatsManager.levelStars = levelsString.Split(',').Select(int.Parse).ToList();
+				PlayerStatsManager.levelStars = string.IsNullOrEmpty(levelsString)
+					? new List<int>()
+					: levelsString.Split(',').Select(int.Parse).ToList();
 				Debug.Log("UNITY - Loaded save data: " + string.Join(", ", PlayerStatsManager.levelStars));
 				instance.mainMenuController.LockLevels();
 				break;
