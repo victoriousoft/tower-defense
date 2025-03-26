@@ -43,7 +43,7 @@ public class Vietcong : BaseEvolutionTower
 				facingLeft = true;
 			}
 		}
-		enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.evolutions[0].damage, DamageTypes.PHYSICAL);
+		enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.evolutions[1].damage, DamageTypes.PHYSICAL);
 		yield return null;
 	}
 

@@ -42,7 +42,13 @@ MonoBehaviour:
     range: 6
     cooldown: 1
     skillName: DDOS
-    skillLevels: []
+    skillLevels:
+    - cooldown: 0
+      upragdeCost: 0
+    - cooldown: 0
+      upragdeCost: 0
+    - cooldown: 0
+      upragdeCost: 0
   - name: IBM
     prefab: {fileID: 6574171007775079891, guid: 448f1ab62ef5c0748b22aaaf9bc98fed, type: 3}
     price: 400
@@ -53,5 +59,7 @@ MonoBehaviour:
     skillLevels:
     - cooldown: 10
       upragdeCost: 100
+    - cooldown: 5
+      upragdeCost: 200
     - cooldown: 5
       upragdeCost: 200

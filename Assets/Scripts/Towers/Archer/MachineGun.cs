@@ -24,7 +24,7 @@ public class MachineGun : BaseEvolutionTower
 		{
 			Vector2 direction = (Vector2)currentEnemy.transform.position - (Vector2)transform.position;
 
-			targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 225;
+			targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
 
 			currentAngle = NormalizeAngle(currentAngle);
 			targetAngle = NormalizeAngle(targetAngle);
@@ -80,7 +80,6 @@ public class MachineGun : BaseEvolutionTower
 
 	protected override IEnumerator Shoot(GameObject enemy)
 	{
-		Debug.Log(towerData.evolutions[0].damage);
 		currentEnemy = enemy;
 		enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.evolutions[0].damage, DamageTypes.PHYSICAL);
 		yield return null;

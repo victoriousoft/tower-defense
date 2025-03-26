@@ -38,12 +38,24 @@ MonoBehaviour:
     range: 3
     cooldown: 0.2
     skillName: Spin des Todes
-    skillLevels: []
+    skillLevels:
+    - cooldown: 0
+      upragdeCost: 0
+    - cooldown: 0
+      upragdeCost: 0
+    - cooldown: 0
+      upragdeCost: 0
   - name: Vietcong
     prefab: {fileID: 6699204228030432529, guid: f08277f4443d0a04ebb20027867967ec, type: 3}
-    price: 400
-    damage: 1
-    range: 3
-    cooldown: 0.2
+    price: 500
+    damage: 200
+    range: 4
+    cooldown: 20
     skillName: Paint It Black
-    skillLevels: []
+    skillLevels:
+    - cooldown: 0
+      upragdeCost: 0
+    - cooldown: 0
+      upragdeCost: 0
+    - cooldown: 0
+      upragdeCost: 0

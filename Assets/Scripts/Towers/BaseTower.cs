@@ -64,6 +64,7 @@ public abstract class BaseTower : MonoBehaviour
 
 		towerAnimator.SetTrigger("idle");
 
+		//nefunguje u evolucnich vezi FIX!!!
 		yield return new WaitForSeconds(towerData.levels[level].cooldown);
 		StartCoroutine(ChargeShootAndResetCooldown());
 	}
