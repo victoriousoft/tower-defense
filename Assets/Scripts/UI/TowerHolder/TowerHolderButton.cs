@@ -80,7 +80,7 @@ public class TowerHolderButton : MonoBehaviour
 	public void Awake()
 	{
 		backgroundSpriteRenderer = GetComponent<SpriteRenderer>();
-		lineRenderer = gameObject.AddComponent<LineRenderer>();
+		lineRenderer = GetComponent<LineRenderer>();
 		lineRenderer.enabled = false;
 	}
 
