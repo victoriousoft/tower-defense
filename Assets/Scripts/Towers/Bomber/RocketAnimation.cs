@@ -4,9 +4,23 @@ using UnityEngine;
 
 public class RocketAnimation : MonoBehaviour
 {
-	// Start is called before the first frame update
-	void Start() { }
+	public Transform sprite;
+	private Vector3 lastPosition;
 
-	// Update is called once per frame
-	void Update() { }
+	void Start()
+	{
+		lastPosition = transform.position;
+	}
+
+	void Update()
+	{
+		Vector3 direction = (transform.position - lastPosition).normalized;
+
+		if (direction != Vector3.zero)
+		{
+			float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+			sprite.rotation = Quaternion.Euler(0, 0, angle);
+		}
+		lastPosition = transform.position;
+	}
 }
