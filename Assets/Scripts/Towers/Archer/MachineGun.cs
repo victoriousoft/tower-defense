@@ -10,6 +10,7 @@ public class MachineGun : BaseEvolutionTower
 	private float targetAngle;
 	private Coroutine rotationCoroutine;
 	private GameObject currentEnemy;
+	private bool skillInUse = false;
 
 	protected override void Start()
 	{
@@ -25,7 +26,7 @@ public class MachineGun : BaseEvolutionTower
 		{
 			Vector2 direction = (Vector2)currentEnemy.transform.position - (Vector2)transform.position;
 
-			targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+			targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 180;
 
 			currentAngle = NormalizeAngle(currentAngle);
 			targetAngle = NormalizeAngle(targetAngle);
@@ -39,7 +40,7 @@ public class MachineGun : BaseEvolutionTower
 
 	private IEnumerator RotateStepByStep()
 	{
-		if (currentEnemy == null)
+		if (currentEnemy == null || skillInUse)
 		{
 			rotationCoroutine = null;
 			yield break;
@@ -67,7 +68,7 @@ public class MachineGun : BaseEvolutionTower
 
 			yield return new WaitForSeconds(0.1f);
 		}
-		StartCoroutine(RotateStepByStep());
+		rotationCoroutine = StartCoroutine(RotateStepByStep());
 	}
 
 	private float NormalizeAngle(float angle)
@@ -81,6 +82,8 @@ public class MachineGun : BaseEvolutionTower
 
 	protected override IEnumerator Shoot(GameObject enemy)
 	{
+		if (skillInUse)
+			yield break;
 		currentEnemy = enemy;
 		enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.evolutions[0].damage, DamageTypes.PHYSICAL);
 		yield return null;
@@ -88,6 +91,32 @@ public class MachineGun : BaseEvolutionTower
 
 	protected override IEnumerator ChargeUp(GameObject enemy)
 	{
+		yield return null;
+	}
+
+	protected override IEnumerator Skill(GameObject enemy)
+	{
+		skillInUse = true;
+		spinAnimationAnimator.speed = 3f;
+		GameObject[] enemies = TowerHelpers.GetEnemiesInRange(
+			transform.position,
+			towerData.evolutions[0].range,
+			towerData.enemyTypes
+		);
+		for (int i = 0; i < 96; i++)
+		{
+			spinAnimationAnimator.SetTrigger("right");
+			foreach (GameObject targetEnemy in enemies)
+			{
+				if (targetEnemy != null)
+					targetEnemy
+						.GetComponent<BaseEnemy>()
+						.TakeDamage(towerData.evolutions[0].damage, DamageTypes.PHYSICAL);
+			}
+			yield return new WaitForSeconds(spinAnimationAnimator.GetCurrentAnimatorStateInfo(0).length);
+		}
+		skillInUse = false;
+		spinAnimationAnimator.speed = 1f;
 		yield return null;
 	}
 

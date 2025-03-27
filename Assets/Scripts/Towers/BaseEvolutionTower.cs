@@ -18,6 +18,8 @@ public abstract class BaseEvolutionTower : BaseTower
 	private bool isSkillCharged = false;
 	private Coroutine skillCoroutine;
 
+	protected abstract IEnumerator Skill(GameObject enemy);
+
 	protected override void Awake()
 	{
 		base.Awake();
@@ -70,6 +72,33 @@ public abstract class BaseEvolutionTower : BaseTower
 		Debug.Log("base price: " + price);
 		Debug.Log("evo price: " + towerData.evolutions[evolutionIndex].price / 2);
 		return price + towerData.evolutions[evolutionIndex].price / 2;
+	}
+
+	public void UseSkill()
+	{
+		if (isSkillCharged)
+		{
+			isSkillCharged = false;
+			healthBar.SetHealth(0);
+			StartCoroutine(
+				Skill(
+					TowerHelpers.SelectEnemyToAttack(
+						TowerHelpers.GetEnemiesInRange(
+							transform.position,
+							towerData.levels[level].range,
+							towerData.enemyTypes
+						),
+						targetType
+					)
+				)
+			);
+			healthBar.Animate(
+				0,
+				1,
+				towerData.evolutions[evolutionIndex].skillLevels[skillLevel].cooldown,
+				SkillChargeupCallback
+			);
+		}
 	}
 
 	private IEnumerator BlinkyBlinky()
