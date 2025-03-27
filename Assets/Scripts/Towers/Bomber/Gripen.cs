@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Gripen : BaseEvolutionTower
 {
-	EnemyTypes[] targetEnemyTypes = new EnemyTypes[] { EnemyTypes.GROUND };
+	public GameObject plane;
+	public float planeSpeed = 10f;
+	private bool onRight = true;
+	private bool isFlying = false;
+	public GameObject projectilePrefab;
 
 	protected override void Start()
 	{
@@ -13,12 +17,87 @@ public class Gripen : BaseEvolutionTower
 
 	protected override IEnumerator Shoot(GameObject enemy)
 	{
+		FlyPlane();
+		yield return new WaitForSeconds(0.5f);
+		for (int i = 0; i < 3; i++)
+		{
+			GameObject projectile = Instantiate(projectilePrefab, plane.transform.position, Quaternion.identity);
+			StartCoroutine(
+				projectile.GetComponent<HomingMissile>().MoveToTarget(enemy, towerData.evolutions[1].damage, 10f)
+			);
+			yield return new WaitForSeconds(0.33f);
+		}
 		yield return null;
 	}
 
 	protected override IEnumerator ChargeUp(GameObject enemy)
 	{
 		yield return null;
+	}
+
+	private void FlyPlane()
+	{
+		if (!isFlying)
+		{
+			if (!onRight)
+			{
+				StartCoroutine(FlyFromLeftToRight());
+			}
+			else
+			{
+				StartCoroutine(FlyFromRightToLeft());
+			}
+		}
+	}
+
+	private IEnumerator FlyFromLeftToRight()
+	{
+		isFlying = true;
+
+		Vector2 startPosition = Camera.main.ViewportToWorldPoint(new Vector3(0, 0));
+		Vector2 endPosition = Camera.main.ViewportToWorldPoint(new Vector3(1, 0));
+		startPosition = new Vector2(startPosition.x - 1, transform.position.y + 2 + Random.Range(-0.75f, 0.75f));
+		endPosition = new Vector2(endPosition.x + 1, transform.position.y + 2 + Random.Range(-0.75f, 0.75f));
+
+		plane.transform.position = startPosition;
+
+		while (plane.transform.position.x < endPosition.x)
+		{
+			plane.transform.position = Vector2.MoveTowards(
+				plane.transform.position,
+				endPosition,
+				planeSpeed * Time.deltaTime
+			);
+			yield return null;
+		}
+
+		onRight = true;
+		isFlying = false;
+	}
+
+	private IEnumerator FlyFromRightToLeft()
+	{
+		isFlying = true;
+
+		Vector2 startPosition = Camera.main.ViewportToWorldPoint(new Vector3(1, 0));
+		Vector2 endPosition = Camera.main.ViewportToWorldPoint(new Vector3(0, 0));
+		startPosition = new Vector2(startPosition.x + 1, transform.position.y + 2 + Random.Range(-0.75f, 0.75f));
+		endPosition = new Vector2(endPosition.x - 1, transform.position.y + 2 + Random.Range(-0.75f, 0.75f));
+
+		plane.transform.position = startPosition;
+
+		while (plane.transform.position.x > endPosition.x)
+		{
+			plane.transform.position = Vector2.MoveTowards(
+				plane.transform.position,
+				endPosition,
+				planeSpeed * Time.deltaTime
+			);
+			yield return null;
+		}
+
+		onRight = false;
+		isFlying = false;
 	}
 
 	protected override void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition) { }

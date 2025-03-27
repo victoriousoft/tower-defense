@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 7422838614731937701}
   - component: {fileID: 5915319249386863444}
   m_Layer: 0
-  m_Name: IBM_test
+  m_Name: BMI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
