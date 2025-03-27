@@ -29,7 +29,9 @@ public class MiddleEastBomber : BaseEvolutionTower
 			if (currentBombers[i] != null)
 			{
 				StartCoroutine(
-					currentBombers[i].GetComponent<SUIcideBomber>().MoveToTarget(enemy, towerData.evolutions[0].damage)
+					currentBombers[i]
+						.GetComponent<HomingMissile>()
+						.MoveToTarget(enemy, towerData.evolutions[0].damage, 5f)
 				);
 				currentBombers[i] = null;
 			}
@@ -45,7 +47,7 @@ public class MiddleEastBomber : BaseEvolutionTower
 			{
 				GameObject newBomber = Instantiate(bomberPrefab, transform.position, Quaternion.identity);
 				currentBombers[i] = newBomber;
-				StartCoroutine(newBomber.GetComponent<SUIcideBomber>().MoveToTarget(bomberWaitPoints[i], 0));
+				StartCoroutine(newBomber.GetComponent<HomingMissile>().MoveToTarget(bomberWaitPoints[i], 0, 5f));
 				break;
 			}
 		}

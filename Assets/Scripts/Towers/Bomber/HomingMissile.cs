@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SUIcideBomber : MonoBehaviour
+public class HomingMissile : MonoBehaviour
 {
-	public IEnumerator MoveToTarget(GameObject target, float damage)
+	public IEnumerator MoveToTarget(GameObject target, float damage, float speed)
 	{
+		Debug.Log("Moving to target");
 		while (target != null && Vector3.Distance(transform.position, target.transform.position) > 0.1f)
 		{
 			transform.position = Vector3.MoveTowards(
 				transform.position,
 				target.transform.position,
-				Time.deltaTime * 5f
+				Time.deltaTime * speed
 			);
 			yield return null;
 		}
@@ -29,7 +30,7 @@ public class SUIcideBomber : MonoBehaviour
 					1000,
 					new EnemyTypes[] { EnemyTypes.GROUND }
 				)[0];
-				StartCoroutine(MoveToTarget(newTarget, damage));
+				StartCoroutine(MoveToTarget(newTarget, damage, speed));
 			}
 			else
 			{
