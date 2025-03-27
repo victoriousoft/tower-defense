@@ -34,8 +34,28 @@ MonoBehaviour:
   - name: Kittengun
     prefab: {fileID: 4112298509408283667, guid: a804c04286e29ae44b34ce18f416c876, type: 3}
     price: 400
-    damage: 10
+    damage: 1
     range: 3
-    cooldown: 2
-    skillName: mad mf spin
-    skillLevels: []
+    cooldown: 0.2
+    skillName: Spin des Todes
+    skillLevels:
+    - cooldown: 0
+      upragdeCost: 0
+    - cooldown: 0
+      upragdeCost: 0
+    - cooldown: 0
+      upragdeCost: 0
+  - name: Vietcong
+    prefab: {fileID: 6699204228030432529, guid: f08277f4443d0a04ebb20027867967ec, type: 3}
+    price: 500
+    damage: 200
+    range: 4
+    cooldown: 20
+    skillName: Paint It Black
+    skillLevels:
+    - cooldown: 0
+      upragdeCost: 0
+    - cooldown: 0
+      upragdeCost: 0
+    - cooldown: 0
+      upragdeCost: 0

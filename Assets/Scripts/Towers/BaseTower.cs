@@ -22,15 +22,12 @@ public abstract class BaseTower : MonoBehaviour
 	protected abstract IEnumerator ChargeUp(GameObject enemy);
 	protected abstract void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition);
 
-	protected virtual void ExtendedAwake() { }
-
-	void Awake()
+	protected virtual void Awake()
 	{
 		towerAnimator = GetComponent<Animator>();
-		ExtendedAwake();
 	}
 
-	void Start()
+	protected virtual void Start()
 	{
 		shootCoroutine = StartCoroutine(ChargeShootAndResetCooldown());
 		if (GetComponent<LineRenderer>() != null)
@@ -67,6 +64,7 @@ public abstract class BaseTower : MonoBehaviour
 
 		towerAnimator.SetTrigger("idle");
 
+		//nefunguje u evolucnich vezi FIX!!!
 		yield return new WaitForSeconds(towerData.levels[level].cooldown);
 		StartCoroutine(ChargeShootAndResetCooldown());
 	}
