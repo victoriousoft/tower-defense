@@ -226,7 +226,12 @@ public static class TowerHelpers
 		return false;
 	}
 
-	public static Vector2 GetClosesPointOnPath(Vector2 origin, GameObject pathParents)
+	public static Vector2 GetClosesPointOnPath(
+		Vector2 origin,
+		GameObject pathParents,
+		Vector2 basePosition,
+		float maxRange
+	)
 	{
 		GameObject[] paths = new GameObject[pathParents.transform.childCount];
 		for (int i = 0; i < pathParents.transform.childCount; i++)
@@ -258,7 +263,19 @@ public static class TowerHelpers
 			closestPoints.Add(closestPoint);
 		}
 
-		return closestPoints.OrderBy(p => Vector2.Distance(origin, p)).FirstOrDefault();
+		// First try to find points within maxRange of the basePosition
+		var pointsInRange = closestPoints.Where(p => Vector2.Distance(p, basePosition) <= maxRange).ToList();
+
+		if (pointsInRange.Count > 0)
+		{
+			// If points are in range, return the closest one to the origin
+			return pointsInRange.OrderBy(p => Vector2.Distance(origin, p)).FirstOrDefault();
+		}
+		else
+		{
+			// If no points are in range, fallback to the closest one to the origin
+			return closestPoints.OrderBy(p => Vector2.Distance(origin, p)).FirstOrDefault();
+		}
 	}
 
 	public static Vector2 GetClosestPointOnLineSegment(Vector2 origin, Vector2 lineStart, Vector2 lineEnd)
