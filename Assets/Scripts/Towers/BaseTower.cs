@@ -73,10 +73,17 @@ public abstract class BaseTower : MonoBehaviour
 	[HideInInspector]
 	public bool enemiesInRange()
 	{
+		EnemyTypes[] targetTypes = towerData.enemyTypes;
+		if (GetComponent<BaseEvolutionTower>() != null)
+		{
+			targetTypes = towerData
+				.evolutionEnemyTypes[GetComponent<BaseEvolutionTower>().evolutionIndex]
+				.enemies.ToArray();
+		}
 		GameObject[] enemies = TowerHelpers.GetEnemiesInRange(
 			transform.position,
 			towerData.levels[level].range,
-			towerData.enemyTypes
+			targetTypes
 		);
 
 		if (enemies.Length == 0)
@@ -111,6 +118,7 @@ public abstract class BaseTower : MonoBehaviour
 
 	public IEnumerator EnhanceTemoprarily(int factor, float duration)
 	{
+		//fixnout
 		yield return null;
 	}
 

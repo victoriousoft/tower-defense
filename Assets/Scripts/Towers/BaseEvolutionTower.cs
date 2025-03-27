@@ -82,10 +82,6 @@ public abstract class BaseEvolutionTower : BaseTower
 		}
 
 		towerAnimator.SetTrigger("attack");
-		foreach (EnemyTypes type in towerData.evolutionEnemyTypes[evolutionIndex].enemies.ToArray())
-		{
-			Debug.Log(type);
-		}
 
 		GameObject target = TowerHelpers.SelectEnemyToAttack(
 			TowerHelpers.GetEnemiesInRange(

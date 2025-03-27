@@ -6,7 +6,6 @@ public class HomingMissile : MonoBehaviour
 {
 	public IEnumerator MoveToTarget(GameObject target, float damage, float speed)
 	{
-		Debug.Log("Moving to target");
 		while (target != null && Vector3.Distance(transform.position, target.transform.position) > 0.1f)
 		{
 			transform.position = Vector3.MoveTowards(
