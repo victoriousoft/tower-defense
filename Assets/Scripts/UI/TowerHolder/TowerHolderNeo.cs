@@ -86,7 +86,7 @@ public class TowerHolderNeo : MonoBehaviour
 
 		animator = GetComponent<Animator>();
 
-		rangeRenderer = gameObject.AddComponent<LineRenderer>();
+		rangeRenderer = GetComponent<LineRenderer>();
 		rangeRenderer.enabled = false;
 	}
 
