@@ -92,11 +92,13 @@ public abstract class BaseEvolutionTower : BaseTower
 					)
 				)
 			);
-			healthBar.Animate(
-				0,
-				1,
-				towerData.evolutions[evolutionIndex].skillLevels[skillLevel].cooldown,
-				SkillChargeupCallback
+			skillCoroutine = StartCoroutine(
+				healthBar.Animate(
+					0,
+					1,
+					towerData.evolutions[evolutionIndex].skillLevels[skillLevel].cooldown,
+					SkillChargeupCallback
+				)
 			);
 		}
 	}
