@@ -17,12 +17,14 @@ public abstract class BaseEvolutionTower : BaseTower
 
 	private bool isSkillCharged = false;
 	private Coroutine skillCoroutine;
+	private Animator towerAnimator;
 
 	protected abstract IEnumerator Skill(GameObject enemy);
 
 	protected override void Awake()
 	{
 		base.Awake();
+		towerAnimator = GetComponent<Animator>();
 		circleImage = GetComponentInChildren<Image>();
 	}
 
@@ -63,6 +65,37 @@ public abstract class BaseEvolutionTower : BaseTower
 				SkillChargeupCallback
 			)
 		);
+	}
+
+	public override IEnumerator ChargeShootAndResetCooldown()
+	{
+		towerAnimator.SetTrigger("charge");
+
+		yield return null;
+
+		while (towerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+		{
+			yield return null;
+		}
+
+		while (!enemiesInRange())
+		{
+			yield return null;
+		}
+
+		towerAnimator.SetTrigger("attack");
+
+		GameObject target = TowerHelpers.SelectEnemyToAttack(
+			TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range, towerData.enemyTypes),
+			targetType
+		);
+
+		yield return Shoot(target);
+
+		towerAnimator.SetTrigger("idle");
+
+		yield return new WaitForSeconds(towerData.evolutions[evolutionIndex].cooldown);
+		StartCoroutine(ChargeShootAndResetCooldown());
 	}
 
 	public override int CalculateSellPrice()

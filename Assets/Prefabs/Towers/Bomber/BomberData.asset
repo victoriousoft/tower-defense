@@ -57,9 +57,9 @@ MonoBehaviour:
     cooldown: 20
     skillName: Kamikadze
     skillLevels:
-    - cooldown: 0
+    - cooldown: 5
       upragdeCost: 0
-    - cooldown: 0
+    - cooldown: 5
       upragdeCost: 0
-    - cooldown: 0
+    - cooldown: 5
       upragdeCost: 0

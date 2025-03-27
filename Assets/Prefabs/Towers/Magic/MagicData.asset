@@ -54,7 +54,7 @@ MonoBehaviour:
     price: 400
     damage: 25
     range: 6
-    cooldown: 1
+    cooldown: 8
     skillName: The Last SOUT
     skillLevels:
     - cooldown: 10

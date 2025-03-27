@@ -384,7 +384,7 @@ GameObject:
   - component: {fileID: 5690299712488015133}
   m_Layer: 0
   m_Name: MiddleEast
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

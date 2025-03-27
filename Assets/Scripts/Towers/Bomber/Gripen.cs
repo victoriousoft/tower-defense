@@ -9,6 +9,8 @@ public class Gripen : BaseEvolutionTower
 	private bool onRight = true;
 	private bool isFlying = false;
 	public GameObject projectilePrefab;
+	private bool readyToCrash = false;
+	public GameObject ExplosionEffect;
 
 	protected override void Start()
 	{
@@ -37,7 +39,7 @@ public class Gripen : BaseEvolutionTower
 
 	private void FlyPlane()
 	{
-		if (!isFlying)
+		if (!isFlying && !readyToCrash)
 		{
 			if (!onRight)
 			{
@@ -47,6 +49,10 @@ public class Gripen : BaseEvolutionTower
 			{
 				StartCoroutine(FlyFromRightToLeft());
 			}
+		}
+		else if (readyToCrash)
+		{
+			Crash();
 		}
 	}
 
@@ -102,7 +108,14 @@ public class Gripen : BaseEvolutionTower
 
 	protected override IEnumerator Skill(GameObject enemy)
 	{
+		readyToCrash = true;
 		yield return null;
+	}
+
+	IEnumerator Crash()
+	{
+		//annimace padu + vybuch + zniceni
+		yield return new WaitForSeconds(0.1f);
 	}
 
 	protected override void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition) { }

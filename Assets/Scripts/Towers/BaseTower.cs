@@ -36,7 +36,7 @@ public abstract class BaseTower : MonoBehaviour
 
 	protected virtual void FixedUpdate() { } //mozna zbytecny
 
-	private IEnumerator ChargeShootAndResetCooldown()
+	public virtual IEnumerator ChargeShootAndResetCooldown()
 	{
 		towerAnimator.SetTrigger("charge");
 
@@ -64,12 +64,12 @@ public abstract class BaseTower : MonoBehaviour
 
 		towerAnimator.SetTrigger("idle");
 
-		//nefunguje u evolucnich vezi FIX!!!
 		yield return new WaitForSeconds(towerData.levels[level].cooldown);
 		StartCoroutine(ChargeShootAndResetCooldown());
 	}
 
-	bool enemiesInRange()
+	[HideInInspector]
+	public bool enemiesInRange()
 	{
 		GameObject[] enemies = TowerHelpers.GetEnemiesInRange(
 			transform.position,
@@ -105,6 +105,11 @@ public abstract class BaseTower : MonoBehaviour
 
 		if (shootCoroutine == null)
 			shootCoroutine = StartCoroutine(ChargeShootAndResetCooldown());
+	}
+
+	public IEnumerator EnhanceTemoprarily(int factor, float duration)
+	{
+		yield return null;
 	}
 
 	private void ResetLaserPosition()

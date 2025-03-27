@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8496520843316544288}
   m_Layer: 0
   m_Name: Barracks
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -118,11 +118,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c977bb1f84a77684296892f5bc0ad763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 0
   towerData: {fileID: 11400000, guid: 486ff5c4b199b964b8a8b93c0ca3038c, type: 2}
-  targetType: 0
+  towerType: 0
   troopCount: 3
   respawnCooldown: 5
-  localTroopRandezvousPoint: {x: 0, y: 0}
   troopPrefab: {fileID: 7100516105498062489, guid: 25beaebbad9a4914ea1dc90f9bdfa452, type: 3}
   randezvousOffset: 0.5
