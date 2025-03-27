@@ -23,13 +23,22 @@ public class Tooltip : MonoBehaviour
 	{
 		Vector2 position = Input.mousePosition;
 
-		float tooltipWidth = rectTransform.rect.width;
-		float tooltipHeight = rectTransform.rect.height;
+		float tooltipWidth = rectTransform.rect.width * rectTransform.lossyScale.x;
+		float tooltipHeight = rectTransform.rect.height * rectTransform.lossyScale.y;
 
-		position.x += tooltipWidth / 4; // + Screen.width / 100;
-		position.y -= tooltipHeight / 4; // + Screen.height / 100;
+		float screenWidth = Screen.width;
+		float screenHeight = Screen.height;
 
-		transform.position = position;
+		Vector2 offset = new Vector2(tooltipWidth / 2, 0);
+
+		offset.x += Screen.width * 0.01f;
+
+		if (position.x + tooltipWidth > screenWidth)
+		{
+			offset.x = -offset.x;
+		}
+
+		transform.position = position + offset;
 	}
 
 	public void SetText(string header = "", string content = "")
