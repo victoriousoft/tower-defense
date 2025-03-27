@@ -17,6 +17,9 @@ MonoBehaviour:
   description: 
   damageType: 1
   enemyTypes: 0000000001000000
+  evolutionEnemyTypes:
+  - enemies: 0000000001000000
+  - enemies: 0000000001000000
   levels:
   - price: 100
     range: 2

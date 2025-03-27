@@ -17,14 +17,12 @@ public abstract class BaseEvolutionTower : BaseTower
 
 	private bool isSkillCharged = false;
 	private Coroutine skillCoroutine;
-	private Animator towerAnimator;
 
 	protected abstract IEnumerator Skill(GameObject enemy);
 
 	protected override void Awake()
 	{
 		base.Awake();
-		towerAnimator = GetComponent<Animator>();
 		circleImage = GetComponentInChildren<Image>();
 	}
 
@@ -84,9 +82,17 @@ public abstract class BaseEvolutionTower : BaseTower
 		}
 
 		towerAnimator.SetTrigger("attack");
+		foreach (EnemyTypes type in towerData.evolutionEnemyTypes[evolutionIndex].enemies.ToArray())
+		{
+			Debug.Log(type);
+		}
 
 		GameObject target = TowerHelpers.SelectEnemyToAttack(
-			TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range, towerData.enemyTypes),
+			TowerHelpers.GetEnemiesInRange(
+				transform.position,
+				towerData.evolutions[evolutionIndex].range,
+				towerData.evolutionEnemyTypes[evolutionIndex].enemies.ToArray()
+			),
 			targetType
 		);
 

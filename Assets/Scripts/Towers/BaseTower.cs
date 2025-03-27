@@ -8,7 +8,9 @@ public abstract class BaseTower : MonoBehaviour
 	public int level = 0;
 
 	public TowerSheetNeo towerData;
-	private Animator towerAnimator;
+
+	[HideInInspector]
+	public Animator towerAnimator;
 
 	[System.NonSerialized]
 	[HideInInspector]

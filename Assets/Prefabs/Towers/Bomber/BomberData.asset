@@ -17,6 +17,9 @@ MonoBehaviour:
   description: 
   damageType: 2
   enemyTypes: 00000000
+  evolutionEnemyTypes:
+  - enemies: 00000000
+  - enemies: 0000000001000000
   levels:
   - price: 100
     range: 1
@@ -54,7 +57,7 @@ MonoBehaviour:
     price: 550
     damage: 40
     range: 20
-    cooldown: 20
+    cooldown: 10
     skillName: Kamikadze
     skillLevels:
     - cooldown: 5

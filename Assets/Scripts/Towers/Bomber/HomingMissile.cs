@@ -45,8 +45,17 @@ public class HomingMissile : MonoBehaviour
 
 	private void Explode(GameObject enemy, float damage)
 	{
-		if (enemy != null)
-			enemy.GetComponent<BaseEnemy>().TakeDamage(damage, DamageTypes.EXPLOSION);
+		GameObject[] enemies = TowerHelpers.GetEnemiesInRange(
+			transform.position,
+			0.25f,
+			new EnemyTypes[] { EnemyTypes.GROUND, EnemyTypes.FLYING }
+		);
+		foreach (GameObject e in enemies)
+		{
+			if (e == null)
+				return;
+			e.GetComponent<BaseEnemy>().TakeDamage(damage, DamageTypes.EXPLOSION);
+		}
 		//bum anim
 		Destroy(gameObject);
 	}
