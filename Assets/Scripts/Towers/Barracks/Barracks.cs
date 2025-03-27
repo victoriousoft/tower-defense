@@ -24,7 +24,12 @@ public class Barracks : BaseTower
 
 		troops = new GameObject[troopCount];
 		paths = GameObject.Find("Paths");
-		Vector2 globalTroopRandezvous = TowerHelpers.GetClosesPointOnPath(transform.position, paths);
+		Vector2 globalTroopRandezvous = TowerHelpers.GetClosesPointOnPath(
+			transform.position,
+			paths,
+			transform.position,
+			towerData.levels[level].range
+		);
 		localTroopRandezvousPoint = globalTroopRandezvous - (Vector2)transform.position;
 
 		SpawnTroops(troopCount);
@@ -98,7 +103,17 @@ public class Barracks : BaseTower
 
 	public void SetTroopRandezvousPoint(Vector2 point)
 	{
-		localTroopRandezvousPoint = point - (Vector2)transform.position;
+		Vector2 direction = (point - (Vector2)transform.position).normalized;
+		float distance = Mathf.Min(Vector2.Distance(point, transform.position), towerData.levels[level].range);
+
+		Vector2 pointOnPath = TowerHelpers.GetClosesPointOnPath(
+			(Vector2)transform.position + direction * distance,
+			paths,
+			transform.position,
+			towerData.levels[level].range
+		);
+
+		localTroopRandezvousPoint = pointOnPath - (Vector2)transform.position;
 
 		for (int i = 0; i < troopCount; i++)
 		{

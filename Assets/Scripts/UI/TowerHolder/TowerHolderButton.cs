@@ -16,6 +16,7 @@ public enum ButtonAction
 	BUY_EVOLUTION_1,
 	BUY_EVOLUTION_2,
 	UPGRADE_EVOLUTION,
+	REPOSITION_BARRACKS,
 }
 
 public static class ButtonActionExtensions
@@ -62,10 +63,6 @@ public class TowerHolderButton : MonoBehaviour
 	[HideInInspector]
 	public LineRenderer lineRenderer;
 
-	[HideInInspector]
-	[System.NonSerialized]
-	public bool isMouseOver = false;
-
 	public SpriteRenderer iconSpriteRenderer;
 
 	private SpriteRenderer backgroundSpriteRenderer;
@@ -93,23 +90,23 @@ public class TowerHolderButton : MonoBehaviour
 		{
 			ShowTooltip();
 		}
-		else
-		{
-			isMouseOver = false;
-		}
 	}
 
 	void OnMouseEnter()
 	{
-		isMouseOver = true;
 		ShowTooltip();
 	}
 
 	void OnMouseExit()
 	{
-		isMouseOver = false;
 		TooltipManager.Hide();
 		lineRenderer.enabled = false;
+	}
+
+	public bool IsMouseOver()
+	{
+		Vector2 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		return GetComponent<Collider2D>().OverlapPoint(point);
 	}
 
 	void ShowTooltip()
@@ -144,6 +141,14 @@ public class TowerHolderButton : MonoBehaviour
 						+ targetTypes[targetTypeIndex].GetString()
 						+ "\nChange to: "
 						+ targetTypes[(targetTypeIndex + 1) % targetTypes.Length].GetString()
+				);
+				break;
+
+			case ButtonAction.REPOSITION_BARRACKS:
+				//tower = towerHolder.GetComponent<TowerHolderNeo>().GetBaseTowerScript();
+				TooltipManager.Show(
+					"Reposition Barracks",
+					"Reposition your troops to a new location within the range of the tower."
 				);
 				break;
 
