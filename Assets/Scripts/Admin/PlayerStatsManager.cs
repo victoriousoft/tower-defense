@@ -4,8 +4,8 @@ using UnityEngine;
 public class PlayerStatsManager : MonoBehaviour
 {
 	public static int currentLevel = -1;
-	public static int lives = 0;
-	public static int gold = 0;
+	public static int lives = 20;
+	public static int gold = 999999999;
 
 	[System.NonSerialized]
 	[HideInInspector]
