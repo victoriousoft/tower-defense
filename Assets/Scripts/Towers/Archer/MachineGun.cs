@@ -7,7 +7,7 @@ public class MachineGun : BaseEvolutionTower
 	private Animator spinAnimationAnimator;
 
 	private float currentAngle = 135f;
-	private float targetAngle = 135f;
+	private float targetAngle;
 	private Coroutine rotationCoroutine;
 	private GameObject currentEnemy;
 
@@ -15,6 +15,7 @@ public class MachineGun : BaseEvolutionTower
 	{
 		base.Start();
 
+		targetAngle = currentAngle;
 		spinAnimationAnimator = GetComponent<Animator>();
 	}
 
@@ -24,7 +25,7 @@ public class MachineGun : BaseEvolutionTower
 		{
 			Vector2 direction = (Vector2)currentEnemy.transform.position - (Vector2)transform.position;
 
-			targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
+			targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
 			currentAngle = NormalizeAngle(currentAngle);
 			targetAngle = NormalizeAngle(targetAngle);
