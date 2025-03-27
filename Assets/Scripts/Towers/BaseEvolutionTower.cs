@@ -75,17 +75,17 @@ public abstract class BaseEvolutionTower : BaseTower
 	private IEnumerator BlinkyBlinky()
 	{
 		float initAlpha = circleImage.color.a;
+		float minAlpha = 0.3f;
+
 		while (isSkillCharged)
 		{
-			for (float alpha = initAlpha; alpha >= 0; alpha -= 0.025f)
+			float elapsedTime = 0f;
+			while (isSkillCharged)
 			{
+				elapsedTime += Time.deltaTime;
+				float alpha = Mathf.Lerp(initAlpha, minAlpha, Mathf.PingPong(elapsedTime, 1f));
 				circleImage.color = new Color(circleImage.color.r, circleImage.color.g, circleImage.color.b, alpha);
-				yield return new WaitForSeconds(0.05f);
-			}
-			for (float alpha = 0; alpha <= initAlpha; alpha += 0.025f)
-			{
-				circleImage.color = new Color(circleImage.color.r, circleImage.color.g, circleImage.color.b, alpha);
-				yield return new WaitForSeconds(0.05f);
+				yield return null;
 			}
 		}
 		circleImage.color = new Color(circleImage.color.r, circleImage.color.g, circleImage.color.b, initAlpha);
