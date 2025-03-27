@@ -5,7 +5,7 @@ public class PlayerStatsManager : MonoBehaviour
 {
 	public static int currentLevel = -1;
 	public static int lives = 20;
-	public static int gold = 123456798;
+	public static int gold = 999999999;
 
 	[System.NonSerialized]
 	[HideInInspector]

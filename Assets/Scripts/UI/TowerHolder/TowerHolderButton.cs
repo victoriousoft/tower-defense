@@ -62,6 +62,10 @@ public class TowerHolderButton : MonoBehaviour
 	[HideInInspector]
 	public LineRenderer lineRenderer;
 
+	[HideInInspector]
+	[System.NonSerialized]
+	public bool isMouseOver = false;
+
 	public SpriteRenderer iconSpriteRenderer;
 
 	private SpriteRenderer backgroundSpriteRenderer;
@@ -84,9 +88,31 @@ public class TowerHolderButton : MonoBehaviour
 	{
 		TooltipManager.Hide();
 		towerHolder.GetComponent<TowerHolderNeo>().ButtonClicked(buttonAction);
+
+		if (buttonAction == ButtonAction.CYCLE_RETARGET)
+		{
+			ShowTooltip();
+		}
+		else
+		{
+			isMouseOver = false;
+		}
 	}
 
 	void OnMouseEnter()
+	{
+		isMouseOver = true;
+		ShowTooltip();
+	}
+
+	void OnMouseExit()
+	{
+		isMouseOver = false;
+		TooltipManager.Hide();
+		lineRenderer.enabled = false;
+	}
+
+	void ShowTooltip()
 	{
 		BaseTower tower = null;
 		BaseEvolutionTower evolutionTower = null;
@@ -200,12 +226,6 @@ public class TowerHolderButton : MonoBehaviour
 				TooltipManager.Show("Error", "No action set for this button");
 				break;
 		}
-	}
-
-	void OnMouseExit()
-	{
-		TooltipManager.Hide();
-		lineRenderer.enabled = false;
 	}
 
 	public void SetAction(ButtonAction action)
