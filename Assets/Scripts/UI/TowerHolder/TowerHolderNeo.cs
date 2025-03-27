@@ -55,6 +55,7 @@ public class TowerHolderNeo : MonoBehaviour
 	private bool isMenuActive = false;
 	private bool isMenuLocked = false;
 	private Animator animator;
+	private bool isMouseOver = false;
 
 	private GameObject prefabToBuild;
 
@@ -89,6 +90,15 @@ public class TowerHolderNeo : MonoBehaviour
 		rangeRenderer.enabled = false;
 	}
 
+	void Update()
+	{
+		if (Input.GetMouseButton(0) && isMenuActive && !isMouseOver)
+		{
+			HideButtons();
+			return;
+		}
+	}
+
 	void Start()
 	{
 		Transform buttons = transform.Find("Buttons");
@@ -111,7 +121,12 @@ public class TowerHolderNeo : MonoBehaviour
 
 	void OnMouseEnter()
 	{
-		// TODO: make cursor pointer
+		isMouseOver = true;
+	}
+
+	void OnMouseExit()
+	{
+		isMouseOver = false;
 	}
 
 	void OnMouseDown()
