@@ -270,3 +270,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foregroundImage: {fileID: 8120599159556174301}
+  progress: 0

@@ -92,7 +92,7 @@ public class TowerHolderNeo : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetMouseButton(0) && isMenuActive && !isMouseOver)
+		if (Input.GetMouseButton(0) && isMenuActive && !IsMouseOver())
 		{
 			HideButtons();
 			return;
@@ -154,7 +154,8 @@ public class TowerHolderNeo : MonoBehaviour
 					(targetTypeIndex + 1)
 					% TowerHelpers.TowerTargetTypes.GetValues(typeof(TowerHelpers.TowerTargetTypes)).Length;
 				towerInstance.GetComponent<BaseTower>().targetType = (TowerHelpers.TowerTargetTypes)targetTypeIndex;
-				HideButtons();
+				//HideButtons();
+				Debug.Log("Target type: " + targetTypeIndex);
 				break;
 
 			case ButtonAction.SELL:
@@ -421,6 +422,20 @@ public class TowerHolderNeo : MonoBehaviour
 
 		evolutionTower.UpgradeSkill();
 		HideButtons();
+	}
+
+	bool IsMouseOver()
+	{
+		if (isMouseOver)
+			return true;
+
+		for (int i = 0; i < menuButtons.Length; i++)
+		{
+			if (menuButtons[i].GetComponent<TowerHolderButton>().isMouseOver)
+				return true;
+		}
+
+		return false;
 	}
 
 	public bool isEvolutionTower()
