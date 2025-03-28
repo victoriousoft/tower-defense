@@ -94,8 +94,6 @@ public abstract class BaseEvolutionTower : BaseTower
 
 		yield return Shoot(target);
 
-		towerAnimator.SetTrigger("idle");
-
 		yield return new WaitForSeconds(towerData.evolutions[evolutionIndex].cooldown);
 		StartCoroutine(ChargeShootAndResetCooldown());
 	}
@@ -104,8 +102,6 @@ public abstract class BaseEvolutionTower : BaseTower
 	{
 		int price = base.CalculateSellPrice();
 
-		Debug.Log("base price: " + price);
-		Debug.Log("evo price: " + towerData.evolutions[evolutionIndex].price / 2);
 		return price + towerData.evolutions[evolutionIndex].price / 2;
 	}
 

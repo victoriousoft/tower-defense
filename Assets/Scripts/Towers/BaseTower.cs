@@ -70,21 +70,20 @@ public abstract class BaseTower : MonoBehaviour
 		StartCoroutine(ChargeShootAndResetCooldown());
 	}
 
-	[HideInInspector]
-	public bool enemiesInRange()
+	protected bool enemiesInRange()
 	{
 		EnemyTypes[] targetTypes = towerData.enemyTypes;
+		float range = towerData.levels[level].range;
+
 		if (GetComponent<BaseEvolutionTower>() != null)
 		{
 			targetTypes = towerData
 				.evolutionEnemyTypes[GetComponent<BaseEvolutionTower>().evolutionIndex]
 				.enemies.ToArray();
+
+			range = towerData.evolutions[GetComponent<BaseEvolutionTower>().evolutionIndex].range;
 		}
-		GameObject[] enemies = TowerHelpers.GetEnemiesInRange(
-			transform.position,
-			towerData.levels[level].range,
-			targetTypes
-		);
+		GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, range, targetTypes);
 
 		if (enemies.Length == 0)
 		{

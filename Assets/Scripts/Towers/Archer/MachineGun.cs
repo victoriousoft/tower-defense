@@ -6,8 +6,8 @@ public class MachineGun : BaseEvolutionTower
 	[SerializeField]
 	private Animator spinAnimationAnimator;
 
-	private float currentAngle = 135f;
-	private float targetAngle;
+	private int currentHeading = 135;
+	private int targetHeading = 135;
 	private Coroutine rotationCoroutine;
 	private GameObject currentEnemy;
 	private bool skillInUse = false;
@@ -16,76 +16,100 @@ public class MachineGun : BaseEvolutionTower
 	{
 		base.Start();
 
-		targetAngle = currentAngle;
 		spinAnimationAnimator = GetComponent<Animator>();
 	}
 
 	void Update()
 	{
-		if (currentEnemy != null)
+		if (currentEnemy != null && rotationCoroutine == null)
 		{
-			Vector2 direction = (Vector2)currentEnemy.transform.position - (Vector2)transform.position;
+			Vector2 directionToEnemy = (currentEnemy.transform.position - transform.position).normalized;
+			float angle = Mathf.Atan2(directionToEnemy.y, directionToEnemy.x) * Mathf.Rad2Deg;
+			angle = (90 - angle) % 360;
+			if (angle < 0)
+				angle += 360;
 
-			targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 180;
+			targetHeading = Mathf.RoundToInt(angle / 45f) * 45;
+			targetHeading = NormalizeHeading(targetHeading);
 
-			currentAngle = NormalizeAngle(currentAngle);
-			targetAngle = NormalizeAngle(targetAngle);
+			int angleDifference = targetHeading - currentHeading;
 
-			if (rotationCoroutine == null && Mathf.Abs(targetAngle - currentAngle) > 22.5f)
+			if (angleDifference > 180)
+				angleDifference -= 360;
+			else if (angleDifference < -180)
+				angleDifference += 360;
+
+			if (angleDifference != 0)
 			{
-				rotationCoroutine = StartCoroutine(RotateStepByStep());
+				rotationCoroutine = StartCoroutine(RotateStepByStep(angleDifference));
 			}
+		}
+		else if (currentEnemy == null && rotationCoroutine != null)
+		{
+			int angleTo135 = 135 - currentHeading;
+			if (angleTo135 > 180)
+				angleTo135 -= 360;
+			else if (angleTo135 < -180)
+				angleTo135 += 360;
+
+			rotationCoroutine = StartCoroutine(RotateStepByStep(angleTo135));
 		}
 	}
 
-	private IEnumerator RotateStepByStep()
+	private IEnumerator RotateStepByStep(int angleDifference)
 	{
-		if (currentEnemy == null || skillInUse)
-		{
-			rotationCoroutine = null;
+		if (rotationCoroutine != null)
 			yield break;
-		}
-		yield return new WaitForSeconds(0.1f);
-		while (Mathf.Abs(targetAngle - currentAngle) > 22.5f)
-		{
-			float angleDifference = targetAngle - currentAngle;
-			if (angleDifference > 180)
-				angleDifference -= 360;
-			if (angleDifference < -180)
-				angleDifference += 360;
 
+		while (currentHeading != targetHeading && currentEnemy != null && !skillInUse)
+		{
+			int newHeading;
 			if (angleDifference > 0)
 			{
-				currentAngle += 45f;
-				spinAnimationAnimator.SetTrigger("left");
+				newHeading = currentHeading + 45;
+				spinAnimationAnimator.SetTrigger("right");
 			}
 			else
 			{
-				currentAngle -= 45f;
-				spinAnimationAnimator.SetTrigger("right");
+				newHeading = currentHeading - 45;
+				spinAnimationAnimator.SetTrigger("left");
 			}
-			currentAngle = NormalizeAngle(currentAngle);
 
 			yield return new WaitForSeconds(0.1f);
-		}
-		rotationCoroutine = StartCoroutine(RotateStepByStep());
-	}
 
-	private float NormalizeAngle(float angle)
-	{
-		while (angle < 0)
-			angle += 360;
-		while (angle > 360)
-			angle -= 360;
-		return angle;
+			currentHeading = NormalizeHeading(newHeading);
+			angleDifference = targetHeading - currentHeading;
+
+			if (currentEnemy == null || skillInUse)
+			{
+				rotationCoroutine = null;
+				yield break;
+			}
+		}
+
+		spinAnimationAnimator.SetTrigger("idle");
+
+		rotationCoroutine = null;
+		currentEnemy = null;
 	}
 
 	protected override IEnumerator Shoot(GameObject enemy)
 	{
-		if (skillInUse)
+		// TODO: Tady jsem chtěl aby to neshootilo když se točí
+		if (skillInUse || rotationCoroutine != null || targetHeading != currentHeading)
 			yield break;
+
 		currentEnemy = enemy;
+
 		enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.evolutions[0].damage, DamageTypes.PHYSICAL);
+		towerAnimator.SetTrigger("idle");
+
+		if (enemy == null)
+		{
+			currentEnemy = null;
+			yield break;
+		}
+
 		yield return null;
 	}
 
@@ -118,6 +142,16 @@ public class MachineGun : BaseEvolutionTower
 		skillInUse = false;
 		spinAnimationAnimator.speed = 1f;
 		yield return null;
+	}
+
+	private int NormalizeHeading(int heading)
+	{
+		if (heading < 0)
+			return 360 + heading;
+		else if (heading >= 360)
+			return heading - 360;
+		else
+			return heading;
 	}
 
 	protected override void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition) { }

@@ -85,7 +85,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &5607315883118690668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,6 +326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerData: {fileID: 11400000, guid: 24ec6c097a61e2e4fadb4503f4a7677b, type: 2}
+  towerAnimator: {fileID: 0}
   towerType: 1
   evolutionIndex: -1
   spinAnimationAnimator: {fileID: 3169483851418421833}
