@@ -13,13 +13,14 @@ public enum MenuState
 
 public enum ButtonIndex
 {
-	TOP_LEFT = 0,
-	TOP_CENTER = 1,
-	TOP_RIGHT = 2,
-	CENTER_LEFT = 3,
-	BOTTOM_LEFT = 4,
-	BOTTOM_CENTER = 5,
-	BOTTOM_RIGHT = 6,
+	TOP_LEFT,
+	TOP_CENTER,
+	TOP_RIGHT,
+	CENTER_LEFT,
+	CENTER_RIGHT,
+	BOTTOM_LEFT,
+	BOTTOM_CENTER,
+	BOTTOM_RIGHT,
 }
 
 public class TowerHolderNeo : MonoBehaviour
@@ -43,7 +44,7 @@ public class TowerHolderNeo : MonoBehaviour
 	public MenuState menuState;
 
 	// top left to right, center left to right, bottom left to right
-	private GameObject[] menuButtons = new GameObject[7];
+	private GameObject[] menuButtons = new GameObject[8];
 
 	[HideInInspector]
 	public int targetTypeIndex = 0;
@@ -56,6 +57,7 @@ public class TowerHolderNeo : MonoBehaviour
 	private bool isMenuLocked = false;
 	private Animator animator;
 	private bool isMouseOver = false;
+	private bool isMouseDown = false;
 
 	private GameObject prefabToBuild;
 
@@ -77,6 +79,7 @@ public class TowerHolderNeo : MonoBehaviour
 			{ ButtonAction.BUILD_MAGIC, magicIcon },
 			{ ButtonAction.BUILD_BOMB, bombIcon },
 			{ ButtonAction.CYCLE_RETARGET, null },
+			{ ButtonAction.REPOSITION_BARRACKS, null },
 			{ ButtonAction.SELL, null },
 			{ ButtonAction.UPGRADE_LEVEL, null },
 			{ ButtonAction.BUY_EVOLUTION_1, null },
@@ -86,16 +89,31 @@ public class TowerHolderNeo : MonoBehaviour
 
 		animator = GetComponent<Animator>();
 
-		rangeRenderer = gameObject.AddComponent<LineRenderer>();
+		rangeRenderer = GetComponent<LineRenderer>();
 		rangeRenderer.enabled = false;
 	}
 
 	void Update()
 	{
-		if (Input.GetMouseButton(0) && isMenuActive && !IsMouseOver())
+		if (Input.GetMouseButton(0))
 		{
-			HideButtons();
-			return;
+			if (isMouseDown)
+				return;
+			isMouseDown = true;
+
+			if (isMenuActive && !IsMouseOverAllButtons())
+			{
+				HideButtons();
+				return;
+			}
+		}
+		else
+		{
+			if (isMouseDown)
+			{
+				isMouseDown = false;
+				return;
+			}
 		}
 	}
 
@@ -178,6 +196,11 @@ public class TowerHolderNeo : MonoBehaviour
 			case ButtonAction.UPGRADE_EVOLUTION:
 				UpgradeEvolutionSkillLevel();
 				break;
+
+			case ButtonAction.REPOSITION_BARRACKS:
+				RepositionBarracks();
+				break;
+
 			default:
 				Debug.LogError("not implemented");
 				break;
@@ -215,10 +238,13 @@ public class TowerHolderNeo : MonoBehaviour
 		}
 	}
 
-	public void HideButtons()
+	public void HideButtons(bool hideRangeRenderer = true)
 	{
 		isMenuActive = false;
-		rangeRenderer.enabled = false;
+		if (hideRangeRenderer)
+		{
+			rangeRenderer.enabled = false;
+		}
 
 		for (int i = 0; i < menuButtons.Length; i++)
 		{
@@ -328,6 +354,13 @@ public class TowerHolderNeo : MonoBehaviour
 			transform.position
 		);
 
+		if (towerInstance.GetComponent<BaseTower>().towerType == TowerTypes.Barracks)
+		{
+			menuButtons[(int)ButtonIndex.CENTER_LEFT]
+				.GetComponent<TowerHolderButton>()
+				.SetAction(ButtonAction.REPOSITION_BARRACKS);
+		}
+
 		isMenuLocked = false;
 	}
 
@@ -428,15 +461,34 @@ public class TowerHolderNeo : MonoBehaviour
 		HideButtons();
 	}
 
-	bool IsMouseOver()
+	private void RepositionBarracks()
+	{
+		HideButtons(false);
+		StartCoroutine(WaitForMouseReleaseAndReposition());
+	}
+
+	private IEnumerator WaitForMouseReleaseAndReposition()
+	{
+		yield return new WaitUntil(() => Input.GetMouseButtonUp(0));
+		yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+
+		Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+		towerInstance.GetComponent<Barracks>().SetTroopRandezvousPoint(mousePosition);
+		HideButtons();
+	}
+
+	bool IsMouseOverAllButtons()
 	{
 		if (isMouseOver)
 			return true;
 
 		for (int i = 0; i < menuButtons.Length; i++)
 		{
-			if (menuButtons[i].GetComponent<TowerHolderButton>().isMouseOver)
+			if (menuButtons[i].GetComponent<TowerHolderButton>().IsMouseOver())
+			{
 				return true;
+			}
 		}
 
 		return false;

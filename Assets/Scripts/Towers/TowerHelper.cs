@@ -226,7 +226,12 @@ public static class TowerHelpers
 		return false;
 	}
 
-	public static Vector2 GetClosesPointOnPath(Vector2 origin, GameObject pathParents)
+	public static Vector2 GetClosesPointOnPath(
+		Vector2 origin,
+		GameObject pathParents,
+		Vector2 basePosition,
+		float maxRange
+	)
 	{
 		GameObject[] paths = new GameObject[pathParents.transform.childCount];
 		for (int i = 0; i < pathParents.transform.childCount; i++)
@@ -258,7 +263,19 @@ public static class TowerHelpers
 			closestPoints.Add(closestPoint);
 		}
 
-		return closestPoints.OrderBy(p => Vector2.Distance(origin, p)).FirstOrDefault();
+		// First try to find points within maxRange of the basePosition
+		var pointsInRange = closestPoints.Where(p => Vector2.Distance(p, basePosition) <= maxRange).ToList();
+
+		if (pointsInRange.Count > 0)
+		{
+			// If points are in range, return the closest one to the origin
+			return pointsInRange.OrderBy(p => Vector2.Distance(origin, p)).FirstOrDefault();
+		}
+		else
+		{
+			// If no points are in range, fallback to the closest one to the origin
+			return closestPoints.OrderBy(p => Vector2.Distance(origin, p)).FirstOrDefault();
+		}
 	}
 
 	public static Vector2 GetClosestPointOnLineSegment(Vector2 origin, Vector2 lineStart, Vector2 lineEnd)
@@ -271,22 +288,22 @@ public static class TowerHelpers
 		return lineStart + t * lineDirection;
 	}
 
-	public static void SetRangeCircle(LineRenderer rangeRendered, float range, Vector2 centerpoint)
+	public static void SetRangeCircle(LineRenderer rangeRenderer, float range, Vector2 centerpoint)
 	{
-		rangeRendered.startWidth = 0.03f;
-		rangeRendered.endWidth = 0.03f;
+		rangeRenderer.startWidth = 0.05f;
+		rangeRenderer.endWidth = 0.05f;
 
 		float Theta = 0f;
 		float radius = range;
 		float ThetaScale = 0.01f;
 		int Size = (int)((1f / ThetaScale) + 1f);
-		rangeRendered.positionCount = Size;
+		rangeRenderer.positionCount = Size;
 		for (int i = 0; i < Size; i++)
 		{
 			Theta += 2.0f * Mathf.PI * ThetaScale;
 			float x = radius * Mathf.Cos(Theta);
 			float y = radius * Mathf.Sin(Theta);
-			rangeRendered.SetPosition(i, new Vector2(x, y) + centerpoint);
+			rangeRenderer.SetPosition(i, new Vector2(x, y) + centerpoint);
 		}
 	}
 
