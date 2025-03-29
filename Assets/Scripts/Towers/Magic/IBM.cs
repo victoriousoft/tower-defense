@@ -35,5 +35,20 @@ public class IBM : BaseEvolutionTower
 		yield return null;
 	}
 
+	protected override IEnumerator Skill(GameObject enemy)
+	{
+		foreach (GameObject tower in GameObject.FindGameObjectsWithTag("Tower"))
+		{
+			if (
+				Vector2.Distance(tower.transform.position, transform.position)
+				< towerData.evolutions[evolutionIndex].range
+			)
+			{
+				tower.GetComponent<BaseTower>().EnhanceTemoprarily(2, 30);
+			}
+		}
+		yield return null;
+	}
+
 	protected override void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition) { }
 }

@@ -52,5 +52,10 @@ public class Vietcong : BaseEvolutionTower
 		yield return null;
 	}
 
+	protected override IEnumerator Skill(GameObject enemy)
+	{
+		yield return null;
+	}
+
 	protected override void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition) { }
 }

@@ -17,6 +17,9 @@ MonoBehaviour:
   description: 
   damageType: 1
   enemyTypes: 0000000001000000
+  evolutionEnemyTypes:
+  - enemies: 0000000001000000
+  - enemies: 0000000001000000
   levels:
   - price: 100
     range: 2
@@ -54,7 +57,7 @@ MonoBehaviour:
     price: 400
     damage: 25
     range: 6
-    cooldown: 1
+    cooldown: 8
     skillName: The Last SOUT
     skillLevels:
     - cooldown: 10

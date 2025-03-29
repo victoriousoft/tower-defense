@@ -8,7 +8,9 @@ public abstract class BaseTower : MonoBehaviour
 	public int level = 0;
 
 	public TowerSheetNeo towerData;
-	private Animator towerAnimator;
+
+	[HideInInspector]
+	public Animator towerAnimator;
 
 	[System.NonSerialized]
 	[HideInInspector]
@@ -36,7 +38,7 @@ public abstract class BaseTower : MonoBehaviour
 
 	protected virtual void FixedUpdate() { } //mozna zbytecny
 
-	private IEnumerator ChargeShootAndResetCooldown()
+	public virtual IEnumerator ChargeShootAndResetCooldown()
 	{
 		towerAnimator.SetTrigger("charge");
 
@@ -64,18 +66,24 @@ public abstract class BaseTower : MonoBehaviour
 
 		towerAnimator.SetTrigger("idle");
 
-		//nefunguje u evolucnich vezi FIX!!!
 		yield return new WaitForSeconds(towerData.levels[level].cooldown);
 		StartCoroutine(ChargeShootAndResetCooldown());
 	}
 
-	bool enemiesInRange()
+	protected bool enemiesInRange()
 	{
-		GameObject[] enemies = TowerHelpers.GetEnemiesInRange(
-			transform.position,
-			towerData.levels[level].range,
-			towerData.enemyTypes
-		);
+		EnemyTypes[] targetTypes = towerData.enemyTypes;
+		float range = towerData.levels[level].range;
+
+		if (GetComponent<BaseEvolutionTower>() != null)
+		{
+			targetTypes = towerData
+				.evolutionEnemyTypes[GetComponent<BaseEvolutionTower>().evolutionIndex]
+				.enemies.ToArray();
+
+			range = towerData.evolutions[GetComponent<BaseEvolutionTower>().evolutionIndex].range;
+		}
+		GameObject[] enemies = TowerHelpers.GetEnemiesInRange(transform.position, range, targetTypes);
 
 		if (enemies.Length == 0)
 		{
@@ -105,6 +113,12 @@ public abstract class BaseTower : MonoBehaviour
 
 		if (shootCoroutine == null)
 			shootCoroutine = StartCoroutine(ChargeShootAndResetCooldown());
+	}
+
+	public IEnumerator EnhanceTemoprarily(int factor, float duration)
+	{
+		//fixnout
+		yield return null;
 	}
 
 	private void ResetLaserPosition()

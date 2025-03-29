@@ -263,17 +263,14 @@ public static class TowerHelpers
 			closestPoints.Add(closestPoint);
 		}
 
-		// First try to find points within maxRange of the basePosition
 		var pointsInRange = closestPoints.Where(p => Vector2.Distance(p, basePosition) <= maxRange).ToList();
 
 		if (pointsInRange.Count > 0)
 		{
-			// If points are in range, return the closest one to the origin
 			return pointsInRange.OrderBy(p => Vector2.Distance(origin, p)).FirstOrDefault();
 		}
 		else
 		{
-			// If no points are in range, fallback to the closest one to the origin
 			return closestPoints.OrderBy(p => Vector2.Distance(origin, p)).FirstOrDefault();
 		}
 	}
@@ -305,16 +302,5 @@ public static class TowerHelpers
 			float y = radius * Mathf.Sin(Theta);
 			rangeRenderer.SetPosition(i, new Vector2(x, y) + centerpoint);
 		}
-	}
-
-	public static float GetAngleBetweenPoints(Vector2 origin, float originAngle, Vector2 target)
-	{
-		Vector2 direction = target - origin;
-		float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-		float angleDifference = targetAngle - originAngle;
-
-		angleDifference = (angleDifference + 180) % 360 - 180;
-
-		return angleDifference;
 	}
 }

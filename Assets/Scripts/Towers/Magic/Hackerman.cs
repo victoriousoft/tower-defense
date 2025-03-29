@@ -55,6 +55,11 @@ public class Hackerman : BaseEvolutionTower
 		yield return null;
 	}
 
+	protected override IEnumerator Skill(GameObject enemy)
+	{
+		yield return null;
+	}
+
 	protected override void KillProjectile(GameObject sphere, GameObject enemy, Vector3 enemyPosition)
 	{
 		if (sphere != null)

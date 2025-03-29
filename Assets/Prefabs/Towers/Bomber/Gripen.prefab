@@ -304,7 +304,7 @@ GameObject:
   - component: {fileID: 4265790859894217844}
   m_Layer: 0
   m_Name: Gripen
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -366,6 +366,7 @@ MonoBehaviour:
   plane: {fileID: 3047164603239164927}
   planeSpeed: 10
   projectilePrefab: {fileID: 478314428750665847, guid: fa9b5cf41962c334097a4d6dc0254562, type: 3}
+  ExplosionEffect: {fileID: 13743912110108325, guid: f60d753f5e9c1f74ca8321c562c551e9, type: 3}
 --- !u!1 &9011415905901537021
 GameObject:
   m_ObjectHideFlags: 0
