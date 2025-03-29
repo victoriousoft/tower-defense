@@ -39,10 +39,6 @@ public class MainMenuController : MonoBehaviour
 			}
 		}
 
-		Debug.Log("Locking levels");
-		Debug.Log("Level stars count: " + PlayerStatsManager.levelStars.Count);
-		Debug.Log("Buttons count: " + buttons.Count);
-		Debug.Log("Level stars: " + string.Join(", ", PlayerStatsManager.levelStars));
 		for (int i = PlayerStatsManager.levelStars.Count + 1; i < buttons.Count; i++)
 		{
 			buttons[i].AddToClassList("lock-overlay");

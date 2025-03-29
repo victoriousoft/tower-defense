@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using Unity.VectorGraphics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerStatsManager : MonoBehaviour
 {
@@ -65,7 +67,14 @@ public class PlayerStatsManager : MonoBehaviour
 				args = new { level = currentLevel, stars = stars },
 			}
 		);
+		ResetStats();
+	}
+
+	public static void ReturnToMenu()
+	{
 		currentLevel = -1;
 		lives = 20;
+		gold = 999999999;
+		SceneManager.LoadScene("Scenes/Levels/MainMenu");
 	}
 }
