@@ -23,12 +23,17 @@ public abstract class BaseEnemy : MonoBehaviour
 	private Vector2 positionOffset;
 
 	private readonly float[] resistanceValues = new float[] { 1, 0.5f, 0.35f, 0.2f, 0 };
+	private int currentPhysicalResistance,
+		currentMagicResistance;
+	private bool nerfed = false;
 	private HealthBar healthBar;
 
 	protected bool canAttack = true;
 
 	[HideInInspector]
 	public float currentSpeed;
+
+	private SpriteRenderer spriteRenderer;
 	protected abstract void Attack();
 
 	void Awake()
@@ -39,6 +44,10 @@ public abstract class BaseEnemy : MonoBehaviour
 		positionOffset = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
 		if (enemyData.enemyType == EnemyTypes.FLYING)
 			positionOffset.y += 1f;
+
+		currentPhysicalResistance = enemyData.stats.physicalResistance;
+		currentMagicResistance = enemyData.stats.magicResistance;
+		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 	}
 
 	void FixedUpdate()
@@ -136,10 +145,9 @@ public abstract class BaseEnemy : MonoBehaviour
 	public void TakeDamage(float damage, DamageTypes damageType)
 	{
 		health -=
-			(damageType == DamageTypes.PHYSICAL) ? damage * resistanceValues[enemyData.stats.physicalResistance]
-			: (damageType == DamageTypes.MAGIC) ? damage * resistanceValues[enemyData.stats.magicResistance]
-			: (damageType == DamageTypes.EXPLOSION)
-				? damage * (resistanceValues[enemyData.stats.physicalResistance] / 2)
+			(damageType == DamageTypes.PHYSICAL) ? damage * resistanceValues[currentPhysicalResistance]
+			: (damageType == DamageTypes.MAGIC) ? damage * resistanceValues[currentMagicResistance]
+			: (damageType == DamageTypes.EXPLOSION) ? damage * (resistanceValues[currentPhysicalResistance] / 2)
 			: damage;
 
 		healthBar.SetHealth(health / enemyData.stats.maxHealth);
@@ -147,7 +155,10 @@ public abstract class BaseEnemy : MonoBehaviour
 		if (health <= 0)
 		{
 			Destroy(gameObject);
-			PlayerStatsManager.AddGold(enemyData.stats.cashDrop);
+			if (!nerfed)
+				PlayerStatsManager.AddGold(enemyData.stats.cashDrop);
+			else
+				PlayerStatsManager.AddGold(enemyData.stats.cashDrop * 3);
 		}
 	}
 
@@ -181,12 +192,53 @@ public abstract class BaseEnemy : MonoBehaviour
 		}
 	}
 
+	public void NerfResistance(int resistanceType, int armorSubtract, float duration)
+	{
+		StartCoroutine(GetNerfed(resistanceType, armorSubtract, duration));
+	}
+
 	private IEnumerator GetSlowedDown(float slowdownFactor, float duration)
 	{
 		float originalSpeed = currentSpeed;
+		if (slowdownFactor < 100)
+			spriteRenderer.color = new Color(0.68f, 0.85f, 0.9f);
+		else
+			spriteRenderer.color = Color.blue;
 		currentSpeed /= slowdownFactor;
 		yield return new WaitForSeconds(duration);
 		currentSpeed = originalSpeed;
+		spriteRenderer.color = Color.white;
+	}
+
+	private IEnumerator GetNerfed(int resistanceType, int armorSubtract, float duration)
+	{
+		nerfed = true;
+		spriteRenderer.color = Color.yellow;
+		int originalResistance;
+		if (resistanceType == 0)
+		{
+			originalResistance = currentPhysicalResistance;
+			currentPhysicalResistance = Mathf.Max(0, currentPhysicalResistance - armorSubtract);
+		}
+		else
+		{
+			originalResistance = currentMagicResistance;
+			currentMagicResistance = Mathf.Max(0, currentMagicResistance - armorSubtract);
+		}
+
+		yield return new WaitForSeconds(duration);
+
+		if (resistanceType == 0)
+		{
+			currentPhysicalResistance = originalResistance;
+		}
+		else
+		{
+			currentMagicResistance = originalResistance;
+		}
+		if (spriteRenderer.color == Color.yellow)
+			spriteRenderer.color = Color.white;
+		nerfed = false;
 	}
 
 	protected IEnumerator ResetAttackCooldown()

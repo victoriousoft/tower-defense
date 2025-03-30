@@ -19,6 +19,7 @@ public abstract class BaseTower : MonoBehaviour
 	public TowerTypes towerType;
 	protected GameObject paths;
 	private Coroutine shootCoroutine;
+	private float currentDamage;
 
 	protected abstract IEnumerator Shoot(GameObject enemy);
 	protected abstract IEnumerator ChargeUp(GameObject enemy);
@@ -34,6 +35,7 @@ public abstract class BaseTower : MonoBehaviour
 		shootCoroutine = StartCoroutine(ChargeShootAndResetCooldown());
 		if (GetComponent<LineRenderer>() != null)
 			ResetLaserPosition();
+		currentDamage = towerData.levels[level].damage;
 	}
 
 	protected virtual void FixedUpdate() { } //mozna zbytecny
@@ -106,6 +108,8 @@ public abstract class BaseTower : MonoBehaviour
 			ResetLaserPosition();
 
 		level++;
+		currentDamage = towerData.levels[level].damage;
+		GetComponent<SpriteRenderer>().color = Color.white;
 
 		towerAnimator.SetTrigger("upgrade");
 
@@ -117,8 +121,13 @@ public abstract class BaseTower : MonoBehaviour
 
 	public IEnumerator EnhanceTemoprarily(int factor, float duration)
 	{
-		//fixnout
-		yield return null;
+		currentDamage *= factor;
+		//enhance effect
+		SpriteRenderer sr = GetComponent<SpriteRenderer>();
+		sr.color = new Color(1, 0.5f, 0.5f, 1);
+		yield return new WaitForSeconds(duration);
+		sr.color = Color.white;
+		currentDamage = towerData.levels[level].damage;
 	}
 
 	private void ResetLaserPosition()

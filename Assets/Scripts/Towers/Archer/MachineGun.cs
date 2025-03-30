@@ -21,6 +21,8 @@ public class MachineGun : BaseEvolutionTower
 
 	void Update()
 	{
+		if (skillInUse)
+			return;
 		if (currentEnemy != null && rotationCoroutine == null)
 		{
 			Vector2 directionToEnemy = (currentEnemy.transform.position - transform.position).normalized;
@@ -54,6 +56,7 @@ public class MachineGun : BaseEvolutionTower
 
 			rotationCoroutine = StartCoroutine(RotateStepByStep(angleTo135));
 		}
+		spinAnimationAnimator.SetBool("connected", currentHeading == targetHeading && currentEnemy != null);
 	}
 
 	private IEnumerator RotateStepByStep(int angleDifference)
@@ -75,10 +78,10 @@ public class MachineGun : BaseEvolutionTower
 				spinAnimationAnimator.SetTrigger("left");
 			}
 
-			yield return new WaitForSeconds(0.1f);
-
 			currentHeading = NormalizeHeading(newHeading);
 			angleDifference = targetHeading - currentHeading;
+
+			yield return new WaitForSeconds(0.1f);
 
 			if (currentEnemy == null || skillInUse)
 			{
@@ -87,22 +90,18 @@ public class MachineGun : BaseEvolutionTower
 			}
 		}
 
-		spinAnimationAnimator.SetTrigger("idle");
-
 		rotationCoroutine = null;
 		currentEnemy = null;
 	}
 
 	protected override IEnumerator Shoot(GameObject enemy)
 	{
+		currentEnemy = enemy;
 		// TODO: Tady jsem chtěl aby to neshootilo když se točí
 		if (skillInUse || rotationCoroutine != null || targetHeading != currentHeading)
 			yield break;
 
-		currentEnemy = enemy;
-
 		enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.evolutions[0].damage, DamageTypes.PHYSICAL);
-		towerAnimator.SetTrigger("idle");
 
 		if (enemy == null)
 		{
@@ -121,15 +120,18 @@ public class MachineGun : BaseEvolutionTower
 	protected override IEnumerator Skill(GameObject enemy)
 	{
 		skillInUse = true;
+		currentEnemy = null;
 		spinAnimationAnimator.speed = 3f;
-		GameObject[] enemies = TowerHelpers.GetEnemiesInRange(
-			transform.position,
-			towerData.evolutions[0].range,
-			towerData.enemyTypes
-		);
+
 		for (int i = 0; i < 96; i++)
 		{
+			GameObject[] enemies = TowerHelpers.GetEnemiesInRange(
+				transform.position,
+				towerData.evolutions[0].range,
+				towerData.enemyTypes
+			);
 			spinAnimationAnimator.SetTrigger("right");
+			targetHeading = NormalizeHeading(targetHeading + 45);
 			foreach (GameObject targetEnemy in enemies)
 			{
 				if (targetEnemy != null)
@@ -141,6 +143,7 @@ public class MachineGun : BaseEvolutionTower
 		}
 		skillInUse = false;
 		spinAnimationAnimator.speed = 1f;
+
 		yield return null;
 	}
 

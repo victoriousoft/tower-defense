@@ -94,6 +94,8 @@ public abstract class BaseEvolutionTower : BaseTower
 
 		yield return Shoot(target);
 
+		towerAnimator.SetTrigger("idle");
+
 		yield return new WaitForSeconds(towerData.evolutions[evolutionIndex].cooldown);
 		StartCoroutine(ChargeShootAndResetCooldown());
 	}

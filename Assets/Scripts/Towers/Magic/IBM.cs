@@ -17,12 +17,12 @@ public class IBM : BaseEvolutionTower
 		foreach (
 			GameObject targetEnemy in TowerHelpers.GetEnemiesInRange(
 				transform.position,
-				towerData.levels[level].range,
+				towerData.evolutions[evolutionIndex].range,
 				targetEnemyTypes
 			)
 		)
 		{
-			yield return new WaitForSeconds(0.1f);
+			yield return new WaitForSeconds(0.05f);
 			BaseEnemy enemyScript = targetEnemy.GetComponent<BaseEnemy>();
 			enemyScript.TakeDamage(towerData.evolutions[1].damage, DamageTypes.MAGIC);
 			enemyScript.Slowdown(3, towerData.evolutions[1].cooldown);
@@ -46,6 +46,17 @@ public class IBM : BaseEvolutionTower
 			{
 				tower.GetComponent<BaseTower>().EnhanceTemoprarily(2, 30);
 			}
+		}
+		foreach (
+			GameObject targetEnemy in TowerHelpers.GetEnemiesInRange(
+				transform.position,
+				towerData.evolutions[evolutionIndex].range,
+				targetEnemyTypes
+			)
+		)
+		{
+			BaseEnemy enemyScript = targetEnemy.GetComponent<BaseEnemy>();
+			enemyScript.Slowdown(1000, towerData.evolutions[1].cooldown * 2);
 		}
 		yield return null;
 	}
