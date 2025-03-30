@@ -57,7 +57,7 @@ MonoBehaviour:
     price: 550
     damage: 40
     range: 20
-    cooldown: 10
+    cooldown: 7
     skillName: Kamikadze!!
     skillLevels:
     - cooldown: 5

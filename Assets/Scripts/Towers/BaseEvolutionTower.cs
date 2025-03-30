@@ -44,7 +44,6 @@ public abstract class BaseEvolutionTower : BaseTower
 
 	public void UpgradeSkill()
 	{
-		Debug.Log("Upgrading skill");
 		if (skillCoroutine != null)
 			StopCoroutine(skillCoroutine);
 		healthBar.SetHealth(0);
