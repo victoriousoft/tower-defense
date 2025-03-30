@@ -46,7 +46,7 @@ public class Overlay : MonoBehaviour
 		Time.timeScale = 0;
 	}
 
-	static void ResumeGame()
+	public static void ResumeGame()
 	{
 		isGamePaused = false;
 		FullscreenOverlayManager.Hide();

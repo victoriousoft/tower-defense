@@ -8,7 +8,7 @@ public class MenuButton : MonoBehaviour
 {
 	public void ResumeClick()
 	{
-		Overlay.TogglePause();
+		Overlay.ResumeGame();
 	}
 
 	public void PauseClick()
