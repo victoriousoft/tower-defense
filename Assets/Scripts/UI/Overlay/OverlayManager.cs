@@ -25,7 +25,7 @@ public class Overlay : MonoBehaviour
 		healthText.text = "Health: " + PlayerStatsManager.lives;
 		waveText.text = "Wave: " + (waveSheet.currentWave + 1) + "/" + waveSheet.waves.Length;
 
-		if (Input.GetKeyDown(KeyCode.Escape))
+		if (Input.GetKeyDown(KeyCode.P))
 		{
 			TogglePause();
 		}
@@ -39,14 +39,14 @@ public class Overlay : MonoBehaviour
 			PauseGame();
 	}
 
-	public static void PauseGame(string title = "Paused", string description = "Press ESC to resume")
+	public static void PauseGame(string title = "Paused", string description = "Press P to resume")
 	{
 		isGamePaused = true;
 		FullscreenOverlayManager.Show(title, description);
 		Time.timeScale = 0;
 	}
 
-	static void ResumeGame()
+	public static void ResumeGame()
 	{
 		isGamePaused = false;
 		FullscreenOverlayManager.Hide();
