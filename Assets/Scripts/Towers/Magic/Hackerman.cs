@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Hackerman : BaseEvolutionTower
 {
+	EnemyTypes[] targetEnemyTypes = new EnemyTypes[] { EnemyTypes.GROUND, EnemyTypes.FLYING };
 	public Transform[] projectileOrigins;
 	private float damageDealt = 0;
+	private bool skillInUse = false;
 
 	protected override void Start()
 	{
@@ -14,6 +16,8 @@ public class Hackerman : BaseEvolutionTower
 
 	protected override IEnumerator Shoot(GameObject enemy)
 	{
+		if (skillInUse)
+			yield break;
 		for (int i = 0; i < projectileOrigins.Length; i++)
 		{
 			if (enemy == null)
@@ -42,16 +46,38 @@ public class Hackerman : BaseEvolutionTower
 				GetComponent<LineRenderer>(),
 				projectileOrigins[i],
 				enemy,
-				0.5f,
+				0.35f,
 				KillProjectile
 			);
 
-			yield return new WaitForSeconds(0.5f);
+			yield return new WaitForSeconds(0.125f);
 		}
 	}
 
 	protected override IEnumerator ChargeUp(GameObject enemy)
 	{
+		yield return null;
+	}
+
+	protected override IEnumerator Skill(GameObject enemy)
+	{
+		skillInUse = true;
+		foreach (
+			GameObject targetEnemy in TowerHelpers.GetEnemiesInRange(
+				transform.position,
+				towerData.evolutions[evolutionIndex].range,
+				targetEnemyTypes
+			)
+		)
+		{
+			BaseEnemy enemyScript = targetEnemy.GetComponent<BaseEnemy>();
+			enemyScript.TakeDamage(towerData.evolutions[evolutionIndex].damage / 10, DamageTypes.MAGIC);
+			enemyScript.NerfResistance(0, 2, 20);
+			enemyScript.NerfResistance(1, 2, 20);
+			enemyScript.Slowdown(0.85f, towerData.evolutions[1].damage);
+			yield return new WaitForSeconds(0.05f);
+		}
+		skillInUse = false;
 		yield return null;
 	}
 

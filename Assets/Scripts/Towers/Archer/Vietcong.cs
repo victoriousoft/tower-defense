@@ -52,5 +52,11 @@ public class Vietcong : BaseEvolutionTower
 		yield return null;
 	}
 
+	protected override IEnumerator Skill(GameObject enemy)
+	{
+		enemy.GetComponent<BaseEnemy>().TakeDamage(1000000, DamageTypes.PHYSICAL);
+		yield return null;
+	}
+
 	protected override void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition) { }
 }

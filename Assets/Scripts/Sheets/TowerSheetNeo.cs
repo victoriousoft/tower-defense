@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "TowerData", menuName = "ScriptableObjects/TowerSheetNeo", order = 1)]
@@ -39,6 +40,15 @@ public class TowerSheetNeo : ScriptableObject
 
 	[SerializeField]
 	public EnemyTypes[] enemyTypes;
+
+	[System.Serializable]
+	public class EnemyTypeList
+	{
+		public List<EnemyTypes> enemies = new List<EnemyTypes>();
+	}
+
+	[SerializeField]
+	public List<EnemyTypeList> evolutionEnemyTypes = new List<EnemyTypeList>();
 
 	public Level[] levels;
 	public Evolution[] evolutions;

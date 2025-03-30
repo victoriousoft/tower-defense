@@ -18,6 +18,8 @@ public abstract class BaseEvolutionTower : BaseTower
 	private bool isSkillCharged = false;
 	private Coroutine skillCoroutine;
 
+	protected abstract IEnumerator Skill(GameObject enemy);
+
 	protected override void Awake()
 	{
 		base.Awake();
@@ -63,13 +65,75 @@ public abstract class BaseEvolutionTower : BaseTower
 		);
 	}
 
+	public override IEnumerator ChargeShootAndResetCooldown()
+	{
+		towerAnimator.SetTrigger("charge");
+
+		yield return null;
+
+		while (towerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+		{
+			yield return null;
+		}
+
+		while (!enemiesInRange())
+		{
+			yield return null;
+		}
+
+		towerAnimator.SetTrigger("attack");
+
+		GameObject target = TowerHelpers.SelectEnemyToAttack(
+			TowerHelpers.GetEnemiesInRange(
+				transform.position,
+				towerData.evolutions[evolutionIndex].range,
+				towerData.evolutionEnemyTypes[evolutionIndex].enemies.ToArray()
+			),
+			targetType
+		);
+
+		yield return Shoot(target);
+
+		towerAnimator.SetTrigger("idle");
+
+		yield return new WaitForSeconds(towerData.evolutions[evolutionIndex].cooldown);
+		StartCoroutine(ChargeShootAndResetCooldown());
+	}
+
 	public override int CalculateSellPrice()
 	{
 		int price = base.CalculateSellPrice();
 
-		Debug.Log("base price: " + price);
-		Debug.Log("evo price: " + towerData.evolutions[evolutionIndex].price / 2);
 		return price + towerData.evolutions[evolutionIndex].price / 2;
+	}
+
+	public void UseSkill()
+	{
+		if (isSkillCharged)
+		{
+			isSkillCharged = false;
+			healthBar.SetHealth(0);
+			StartCoroutine(
+				Skill(
+					TowerHelpers.SelectEnemyToAttack(
+						TowerHelpers.GetEnemiesInRange(
+							transform.position,
+							towerData.levels[level].range,
+							towerData.enemyTypes
+						),
+						targetType
+					)
+				)
+			);
+			skillCoroutine = StartCoroutine(
+				healthBar.Animate(
+					0,
+					1,
+					towerData.evolutions[evolutionIndex].skillLevels[skillLevel].cooldown,
+					SkillChargeupCallback
+				)
+			);
+		}
 	}
 
 	private IEnumerator BlinkyBlinky()
