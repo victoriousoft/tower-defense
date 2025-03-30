@@ -14,7 +14,15 @@ public class FullscreenOverlayManager : MonoBehaviour
 
 	void Start()
 	{
-		instance = this;
+		if (instance == null)
+		{
+			instance = this;
+		}
+		else
+		{
+			Destroy(gameObject);
+		}
+
 		Hide();
 	}
 

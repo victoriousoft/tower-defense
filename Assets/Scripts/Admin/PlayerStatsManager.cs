@@ -45,7 +45,7 @@ public class PlayerStatsManager : MonoBehaviour
 
 	public static void GameOver()
 	{
-		Overlay.PauseGame("Game Over", "press f5 to restart (I'm a lazy developer)");
+		Overlay.PauseGame("Game Over", "You have lost all your lives");
 	}
 
 	public static void WinGame()
@@ -67,14 +67,5 @@ public class PlayerStatsManager : MonoBehaviour
 				args = new { level = currentLevel, stars = stars },
 			}
 		);
-		ResetStats();
-	}
-
-	public static void ReturnToMenu()
-	{
-		currentLevel = -1;
-		lives = 20;
-		gold = 999999999;
-		SceneManager.LoadScene("Scenes/Levels/MainMenu");
 	}
 }

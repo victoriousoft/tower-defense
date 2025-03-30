@@ -38,7 +38,15 @@ public class WebGLMessageHandler : MonoBehaviour
 		if (Application.isEditor)
 			return;
 
-		instance = this;
+		if (instance == null)
+		{
+			instance = this;
+			DontDestroyOnLoad(gameObject);
+		}
+		else
+		{
+			Destroy(gameObject);
+		}
 
 		bool initRes = InitMessageListener();
 		if (!initRes)

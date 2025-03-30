@@ -12,11 +12,18 @@ public class Overlay : MonoBehaviour
 	public WaveSheet waveSheet;
 
 	private static bool isGamePaused = false;
-	private Overlay instance;
+	private static Overlay instance;
 
-	void Start()
+	void Awake()
 	{
-		instance = this;
+		if (instance == null)
+		{
+			instance = this;
+		}
+		else
+		{
+			Destroy(gameObject);
+		}
 	}
 
 	void Update()
@@ -31,6 +38,16 @@ public class Overlay : MonoBehaviour
 		}
 	}
 
+	public static void Hide()
+	{
+		instance.gameObject.SetActive(false);
+	}
+
+	public static void Show()
+	{
+		instance.gameObject.SetActive(true);
+	}
+
 	public static void TogglePause()
 	{
 		if (isGamePaused)
@@ -39,17 +56,23 @@ public class Overlay : MonoBehaviour
 			PauseGame();
 	}
 
-	public static void PauseGame(string title = "Paused", string description = "Press P to resume")
+	public static void PauseGame(
+		string title = "Paused",
+		string description = "Press P to resume",
+		bool[] hideButtons = null
+	)
 	{
 		isGamePaused = true;
+		hideButtons = hideButtons ?? new bool[] { false, false, false };
+
 		FullscreenOverlayManager.Show(title, description);
 		Time.timeScale = 0;
 	}
 
 	public static void ResumeGame()
 	{
-		isGamePaused = false;
 		FullscreenOverlayManager.Hide();
+		isGamePaused = false;
 		Time.timeScale = 1;
 	}
 }

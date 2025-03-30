@@ -15,7 +15,7 @@ public class MainMenuController : MonoBehaviour
 
 		for (int i = 0; i < buttons.Count; i++)
 		{
-			if (i > GlobalData.instance.levelSheet.levels.Length)
+			if (i >= GlobalData.instance.levelSheet.levels.Length)
 			{
 				buttons[i].SetEnabled(false);
 				continue;
@@ -51,6 +51,7 @@ public class MainMenuController : MonoBehaviour
 			x => x.SceneName == levelPath
 		);
 		PlayerStatsManager.ResetStats();
+		Overlay.ResumeGame();
 		SceneManager.LoadScene(levelPath);
 	}
 }
