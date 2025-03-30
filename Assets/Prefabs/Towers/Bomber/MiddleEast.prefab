@@ -443,6 +443,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerData: {fileID: 11400000, guid: 849027f545f0d6f41a9e7670b7134e78, type: 2}
+  towerAnimator: {fileID: 0}
   towerType: 3
   evolutionIndex: -1
   bomberWaitPoints:
@@ -450,3 +451,4 @@ MonoBehaviour:
   - {fileID: 2843516036664071242}
   - {fileID: 8518867552760043048}
   bomberPrefab: {fileID: 478314428750665847, guid: 247de406d9fffab4c815deb36d825798, type: 3}
+  bomberSpeed: 5

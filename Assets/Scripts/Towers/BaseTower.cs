@@ -109,7 +109,7 @@ public abstract class BaseTower : MonoBehaviour
 
 		level++;
 		currentDamage = towerData.levels[level].damage;
-		GetComponent<SpriteRenderer>().color = Color.white;
+		GetComponentInChildren<SpriteRenderer>().color = Color.white;
 
 		towerAnimator.SetTrigger("upgrade");
 

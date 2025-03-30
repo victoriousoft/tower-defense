@@ -7,6 +7,8 @@ public class MiddleEastBomber : BaseEvolutionTower
 	private GameObject[] currentBombers = new GameObject[3];
 	public GameObject[] bomberWaitPoints = new GameObject[3];
 	public GameObject bomberPrefab;
+	private readonly int[] evoBomberCount = new int[] { 3, 4, 5 };
+	public float bomberSpeed;
 
 	protected override void Start()
 	{
@@ -31,7 +33,7 @@ public class MiddleEastBomber : BaseEvolutionTower
 				StartCoroutine(
 					currentBombers[i]
 						.GetComponent<HomingMissile>()
-						.MoveToTarget(enemy, towerData.evolutions[0].damage, 5f)
+						.MoveToTarget(enemy, towerData.evolutions[0].damage, bomberSpeed)
 				);
 				currentBombers[i] = null;
 			}
@@ -41,18 +43,36 @@ public class MiddleEastBomber : BaseEvolutionTower
 
 	IEnumerator SpawnBomber()
 	{
+		yield return new WaitForSeconds(1000000);
 		for (int i = 0; i < currentBombers.Length; i++)
 		{
 			if (currentBombers[i] == null)
 			{
 				GameObject newBomber = Instantiate(bomberPrefab, transform.position, Quaternion.identity);
 				currentBombers[i] = newBomber;
-				StartCoroutine(newBomber.GetComponent<HomingMissile>().MoveToTarget(bomberWaitPoints[i], 0, 5f));
+				HomingMissile bomberScript = newBomber.GetComponent<HomingMissile>();
+				StartCoroutine(bomberScript.MoveToTarget(bomberWaitPoints[i], 0, bomberSpeed));
 				break;
 			}
 		}
 		yield return new WaitForSeconds(towerData.evolutions[0].cooldown);
 		StartCoroutine(SpawnBomber());
+	}
+
+	void SkillSpawn()
+	{
+		GameObject newBomber = Instantiate(bomberPrefab, transform.position, Quaternion.identity);
+		HomingMissile bomberScript = newBomber.GetComponent<HomingMissile>();
+		bomberScript.isSkillBomber = true;
+		GameObject target = TowerHelpers.SelectEnemyToAttack(
+			TowerHelpers.GetEnemiesInRange(
+				transform.position,
+				towerData.evolutions[evolutionIndex].range,
+				towerData.evolutionEnemyTypes[evolutionIndex].enemies.ToArray()
+			),
+			targetType
+		);
+		StartCoroutine(bomberScript.MoveToTarget(target, towerData.evolutions[0].damage, bomberSpeed));
 	}
 
 	protected override IEnumerator ChargeUp(GameObject enemy)
@@ -62,6 +82,11 @@ public class MiddleEastBomber : BaseEvolutionTower
 
 	protected override IEnumerator Skill(GameObject enemy)
 	{
+		for (int i = 0; i < evoBomberCount[skillLevel]; i++)
+		{
+			SkillSpawn();
+			yield return new WaitForSeconds(0.25f);
+		}
 		yield return null;
 	}
 
