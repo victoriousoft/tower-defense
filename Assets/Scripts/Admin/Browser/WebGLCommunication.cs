@@ -57,7 +57,7 @@ public class WebGLMessageHandler : MonoBehaviour
 			SendToJavaScript(message);
 		}
 
-		DontDestroyOnLoad(this.gameObject);
+		DontDestroyOnLoad(gameObject);
 	}
 
 	public void _ReceiveFromJavaScript(string jsonMessage)

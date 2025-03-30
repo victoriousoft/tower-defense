@@ -8,24 +8,22 @@ public class MainMenuController : MonoBehaviour
 	private VisualElement ui;
 	private List<Button> buttons = new();
 
-	private readonly string[] levelScenes = { "Assets/Scenes/Levels/Sandbox.unity" };
-
-	void Awake()
+	void Start()
 	{
 		ui = GetComponent<UIDocument>().rootVisualElement;
 		buttons = ui.Query<Button>().Where(x => x.ClassListContains("level-btn")).ToList();
 
 		for (int i = 0; i < buttons.Count; i++)
 		{
-			int index = i;
-			if (index >= levelScenes.Length)
+			if (i > GlobalData.instance.levelSheet.levels.Length)
 			{
-				buttons[i].clicked += () => Debug.Log("Level not found");
+				buttons[i].SetEnabled(false);
 				continue;
 			}
 
-			PlayerStatsManager.currentLevel = index;
-			buttons[i].clicked += () => LoadLevel(levelScenes[index]);
+			LevelSheet.Level level = GlobalData.instance.levelSheet.levels[i];
+			buttons[i].text = level.LevelName;
+			buttons[i].clicked += () => LoadLevel(level.SceneName);
 		}
 	}
 
@@ -33,7 +31,7 @@ public class MainMenuController : MonoBehaviour
 	{
 		for (int i = 0; i < buttons.Count; i++)
 		{
-			if (i >= levelScenes.Length)
+			if (i >= GlobalData.instance.levelSheet.levels.Length)
 			{
 				buttons[i].SetEnabled(false);
 			}
@@ -42,16 +40,17 @@ public class MainMenuController : MonoBehaviour
 		for (int i = PlayerStatsManager.levelStars.Count + 1; i < buttons.Count; i++)
 		{
 			buttons[i].AddToClassList("lock-overlay");
-			buttons[i].clicked -= () => LoadLevel(levelScenes[i]);
-			buttons[i].clicked += () => Debug.Log("Level not unlocked yet");
+			buttons[i].SetEnabled(false);
 		}
 	}
 
 	void LoadLevel(string levelPath)
 	{
-		string sceneName = levelPath.Replace("Assets/", "").Replace(".unity", "");
+		PlayerStatsManager.currentLevel = System.Array.FindIndex(
+			GlobalData.instance.levelSheet.levels,
+			x => x.SceneName == levelPath
+		);
 		PlayerStatsManager.ResetStats();
-		PlayerStatsManager.currentLevel = System.Array.IndexOf(levelScenes, levelPath);
-		SceneManager.LoadScene(sceneName);
+		SceneManager.LoadScene(levelPath);
 	}
 }
