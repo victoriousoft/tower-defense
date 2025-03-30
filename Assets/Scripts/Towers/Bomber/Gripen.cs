@@ -9,7 +9,8 @@ public class Gripen : BaseEvolutionTower
 		crashDamageRadius,
 		kamikadzeDamage;
 	private bool onRight = true;
-	private bool isFlying = false;
+	private bool isFlying = false,
+		crashed = false;
 	public GameObject projectilePrefab;
 	private bool readyToCrash = false;
 	public GameObject ExplosionEffect;
@@ -23,7 +24,6 @@ public class Gripen : BaseEvolutionTower
 
 	protected override IEnumerator Shoot(GameObject enemy)
 	{
-		Debug.Log(readyToCrash);
 		if (!isFlying && !readyToCrash)
 		{
 			FlyPlane();
@@ -38,11 +38,6 @@ public class Gripen : BaseEvolutionTower
 				yield return new WaitForSeconds(0.33f);
 			}
 			yield return null;
-		}
-		else if (readyToCrash)
-		{
-			Debug.Log("Crash");
-			StartCoroutine(Crash());
 		}
 	}
 
@@ -86,6 +81,7 @@ public class Gripen : BaseEvolutionTower
 			yield return null;
 		}
 
+		yield return new WaitForSeconds(0.5f);
 		onRight = true;
 		isFlying = false;
 	}
@@ -111,6 +107,7 @@ public class Gripen : BaseEvolutionTower
 			yield return null;
 		}
 
+		yield return new WaitForSeconds(0.5f);
 		onRight = false;
 		isFlying = false;
 	}
@@ -124,27 +121,33 @@ public class Gripen : BaseEvolutionTower
 
 	IEnumerator Crash()
 	{
-		Debug.Log("Crash");
 		plane.transform.position = transform.position;
 		animator.SetTrigger("kamikadze");
+
+		yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length - 0.125f);
+
+		ScreenShake.Instance.Shake(0.55f, 0.3f);
 		//annimace padu + vybuch + zniceni
 		GameObject[] affectedEnemies = TowerHelpers.GetEnemiesInRange(
 			transform.position,
-			towerData.evolutions[0].range,
-			towerData.enemyTypes
+			crashDamageRadius,
+			new EnemyTypes[] { EnemyTypes.GROUND, EnemyTypes.FLYING }
 		);
 		foreach (GameObject enemy in affectedEnemies)
 		{
 			enemy.GetComponent<BaseEnemy>().TakeDamage(kamikadzeDamage, DamageTypes.EXPLOSION);
 		}
-		yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length + 1);
 		readyToCrash = false;
+		crashed = false;
 	}
 
 	private void LateUpdate()
 	{
-		if (!isFlying && readyToCrash)
+		if (!isFlying && readyToCrash && !crashed)
+		{
+			crashed = true;
 			StartCoroutine(Crash());
+		}
 	}
 
 	protected override void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition) { }
