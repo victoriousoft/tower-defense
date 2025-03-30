@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class WaveTriggerButton : MonoBehaviour
+public class WaveTriggerButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
 	public WaveSheet waveSheet;
 	public HealthBar statusBar;
@@ -12,13 +13,7 @@ public class WaveTriggerButton : MonoBehaviour
 		statusBar.gameObject.SetActive(false);
 	}
 
-	void OnMouseDown()
-	{
-		waveSheet.GetComponent<WaveSheet>().TriggerWaveSpawn();
-		TooltipManager.Hide();
-	}
-
-	void OnMouseEnter()
+	public void OnPointerEnter(PointerEventData eventData)
 	{
 		WaveSheet.Wave nextWave = waveSheet.waves[waveSheet.currentWave + 1];
 
@@ -32,7 +27,13 @@ public class WaveTriggerButton : MonoBehaviour
 		TooltipManager.Show("Call next wave early", nextWave.GetWaveInfo() + cashbackText);
 	}
 
-	void OnMouseExit()
+	public void OnPointerClick(PointerEventData eventData)
+	{
+		waveSheet.GetComponent<WaveSheet>().TriggerWaveSpawn();
+		TooltipManager.Hide();
+	}
+
+	public void OnPointerExit(PointerEventData eventData)
 	{
 		TooltipManager.Hide();
 	}

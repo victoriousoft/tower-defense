@@ -5,9 +5,28 @@ using UnityEngine.UI;
 
 public class MenuButton : MonoBehaviour
 {
-	public void Click()
+	void Awake()
 	{
-		Debug.Log("Menu button clicked on " + gameObject.name);
-		PlayerStatsManager.ReturnToMenu();
+		Debug.Log("MenuButton Awake");
+	}
+
+	public void ResumeClick()
+	{
+		Debug.Log("Resume Clicked");
+	}
+
+	public void PauseClick()
+	{
+		Debug.Log("Pause Clicked");
+	}
+
+	public void RestartClick()
+	{
+		Debug.Log("Restart Clicked");
+	}
+
+	public void MenuClick()
+	{
+		Debug.Log("Menu Clicked");
 	}
 }
