@@ -1,32 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuButton : MonoBehaviour
 {
-	void Awake()
-	{
-		Debug.Log("MenuButton Awake");
-	}
-
 	public void ResumeClick()
 	{
-		Debug.Log("Resume Clicked");
+		Overlay.TogglePause();
 	}
 
 	public void PauseClick()
 	{
-		Debug.Log("Pause Clicked");
+		Overlay.PauseGame();
 	}
 
 	public void RestartClick()
 	{
-		Debug.Log("Restart Clicked");
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 
 	public void MenuClick()
 	{
-		Debug.Log("Menu Clicked");
+		SceneManager.LoadScene("Menu/MainMenu");
 	}
 }
