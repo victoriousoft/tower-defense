@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public enum MenuState
 {
@@ -23,7 +24,7 @@ public enum ButtonIndex
 	BOTTOM_RIGHT,
 }
 
-public class TowerHolderNeo : MonoBehaviour
+public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
 	public GameObject archerPrefab;
 	public GameObject barracksPrefab;
@@ -137,17 +138,17 @@ public class TowerHolderNeo : MonoBehaviour
 		ChangeState(MenuState.Initial);
 	}
 
-	void OnMouseEnter()
+	public void OnPointerEnter(PointerEventData eventData)
 	{
 		isMouseOver = true;
 	}
 
-	void OnMouseExit()
+	public void OnPointerExit(PointerEventData eventData)
 	{
 		isMouseOver = false;
 	}
 
-	void OnMouseDown()
+	public void OnPointerClick(PointerEventData eventData)
 	{
 		if (isMenuActive)
 			HideButtons();

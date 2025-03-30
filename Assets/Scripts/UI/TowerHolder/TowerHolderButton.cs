@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public enum ButtonAction
 {
@@ -52,7 +53,7 @@ public static class ButtonActionExtensions
 	}
 }
 
-public class TowerHolderButton : MonoBehaviour
+public class TowerHolderButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
 	[HideInInspector]
 	public ButtonAction buttonAction;
@@ -81,7 +82,7 @@ public class TowerHolderButton : MonoBehaviour
 		lineRenderer.enabled = false;
 	}
 
-	public void OnMouseDown()
+	public void OnPointerClick(PointerEventData eventData)
 	{
 		TooltipManager.Hide();
 		towerHolder.GetComponent<TowerHolderNeo>().ButtonClicked(buttonAction);
@@ -92,12 +93,12 @@ public class TowerHolderButton : MonoBehaviour
 		}
 	}
 
-	void OnMouseEnter()
+	public void OnPointerEnter(PointerEventData eventData)
 	{
 		ShowTooltip();
 	}
 
-	void OnMouseExit()
+	public void OnPointerExit(PointerEventData eventData)
 	{
 		TooltipManager.Hide();
 		lineRenderer.enabled = false;

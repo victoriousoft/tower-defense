@@ -25,7 +25,7 @@ public class Overlay : MonoBehaviour
 		healthText.text = "Health: " + PlayerStatsManager.lives;
 		waveText.text = "Wave: " + (waveSheet.currentWave + 1) + "/" + waveSheet.waves.Length;
 
-		if (Input.GetKeyDown(KeyCode.Escape))
+		if (Input.GetKeyDown(KeyCode.P))
 		{
 			TogglePause();
 		}
