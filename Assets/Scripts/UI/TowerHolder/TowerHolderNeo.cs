@@ -30,16 +30,30 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	public GameObject barracksPrefab;
 	public GameObject magicPrefab;
 	public GameObject bombPrefab;
+
 	public Sprite archerIcon;
+	public Sprite machineGunIcon;
+	public Sprite vietcongIcon;
+
 	public Sprite barracksIcon;
+
 	public Sprite magicIcon;
+	public Sprite IBMIcon;
+
 	public Sprite bombIcon;
+	public Sprite suicideBomberIcon;
+
+	public Sprite sellIcon;
+	public Sprite upgradeIcon;
+	public Sprite repositionIcon;
+	public Sprite cycleRetargetIcon;
 
 	public SpriteRenderer backgroundSprite;
 	public GameObject statusBar;
 
 	private Dictionary<TowerTypes, GameObject> towerPrefabs;
 	public Dictionary<ButtonAction, Sprite> towerIcons;
+	public Dictionary<TowerTypes, Sprite[]> evolutionTowerIcons;
 
 	[HideInInspector]
 	public MenuState menuState;
@@ -79,13 +93,21 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 			{ ButtonAction.BUILD_BARRACKS, barracksIcon },
 			{ ButtonAction.BUILD_MAGIC, magicIcon },
 			{ ButtonAction.BUILD_BOMB, bombIcon },
-			{ ButtonAction.CYCLE_RETARGET, null },
-			{ ButtonAction.REPOSITION_BARRACKS, null },
-			{ ButtonAction.SELL, null },
-			{ ButtonAction.UPGRADE_LEVEL, null },
+			{ ButtonAction.CYCLE_RETARGET, cycleRetargetIcon },
+			{ ButtonAction.REPOSITION_BARRACKS, repositionIcon },
+			{ ButtonAction.SELL, sellIcon },
+			{ ButtonAction.UPGRADE_LEVEL, upgradeIcon },
 			{ ButtonAction.BUY_EVOLUTION_1, null },
 			{ ButtonAction.BUY_EVOLUTION_2, null },
-			{ ButtonAction.UPGRADE_EVOLUTION, null },
+			{ ButtonAction.UPGRADE_EVOLUTION, upgradeIcon },
+		};
+
+		evolutionTowerIcons = new Dictionary<TowerTypes, Sprite[]>
+		{
+			{ TowerTypes.Archer, new Sprite[] { machineGunIcon, vietcongIcon } },
+			{ TowerTypes.Barracks, new Sprite[] { } },
+			{ TowerTypes.Magic, new Sprite[] { IBMIcon } },
+			{ TowerTypes.Bomb, new Sprite[] { suicideBomberIcon } },
 		};
 
 		animator = GetComponent<Animator>();

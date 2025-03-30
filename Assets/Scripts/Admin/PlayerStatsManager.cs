@@ -38,14 +38,14 @@ public class PlayerStatsManager : MonoBehaviour
 
 	public static void ResetStats()
 	{
-		currentLevel = -1;
-		lives = 20;
-		gold = 999999999;
+		lives = GlobalData.instance.levelSheet.levels[currentLevel].initialLives;
+		gold = GlobalData.instance.levelSheet.levels[currentLevel].initialGold;
+		levelStars = new List<int>();
 	}
 
 	public static void GameOver()
 	{
-		Overlay.PauseGame("Game Over", "press f5 to restart (I'm a lazy developer)");
+		Overlay.PauseGame("Game Over", "You have lost all your lives");
 	}
 
 	public static void WinGame()
@@ -67,14 +67,5 @@ public class PlayerStatsManager : MonoBehaviour
 				args = new { level = currentLevel, stars = stars },
 			}
 		);
-		ResetStats();
-	}
-
-	public static void ReturnToMenu()
-	{
-		currentLevel = -1;
-		lives = 20;
-		gold = 999999999;
-		SceneManager.LoadScene("Scenes/Levels/MainMenu");
 	}
 }

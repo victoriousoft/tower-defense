@@ -240,6 +240,14 @@ public class TowerHolderButton : MonoBehaviour, IPointerClickHandler, IPointerEn
 
 		Sprite buttonSprite = towerHolder.GetComponent<TowerHolderNeo>().towerIcons[action];
 
+		if (buttonAction == ButtonAction.BUY_EVOLUTION_1 || buttonAction == ButtonAction.BUY_EVOLUTION_2)
+		{
+			TowerHolderNeo towerHolderNeo = towerHolder.GetComponent<TowerHolderNeo>();
+			BaseTower tower = towerHolderNeo.towerInstance.GetComponent<BaseTower>();
+
+			buttonSprite = towerHolderNeo.evolutionTowerIcons[tower.towerType][buttonAction.GetEvolutionIndex()];
+		}
+
 		iconSpriteRenderer.sprite = buttonSprite;
 	}
 }

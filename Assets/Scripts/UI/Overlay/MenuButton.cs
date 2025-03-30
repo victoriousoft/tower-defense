@@ -18,11 +18,14 @@ public class MenuButton : MonoBehaviour
 
 	public void RestartClick()
 	{
+		PlayerStatsManager.ResetStats();
+		Overlay.ResumeGame();
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 
 	public void MenuClick()
 	{
-		SceneManager.LoadScene("Menu/MainMenu");
+		FullscreenOverlayManager.Hide();
+		SceneManager.LoadScene(GlobalData.instance.levelSheet.mainMenuSceneName);
 	}
 }
