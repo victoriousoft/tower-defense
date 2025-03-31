@@ -17,6 +17,8 @@ public class Archer : BaseTower
 	private SpriteRenderer spriteRendererLeft,
 		spriteRendererRight;
 
+	public GameObject arrowPrefab;
+
 	protected override IEnumerator ChargeUp(GameObject enemy)
 	{
 		yield return null;
@@ -41,11 +43,7 @@ public class Archer : BaseTower
 				facingLeft = true;
 			}
 		}
-		GameObject arrow = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-		arrow.transform.SetParent(transform);
-		arrow.transform.position = currentOrigin.position;
-		arrow.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-		arrow.GetComponent<Renderer>().material.color = Color.red;
+		GameObject arrow = Instantiate(arrowPrefab, currentOrigin.position, Quaternion.identity, transform);
 
 		yield return TowerHelpers.AnimateBezierProjectile(
 			arrow,

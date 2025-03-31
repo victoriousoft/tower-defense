@@ -128,11 +128,13 @@ public static class TowerHelpers
 
 			if (rotationType == TowerProjectileRotationTypes.LOOK_AT_TARGET)
 			{
-				projectile.transform.rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(90, 0, 0);
+				// SPRITY MUSEJ MIT PREDEK NAHORE
+				float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
+				projectile.transform.rotation = Quaternion.Euler(0, 0, angle);
 			}
 			else if (rotationType == TowerProjectileRotationTypes.SPIN)
 			{
-				projectile.transform.Rotate(Vector3.up, 360 * Time.fixedDeltaTime / duration);
+				projectile.transform.Rotate(0, 0, 360 * Time.fixedDeltaTime / duration);
 			}
 
 			yield return null;

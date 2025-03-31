@@ -28,4 +28,9 @@ public class MenuButton : MonoBehaviour
 		FullscreenOverlayManager.Hide();
 		SceneManager.LoadScene(GlobalData.instance.levelSheet.mainMenuSceneName);
 	}
+
+	public void HideBottomBarClick()
+	{
+		BottomBar.Hide();
+	}
 }

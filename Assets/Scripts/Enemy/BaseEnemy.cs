@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public abstract class BaseEnemy : MonoBehaviour
+public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 {
 	public EnemySheet enemyData;
 
@@ -62,6 +63,11 @@ public abstract class BaseEnemy : MonoBehaviour
 			if (currentTarget != null && canAttack)
 				Attack();
 		}
+	}
+
+	public void OnPointerClick(PointerEventData eventData)
+	{
+		BottomBar.ShowEnemy(gameObject);
 	}
 
 	GameObject FindEnemyInRange()

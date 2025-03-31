@@ -101,9 +101,6 @@ public abstract class BaseTower : MonoBehaviour
 
 	private IEnumerator UpgradeRoutine()
 	{
-		StopCoroutine(shootCoroutine);
-		shootCoroutine = null;
-
 		if (GetComponent<LineRenderer>() != null)
 			ResetLaserPosition();
 

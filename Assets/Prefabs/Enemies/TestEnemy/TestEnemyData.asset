@@ -25,5 +25,5 @@ MonoBehaviour:
     playerLives: 1
   info:
     name: "Testovac\xED enem\xE1k"
-    description: 
+    description: "Test enm\xE1k, chod\xED po zemi a jako\u017Ee je docela fast"
   enemyType: 0

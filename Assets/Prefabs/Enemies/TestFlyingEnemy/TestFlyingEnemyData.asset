@@ -25,5 +25,6 @@ MonoBehaviour:
     playerLives: 1
   info:
     name: "Litaj\xEDc\xED test enem\xE1k"
-    description: 
+    description: "Na to \u017Ee l\xEDt\xE1, je stejn\u011B pomalej jako chod\xEDc\xED
+      enem\xE1k: bruh"
   enemyType: 1
