@@ -119,14 +119,21 @@ public abstract class BaseTower : MonoBehaviour
 			shootCoroutine = StartCoroutine(ChargeShootAndResetCooldown());
 	}
 
-	public IEnumerator EnhanceTemoprarily(int factor, float duration)
+	public IEnumerator EnhanceTemporarily(float factor, float duration)
 	{
+		Debug.Log("Enhanced " + gameObject.name);
 		currentDamage *= factor;
 		//enhance effect
-		SpriteRenderer sr = GetComponent<SpriteRenderer>();
-		sr.color = new Color(1, 0.5f, 0.5f, 1);
+		SpriteRenderer[] sr = GetComponentsInChildren<SpriteRenderer>();
+		foreach (SpriteRenderer s in sr)
+		{
+			s.color = new Color(1, 0.5f, 0.5f, 1);
+		}
 		yield return new WaitForSeconds(duration);
-		sr.color = Color.white;
+		foreach (SpriteRenderer s in sr)
+		{
+			s.color = Color.white;
+		}
 		currentDamage = towerData.levels[level].damage;
 	}
 

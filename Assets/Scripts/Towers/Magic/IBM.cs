@@ -5,6 +5,7 @@ using UnityEngine;
 public class IBM : BaseEvolutionTower
 {
 	EnemyTypes[] targetEnemyTypes = new EnemyTypes[] { EnemyTypes.GROUND };
+	public Animator circleAnimator;
 
 	protected override void Start()
 	{
@@ -24,6 +25,7 @@ public class IBM : BaseEvolutionTower
 		{
 			yield return new WaitForSeconds(0.05f);
 			BaseEnemy enemyScript = targetEnemy.GetComponent<BaseEnemy>();
+			circleAnimator.SetTrigger("attack");
 			enemyScript.TakeDamage(towerData.evolutions[1].damage, DamageTypes.MAGIC);
 			enemyScript.Slowdown(3, towerData.evolutions[1].cooldown);
 		}
@@ -37,14 +39,19 @@ public class IBM : BaseEvolutionTower
 
 	protected override IEnumerator Skill(GameObject enemy)
 	{
+		circleAnimator.SetTrigger("ability");
 		foreach (GameObject tower in GameObject.FindGameObjectsWithTag("Tower"))
 		{
+			Debug.Log(tower.name);
 			if (
 				Vector2.Distance(tower.transform.position, transform.position)
-				< towerData.evolutions[evolutionIndex].range
+					< towerData.evolutions[evolutionIndex].range
+				&& tower != this.gameObject
 			)
 			{
-				tower.GetComponent<BaseTower>().EnhanceTemoprarily(2, 30);
+				tower
+					.GetComponent<BaseTower>()
+					.StartCoroutine(tower.GetComponent<BaseTower>().EnhanceTemporarily(1.5f, 17));
 			}
 		}
 		foreach (
