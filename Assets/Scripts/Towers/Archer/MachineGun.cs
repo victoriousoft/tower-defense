@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -137,26 +138,43 @@ public class MachineGun : BaseEvolutionTower
 		currentEnemy = null;
 		spinAnimationAnimator.speed = 3f;
 
-		for (int i = 0; i < 96; i++)
+		spinAnimationAnimator.SetTrigger("attack");
+
+		for (int i = 0; i < 360 / 45 * 10; i++)
 		{
 			GameObject[] enemies = TowerHelpers.GetEnemiesInRange(
 				transform.position,
 				towerData.evolutions[0].range,
 				towerData.enemyTypes
 			);
+
 			spinAnimationAnimator.SetTrigger("right");
-			targetHeading = NormalizeHeading(targetHeading + 45);
-			foreach (GameObject targetEnemy in enemies)
+			currentHeading = NormalizeHeading(currentHeading + 45);
+			targetHeading = currentHeading;
+
+			if (enemies.Length > 0)
 			{
-				if (targetEnemy != null)
-					targetEnemy
-						.GetComponent<BaseEnemy>()
-						.TakeDamage(towerData.evolutions[0].damage, DamageTypes.PHYSICAL);
+				StartCoroutine(DatageEnemies(enemies));
 			}
-			yield return new WaitForSeconds(spinAnimationAnimator.GetCurrentAnimatorStateInfo(0).length);
+
+			yield return new WaitForSeconds(
+				Mathf.Max(spinAnimationAnimator.GetCurrentAnimatorStateInfo(0).length + 0.01f, 0.025f)
+			);
 		}
+
 		skillInUse = false;
 		spinAnimationAnimator.speed = 1f;
+
+		yield return null;
+	}
+
+	private IEnumerator DatageEnemies(GameObject[] enemies)
+	{
+		foreach (GameObject enemy in enemies)
+		{
+			if (enemy != null)
+				enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.evolutions[0].damage, DamageTypes.PHYSICAL);
+		}
 
 		yield return null;
 	}
