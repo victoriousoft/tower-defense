@@ -121,9 +121,7 @@ public abstract class BaseTower : MonoBehaviour
 
 	public IEnumerator EnhanceTemporarily(float factor, float duration)
 	{
-		Debug.Log("Enhanced " + gameObject.name);
 		currentDamage *= factor;
-		//enhance effect
 		SpriteRenderer[] sr = GetComponentsInChildren<SpriteRenderer>();
 		foreach (SpriteRenderer s in sr)
 		{
