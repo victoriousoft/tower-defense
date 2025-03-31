@@ -123,15 +123,7 @@ public abstract class BaseTower : MonoBehaviour
 	{
 		currentDamage *= factor;
 		SpriteRenderer[] sr = GetComponentsInChildren<SpriteRenderer>();
-		foreach (SpriteRenderer s in sr)
-		{
-			s.color = new Color(1, 0.5f, 0.5f, 1);
-		}
 		yield return new WaitForSeconds(duration);
-		foreach (SpriteRenderer s in sr)
-		{
-			s.color = Color.white;
-		}
 		currentDamage = towerData.levels[level].damage;
 	}
 

@@ -56,6 +56,7 @@ public class IBM : BaseEvolutionTower
 
 				GameObject icon = Instantiate(buffIcon, tower.transform.position, Quaternion.identity, tower.transform);
 				icon.GetComponent<SelfDestruct>().DestroySelf(17);
+				yield return new WaitForSeconds(0.1f);
 			}
 		}
 		foreach (
