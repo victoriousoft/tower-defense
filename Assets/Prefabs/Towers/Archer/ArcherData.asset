@@ -53,8 +53,8 @@ MonoBehaviour:
     price: 500
     damage: 200
     range: 4
-    cooldown: 20
-    skillName: Paint It Black
+    cooldown: 5
+    skillName: Paint It Cat
     skillLevels:
     - cooldown: 0
       upragdeCost: 0
