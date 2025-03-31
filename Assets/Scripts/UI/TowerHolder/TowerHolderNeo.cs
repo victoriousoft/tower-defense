@@ -172,14 +172,20 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
 	public void OnPointerClick(PointerEventData eventData)
 	{
+		if (
+			towerInstance != null
+			&& towerInstance.GetComponent<BaseEvolutionTower>() != null
+			&& towerInstance.GetComponent<BaseEvolutionTower>().isSkillCharged
+		)
+		{
+			towerInstance.GetComponent<BaseEvolutionTower>().UseSkill();
+			return;
+		}
+
 		if (isMenuActive)
 			HideButtons();
 		else
 			ShowButtons();
-		if ((towerInstance != null && towerInstance.GetComponent<BaseEvolutionTower>() != null))
-		{
-			towerInstance.GetComponent<BaseEvolutionTower>().UseSkill();
-		}
 	}
 
 	public void ButtonClicked(ButtonAction buttonAction)

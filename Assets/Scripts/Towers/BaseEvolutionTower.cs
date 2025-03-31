@@ -15,7 +15,7 @@ public abstract class BaseEvolutionTower : BaseTower
 	private HealthBar healthBar;
 	private Image circleImage;
 
-	private bool isSkillCharged = false;
+	public bool isSkillCharged = false;
 	private Coroutine skillCoroutine;
 
 	protected abstract IEnumerator Skill(GameObject enemy);
