@@ -166,12 +166,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerData: {fileID: 11400000, guid: 24ec6c097a61e2e4fadb4503f4a7677b, type: 2}
+  towerAnimator: {fileID: 0}
   towerType: 1
   originLeft: {fileID: 1078267103266504290}
   originRight: {fileID: 4240666820417478461}
   currentOrigin: {fileID: 1078267103266504290}
   spriteRendererLeft: {fileID: 1327575465199410396}
   spriteRendererRight: {fileID: 1528979920410206371}
+  arrowPrefab: {fileID: 2920623046841840206, guid: ec901d5f6b6a2cb4496b3cdfd6d5eb28, type: 3}
 --- !u!95 &8824527961994585917
 Animator:
   serializedVersion: 5
