@@ -50,11 +50,14 @@ public class PlayerStatsManager : MonoBehaviour
 
 	public static void WinGame()
 	{
+		int initialLives = GlobalData.instance.levelSheet.levels[currentLevel].initialLives;
 		int stars = 0;
 
-		if (lives <= 10)
+		float percentRemaining = (float)lives / initialLives;
+
+		if (percentRemaining <= 0.5f)
 			stars = 1;
-		else if (lives <= 15)
+		else if (percentRemaining <= 0.75f)
 			stars = 2;
 		else
 			stars = 3;
