@@ -138,6 +138,7 @@ public class MachineGun : BaseEvolutionTower
 		currentEnemy = null;
 		spinAnimationAnimator.speed = 3f;
 
+		spinAnimationAnimator.SetBool("connected", true);
 		spinAnimationAnimator.SetTrigger("attack");
 
 		for (int i = 0; i < 360 / 45 * 10; i++)
@@ -158,7 +159,7 @@ public class MachineGun : BaseEvolutionTower
 			}
 
 			yield return new WaitForSeconds(
-				Mathf.Max(spinAnimationAnimator.GetCurrentAnimatorStateInfo(0).length + 0.01f, 0.025f)
+				Mathf.Max(spinAnimationAnimator.GetCurrentAnimatorStateInfo(0).length + 0.01f, 0.04f)
 			);
 		}
 
