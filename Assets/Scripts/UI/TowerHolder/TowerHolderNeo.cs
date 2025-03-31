@@ -105,9 +105,9 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 		evolutionTowerIcons = new Dictionary<TowerTypes, Sprite[]>
 		{
 			{ TowerTypes.Archer, new Sprite[] { machineGunIcon, vietcongIcon } },
-			{ TowerTypes.Barracks, new Sprite[] { } },
-			{ TowerTypes.Magic, new Sprite[] { IBMIcon } },
-			{ TowerTypes.Bomb, new Sprite[] { suicideBomberIcon } },
+			{ TowerTypes.Barracks, new Sprite[] { null, null } },
+			{ TowerTypes.Magic, new Sprite[] { null, IBMIcon } },
+			{ TowerTypes.Bomb, new Sprite[] { suicideBomberIcon, null } },
 		};
 
 		animator = GetComponent<Animator>();
