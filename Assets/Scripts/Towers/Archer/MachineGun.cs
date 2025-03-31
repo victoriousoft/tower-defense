@@ -64,6 +64,12 @@ public class MachineGun : BaseEvolutionTower
 		if (rotationCoroutine != null)
 			yield break;
 
+		// Determine the shortest rotation path
+		if (angleDifference > 180)
+			angleDifference -= 360;
+		else if (angleDifference < -180)
+			angleDifference += 360;
+
 		while (currentHeading != targetHeading && currentEnemy != null && !skillInUse)
 		{
 			int newHeading;
@@ -79,7 +85,12 @@ public class MachineGun : BaseEvolutionTower
 			}
 
 			currentHeading = NormalizeHeading(newHeading);
+
 			angleDifference = targetHeading - currentHeading;
+			if (angleDifference > 180)
+				angleDifference -= 360;
+			else if (angleDifference < -180)
+				angleDifference += 360;
 
 			yield return new WaitForSeconds(0.1f);
 
@@ -97,9 +108,12 @@ public class MachineGun : BaseEvolutionTower
 	protected override IEnumerator Shoot(GameObject enemy)
 	{
 		currentEnemy = enemy;
-		// TODO: Tady jsem chtěl aby to neshootilo když se točí
+
 		if (skillInUse || rotationCoroutine != null || targetHeading != currentHeading)
+		{
+			spinAnimationAnimator.SetTrigger("idle");
 			yield break;
+		}
 
 		enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.evolutions[0].damage, DamageTypes.PHYSICAL);
 
