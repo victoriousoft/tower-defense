@@ -105,9 +105,9 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 		evolutionTowerIcons = new Dictionary<TowerTypes, Sprite[]>
 		{
 			{ TowerTypes.Archer, new Sprite[] { machineGunIcon, vietcongIcon } },
-			{ TowerTypes.Barracks, new Sprite[] { } },
-			{ TowerTypes.Magic, new Sprite[] { IBMIcon } },
-			{ TowerTypes.Bomb, new Sprite[] { suicideBomberIcon } },
+			{ TowerTypes.Barracks, new Sprite[] { null, null } },
+			{ TowerTypes.Magic, new Sprite[] { null, IBMIcon } },
+			{ TowerTypes.Bomb, new Sprite[] { suicideBomberIcon, null } },
 		};
 
 		animator = GetComponent<Animator>();
@@ -172,14 +172,20 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
 	public void OnPointerClick(PointerEventData eventData)
 	{
+		if (
+			towerInstance != null
+			&& towerInstance.GetComponent<BaseEvolutionTower>() != null
+			&& towerInstance.GetComponent<BaseEvolutionTower>().isSkillCharged
+		)
+		{
+			towerInstance.GetComponent<BaseEvolutionTower>().UseSkill();
+			return;
+		}
+
 		if (isMenuActive)
 			HideButtons();
 		else
 			ShowButtons();
-		if ((towerInstance != null && towerInstance.GetComponent<BaseEvolutionTower>() != null))
-		{
-			towerInstance.GetComponent<BaseEvolutionTower>().UseSkill();
-		}
 	}
 
 	public void ButtonClicked(ButtonAction buttonAction)

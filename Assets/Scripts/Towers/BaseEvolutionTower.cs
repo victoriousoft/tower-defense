@@ -15,7 +15,7 @@ public abstract class BaseEvolutionTower : BaseTower
 	private HealthBar healthBar;
 	private Image circleImage;
 
-	private bool isSkillCharged = false;
+	public bool isSkillCharged = false;
 	private Coroutine skillCoroutine;
 
 	protected abstract IEnumerator Skill(GameObject enemy);
@@ -113,27 +113,28 @@ public abstract class BaseEvolutionTower : BaseTower
 		{
 			isSkillCharged = false;
 			healthBar.SetHealth(0);
-			StartCoroutine(
-				Skill(
-					TowerHelpers.SelectEnemyToAttack(
-						TowerHelpers.GetEnemiesInRange(
-							transform.position,
-							towerData.levels[level].range,
-							towerData.enemyTypes
-						),
-						targetType
-					)
-				)
-			);
-			skillCoroutine = StartCoroutine(
-				healthBar.Animate(
-					0,
-					1,
-					towerData.evolutions[evolutionIndex].skillLevels[skillLevel].cooldown,
-					SkillChargeupCallback
-				)
-			);
+
+			StartCoroutine(UseSkillSequence());
 		}
+	}
+
+	private IEnumerator UseSkillSequence()
+	{
+		GameObject target = TowerHelpers.SelectEnemyToAttack(
+			TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range, towerData.enemyTypes),
+			targetType
+		);
+
+		yield return StartCoroutine(Skill(target));
+
+		skillCoroutine = StartCoroutine(
+			healthBar.Animate(
+				0,
+				1,
+				towerData.evolutions[evolutionIndex].skillLevels[skillLevel].cooldown,
+				SkillChargeupCallback
+			)
+		);
 	}
 
 	private IEnumerator BlinkyBlinky()

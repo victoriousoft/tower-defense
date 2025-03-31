@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -64,6 +65,12 @@ public class MachineGun : BaseEvolutionTower
 		if (rotationCoroutine != null)
 			yield break;
 
+		// Determine the shortest rotation path
+		if (angleDifference > 180)
+			angleDifference -= 360;
+		else if (angleDifference < -180)
+			angleDifference += 360;
+
 		while (currentHeading != targetHeading && currentEnemy != null && !skillInUse)
 		{
 			int newHeading;
@@ -79,7 +86,12 @@ public class MachineGun : BaseEvolutionTower
 			}
 
 			currentHeading = NormalizeHeading(newHeading);
+
 			angleDifference = targetHeading - currentHeading;
+			if (angleDifference > 180)
+				angleDifference -= 360;
+			else if (angleDifference < -180)
+				angleDifference += 360;
 
 			yield return new WaitForSeconds(0.1f);
 
@@ -97,9 +109,12 @@ public class MachineGun : BaseEvolutionTower
 	protected override IEnumerator Shoot(GameObject enemy)
 	{
 		currentEnemy = enemy;
-		// TODO: Tady jsem chtěl aby to neshootilo když se točí
+
 		if (skillInUse || rotationCoroutine != null || targetHeading != currentHeading)
+		{
+			spinAnimationAnimator.SetTrigger("idle");
 			yield break;
+		}
 
 		enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.evolutions[0].damage, DamageTypes.PHYSICAL);
 
@@ -123,26 +138,44 @@ public class MachineGun : BaseEvolutionTower
 		currentEnemy = null;
 		spinAnimationAnimator.speed = 3f;
 
-		for (int i = 0; i < 96; i++)
+		spinAnimationAnimator.SetBool("connected", true);
+		spinAnimationAnimator.SetTrigger("attack");
+
+		for (int i = 0; i < 360 / 45 * 10; i++)
 		{
 			GameObject[] enemies = TowerHelpers.GetEnemiesInRange(
 				transform.position,
 				towerData.evolutions[0].range,
 				towerData.enemyTypes
 			);
+
 			spinAnimationAnimator.SetTrigger("right");
-			targetHeading = NormalizeHeading(targetHeading + 45);
-			foreach (GameObject targetEnemy in enemies)
+			currentHeading = NormalizeHeading(currentHeading + 45);
+			targetHeading = currentHeading;
+
+			if (enemies.Length > 0)
 			{
-				if (targetEnemy != null)
-					targetEnemy
-						.GetComponent<BaseEnemy>()
-						.TakeDamage(towerData.evolutions[0].damage, DamageTypes.PHYSICAL);
+				StartCoroutine(DatageEnemies(enemies));
 			}
-			yield return new WaitForSeconds(spinAnimationAnimator.GetCurrentAnimatorStateInfo(0).length);
+
+			yield return new WaitForSeconds(
+				Mathf.Max(spinAnimationAnimator.GetCurrentAnimatorStateInfo(0).length + 0.01f, 0.04f)
+			);
 		}
+
 		skillInUse = false;
 		spinAnimationAnimator.speed = 1f;
+
+		yield return null;
+	}
+
+	private IEnumerator DatageEnemies(GameObject[] enemies)
+	{
+		foreach (GameObject enemy in enemies)
+		{
+			if (enemy != null)
+				enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.evolutions[0].damage, DamageTypes.PHYSICAL);
+		}
 
 		yield return null;
 	}
