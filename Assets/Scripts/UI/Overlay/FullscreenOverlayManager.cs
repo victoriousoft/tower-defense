@@ -36,6 +36,9 @@ public class FullscreenOverlayManager : MonoBehaviour
 
 	public static void Hide()
 	{
+		if (instance == null)
+			return;
+
 		instance.backgroundImage.SetActive(false);
 		instance.menuPanel.SetActive(false);
 	}

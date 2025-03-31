@@ -24,6 +24,8 @@ public class Overlay : MonoBehaviour
 		{
 			Destroy(gameObject);
 		}
+
+		ResumeGame();
 	}
 
 	void Update()
