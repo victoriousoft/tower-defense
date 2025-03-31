@@ -21,24 +21,7 @@ public class Tooltip : MonoBehaviour
 
 	void Update()
 	{
-		Vector2 position = Input.mousePosition;
-
-		float tooltipWidth = rectTransform.rect.width * rectTransform.lossyScale.x;
-		float tooltipHeight = rectTransform.rect.height * rectTransform.lossyScale.y;
-
-		float screenWidth = Screen.width;
-		float screenHeight = Screen.height;
-
-		Vector2 offset = new Vector2(tooltipWidth / 2, 0);
-
-		offset.x += Screen.width * 0.01f;
-
-		if (position.x + tooltipWidth > screenWidth)
-		{
-			offset.x = -offset.x;
-		}
-
-		transform.position = position + offset;
+		UpdatePosition();
 	}
 
 	public void SetText(string header = "", string content = "")
@@ -72,5 +55,29 @@ public class Tooltip : MonoBehaviour
 		}
 
 		layout.enabled = (headerLength > characterLimit || contentLineLength > characterLimit) ? true : false;
+
+		UpdatePosition();
+	}
+
+	private void UpdatePosition()
+	{
+		Vector2 position = Input.mousePosition;
+
+		float tooltipWidth = rectTransform.rect.width * rectTransform.lossyScale.x;
+		float tooltipHeight = rectTransform.rect.height * rectTransform.lossyScale.y;
+
+		float screenWidth = Screen.width;
+		float screenHeight = Screen.height;
+
+		Vector2 offset = new Vector2(tooltipWidth / 2, 0);
+
+		offset.x += Screen.width * 0.01f;
+
+		if (position.x + tooltipWidth > screenWidth)
+		{
+			offset.x = -offset.x;
+		}
+
+		transform.position = position + offset;
 	}
 }
