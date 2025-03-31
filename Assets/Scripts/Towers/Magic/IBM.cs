@@ -6,6 +6,7 @@ public class IBM : BaseEvolutionTower
 {
 	EnemyTypes[] targetEnemyTypes = new EnemyTypes[] { EnemyTypes.GROUND };
 	public Animator circleAnimator;
+	public GameObject buffIcon;
 
 	protected override void Start()
 	{
@@ -52,6 +53,9 @@ public class IBM : BaseEvolutionTower
 				tower
 					.GetComponent<BaseTower>()
 					.StartCoroutine(tower.GetComponent<BaseTower>().EnhanceTemporarily(1.5f, 17));
+
+				GameObject icon = Instantiate(buffIcon, tower.transform.position, Quaternion.identity, tower.transform);
+				icon.GetComponent<SelfDestruct>().DestroySelf(17);
 			}
 		}
 		foreach (

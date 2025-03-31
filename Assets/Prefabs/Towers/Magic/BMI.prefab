@@ -331,6 +331,7 @@ MonoBehaviour:
   towerType: 2
   evolutionIndex: -1
   circleAnimator: {fileID: 359532163759007785}
+  buffIcon: {fileID: 9161141226137807145, guid: a2f1ba98848cdd84693f0733891d5096, type: 3}
 --- !u!95 &5915319249386863444
 Animator:
   serializedVersion: 5

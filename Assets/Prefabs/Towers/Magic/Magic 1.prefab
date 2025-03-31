@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerData: {fileID: 11400000, guid: 807b62f3fac1db34c9c1e43f4949424a, type: 2}
+  towerAnimator: {fileID: 0}
   towerType: 2
   projectileOrigin: {fileID: 3754848899202580558}
 --- !u!95 &6535046628171810363

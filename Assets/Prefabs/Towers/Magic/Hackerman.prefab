@@ -371,7 +371,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 81432fb10a7d99e44983e7a2cd9964f0, type: 2}
+  - {fileID: 2100000, guid: 93b517e8a801cbb4d8a83002a1e64345, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -483,6 +483,7 @@ MonoBehaviour:
   - {fileID: 2146153466631234433}
   - {fileID: 3141230562584186627}
   - {fileID: 2236292800498189137}
+  debuffIcon: {fileID: 7690609920965305961, guid: a202e7bf716142048b5d9cd6de3f06ae, type: 3}
 --- !u!1 &8227565998887606767
 GameObject:
   m_ObjectHideFlags: 0
