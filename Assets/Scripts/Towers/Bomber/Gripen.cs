@@ -66,8 +66,8 @@ public class Gripen : BaseEvolutionTower
 
 		Vector2 startPosition = Camera.main.ViewportToWorldPoint(new Vector3(0, 0));
 		Vector2 endPosition = Camera.main.ViewportToWorldPoint(new Vector3(1, 0));
-		startPosition = new Vector2(startPosition.x - 1, transform.position.y + 2 + Random.Range(-0.75f, 0.75f));
-		endPosition = new Vector2(endPosition.x + 1, transform.position.y + 2 + Random.Range(-0.75f, 0.75f));
+		startPosition = new Vector2(startPosition.x - 1.5f, transform.position.y + 2 + Random.Range(-0.75f, 0.75f));
+		endPosition = new Vector2(endPosition.x + 1.5f, transform.position.y + 2 + Random.Range(-0.75f, 0.75f));
 
 		plane.transform.position = startPosition;
 
@@ -92,8 +92,8 @@ public class Gripen : BaseEvolutionTower
 
 		Vector2 startPosition = Camera.main.ViewportToWorldPoint(new Vector3(1, 0));
 		Vector2 endPosition = Camera.main.ViewportToWorldPoint(new Vector3(0, 0));
-		startPosition = new Vector2(startPosition.x + 1, transform.position.y + 2 + Random.Range(-0.75f, 0.75f));
-		endPosition = new Vector2(endPosition.x - 1, transform.position.y + 2 + Random.Range(-0.75f, 0.75f));
+		startPosition = new Vector2(startPosition.x + 1.5f, transform.position.y + 2 + Random.Range(-0.75f, 0.75f));
+		endPosition = new Vector2(endPosition.x - 1.5f, transform.position.y + 2 + Random.Range(-0.75f, 0.75f));
 
 		plane.transform.position = startPosition;
 

@@ -4,6 +4,8 @@ using UnityEngine;
 public class Bomber : BaseTower
 {
 	public float splashRadius = 1;
+	public Transform shotOrigin;
+	public GameObject bombPrefab;
 
 	protected override IEnumerator ChargeUp(GameObject enemy)
 	{
@@ -12,18 +14,19 @@ public class Bomber : BaseTower
 
 	protected override IEnumerator Shoot(GameObject enemy)
 	{
-		GameObject bomb = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+		/*GameObject bomb = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 		bomb.transform.SetParent(transform);
 		bomb.transform.position = transform.position;
 		bomb.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-		bomb.GetComponent<Renderer>().material.color = Color.red;
+		bomb.GetComponent<Renderer>().material.color = Color.red;*/
+		GameObject bomb = Instantiate(bombPrefab);
 
 		yield return TowerHelpers.AnimateBezierProjectile(
 			bomb,
-			transform.position,
+			shotOrigin.position,
 			enemy,
-			2,
-			1,
+			4,
+			0.75f,
 			KillProjectile,
 			TowerHelpers.TowerProjectileRotationTypes.SPIN
 		);
