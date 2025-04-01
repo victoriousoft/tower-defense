@@ -17,7 +17,6 @@ public abstract class BaseEvolutionTower : BaseTower
 
 	public bool isSkillCharged = false;
 	private Coroutine skillCoroutine;
-	private WaveSheet waveManager;
 	private bool waitingForFirstWave = false;
 
 	protected abstract IEnumerator Skill(GameObject enemy);
@@ -26,7 +25,6 @@ public abstract class BaseEvolutionTower : BaseTower
 	{
 		base.Awake();
 		circleImage = GetComponentInChildren<Image>();
-		waveManager = GameObject.FindGameObjectWithTag("WaveManager").GetComponent<WaveSheet>();
 	}
 
 	protected override void Start()
@@ -40,7 +38,7 @@ public abstract class BaseEvolutionTower : BaseTower
 
 	private void Update()
 	{
-		if (waitingForFirstWave && waveManager.currentWave >= 0)
+		if (waitingForFirstWave && WaveSheet.instance.currentWave >= 0)
 		{
 			waitingForFirstWave = false;
 			healthBar.gameObject.SetActive(true);
@@ -70,7 +68,7 @@ public abstract class BaseEvolutionTower : BaseTower
 
 		skillLevel++;
 
-		if (waveManager.currentWave >= 0)
+		if (WaveSheet.instance.currentWave >= 0)
 		{
 			healthBar.gameObject.SetActive(true);
 

@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 
 public class WaveTriggerButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-	public WaveSheet waveSheet;
 	public HealthBar statusBar;
 
 	public void Awake()
@@ -15,10 +14,10 @@ public class WaveTriggerButton : MonoBehaviour, IPointerClickHandler, IPointerEn
 
 	public void OnPointerEnter(PointerEventData eventData)
 	{
-		WaveSheet.Wave nextWave = waveSheet.waves[waveSheet.currentWave + 1];
+		WaveSheet.Wave nextWave = WaveSheet.instance.waves[WaveSheet.instance.currentWave + 1];
 
 		string cashbackText = "";
-		if (waveSheet.currentWave != -1)
+		if (WaveSheet.instance.currentWave != -1)
 		{
 			cashbackText =
 				"\nFor Early call you will receive " + nextWave.GetEarlyCallCashback(statusBar.progress) + " gold";
@@ -29,7 +28,7 @@ public class WaveTriggerButton : MonoBehaviour, IPointerClickHandler, IPointerEn
 
 	public void OnPointerClick(PointerEventData eventData)
 	{
-		waveSheet.GetComponent<WaveSheet>().TriggerWaveSpawn();
+		WaveSheet.TriggerWaveSpawn();
 		TooltipManager.Hide();
 	}
 

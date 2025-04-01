@@ -9,8 +9,6 @@ public class Overlay : MonoBehaviour
 	public TextMeshProUGUI healthText;
 	public TextMeshProUGUI waveText;
 
-	public WaveSheet waveSheet;
-
 	private static bool isGamePaused = false;
 	private static Overlay instance;
 
@@ -30,9 +28,14 @@ public class Overlay : MonoBehaviour
 
 	void Update()
 	{
+		if (WaveSheet.instance == null)
+		{
+			return;
+		}
+		Debug.Log(WaveSheet.instance.currentWave + 1 + "/" + WaveSheet.instance.waves.Length);
 		goldText.text = "Gold: " + PlayerStatsManager.gold;
 		healthText.text = "Health: " + PlayerStatsManager.lives;
-		waveText.text = "Wave: " + (waveSheet.currentWave + 1) + "/" + waveSheet.waves.Length;
+		waveText.text = "Wave: " + (WaveSheet.instance.currentWave + 1) + "/" + WaveSheet.instance.waves.Length;
 
 		if (Input.GetKeyDown(KeyCode.P))
 		{
