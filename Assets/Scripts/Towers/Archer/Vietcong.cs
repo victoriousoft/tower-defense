@@ -6,6 +6,7 @@ public class Vietcong : BaseEvolutionTower
 {
 	private Animator flipAnimator;
 	private Transform currentOrigin;
+	public GameObject spikesPrefab;
 
 	[SerializeField]
 	private SpriteRenderer spriteRendererLeft,
@@ -50,8 +51,43 @@ public class Vietcong : BaseEvolutionTower
 
 	protected override IEnumerator Skill(GameObject enemy)
 	{
+		//nesmi byt flying
+		GameObject targetEnemy = TowerHelpers.SelectEnemyToAttack(
+			TowerHelpers.GetEnemiesInRange(
+				transform.position,
+				towerData.evolutions[evolutionIndex].range,
+				new EnemyTypes[] { EnemyTypes.GROUND }
+			),
+			targetType
+		);
+
 		//pokud closest to finish tak closest to finish, ale pokud cokoli jinyho tak most hp (check jestli nema imunitu)
-		enemy.GetComponent<BaseEnemy>().TakeDamage(1000000, DamageTypes.PHYSICAL);
+		if (targetType != TowerHelpers.TowerTargetTypes.CLOSEST_TO_FINISH)
+		{
+			GameObject[] enemies = TowerHelpers.GetEnemiesInRange(
+				transform.position,
+				towerData.levels[level].range,
+				towerData.enemyTypes
+			);
+			GameObject target = TowerHelpers.SelectEnemyToAttack(
+				TowerHelpers.GetEnemiesInRange(
+					transform.position,
+					towerData.evolutions[evolutionIndex].range,
+					towerData.enemyTypes
+				),
+				TowerHelpers.TowerTargetTypes.MOST_HP
+			);
+			if (target.GetComponent<BaseEnemy>().currentPhysicalResistance != 4)
+				targetEnemy = target;
+		}
+		GameObject spikes = Instantiate(
+			spikesPrefab,
+			new Vector2(targetEnemy.transform.position.x, enemy.transform.position.y - 0.1f),
+			Quaternion.identity
+		);
+		spikes.GetComponent<SelfDestruct>().DestroySelf(1);
+		yield return new WaitForSeconds(0.225f);
+		targetEnemy.GetComponent<BaseEnemy>().TakeDamage(1000000, DamageTypes.PHYSICAL);
 		yield return null;
 	}
 

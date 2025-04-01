@@ -24,7 +24,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 	private Vector2 positionOffset;
 
 	private readonly float[] resistanceValues = new float[] { 1, 0.5f, 0.35f, 0.2f, 0 };
-	private int currentPhysicalResistance,
+	public int currentPhysicalResistance,
 		currentMagicResistance;
 	private bool nerfed = false;
 	private HealthBar healthBar;
