@@ -68,6 +68,7 @@ public class Overlay : MonoBehaviour
 		hideButtons = hideButtons ?? new bool[] { false, false, false };
 
 		FullscreenOverlayManager.Show(title, description);
+		BottomBar.Hide();
 		Time.timeScale = 0;
 	}
 
