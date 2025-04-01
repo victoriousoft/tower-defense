@@ -43,7 +43,6 @@ public class MiddleEastBomber : BaseEvolutionTower
 
 	IEnumerator SpawnBomber()
 	{
-		yield return new WaitForSeconds(1000000);
 		for (int i = 0; i < currentBombers.Length; i++)
 		{
 			if (currentBombers[i] == null)
