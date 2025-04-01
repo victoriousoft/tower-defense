@@ -4,7 +4,7 @@ using UnityEngine;
 public class Barracks : BaseTower
 {
 	public int troopCount = 3;
-	public float respawnCooldown = 5; // seconds
+	public float respawnCooldown = 5;
 
 	[System.NonSerialized]
 	[HideInInspector]
@@ -14,6 +14,7 @@ public class Barracks : BaseTower
 	public float randezvousOffset = 1;
 
 	private GameObject[] troops;
+	private Animator animator;
 
 	// tohle se neimplementuje v barracks
 	protected override void FixedUpdate() { }
@@ -31,6 +32,7 @@ public class Barracks : BaseTower
 			towerData.levels[level].range
 		);
 		localTroopRandezvousPoint = globalTroopRandezvous - (Vector2)transform.position;
+		animator = GetComponent<Animator>();
 
 		SpawnTroops(troopCount);
 	}
@@ -65,6 +67,7 @@ public class Barracks : BaseTower
 		troop.GetComponent<BaseTroop>().targetLocation = RequestTroopRandezvousPoint(id);
 		troop.GetComponent<BaseTroop>().id = id;
 		troops[id] = troop;
+		animator.SetTrigger("open");
 	}
 
 	private int GetAliveTroopCount()

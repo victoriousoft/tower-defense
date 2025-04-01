@@ -41,10 +41,10 @@ MonoBehaviour:
   - name: explosive kitten
     prefab: {fileID: 8909524829413949195, guid: 2be2af70e2ebbf44e8cdff254d70fcd3, type: 3}
     price: 10
-    damage: 100
+    damage: 30
     range: 2
     cooldown: 3
-    skillName: Meowhammad Ali
+    skillName: Blast Plague
     skillLevels:
     - cooldown: 0
       upragdeCost: 0
@@ -57,8 +57,8 @@ MonoBehaviour:
     price: 550
     damage: 40
     range: 20
-    cooldown: 10
-    skillName: Kamikadze
+    cooldown: 7
+    skillName: Kamikadze!!
     skillLevels:
     - cooldown: 5
       upragdeCost: 0

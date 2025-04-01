@@ -5,21 +5,25 @@ using UnityEngine;
 public class Gripen : BaseEvolutionTower
 {
 	public GameObject plane;
-	public float planeSpeed = 10f;
+	public float planeSpeed,
+		crashDamageRadius,
+		kamikadzeDamage;
 	private bool onRight = true;
-	private bool isFlying = false;
+	private bool isFlying = false,
+		crashed = false;
 	public GameObject projectilePrefab;
 	private bool readyToCrash = false;
 	public GameObject ExplosionEffect;
+	private Animator animator;
 
 	protected override void Start()
 	{
 		base.Start();
+		animator = GetComponent<Animator>();
 	}
 
 	protected override IEnumerator Shoot(GameObject enemy)
 	{
-		Debug.Log("111");
 		if (!isFlying && !readyToCrash)
 		{
 			FlyPlane();
@@ -30,13 +34,10 @@ public class Gripen : BaseEvolutionTower
 				StartCoroutine(
 					projectile.GetComponent<HomingMissile>().MoveToTarget(enemy, towerData.evolutions[1].damage, 10f)
 				);
+				animator.SetTrigger("shoot");
 				yield return new WaitForSeconds(0.33f);
 			}
 			yield return null;
-		}
-		else if (readyToCrash)
-		{
-			Crash();
 		}
 	}
 
@@ -49,10 +50,12 @@ public class Gripen : BaseEvolutionTower
 	{
 		if (!onRight)
 		{
+			animator.Play("gripen_flight_R");
 			StartCoroutine(FlyFromLeftToRight());
 		}
 		else
 		{
+			animator.Play("gripen_flight_L");
 			StartCoroutine(FlyFromRightToLeft());
 		}
 	}
@@ -78,6 +81,7 @@ public class Gripen : BaseEvolutionTower
 			yield return null;
 		}
 
+		yield return new WaitForSeconds(0.5f);
 		onRight = true;
 		isFlying = false;
 	}
@@ -95,7 +99,6 @@ public class Gripen : BaseEvolutionTower
 
 		while (plane.transform.position.x > endPosition.x + 0.1f)
 		{
-			Debug.Log(plane.transform.position.x.ToString() + " " + endPosition.x.ToString());
 			plane.transform.position = Vector2.MoveTowards(
 				plane.transform.position,
 				endPosition,
@@ -104,6 +107,7 @@ public class Gripen : BaseEvolutionTower
 			yield return null;
 		}
 
+		yield return new WaitForSeconds(0.5f);
 		onRight = false;
 		isFlying = false;
 	}
@@ -111,13 +115,39 @@ public class Gripen : BaseEvolutionTower
 	protected override IEnumerator Skill(GameObject enemy)
 	{
 		readyToCrash = true;
+		onRight = true;
 		yield return null;
 	}
 
 	IEnumerator Crash()
 	{
+		plane.transform.position = transform.position;
+		animator.SetTrigger("kamikadze");
+
+		yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length - 0.125f);
+
+		ScreenShake.Instance.Shake(0.55f, 0.3f);
 		//annimace padu + vybuch + zniceni
-		yield return new WaitForSeconds(0.1f);
+		GameObject[] affectedEnemies = TowerHelpers.GetEnemiesInRange(
+			transform.position,
+			crashDamageRadius,
+			new EnemyTypes[] { EnemyTypes.GROUND, EnemyTypes.FLYING }
+		);
+		foreach (GameObject enemy in affectedEnemies)
+		{
+			enemy.GetComponent<BaseEnemy>().TakeDamage(kamikadzeDamage, DamageTypes.EXPLOSION);
+		}
+		readyToCrash = false;
+		crashed = false;
+	}
+
+	private void LateUpdate()
+	{
+		if (!isFlying && readyToCrash && !crashed)
+		{
+			crashed = true;
+			StartCoroutine(Crash());
+		}
 	}
 
 	protected override void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition) { }

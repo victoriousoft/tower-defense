@@ -17,6 +17,8 @@ public abstract class BaseEvolutionTower : BaseTower
 
 	public bool isSkillCharged = false;
 	private Coroutine skillCoroutine;
+	private WaveSheet waveManager;
+	private bool waitingForFirstWave = false;
 
 	protected abstract IEnumerator Skill(GameObject enemy);
 
@@ -24,6 +26,7 @@ public abstract class BaseEvolutionTower : BaseTower
 	{
 		base.Awake();
 		circleImage = GetComponentInChildren<Image>();
+		waveManager = GameObject.FindGameObjectWithTag("WaveManager").GetComponent<WaveSheet>();
 	}
 
 	protected override void Start()
@@ -35,6 +38,24 @@ public abstract class BaseEvolutionTower : BaseTower
 		healthBar.gameObject.SetActive(false);
 	}
 
+	private void Update()
+	{
+		if (waitingForFirstWave && waveManager.currentWave >= 0)
+		{
+			waitingForFirstWave = false;
+			healthBar.gameObject.SetActive(true);
+
+			skillCoroutine = StartCoroutine(
+				healthBar.Animate(
+					0,
+					1,
+					towerData.evolutions[evolutionIndex].skillLevels[skillLevel].cooldown,
+					SkillChargeupCallback
+				)
+			);
+		}
+	}
+
 	void SkillChargeupCallback()
 	{
 		isSkillCharged = true;
@@ -44,25 +65,31 @@ public abstract class BaseEvolutionTower : BaseTower
 
 	public void UpgradeSkill()
 	{
-		Debug.Log("Upgrading skill");
 		if (skillCoroutine != null)
 			StopCoroutine(skillCoroutine);
-		healthBar.SetHealth(0);
-		isSkillCharged = false;
 
 		skillLevel++;
 
-		if (skillLevel >= 0)
+		if (waveManager.currentWave >= 0)
+		{
 			healthBar.gameObject.SetActive(true);
 
-		skillCoroutine = StartCoroutine(
-			healthBar.Animate(
-				0,
-				1,
-				towerData.evolutions[evolutionIndex].skillLevels[skillLevel].cooldown,
-				SkillChargeupCallback
-			)
-		);
+			healthBar.SetHealth(0);
+			isSkillCharged = false;
+
+			skillCoroutine = StartCoroutine(
+				healthBar.Animate(
+					0,
+					1,
+					towerData.evolutions[evolutionIndex].skillLevels[skillLevel].cooldown,
+					SkillChargeupCallback
+				)
+			);
+		}
+		else
+		{
+			waitingForFirstWave = true;
+		}
 	}
 
 	public override IEnumerator ChargeShootAndResetCooldown()

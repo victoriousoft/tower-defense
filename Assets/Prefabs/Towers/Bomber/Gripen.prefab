@@ -337,7 +337,7 @@ Animator:
   m_GameObject: {fileID: 8909524829413949195}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 368c1721799689640b724e3512585784, type: 2}
+  m_Controller: {fileID: 9100000, guid: dddd9470be8e6114b853a38eb575f4ff, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -361,10 +361,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerData: {fileID: 11400000, guid: 849027f545f0d6f41a9e7670b7134e78, type: 2}
+  towerAnimator: {fileID: 0}
   towerType: 3
   evolutionIndex: -1
   plane: {fileID: 3047164603239164927}
   planeSpeed: 10
+  crashDamageRadius: 3
+  kamikadzeDamage: 100
   projectilePrefab: {fileID: 478314428750665847, guid: fa9b5cf41962c334097a4d6dc0254562, type: 3}
   ExplosionEffect: {fileID: 13743912110108325, guid: f60d753f5e9c1f74ca8321c562c551e9, type: 3}
 --- !u!1 &9011415905901537021

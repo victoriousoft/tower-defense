@@ -106,7 +106,7 @@ public abstract class BaseTower : MonoBehaviour
 
 		level++;
 		currentDamage = towerData.levels[level].damage;
-		GetComponent<SpriteRenderer>().color = Color.white;
+		GetComponentInChildren<SpriteRenderer>().color = Color.white;
 
 		towerAnimator.SetTrigger("upgrade");
 
@@ -116,14 +116,11 @@ public abstract class BaseTower : MonoBehaviour
 			shootCoroutine = StartCoroutine(ChargeShootAndResetCooldown());
 	}
 
-	public IEnumerator EnhanceTemoprarily(int factor, float duration)
+	public IEnumerator EnhanceTemporarily(float factor, float duration)
 	{
 		currentDamage *= factor;
-		//enhance effect
-		SpriteRenderer sr = GetComponent<SpriteRenderer>();
-		sr.color = new Color(1, 0.5f, 0.5f, 1);
+		SpriteRenderer[] sr = GetComponentsInChildren<SpriteRenderer>();
 		yield return new WaitForSeconds(duration);
-		sr.color = Color.white;
 		currentDamage = towerData.levels[level].damage;
 	}
 

@@ -5,10 +5,6 @@ using UnityEngine;
 public class Vietcong : BaseEvolutionTower
 {
 	private Animator flipAnimator;
-
-	[SerializeField]
-	private Transform originLeft,
-		originRight;
 	private Transform currentOrigin;
 
 	[SerializeField]
@@ -21,7 +17,8 @@ public class Vietcong : BaseEvolutionTower
 	{
 		base.Start();
 		flipAnimator = GetComponent<Animator>();
-		currentOrigin = originLeft;
+		spriteRendererLeft.gameObject.SetActive(true);
+		spriteRendererRight.gameObject.SetActive(false);
 	}
 
 	protected override IEnumerator Shoot(GameObject enemy)
@@ -30,19 +27,18 @@ public class Vietcong : BaseEvolutionTower
 		{
 			if (facingLeft && enemy.transform.position.x > transform.position.x)
 			{
-				spriteRendererLeft.enabled = false;
-				spriteRendererRight.enabled = true;
-				currentOrigin = originRight;
+				spriteRendererLeft.gameObject.SetActive(false);
+				spriteRendererRight.gameObject.SetActive(true);
 				facingLeft = false;
 			}
 			else if (!facingLeft && enemy.transform.position.x < transform.position.x)
 			{
-				spriteRendererLeft.enabled = true;
-				spriteRendererRight.enabled = false;
-				currentOrigin = originLeft;
+				spriteRendererLeft.gameObject.SetActive(true);
+				spriteRendererRight.gameObject.SetActive(false);
 				facingLeft = true;
 			}
 		}
+		yield return new WaitForSeconds(0.5f);
 		enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.evolutions[1].damage, DamageTypes.PHYSICAL);
 		yield return null;
 	}
@@ -54,6 +50,7 @@ public class Vietcong : BaseEvolutionTower
 
 	protected override IEnumerator Skill(GameObject enemy)
 	{
+		//pokud closest to finish tak closest to finish, ale pokud cokoli jinyho tak most hp (check jestli nema imunitu)
 		enemy.GetComponent<BaseEnemy>().TakeDamage(1000000, DamageTypes.PHYSICAL);
 		yield return null;
 	}

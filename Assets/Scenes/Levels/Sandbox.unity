@@ -909,6 +909,7 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1050,6 +1051,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_MaxRayIntersections: 0
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf3e2a38b7e7f1b4d8cb3937db71a456, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &529057646
 GameObject:
   m_ObjectHideFlags: 0
@@ -4019,7 +4032,7 @@ GameObject:
   - component: {fileID: 1258185205}
   m_Layer: 0
   m_Name: Enemies
-  m_TagString: Untagged
+  m_TagString: WaveManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4057,8 +4070,8 @@ MonoBehaviour:
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: 5454311c74a546e44954c494185f1ca7, type: 3}
       pathParent: {fileID: 1110906503}
-      count: 2
-      spawnDelay: 6
+      count: 7
+      spawnDelay: 0.75
       initialDelay: 0
     - enemyPrefab: {fileID: 9059301247369330279, guid: 1f7246b5e78970e4ca258876c8d0cc72, type: 3}
       pathParent: {fileID: 841696768}
