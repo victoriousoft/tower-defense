@@ -126,7 +126,10 @@ public abstract class BaseTower : MonoBehaviour
 
 	private void ResetLaserPosition()
 	{
-		GetComponent<LineRenderer>().SetPosition(0, transform.Find("shotOrigin").position);
+		return;
+		// Tohle asi neni potreba, ale pro jistotu to necham tady, u hackermana to tweakuje
+		GetComponent<LineRenderer>()
+			.SetPosition(0, transform.Find("shotOrigin").position);
 		GetComponent<LineRenderer>().SetPosition(1, transform.Find("shotOrigin").position);
 	}
 
