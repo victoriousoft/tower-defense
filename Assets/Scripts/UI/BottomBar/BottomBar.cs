@@ -86,8 +86,8 @@ public class BottomBar : MonoBehaviour
 
 		instance.descriptionText.text = currentEnemy.enemyData.info.description;
 
-		instance.physicalImmunityBar.SetProgress(currentEnemy.enemyData.stats.physicalResistance);
-		instance.magicImmunityBar.SetProgress(currentEnemy.enemyData.stats.magicResistance);
+		instance.physicalImmunityBar.SetProgress(currentEnemy.currentPhysicalResistance);
+		instance.magicImmunityBar.SetProgress(currentEnemy.currentMagicResistance);
 
 		instance.gameObject.transform.GetChild(0).gameObject.SetActive(true);
 	}

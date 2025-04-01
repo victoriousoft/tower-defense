@@ -350,6 +350,17 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 			default:
 				break;
 		}
+
+		if (
+			towerInstance
+			&& towerInstance.GetComponent<BaseTower>() != null
+			&& towerInstance.GetComponent<BaseTower>().towerType == TowerTypes.Barracks
+		)
+		{
+			menuButtons[(int)ButtonIndex.CENTER_LEFT]
+				.GetComponent<TowerHolderButton>()
+				.SetAction(ButtonAction.REPOSITION_BARRACKS);
+		}
 	}
 
 	private IEnumerator BuyTower(GameObject towerPrefab)

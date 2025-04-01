@@ -43,8 +43,9 @@ public class WaveSheet : MonoBehaviour
 
 		public int GetEarlyCallCashback(float progress)
 		{
-			// TODO: Tahle kalkulace je sketchy af
-			return Mathf.Min((int)Mathf.Ceil((initialDelay / progress) - initialDelay), 200);
+			int secondsRemaining = Mathf.CeilToInt(initialDelay * (1 - progress));
+			int cashback = Mathf.CeilToInt(secondsRemaining * 3);
+			return cashback;
 		}
 	}
 
@@ -92,23 +93,35 @@ public class WaveSheet : MonoBehaviour
 
 	private Coroutine waveCountdownRoutine;
 
+	public static WaveSheet instance;
+
 	public void Awake()
 	{
-		// StartCoroutine(SpawnWaves());
+		if (instance == null)
+		{
+			Debug.Log("WaveSheet instance created.");
+			instance = this;
+		}
+		else
+		{
+			Debug.LogError("WaveSheet instance already exists, destroying this one.");
+			Destroy(gameObject);
+			return;
+		}
 	}
 
-	public void TriggerWaveSpawn()
+	public static void TriggerWaveSpawn()
 	{
-		if (waveCountdownRoutine != null)
+		if (instance.waveCountdownRoutine != null)
 		{
-			StopCoroutine(waveCountdownRoutine);
-			waveCountdownRoutine = null;
+			instance.StopCoroutine(instance.waveCountdownRoutine);
+			instance.waveCountdownRoutine = null;
 		}
 
-		Debug.Log("running wave " + (currentWave + 1));
+		Debug.Log("running wave " + (instance.currentWave + 1));
 
-		waveTriggerButton.gameObject.SetActive(false);
-		StartCoroutine(SpawnWave(currentWave + 1));
+		instance.waveTriggerButton.gameObject.SetActive(false);
+		instance.StartCoroutine(instance.SpawnWave(instance.currentWave + 1));
 	}
 
 	private IEnumerator AwaitAllEnemyDeath()
