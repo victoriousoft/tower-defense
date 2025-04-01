@@ -129,7 +129,12 @@ public abstract class BaseEvolutionTower : BaseTower
 	{
 		int price = base.CalculateSellPrice();
 
-		return price + towerData.evolutions[evolutionIndex].price / 2;
+		if (WaveSheet.instance.currentWave == -1)
+		{
+			return price + towerData.evolutions[evolutionIndex].price;
+		}
+
+		return price + towerData.evolutions[evolutionIndex].price;
 	}
 
 	public void UseSkill()

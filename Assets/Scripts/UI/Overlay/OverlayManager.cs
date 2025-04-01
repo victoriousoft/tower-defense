@@ -32,7 +32,6 @@ public class Overlay : MonoBehaviour
 		{
 			return;
 		}
-		Debug.Log(WaveSheet.instance.currentWave + 1 + "/" + WaveSheet.instance.waves.Length);
 		goldText.text = "Gold: " + PlayerStatsManager.gold;
 		healthText.text = "Health: " + PlayerStatsManager.lives;
 		waveText.text = "Wave: " + (WaveSheet.instance.currentWave + 1) + "/" + WaveSheet.instance.waves.Length;

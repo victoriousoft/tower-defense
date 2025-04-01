@@ -140,6 +140,12 @@ public abstract class BaseTower : MonoBehaviour
 		{
 			price += towerData.levels[i].price;
 		}
+
+		if (WaveSheet.instance.currentWave == -1)
+		{
+			return price;
+		}
+
 		return price / 2;
 	}
 }
