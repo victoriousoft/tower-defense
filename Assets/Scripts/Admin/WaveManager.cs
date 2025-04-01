@@ -43,8 +43,9 @@ public class WaveSheet : MonoBehaviour
 
 		public int GetEarlyCallCashback(float progress)
 		{
-			// TODO: Tahle kalkulace je sketchy af
-			return Mathf.Min((int)Mathf.Ceil((initialDelay / progress) - initialDelay), 200);
+			int secondsRemaining = Mathf.CeilToInt(initialDelay * progress);
+			int cashback = Mathf.CeilToInt(secondsRemaining * 3);
+			return cashback;
 		}
 	}
 

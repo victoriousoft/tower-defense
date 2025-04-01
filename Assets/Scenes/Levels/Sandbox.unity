@@ -2832,7 +2832,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a036260ff03287d4ab7e3730c644f261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveSheet: {fileID: 1258185205}
   statusBar: {fileID: 1395549387}
 --- !u!212 &956672198
 SpriteRenderer:
@@ -4070,25 +4069,35 @@ MonoBehaviour:
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: 5454311c74a546e44954c494185f1ca7, type: 3}
       pathParent: {fileID: 1110906503}
-      count: 7
-      spawnDelay: 0.75
+      count: 10
+      spawnDelay: 1
       initialDelay: 0
-    - enemyPrefab: {fileID: 9059301247369330279, guid: 1f7246b5e78970e4ca258876c8d0cc72, type: 3}
+    - enemyPrefab: {fileID: 9059301247369330279, guid: 5454311c74a546e44954c494185f1ca7, type: 3}
       pathParent: {fileID: 841696768}
-      count: 5
-      spawnDelay: 6
-      initialDelay: 1
-  - initialDelay: 20
+      count: 10
+      spawnDelay: 1
+      initialDelay: 0
+    - enemyPrefab: {fileID: 9059301247369330279, guid: 5454311c74a546e44954c494185f1ca7, type: 3}
+      pathParent: {fileID: 1763392645}
+      count: 10
+      spawnDelay: 1
+      initialDelay: 0
+  - initialDelay: 10
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: 5454311c74a546e44954c494185f1ca7, type: 3}
       pathParent: {fileID: 1110906503}
-      count: 1
-      spawnDelay: 6
+      count: 10
+      spawnDelay: 1
       initialDelay: 0
-    - enemyPrefab: {fileID: 9059301247369330279, guid: 1f7246b5e78970e4ca258876c8d0cc72, type: 3}
+    - enemyPrefab: {fileID: 9059301247369330279, guid: 5454311c74a546e44954c494185f1ca7, type: 3}
       pathParent: {fileID: 841696768}
-      count: 1
-      spawnDelay: 6
+      count: 10
+      spawnDelay: 1
+      initialDelay: 0
+    - enemyPrefab: {fileID: 9059301247369330279, guid: 5454311c74a546e44954c494185f1ca7, type: 3}
+      pathParent: {fileID: 1763392645}
+      count: 10
+      spawnDelay: 1
       initialDelay: 0
 --- !u!1 &1270517328
 GameObject:
@@ -4616,7 +4625,6 @@ MonoBehaviour:
   goldText: {fileID: 1780592143}
   healthText: {fileID: 1561097909}
   waveText: {fileID: 1324190886}
-  waveSheet: {fileID: 1258185205}
 --- !u!1001 &1409130065
 PrefabInstance:
   m_ObjectHideFlags: 0
