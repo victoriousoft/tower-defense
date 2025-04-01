@@ -155,8 +155,8 @@ public class WaveSheet : MonoBehaviour
 
 			waveCountdownRoutine = StartCoroutine(
 				waveTriggerButton.statusBar.Animate(
-					0,
 					1,
+					0,
 					waves[waveIndex + 1].initialDelay,
 					() =>
 					{
