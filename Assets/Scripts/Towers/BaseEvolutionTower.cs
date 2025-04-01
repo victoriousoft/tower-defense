@@ -127,14 +127,20 @@ public abstract class BaseEvolutionTower : BaseTower
 
 	public override int CalculateSellPrice()
 	{
-		int price = base.CalculateSellPrice();
+		int basePrice = base.CalculateSellPrice();
+		int skillPrice = 0;
+
+		for (int i = 0; i < skillLevel + 1; i++)
+		{
+			skillPrice += towerData.evolutions[evolutionIndex].skillLevels[i].upragdeCost;
+		}
 
 		if (WaveSheet.instance.currentWave == -1)
 		{
-			return price + towerData.evolutions[evolutionIndex].price;
+			return basePrice + towerData.evolutions[evolutionIndex].price + skillPrice;
 		}
 
-		return price + towerData.evolutions[evolutionIndex].price;
+		return basePrice + towerData.evolutions[evolutionIndex].price / 2 + skillPrice / 2;
 	}
 
 	public void UseSkill()
