@@ -733,7 +733,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 487820208}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.59, y: 5.17, z: 0}
+  m_LocalPosition: {x: 8.78, y: 7.27, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2707,7 +2707,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a036260ff03287d4ab7e3730c644f261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveSheet: {fileID: 1258185205}
   statusBar: {fileID: 4612087678464529047}
 --- !u!212 &956672198
 SpriteRenderer:
@@ -3209,7 +3208,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1055569940}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.74, y: 5.45, z: 0}
+  m_LocalPosition: {x: 9.78, y: 5.94, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3753,7 +3752,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1212795304}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.58, y: 5.27, z: 0}
+  m_LocalPosition: {x: 15.54, y: 5.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3943,10 +3942,10 @@ MonoBehaviour:
   waves:
   - initialDelay: 0
     enemies:
-    - enemyPrefab: {fileID: 9059301247369330279, guid: dc2fd337830c2934097476c3650a2ea8, type: 3}
+    - enemyPrefab: {fileID: 9059301247369330279, guid: 5d2dd7192bfa41b4aa5b9ccdce4406ac, type: 3}
       pathParent: {fileID: 841696768}
-      count: 1
-      spawnDelay: 0
+      count: 10
+      spawnDelay: 1
       initialDelay: 0
     - enemyPrefab: {fileID: 9059301247369330279, guid: 5454311c74a546e44954c494185f1ca7, type: 3}
       pathParent: {fileID: 1110906503}
@@ -4480,7 +4479,6 @@ MonoBehaviour:
   goldText: {fileID: 1780592143}
   healthText: {fileID: 1561097909}
   waveText: {fileID: 1324190886}
-  waveSheet: {fileID: 1258185205}
 --- !u!1001 &1409130065
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6503,7 +6501,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2106052097}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.4, y: 4.48, z: 0}
+  m_LocalPosition: {x: 14.34, y: 4.59, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

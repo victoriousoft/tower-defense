@@ -103,9 +103,15 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		Vector2 moveDirection = (targetPos - (Vector2)transform.position).normalized;
 
 		if (Mathf.Abs(moveDirection.x) > Mathf.Abs(moveDirection.y))
+		{
 			animator.SetFloat("x", moveDirection.x);
+			animator.SetFloat("y", 0);
+		}
 		else
+		{
 			animator.SetFloat("y", moveDirection.y);
+			animator.SetFloat("x", 0);
+		}
 
 		if (Vector2.Distance(transform.position, (Vector2)points[currentPointIndex].position + positionOffset) < 0.1f)
 		{
@@ -180,6 +186,9 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 			PlayerStatsManager.AddGold(enemyData.stats.cashDrop);
 		else
 			PlayerStatsManager.AddGold(enemyData.stats.cashDrop * 3);
+
+		if (animator.GetFloat("x") != 0)
+			spriteRenderer.flipX = animator.GetFloat("x") < 0;
 		animator.Play("death");
 		yield return null;
 		Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
