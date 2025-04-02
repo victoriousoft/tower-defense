@@ -62,3 +62,16 @@
 .lock-overlay {
     background-image: url('project://database/Assets/Sprites/UI/Menu/Lock(locked).png?fileID=2800000&guid=98cdccbdb7cd2714883246a2c2696862&type=3#Lock(locked)');
 }
+
+.volume-container {
+    align-items: center;
+    justify-content: center;
+}
+
+.volume-slider {
+	color: rgb(255, 255, 255);
+	-unity-text-align: middle-center;
+	width: 524px;
+	font-size: 30px;
+	-unity-font-style: normal;
+}

@@ -8,6 +8,7 @@ public class SoundPlayer : MonoBehaviour
 	{
 		source.clip = clip;
 		source.loop = loop;
+		source.volume = GlobalData.instance.volume / 100f;
 		source.Play();
 	}
 
@@ -20,6 +21,7 @@ public class SoundPlayer : MonoBehaviour
 
 		source.clip = clip;
 		source.loop = loop;
+		source.volume = GlobalData.instance.volume / 100f;
 		source.Play();
 
 		if (!loop)

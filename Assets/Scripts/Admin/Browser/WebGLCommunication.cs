@@ -114,6 +114,11 @@ public class WebGLMessageHandler : MonoBehaviour
 				instance.mainMenuController.LockLevels();
 				break;
 
+			case "setVolume":
+				Debug.Log("UNITY - Setting volume: " + message.args["volume"]);
+				MainMenuController.instance.SetVolume(int.Parse(message.args["volume"].ToString()));
+				break;
+
 			default:
 				Debug.Log("UNITY - Unknown action: " + message);
 				break;

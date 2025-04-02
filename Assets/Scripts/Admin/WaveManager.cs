@@ -94,7 +94,6 @@ public class WaveSheet : MonoBehaviour
 	public AudioClip waveStartSound;
 
 	private Coroutine waveCountdownRoutine;
-	private AudioSource audioSource;
 
 	public static WaveSheet instance;
 
@@ -104,7 +103,6 @@ public class WaveSheet : MonoBehaviour
 		{
 			Debug.Log("WaveSheet instance created.");
 			instance = this;
-			audioSource = GetComponent<AudioSource>();
 		}
 		else
 		{
@@ -122,7 +120,7 @@ public class WaveSheet : MonoBehaviour
 			instance.waveCountdownRoutine = null;
 		}
 
-		instance.audioSource.PlayOneShot(instance.waveStartSound);
+		SoundPlayer.PlayInBackground(instance.gameObject, instance.waveStartSound);
 
 		instance.waveTriggerButton.gameObject.SetActive(false);
 		instance.StartCoroutine(instance.SpawnWave(instance.currentWave + 1));
