@@ -149,7 +149,7 @@ Transform:
   m_GameObject: {fileID: 6027333647550433868}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7600309255680151018}
@@ -364,11 +364,12 @@ MonoBehaviour:
   towerAnimator: {fileID: 0}
   towerType: 3
   evolutionIndex: -1
+  isSkillCharged: 0
   plane: {fileID: 3047164603239164927}
   planeSpeed: 10
   crashDamageRadius: 3
   kamikadzeDamage: 100
-  projectilePrefab: {fileID: 478314428750665847, guid: fa9b5cf41962c334097a4d6dc0254562, type: 3}
+  projectilePrefab: {fileID: 3215632836880019647, guid: 985110dcd473d7642b40bf4f311c40e9, type: 3}
   ExplosionEffect: {fileID: 13743912110108325, guid: f60d753f5e9c1f74ca8321c562c551e9, type: 3}
 --- !u!1 &9011415905901537021
 GameObject:

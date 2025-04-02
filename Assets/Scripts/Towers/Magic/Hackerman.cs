@@ -72,31 +72,34 @@ public class Hackerman : BaseEvolutionTower
 			)
 		)
 		{
-			BaseEnemy enemyScript = targetEnemy.GetComponent<BaseEnemy>();
-			enemyScript.TakeDamage(towerData.evolutions[evolutionIndex].damage / 3, DamageTypes.MAGIC);
-			enemyScript.NerfResistance(0, 2, 20);
-			enemyScript.NerfResistance(1, 2, 20);
-			enemyScript.Slowdown(0.85f, towerData.evolutions[1].damage);
-			GameObject icon = Instantiate(
-				debuffIcon,
-				targetEnemy.transform.position,
-				Quaternion.identity,
-				targetEnemy.transform
-			);
-			icon.GetComponent<SelfDestruct>().DestroySelf(20);
+			if (targetEnemy != null)
+			{
+				BaseEnemy enemyScript = targetEnemy.GetComponent<BaseEnemy>();
+				enemyScript.TakeDamage(towerData.evolutions[evolutionIndex].damage / 3, DamageTypes.MAGIC);
+				enemyScript.NerfResistance(0, 2, 20);
+				enemyScript.NerfResistance(1, 2, 20);
+				enemyScript.Slowdown(0.85f, towerData.evolutions[1].damage);
+				GameObject icon = Instantiate(
+					debuffIcon,
+					targetEnemy.transform.position,
+					Quaternion.identity,
+					targetEnemy.transform
+				);
+				icon.GetComponent<SelfDestruct>().DestroySelf(20);
 
-			yield return TowerHelpers.AnimateLaser(
-				GetComponent<LineRenderer>(),
-				projectileOrigins[head],
-				targetEnemy,
-				0.05f,
-				KillProjectile
-			);
-			if (head < 2)
-				head++;
-			else
-				head = 0;
-			yield return new WaitForSeconds(0.1f);
+				yield return TowerHelpers.AnimateLaser(
+					GetComponent<LineRenderer>(),
+					projectileOrigins[head],
+					targetEnemy,
+					0.05f,
+					KillProjectile
+				);
+				if (head < 2)
+					head++;
+				else
+					head = 0;
+				yield return new WaitForSeconds(0.1f);
+			}
 		}
 		skillInUse = false;
 		yield return null;

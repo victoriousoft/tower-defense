@@ -37,7 +37,7 @@ MonoBehaviour:
   - name: Kittengun
     prefab: {fileID: 4112298509408283667, guid: a804c04286e29ae44b34ce18f416c876, type: 3}
     price: 400
-    damage: 1
+    damage: 3
     range: 3
     cooldown: 0.2
     skillName: Spin des Todes

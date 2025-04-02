@@ -33,6 +33,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 	[HideInInspector]
 	public float currentSpeed;
+	private Animator animator;
 
 	private SpriteRenderer spriteRenderer;
 	protected abstract void Attack();
@@ -49,6 +50,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		currentPhysicalResistance = enemyData.stats.physicalResistance;
 		currentMagicResistance = enemyData.stats.magicResistance;
 		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+		animator = GetComponent<Animator>();
 	}
 
 	void FixedUpdate()
@@ -96,6 +98,14 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 	{
 		if (points == null)
 			return;
+
+		Vector2 targetPos = (Vector2)points[currentPointIndex].position + positionOffset;
+		Vector2 moveDirection = (targetPos - (Vector2)transform.position).normalized;
+
+		if (Mathf.Abs(moveDirection.x) > Mathf.Abs(moveDirection.y))
+			animator.SetFloat("x", moveDirection.x);
+		else
+			animator.SetFloat("y", moveDirection.y);
 
 		if (Vector2.Distance(transform.position, (Vector2)points[currentPointIndex].position + positionOffset) < 0.1f)
 		{
@@ -160,12 +170,19 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 		if (health <= 0)
 		{
-			Destroy(gameObject);
-			if (!nerfed)
-				PlayerStatsManager.AddGold(enemyData.stats.cashDrop);
-			else
-				PlayerStatsManager.AddGold(enemyData.stats.cashDrop * 3);
+			Death();
 		}
+	}
+
+	public IEnumerator Death()
+	{
+		if (!nerfed)
+			PlayerStatsManager.AddGold(enemyData.stats.cashDrop);
+		else
+			PlayerStatsManager.AddGold(enemyData.stats.cashDrop * 3);
+		animator.Play("death");
+		yield return null;
+		Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
 	}
 
 	public Vector2 GetAttackLocation(float troopAttackRange)

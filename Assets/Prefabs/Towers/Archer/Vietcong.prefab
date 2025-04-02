@@ -435,5 +435,7 @@ MonoBehaviour:
   towerAnimator: {fileID: 0}
   towerType: 1
   evolutionIndex: -1
+  isSkillCharged: 0
+  spikesPrefab: {fileID: 4023953834532007022, guid: d5beb214b336b0f4a936e2ad6eda5808, type: 3}
   spriteRendererLeft: {fileID: 4590098121474804460}
   spriteRendererRight: {fileID: 5104814594907731636}
