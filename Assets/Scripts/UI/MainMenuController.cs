@@ -84,5 +84,12 @@ public class MainMenuController : MonoBehaviour
 		Debug.Log("Setting volume to: " + value);
 		volumeSlider.value = value;
 		GlobalData.instance.volume = value;
+		WebGLMessageHandler.SendToJavaScript(
+			new WebGLMessageHandler.OutBrowserMessage
+			{
+				action = "setVolume",
+				args = new Dictionary<string, object> { { "volume", value } },
+			}
+		);
 	}
 }
