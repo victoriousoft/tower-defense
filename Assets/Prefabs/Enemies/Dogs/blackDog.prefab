@@ -94,8 +94,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8454266277183463836}
   - component: {fileID: 6324347410508317063}
-  - component: {fileID: 3528937960336872651}
   - component: {fileID: 3669478635275523187}
+  - component: {fileID: -2868903766839660906}
   m_Layer: 0
   m_Name: blackDog
   m_TagString: Enemy
@@ -165,23 +165,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.99999994, y: 0.99999994}
   m_EdgeRadius: 0
---- !u!114 &3528937960336872651
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9059301247369330279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dcea8b3382dd364fafc898896eeb586, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyData: {fileID: 11400000, guid: 1b4b84dc3dd6fca4aa22474b3c7640e2, type: 2}
-  currentPhysicalResistance: 0
-  currentMagicResistance: 0
-  currentSpeed: 0
-  animator: {fileID: 0}
 --- !u!95 &3669478635275523187
 Animator:
   serializedVersion: 5
@@ -203,6 +186,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-2868903766839660906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9059301247369330279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 417fe0b8bf11189419ef2c719a4f5e1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyData: {fileID: 11400000, guid: 1b4b84dc3dd6fca4aa22474b3c7640e2, type: 2}
+  currentPhysicalResistance: 0
+  currentMagicResistance: 0
+  currentSpeed: 0
+  animator: {fileID: 3669478635275523187}
 --- !u!1001 &5007395829321720595
 PrefabInstance:
   m_ObjectHideFlags: 0
