@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -492,6 +491,20 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 			rangeRenderer,
 			towerInstance.GetComponent<BaseTower>().towerData.evolutions[evolutionIndex].range,
 			transform.position
+		);
+
+		SoundPlayer.PlayInBackground(
+			gameObject,
+			towerInstance.GetComponent<BaseEvolutionTower>().towerData.evolutions[evolutionIndex].upgradeSounds[
+				Random.Range(
+					0,
+					towerInstance
+						.GetComponent<BaseEvolutionTower>()
+						.towerData.evolutions[evolutionIndex]
+						.upgradeSounds.Length
+				)
+			],
+			false
 		);
 
 		HideButtons();

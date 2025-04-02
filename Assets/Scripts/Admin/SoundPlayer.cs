@@ -10,4 +10,23 @@ public class SoundPlayer : MonoBehaviour
 		source.loop = loop;
 		source.Play();
 	}
+
+	public static GameObject PlayInBackground(GameObject sourceGameObject, AudioClip clip, bool loop = false)
+	{
+		GameObject soundObject = new("SoundPlayer - " + clip.name);
+		soundObject.transform.SetParent(sourceGameObject.transform);
+
+		AudioSource source = soundObject.AddComponent<AudioSource>();
+
+		source.clip = clip;
+		source.loop = loop;
+		source.Play();
+
+		if (!loop)
+		{
+			Destroy(soundObject, clip.length);
+		}
+
+		return soundObject;
+	}
 }

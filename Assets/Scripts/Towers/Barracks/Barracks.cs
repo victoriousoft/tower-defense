@@ -16,9 +16,6 @@ public class Barracks : BaseTower
 	private GameObject[] troops;
 	private Animator animator;
 
-	// tohle se neimplementuje v barracks
-	protected override void FixedUpdate() { }
-
 	protected override void Start()
 	{
 		base.Start();
