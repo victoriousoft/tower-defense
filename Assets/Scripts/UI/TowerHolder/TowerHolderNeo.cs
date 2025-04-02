@@ -385,9 +385,7 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
 		animator.SetTrigger("BuildStart");
 
-		audioSource.clip = buildSound;
-		audioSource.loop = true;
-		audioSource.Play();
+		SoundPlayer.PlaySound(audioSource, buildSound, true);
 
 		prefabToBuild = towerPrefab;
 	}
@@ -420,9 +418,7 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 		if (towerInstance == null)
 			return;
 
-		audioSource.clip = sellSound;
-		audioSource.loop = false;
-		audioSource.Play();
+		SoundPlayer.PlaySound(audioSource, sellSound, false);
 
 		if (isEvolutionTower())
 		{
