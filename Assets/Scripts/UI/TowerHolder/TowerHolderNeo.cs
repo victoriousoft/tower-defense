@@ -51,6 +51,9 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	public SpriteRenderer backgroundSprite;
 	public GameObject statusBar;
 
+	public AudioClip buildSound;
+	public AudioClip sellSound;
+
 	private Dictionary<TowerTypes, GameObject> towerPrefabs;
 	public Dictionary<ButtonAction, Sprite> towerIcons;
 	public Dictionary<TowerTypes, Sprite[]> evolutionTowerIcons;
@@ -75,6 +78,7 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	private bool isMouseDown = false;
 
 	private GameObject prefabToBuild;
+	private AudioSource audioSource;
 
 	void Awake()
 	{
@@ -111,6 +115,7 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 		};
 
 		animator = GetComponent<Animator>();
+		audioSource = GetComponent<AudioSource>();
 
 		rangeRenderer = GetComponent<LineRenderer>();
 		rangeRenderer.enabled = false;
@@ -380,11 +385,17 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
 		animator.SetTrigger("BuildStart");
 
+		audioSource.clip = buildSound;
+		audioSource.loop = true;
+		audioSource.Play();
+
 		prefabToBuild = towerPrefab;
 	}
 
 	private void BuyTowerAnimationCompletion()
 	{
+		audioSource.Stop();
+
 		towerInstance = Instantiate(prefabToBuild, transform.position, Quaternion.identity, transform);
 
 		BaseTower baseTowerScript = towerInstance.GetComponent<BaseTower>();
@@ -408,6 +419,10 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	{
 		if (towerInstance == null)
 			return;
+
+		audioSource.clip = sellSound;
+		audioSource.loop = false;
+		audioSource.Play();
 
 		if (isEvolutionTower())
 		{
