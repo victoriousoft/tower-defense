@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: death_bDog
+  m_Name: blackDog_runL
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,15 +21,15 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 21300000, guid: c3c65b5b7076c944db66fe9242cd750b, type: 3}
+      value: {fileID: 21300000, guid: dd7c334a1efaaad4d94d87f81824d2f8, type: 3}
     - time: 0.13333334
-      value: {fileID: 21300000, guid: 63cce3b65cd0381479a9a3f3043afe71, type: 3}
+      value: {fileID: 21300000, guid: af228b656ee66ee4397d2bf9319585c2, type: 3}
     - time: 0.25
-      value: {fileID: 21300000, guid: 5587403b1cfacf441a351bcef5c35d63, type: 3}
+      value: {fileID: 21300000, guid: a9ed77ce96ab40a409c6dc7f414ff560, type: 3}
     - time: 0.36666667
-      value: {fileID: 21300000, guid: 5067441ce0809ac41876d6a700896443, type: 3}
+      value: {fileID: 21300000, guid: 8e6a4e12c0bfde742a64e4f13d9ee8dc, type: 3}
     - time: 0.5
-      value: {fileID: 21300000, guid: 5067441ce0809ac41876d6a700896443, type: 3}
+      value: {fileID: 21300000, guid: 8e6a4e12c0bfde742a64e4f13d9ee8dc, type: 3}
     attribute: m_Sprite
     path: Sprite
     classID: 212
@@ -41,8 +41,22 @@ AnimationClip:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
-    genericBindings: []
-    pptrCurveMapping: []
+    genericBindings:
+    - serializedVersion: 2
+      path: 850496168
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
+    pptrCurveMapping:
+    - {fileID: 21300000, guid: dd7c334a1efaaad4d94d87f81824d2f8, type: 3}
+    - {fileID: 21300000, guid: af228b656ee66ee4397d2bf9319585c2, type: 3}
+    - {fileID: 21300000, guid: a9ed77ce96ab40a409c6dc7f414ff560, type: 3}
+    - {fileID: 21300000, guid: 8e6a4e12c0bfde742a64e4f13d9ee8dc, type: 3}
+    - {fileID: 21300000, guid: 8e6a4e12c0bfde742a64e4f13d9ee8dc, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

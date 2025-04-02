@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: bBlackDogEnemyData
   m_EditorClassIdentifier: 
   stats:
-    maxHealth: 500
+    maxHealth: 20
     damage: 10
     cashDrop: 100
     speed: 1

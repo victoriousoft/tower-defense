@@ -60,7 +60,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 			isPaused = false;
 			currentTarget = FindEnemyInRange();
 
-			if (!isPaused)
+			if (!isPaused && health > 0)
 				Move();
 			if (currentTarget != null && canAttack)
 				Attack();
@@ -104,13 +104,13 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 		if (Mathf.Abs(moveDirection.x) > Mathf.Abs(moveDirection.y))
 		{
-			animator.SetFloat("x", moveDirection.x);
 			animator.SetFloat("y", 0);
+			animator.SetFloat("x", moveDirection.x);
 		}
 		else
 		{
-			animator.SetFloat("y", moveDirection.y);
 			animator.SetFloat("x", 0);
+			animator.SetFloat("y", moveDirection.y);
 		}
 
 		if (Vector2.Distance(transform.position, (Vector2)points[currentPointIndex].position + positionOffset) < 0.1f)
@@ -176,7 +176,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 		if (health <= 0)
 		{
-			Death();
+			StartCoroutine(Death());
 		}
 	}
 
@@ -189,7 +189,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 		if (animator.GetFloat("x") != 0)
 			spriteRenderer.flipX = animator.GetFloat("x") < 0;
-		animator.Play("death");
+		animator.SetBool("death", true);
 		yield return null;
 		Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
 	}

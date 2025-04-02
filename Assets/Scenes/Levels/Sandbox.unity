@@ -3947,26 +3947,11 @@ MonoBehaviour:
       count: 10
       spawnDelay: 1
       initialDelay: 0
-    - enemyPrefab: {fileID: 9059301247369330279, guid: 5454311c74a546e44954c494185f1ca7, type: 3}
-      pathParent: {fileID: 1110906503}
-      count: 7
-      spawnDelay: 0.75
-      initialDelay: 0
-    - enemyPrefab: {fileID: 9059301247369330279, guid: 1f7246b5e78970e4ca258876c8d0cc72, type: 3}
-      pathParent: {fileID: 841696768}
-      count: 0
-      spawnDelay: 6
-      initialDelay: 1
   - initialDelay: 20
     enemies:
-    - enemyPrefab: {fileID: 9059301247369330279, guid: 5454311c74a546e44954c494185f1ca7, type: 3}
+    - enemyPrefab: {fileID: 9059301247369330279, guid: 5d2dd7192bfa41b4aa5b9ccdce4406ac, type: 3}
       pathParent: {fileID: 1110906503}
       count: 25
-      spawnDelay: 1
-      initialDelay: 0
-    - enemyPrefab: {fileID: 9059301247369330279, guid: 1f7246b5e78970e4ca258876c8d0cc72, type: 3}
-      pathParent: {fileID: 841696768}
-      count: 10
       spawnDelay: 1
       initialDelay: 0
 --- !u!1 &1270517328
