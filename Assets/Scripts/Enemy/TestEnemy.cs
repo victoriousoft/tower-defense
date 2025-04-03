@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class TestEnemy : BaseEnemy
 {
-	public Animator animator;
-
 	protected override void Attack()
 	{
 		if (
