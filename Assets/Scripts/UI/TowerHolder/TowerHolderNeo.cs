@@ -544,13 +544,24 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
 	private IEnumerator WaitForMouseReleaseAndReposition()
 	{
-		yield return new WaitUntil(() => Input.GetMouseButtonUp(0));
-		yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+		while (true)
+		{
+			if (Input.GetMouseButtonDown(1))
+			{
+				HideButtons();
+				yield break;
+			}
 
-		Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			if (Input.GetMouseButtonDown(0))
+			{
+				Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+				towerInstance.GetComponent<Barracks>().SetTroopRandezvousPoint(mousePosition);
+				HideButtons();
+				yield break;
+			}
 
-		towerInstance.GetComponent<Barracks>().SetTroopRandezvousPoint(mousePosition);
-		HideButtons();
+			yield return null;
+		}
 	}
 
 	bool IsMouseOverAllButtons()
