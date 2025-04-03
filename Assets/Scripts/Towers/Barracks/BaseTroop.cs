@@ -80,6 +80,8 @@ public abstract class BaseTroop : MonoBehaviour
 				)
 				{
 					animator.SetFloat("x", 0);
+					float direction = currentEnemy.transform.position.x - transform.position.x;
+					animator.SetFloat("x", direction);
 					Attack();
 				}
 			}
@@ -120,8 +122,10 @@ public abstract class BaseTroop : MonoBehaviour
 	{
 		healthBar.gameObject.SetActive(false);
 		animator.SetTrigger("die");
-		if (currentEnemy != null)
-			currentEnemy.GetComponent<BaseEnemy>().currentTarget = null;
+		currentEnemy.GetComponent<BaseEnemy>().currentTarget = null;
+		float direction = currentEnemy.transform.position.x - transform.position.x;
+		animator.SetFloat("x", direction);
+
 		homeBase.GetComponent<Barracks>().RequestTroopRevive(id);
 		yield return null;
 		yield return null;

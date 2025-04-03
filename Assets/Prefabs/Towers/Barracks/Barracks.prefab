@@ -97,7 +97,10 @@ MonoBehaviour:
   towerType: 0
   troopCount: 3
   respawnCooldown: 5
-  troopPrefab: {fileID: 1588823637165296686, guid: f36ba79fe68968846a3e5d2aae66b7b9, type: 3}
+  troopPrefabs:
+  - {fileID: 1588823637165296686, guid: f36ba79fe68968846a3e5d2aae66b7b9, type: 3}
+  - {fileID: 1588823637165296686, guid: 2d1d9a824e6c5484f9c8245deade2794, type: 3}
+  - {fileID: 1588823637165296686, guid: bf6588f990908b3469cf838933fcc9f9, type: 3}
   randezvousOffset: 0.5
 --- !u!95 &5504307546678931042
 Animator:

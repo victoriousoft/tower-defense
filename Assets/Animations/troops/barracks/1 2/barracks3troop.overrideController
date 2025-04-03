@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: barracks3troop
+  m_Controller: {fileID: 9100000, guid: f1e95155a5418a5408cada8ab6b128d8, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 56a71b09c57c5764781647e10a361718, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ddceec375c9884746ab24c4739eb61e5, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 2a50f4e2d8b40a8478ea11c2c7bf9f8c, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: d51dfdff3b5d0cd429df84230ef0ee8e, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: cd0ee5921d951724bb4e40be15f0c927, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: e0d4b942874df034c9864d8c9aa5831d, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 38a8b89d0f0e9be4ab25489aed8b38a5, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7ed7a2372632774449cbafe86386e64d, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: a1d73c33dfea72d489584b7d2291412d, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 41e7ceca9d5dc8e49bd78f9d80aad3ac, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: afaf2e368f3c6da4c9c130afba30ea99, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 4fbebe83159ccab4e9be02764289c5c6, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: c3e0492a8fde90144a0078e3f30f6cee, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a598f25b4aee846489782f21c1eda0c7, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: dce4ddb7782968b4ea9d0320fd1660b6, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 1d61e9ac723daf7469d24732c5843a7a, type: 2}

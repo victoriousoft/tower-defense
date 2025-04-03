@@ -10,7 +10,7 @@ public class Barracks : BaseTower
 	[HideInInspector]
 	public Vector2 localTroopRandezvousPoint;
 
-	public GameObject troopPrefab;
+	public GameObject[] troopPrefabs = new GameObject[3];
 	public float randezvousOffset = 1;
 
 	private GameObject[] troops;
@@ -62,7 +62,7 @@ public class Barracks : BaseTower
 		if (troops[id] != null)
 			return;
 
-		GameObject troop = Instantiate(troopPrefab, transform.position, Quaternion.identity, transform);
+		GameObject troop = Instantiate(troopPrefabs[level], transform.position, Quaternion.identity, transform);
 		troop.GetComponent<BaseTroop>().homeBase = gameObject;
 		troop.GetComponent<BaseTroop>().targetLocation = RequestTroopRandezvousPoint(id);
 		troop.GetComponent<BaseTroop>().id = id;
