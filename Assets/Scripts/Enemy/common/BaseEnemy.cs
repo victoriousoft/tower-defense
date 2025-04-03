@@ -35,13 +35,16 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 	private HealthBar healthBar;
 
 	protected bool canAttack = true;
+	protected bool isAbilityCharged = false;
 
 	[HideInInspector]
 	public float currentSpeed;
 	public Animator animator;
 
 	private SpriteRenderer spriteRenderer;
+
 	protected abstract void Attack();
+	protected abstract void UseAbility();
 
 	void Awake()
 	{
@@ -56,6 +59,8 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		currentMagicResistance = enemyData.stats.magicResistance;
 		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 		animator = GetComponent<Animator>();
+
+		StartCoroutine(ResetAbilityCooldown());
 	}
 
 	void Update()
@@ -73,6 +78,13 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 				Move();
 				isIdle = false;
 				animator.SetBool("idle", false);
+
+				if (isAbilityCharged)
+				{
+					UseAbility();
+					isAbilityCharged = false;
+					StartCoroutine(ResetAbilityCooldown());
+				}
 			}
 			else if (!isIdle)
 			{
@@ -332,5 +344,11 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 	{
 		yield return new WaitForSeconds(enemyData.stats.attackCooldown);
 		canAttack = true;
+	}
+
+	protected IEnumerator ResetAbilityCooldown()
+	{
+		yield return new WaitForSeconds(enemyData.stats.abilityCooldown);
+		isAbilityCharged = true;
 	}
 }

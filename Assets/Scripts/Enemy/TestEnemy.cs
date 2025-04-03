@@ -15,4 +15,9 @@ public class TestEnemy : BaseEnemy
 		canAttack = false;
 		StartCoroutine(ResetAttackCooldown());
 	}
+
+	protected override void UseAbility()
+	{
+		Debug.Log("TestEnemy uses ability");
+	}
 }
