@@ -23,8 +23,12 @@ MonoBehaviour:
     attackCooldown: 1
     visRange: 1
     playerLives: 1
+    attacksTroops: 1
+    abilityCooldown: 10
   info:
     name: "Litaj\xEDc\xED test enem\xE1k"
     description: "Na to \u017Ee l\xEDt\xE1, je stejn\u011B pomalej jako chod\xEDc\xED
       enem\xE1k: bruh"
   enemyType: 1
+  attackSound: {fileID: 0}
+  deathSound: {fileID: 0}

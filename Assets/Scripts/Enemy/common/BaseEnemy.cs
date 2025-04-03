@@ -35,13 +35,19 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 	private HealthBar healthBar;
 
 	protected bool canAttack = true;
+	protected bool isAbilityCharged = false;
 
 	[HideInInspector]
 	public float currentSpeed;
 	public Animator animator;
 
 	private SpriteRenderer spriteRenderer;
+
 	protected abstract void Attack();
+
+	protected virtual void UseAbility() { }
+
+	protected virtual void ExtendedDeath() { }
 
 	void Awake()
 	{
@@ -56,6 +62,8 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		currentMagicResistance = enemyData.stats.magicResistance;
 		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 		animator = GetComponent<Animator>();
+
+		StartCoroutine(ResetAbilityCooldown());
 	}
 
 	void Update()
@@ -73,6 +81,13 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 				Move();
 				isIdle = false;
 				animator.SetBool("idle", false);
+
+				if (isAbilityCharged)
+				{
+					UseAbility();
+					isAbilityCharged = false;
+					StartCoroutine(ResetAbilityCooldown());
+				}
 			}
 			else if (!isIdle)
 			{
@@ -82,7 +97,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 				isIdle = true;
 			}
 		}
-		else if (canAttack)
+		else if (canAttack && enemyData.stats.attacksTroops)
 		{
 			AttackAnimation();
 			Attack();
@@ -145,6 +160,11 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		}
 
 		transform.position = (Vector2)points[currentPointIndex].position + positionOffset;
+	}
+
+	public void SetPathParent(Transform[] newPoints)
+	{
+		points = newPoints;
 	}
 
 	void Move()
@@ -247,6 +267,9 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 			spriteRenderer.flipX = animator.GetFloat("x") < 0;
 		animator.SetBool("death", true);
 		yield return null;
+
+		ExtendedDeath();
+
 		Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
 	}
 
@@ -328,9 +351,27 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		nerfed = false;
 	}
 
+	protected void SpawnChild(GameObject childPrefab, float xSpawnOffset)
+	{
+		GameObject child = Instantiate(
+			childPrefab,
+			transform.position + new Vector3(xSpawnOffset, 0, 0),
+			Quaternion.identity
+		);
+		child.transform.SetParent(gameObject.transform.parent.gameObject.transform);
+		child.GetComponent<BaseEnemy>().currentPointIndex = currentPointIndex;
+		child.GetComponent<BaseEnemy>().SetPathParent(points);
+	}
+
 	protected IEnumerator ResetAttackCooldown()
 	{
 		yield return new WaitForSeconds(enemyData.stats.attackCooldown);
 		canAttack = true;
+	}
+
+	protected IEnumerator ResetAbilityCooldown()
+	{
+		yield return new WaitForSeconds(enemyData.stats.abilityCooldown);
+		isAbilityCharged = true;
 	}
 }
