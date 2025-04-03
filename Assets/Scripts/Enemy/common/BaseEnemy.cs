@@ -44,7 +44,10 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 	private SpriteRenderer spriteRenderer;
 
 	protected abstract void Attack();
-	protected abstract void UseAbility();
+
+	protected virtual void UseAbility() { }
+
+	protected virtual void ExtendedDeath() { }
 
 	void Awake()
 	{
@@ -264,6 +267,9 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 			spriteRenderer.flipX = animator.GetFloat("x") < 0;
 		animator.SetBool("death", true);
 		yield return null;
+
+		ExtendedDeath();
+
 		Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
 	}
 
