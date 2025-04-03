@@ -7,47 +7,39 @@ public class HomingMissile : MonoBehaviour
 	private Animator animator;
 	private bool movable = true;
 	public GameObject explosionPrefab;
+	private GameObject currentTarget;
 
 	void Awake()
 	{
-		if (GetComponent<Animator>() != null)
-			animator = GetComponent<Animator>();
+		animator = GetComponent<Animator>();
 	}
 
 	public IEnumerator MoveToTarget(GameObject target, float damage, float speed)
 	{
+		currentTarget = target;
+		float startTime = Time.time;
+
 		while (target != null && Vector3.Distance(transform.position, target.transform.position) > 0.1f && movable)
 		{
 			if (animator != null)
 				animator.SetFloat("x", target.transform.position.x - transform.position.x);
+
 			transform.position = Vector3.MoveTowards(
 				transform.position,
 				target.transform.position,
 				Time.deltaTime * speed
 			);
+
 			yield return null;
 		}
 
+		if (damage == 0)
+			yield break;
 		if (target == null)
 		{
-			// Find a new target
-			GameObject[] potentialTargets = TowerHelpers.GetEnemiesInRange(
-				transform.position,
-				1000,
-				new EnemyTypes[] { EnemyTypes.GROUND }
-			);
-
-			if (potentialTargets.Length > 0)
-			{
-				GameObject newTarget = potentialTargets[0];
-				StartCoroutine(MoveToTarget(newTarget, damage, speed));
-			}
-			else
-			{
-				StartCoroutine(Explode(null, damage, speed));
-			}
+			FindNewTargetAndMove(damage, speed);
 		}
-		else if (target.CompareTag("Enemy"))
+		else
 		{
 			StartCoroutine(Explode(target, damage, speed));
 		}
@@ -96,7 +88,6 @@ public class HomingMissile : MonoBehaviour
 			}
 		}
 
-		// bum efekt
 		if (animator != null)
 			animator.SetTrigger("explode");
 		movable = false;
@@ -107,6 +98,34 @@ public class HomingMissile : MonoBehaviour
 			.GetComponent<SelfDestruct>()
 			.DestroySelf(explosionFX.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
 		Destroy(this.gameObject);
+	}
+
+	void FindNewTargetAndMove(float damage, float speed)
+	{
+		GameObject[] potentialTargets = TowerHelpers.GetEnemiesInRange(
+			transform.position,
+			1000,
+			new EnemyTypes[] { EnemyTypes.GROUND }
+		);
+
+		GameObject newTarget = null;
+		foreach (GameObject enemy in potentialTargets)
+		{
+			if (enemy != null && enemy != currentTarget)
+			{
+				newTarget = enemy;
+				break;
+			}
+		}
+
+		if (newTarget != null)
+		{
+			StartCoroutine(MoveToTarget(newTarget, damage, speed));
+		}
+		else
+		{
+			StartCoroutine(Explode(null, damage, speed));
+		}
 	}
 
 	public void MoveToTargetGetter(GameObject target, float damage, float speed)
