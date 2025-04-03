@@ -23,7 +23,7 @@ MonoBehaviour:
     attackCooldown: 1
     visRange: 4
     playerLives: 2
-    attacksTroops: 1
+    attacksTroops: 0
     abilityCooldown: 3
   info:
     name: Doggo
