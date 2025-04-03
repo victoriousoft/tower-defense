@@ -28,7 +28,8 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 	[HideInInspector]
 	public int currentPhysicalResistance,
 		currentMagicResistance;
-	private bool nerfed = false;
+	private bool nerfed = false,
+		isIdle = false;
 	private HealthBar healthBar;
 
 	protected bool canAttack = true;
@@ -63,10 +64,26 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 			currentTarget = FindEnemyInRange();
 
 			if (!isPaused && health > 0)
+			{
 				Move();
+				isIdle = false;
+			}
+			else if (!isIdle)
+			{
+				animator.SetTrigger("idle");
+				isIdle = true;
+			}
 		}
 		else if (canAttack)
+		{
 			Attack();
+			isIdle = true;
+		}
+		else if (!isIdle)
+		{
+			animator.SetTrigger("idle");
+			isIdle = true;
+		}
 	}
 
 	public void OnPointerClick(PointerEventData eventData)
@@ -188,6 +205,8 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 			PlayerStatsManager.AddGold(enemyData.stats.cashDrop);
 		else
 			PlayerStatsManager.AddGold(enemyData.stats.cashDrop * 3);
+
+		healthBar.gameObject.SetActive(false);
 
 		if (animator.GetFloat("x") != 0)
 			spriteRenderer.flipX = animator.GetFloat("x") < 0;

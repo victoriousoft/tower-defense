@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TestTroop : BaseTroop
+public class BarracksTroop : BaseTroop
 {
 	protected override void Attack()
 	{
@@ -9,6 +9,7 @@ public class TestTroop : BaseTroop
 
 		isFighting = true;
 
+		animator.SetTrigger("attack");
 		currentEnemy.GetComponent<BaseEnemy>().TakeDamage(troopData.stats.damage, DamageTypes.PHYSICAL);
 		canAttack = false;
 		StartCoroutine(ResetAttackCooldown());

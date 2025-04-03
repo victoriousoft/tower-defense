@@ -31,12 +31,14 @@ public abstract class BaseTroop : MonoBehaviour
 	protected bool ignoreEnemies = false;
 	protected bool isFighting = false;
 
+	public Animator animator;
 	protected abstract void Attack();
 
 	void Awake()
 	{
 		health = troopData.stats.maxHealth;
 		healthBar = GetComponentInChildren<HealthBar>();
+		animator = GetComponent<Animator>();
 	}
 
 	void Update()
@@ -106,6 +108,7 @@ public abstract class BaseTroop : MonoBehaviour
 
 	public void Die()
 	{
+		animator.SetBool("death", true);
 		currentEnemy.GetComponent<BaseEnemy>().currentTarget = null;
 		homeBase.GetComponent<Barracks>().RequestTroopRevive(id);
 		Destroy(gameObject);
@@ -113,7 +116,14 @@ public abstract class BaseTroop : MonoBehaviour
 
 	public void WalkTo(Vector3 target)
 	{
-		transform.position = Vector2.MoveTowards(transform.position, target, troopData.stats.speed * Time.deltaTime);
+		Vector2 currentPosition = transform.position;
+		Vector2 newPosition = Vector2.MoveTowards(currentPosition, target, troopData.stats.speed * Time.deltaTime);
+
+		Vector2 movement = newPosition - currentPosition;
+
+		animator.SetFloat("x", movement.x);
+
+		transform.position = newPosition;
 	}
 
 	void FindNewEnemy()
