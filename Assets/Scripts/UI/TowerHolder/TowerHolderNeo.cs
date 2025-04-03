@@ -319,9 +319,7 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 				menuButtons[(int)ButtonIndex.BOTTOM_CENTER]
 					.GetComponent<TowerHolderButton>()
 					.SetAction(ButtonAction.SELL);
-				menuButtons[(int)ButtonIndex.CENTER_LEFT]
-					.GetComponent<TowerHolderButton>()
-					.SetAction(ButtonAction.CYCLE_RETARGET);
+				// retarget/reposition v BuyTowerAnimationCompletion()
 				break;
 
 			case MenuState.UpgradeTowerFinal:
@@ -334,9 +332,18 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 				menuButtons[(int)ButtonIndex.BOTTOM_CENTER]
 					.GetComponent<TowerHolderButton>()
 					.SetAction(ButtonAction.SELL);
-				menuButtons[(int)ButtonIndex.CENTER_LEFT]
-					.GetComponent<TowerHolderButton>()
-					.SetAction(ButtonAction.CYCLE_RETARGET);
+				if (towerInstance.GetComponent<BaseTower>().towerType == TowerTypes.Barracks)
+				{
+					menuButtons[(int)ButtonIndex.CENTER_LEFT]
+						.GetComponent<TowerHolderButton>()
+						.SetAction(ButtonAction.REPOSITION_BARRACKS);
+				}
+				else
+				{
+					menuButtons[(int)ButtonIndex.CENTER_LEFT]
+						.GetComponent<TowerHolderButton>()
+						.SetAction(ButtonAction.CYCLE_RETARGET);
+				}
 				break;
 
 			case MenuState.EvolutionTower:
@@ -346,24 +353,22 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 				menuButtons[(int)ButtonIndex.BOTTOM_CENTER]
 					.GetComponent<TowerHolderButton>()
 					.SetAction(ButtonAction.SELL);
-				menuButtons[(int)ButtonIndex.CENTER_LEFT]
-					.GetComponent<TowerHolderButton>()
-					.SetAction(ButtonAction.CYCLE_RETARGET);
+				if (towerInstance.GetComponent<BaseTower>().towerType == TowerTypes.Barracks)
+				{
+					menuButtons[(int)ButtonIndex.CENTER_LEFT]
+						.GetComponent<TowerHolderButton>()
+						.SetAction(ButtonAction.REPOSITION_BARRACKS);
+				}
+				else
+				{
+					menuButtons[(int)ButtonIndex.CENTER_LEFT]
+						.GetComponent<TowerHolderButton>()
+						.SetAction(ButtonAction.CYCLE_RETARGET);
+				}
 				break;
 
 			default:
 				break;
-		}
-
-		if (
-			towerInstance
-			&& towerInstance.GetComponent<BaseTower>() != null
-			&& towerInstance.GetComponent<BaseTower>().towerType == TowerTypes.Barracks
-		)
-		{
-			menuButtons[(int)ButtonIndex.CENTER_LEFT]
-				.GetComponent<TowerHolderButton>()
-				.SetAction(ButtonAction.REPOSITION_BARRACKS);
 		}
 	}
 
@@ -407,6 +412,12 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 			menuButtons[(int)ButtonIndex.CENTER_LEFT]
 				.GetComponent<TowerHolderButton>()
 				.SetAction(ButtonAction.REPOSITION_BARRACKS);
+		}
+		else
+		{
+			menuButtons[(int)ButtonIndex.CENTER_LEFT]
+				.GetComponent<TowerHolderButton>()
+				.SetAction(ButtonAction.CYCLE_RETARGET);
 		}
 
 		isMenuLocked = false;
