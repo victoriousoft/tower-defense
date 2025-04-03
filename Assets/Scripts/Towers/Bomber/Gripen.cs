@@ -13,8 +13,8 @@ public class Gripen : BaseEvolutionTower
 		crashed = false;
 	public GameObject projectilePrefab;
 	private bool readyToCrash = false;
-	public GameObject ExplosionEffect;
 	private Animator animator;
+	public GameObject explosionPrefab;
 
 	protected override void Start()
 	{
@@ -127,7 +127,11 @@ public class Gripen : BaseEvolutionTower
 		yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length - 0.125f);
 
 		ScreenShake.Instance.Shake(0.55f, 0.3f);
-		//annimace padu + vybuch + zniceni
+		GameObject explosionFX = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+		explosionFX
+			.GetComponent<SelfDestruct>()
+			.DestroySelf(explosionFX.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
+
 		GameObject[] affectedEnemies = TowerHelpers.GetEnemiesInRange(
 			transform.position,
 			crashDamageRadius,

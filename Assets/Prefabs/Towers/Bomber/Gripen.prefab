@@ -866,7 +866,7 @@ MonoBehaviour:
   crashDamageRadius: 3
   kamikadzeDamage: 100
   projectilePrefab: {fileID: 3215632836880019647, guid: 985110dcd473d7642b40bf4f311c40e9, type: 3}
-  ExplosionEffect: {fileID: 13743912110108325, guid: f60d753f5e9c1f74ca8321c562c551e9, type: 3}
+  explosionPrefab: {fileID: 5843283228616680654, guid: 58ecf64c05825c44c9704a5cd04d30db, type: 3}
 --- !u!1 &9011415905901537021
 GameObject:
   m_ObjectHideFlags: 0

@@ -4875,6 +4875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSkillBomber: 0
+  explosionPrefab: {fileID: 5843283228616680654, guid: bc3ce6692116b3c44b037396b0187757, type: 3}
 --- !u!114 &-2062497842414096079
 MonoBehaviour:
   m_ObjectHideFlags: 0

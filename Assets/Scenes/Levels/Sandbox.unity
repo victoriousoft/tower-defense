@@ -2850,7 +2850,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1343530241786801499, guid: 6dfda4cd63b3878439edc3a0ccedabaf, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1997053013555343944, guid: 6dfda4cd63b3878439edc3a0ccedabaf, type: 3}
       propertyPath: m_RootOrder
@@ -3953,8 +3953,8 @@ MonoBehaviour:
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: 5d2dd7192bfa41b4aa5b9ccdce4406ac, type: 3}
       pathParent: {fileID: 1763392645}
-      count: 1
-      spawnDelay: 1
+      count: 20
+      spawnDelay: 5
       initialDelay: 0
   - initialDelay: 9999999
     enemies: []
@@ -5372,7 +5372,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1343530241786801499, guid: 6dfda4cd63b3878439edc3a0ccedabaf, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1997053013555343944, guid: 6dfda4cd63b3878439edc3a0ccedabaf, type: 3}
       propertyPath: m_RootOrder
