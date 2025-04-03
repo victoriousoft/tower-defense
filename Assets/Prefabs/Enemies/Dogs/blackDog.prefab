@@ -201,8 +201,10 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: 1b4b84dc3dd6fca4aa22474b3c7640e2, type: 2}
   currentPhysicalResistance: 0
   currentMagicResistance: 0
+  isIdle: 0
   currentSpeed: 0
   animator: {fileID: 3669478635275523187}
+  childPrefab: {fileID: 9059301247369330279}
 --- !u!1001 &5007395829321720595
 PrefabInstance:
   m_ObjectHideFlags: 0

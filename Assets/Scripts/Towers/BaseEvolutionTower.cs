@@ -75,10 +75,11 @@ public abstract class BaseEvolutionTower : BaseTower
 			healthBar.SetHealth(0);
 			isSkillCharged = false;
 
-			SoundPlayer.PlayInBackground(
-				gameObject,
-				towerData.evolutions[evolutionIndex].upgradeSounds[Random.Range(0, towerData.upgradeSounds.Length)]
-			);
+			//TODO
+			/*SoundPlayer.PlayInBackground(
+			    gameObject,
+			    towerData.evolutions[evolutionIndex].upgradeSounds[Random.Range(0, towerData.upgradeSounds.Length)]
+			);*/
 
 			skillCoroutine = StartCoroutine(
 				healthBar.Animate(

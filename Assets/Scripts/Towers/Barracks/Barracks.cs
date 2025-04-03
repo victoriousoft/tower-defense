@@ -46,6 +46,20 @@ public class Barracks : BaseTower
 		yield return null;
 	}
 
+	protected override void ExtendedUpgrade()
+	{
+		for (int i = 0; i < troopCount; i++)
+		{
+			if (troops[i] != null)
+			{
+				Destroy(troops[i]);
+				troops[i] = null;
+			}
+		}
+
+		SpawnTroops(troopCount);
+	}
+
 	void SpawnTroops(int count)
 	{
 		for (int i = 0; i < count; i++)

@@ -6,6 +6,7 @@ public class MiddleEastBomber : BaseEvolutionTower
 {
 	private GameObject[] currentBombers = new GameObject[3];
 	public GameObject[] bomberWaitPoints = new GameObject[3];
+	public Transform spawnPosition;
 	public GameObject bomberPrefab;
 	private readonly int[] evoBomberCount = new int[] { 3, 4, 5 };
 	public float bomberSpeed;
@@ -47,7 +48,7 @@ public class MiddleEastBomber : BaseEvolutionTower
 		{
 			if (currentBombers[i] == null)
 			{
-				GameObject newBomber = Instantiate(bomberPrefab, transform.position, Quaternion.identity);
+				GameObject newBomber = Instantiate(bomberPrefab, spawnPosition.transform.position, Quaternion.identity);
 				currentBombers[i] = newBomber;
 				HomingMissile bomberScript = newBomber.GetComponent<HomingMissile>();
 				StartCoroutine(bomberScript.MoveToTarget(bomberWaitPoints[i], 0, bomberSpeed));

@@ -174,13 +174,11 @@ public abstract class BaseTroop : MonoBehaviour
 
 		GameObject[] enemiesInRange = enemiesInTroopRange
 			.Intersect(enemiesInTowerRange)
-			.Where(enemy => enemy.GetComponent<BaseEnemy>().currentTarget == null)
-			.ToArray();
-		enemiesInRange = enemiesInRange
-			.Where(enemy => troopData.enemyTypes.Contains(enemy.GetComponent<BaseEnemy>().enemyData.enemyType))
-			.ToArray();
-
-		enemiesInRange = enemiesInRange
+			.Where(enemy =>
+				enemy.GetComponent<BaseEnemy>().currentTarget == null
+				&& troopData.enemyTypes.Contains(enemy.GetComponent<BaseEnemy>().enemyData.enemyType)
+				&& enemy.GetComponent<BaseEnemy>().enemyData.stats.attacksTroops == true
+			)
 			.OrderBy(enemy => enemy.GetComponent<BaseEnemy>().currentTarget != null)
 			.ThenBy(enemy => Vector3.Distance(transform.position, enemy.transform.position))
 			.ToArray();

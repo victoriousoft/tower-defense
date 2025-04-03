@@ -4,11 +4,22 @@ using UnityEngine;
 public class HomingMissile : MonoBehaviour
 {
 	public bool isSkillBomber;
+	private Animator animator;
+	private bool movable = true;
+	public GameObject explosionPrefab;
+
+	void Awake()
+	{
+		if (GetComponent<Animator>() != null)
+			animator = GetComponent<Animator>();
+	}
 
 	public IEnumerator MoveToTarget(GameObject target, float damage, float speed)
 	{
-		while (target != null && Vector3.Distance(transform.position, target.transform.position) > 0.1f)
+		while (target != null && Vector3.Distance(transform.position, target.transform.position) > 0.1f && movable)
 		{
+			if (animator != null)
+				animator.SetFloat("x", target.transform.position.x - transform.position.x);
 			transform.position = Vector3.MoveTowards(
 				transform.position,
 				target.transform.position,
@@ -33,16 +44,16 @@ public class HomingMissile : MonoBehaviour
 			}
 			else
 			{
-				Explode(null, damage, speed);
+				StartCoroutine(Explode(null, damage, speed));
 			}
 		}
 		else if (target.CompareTag("Enemy"))
 		{
-			Explode(target, damage, speed);
+			StartCoroutine(Explode(target, damage, speed));
 		}
 	}
 
-	private void Explode(GameObject enemy, float damage, float speed)
+	private IEnumerator Explode(GameObject enemy, float damage, float speed)
 	{
 		GameObject[] enemies = TowerHelpers.GetEnemiesInRange(
 			transform.position,
@@ -53,7 +64,7 @@ public class HomingMissile : MonoBehaviour
 		if (enemies.Length == 0)
 		{
 			Destroy(this.gameObject);
-			return;
+			yield break;
 		}
 
 		foreach (GameObject e in enemies)
@@ -86,6 +97,15 @@ public class HomingMissile : MonoBehaviour
 		}
 
 		// bum efekt
+		if (animator != null)
+			animator.SetTrigger("explode");
+		movable = false;
+		if (animator != null)
+			yield return new WaitForSeconds(0.25f);
+		GameObject explosionFX = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+		explosionFX
+			.GetComponent<SelfDestruct>()
+			.DestroySelf(explosionFX.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
 		Destroy(this.gameObject);
 	}
 

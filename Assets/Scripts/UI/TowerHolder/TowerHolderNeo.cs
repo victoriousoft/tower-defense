@@ -520,19 +520,22 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 			transform.position
 		);
 
-		SoundPlayer.PlayInBackground(
-			gameObject,
-			towerInstance.GetComponent<BaseEvolutionTower>().towerData.evolutions[evolutionIndex].upgradeSounds[
-				Random.Range(
-					0,
-					towerInstance
-						.GetComponent<BaseEvolutionTower>()
-						.towerData.evolutions[evolutionIndex]
-						.upgradeSounds.Length
-				)
-			],
-			false
-		);
+		if (towerInstance.GetComponent<BaseEvolutionTower>().towerData.upgradeSounds.Length > 0)
+		{
+			SoundPlayer.PlayInBackground(
+				gameObject,
+				towerInstance.GetComponent<BaseEvolutionTower>().towerData.evolutions[evolutionIndex].upgradeSounds[
+					Random.Range(
+						0,
+						towerInstance
+							.GetComponent<BaseEvolutionTower>()
+							.towerData.evolutions[evolutionIndex]
+							.upgradeSounds.Length
+					)
+				],
+				false
+			);
+		}
 
 		HideButtons();
 		ChangeState(MenuState.EvolutionTower);

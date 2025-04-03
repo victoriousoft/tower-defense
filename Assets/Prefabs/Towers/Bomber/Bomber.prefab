@@ -159,6 +159,7 @@ MonoBehaviour:
   splashRadius: 1
   shotOrigin: {fileID: 5367021152722668337}
   bombPrefab: {fileID: 2831346277213790849, guid: 4c74b5fa71c123b42ac62a0c6a4725fb, type: 3}
+  explosionPrefab: {fileID: 5843283228616680654, guid: bc3ce6692116b3c44b037396b0187757, type: 3}
 --- !u!95 &7000671827535086502
 Animator:
   serializedVersion: 5

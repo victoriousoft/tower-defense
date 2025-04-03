@@ -25,6 +25,8 @@ public abstract class BaseTower : MonoBehaviour
 	protected abstract IEnumerator ChargeUp(GameObject enemy);
 	protected abstract void KillProjectile(GameObject projectile, GameObject enemy, Vector3 enemyPosition);
 
+	protected virtual void ExtendedUpgrade() { }
+
 	protected virtual void Awake()
 	{
 		towerAnimator = GetComponent<Animator>();
@@ -114,15 +116,20 @@ public abstract class BaseTower : MonoBehaviour
 
 		towerAnimator.SetTrigger("upgrade");
 
-		SoundPlayer.PlayInBackground(
-			gameObject,
-			towerData.upgradeSounds[Random.Range(0, towerData.upgradeSounds.Length)]
-		);
+		if (towerData.upgradeSounds.Length > 0)
+		{
+			SoundPlayer.PlayInBackground(
+				gameObject,
+				towerData.upgradeSounds[Random.Range(0, towerData.upgradeSounds.Length)]
+			);
+		}
 
 		//yield return new WaitForSeconds(0.5f);
 
 		if (shootCoroutine == null)
 			shootCoroutine = StartCoroutine(ChargeShootAndResetCooldown());
+
+		ExtendedUpgrade();
 
 		yield break;
 	}
@@ -141,7 +148,7 @@ public abstract class BaseTower : MonoBehaviour
 		// Tohle asi neni potreba, ale pro jistotu to necham tady, u hackermana to tweakuje
 		/* fuckoff unreachable code my ASS
 		GetComponent<LineRenderer>()
-			.SetPosition(0, transform.Find("shotOrigin").position);
+		    .SetPosition(0, transform.Find("shotOrigin").position);
 		GetComponent<LineRenderer>().SetPosition(1, transform.Find("shotOrigin").position);
 		*/
 	}
