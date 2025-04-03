@@ -159,6 +159,11 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		transform.position = (Vector2)points[currentPointIndex].position + positionOffset;
 	}
 
+	public void SetPathParent(Transform[] newPoints)
+	{
+		points = newPoints;
+	}
+
 	void Move()
 	{
 		if (points == null)
@@ -338,6 +343,18 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		if (spriteRenderer.color == Color.yellow)
 			spriteRenderer.color = Color.white;
 		nerfed = false;
+	}
+
+	protected void SpawnChild(GameObject childPrefab, float xSpawnOffset)
+	{
+		GameObject child = Instantiate(
+			childPrefab,
+			transform.position + new Vector3(xSpawnOffset, 0, 0),
+			Quaternion.identity
+		);
+		child.transform.SetParent(gameObject.transform.parent.gameObject.transform);
+		child.GetComponent<BaseEnemy>().currentPointIndex = currentPointIndex;
+		child.GetComponent<BaseEnemy>().SetPathParent(points);
 	}
 
 	protected IEnumerator ResetAttackCooldown()
