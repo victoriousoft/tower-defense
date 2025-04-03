@@ -82,7 +82,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 				isIdle = true;
 			}
 		}
-		else if (canAttack)
+		else if (canAttack && enemyData.stats.attacksTroops)
 		{
 			AttackAnimation();
 			Attack();
