@@ -31,7 +31,8 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 	private bool nerfed = false;
 
 	[HideInInspector]
-	public bool isIdle = false;
+	public bool isIdle = false,
+		attacksTroops;
 	private HealthBar healthBar;
 
 	protected bool canAttack = true;
@@ -39,6 +40,8 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 	[HideInInspector]
 	public float currentSpeed;
+
+	[HideInInspector]
 	public Animator animator;
 
 	private SpriteRenderer spriteRenderer;
@@ -53,6 +56,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 	{
 		currentSpeed = enemyData.stats.speed;
 		health = enemyData.stats.maxHealth;
+		attacksTroops = enemyData.stats.attacksTroops;
 		healthBar = GetComponentInChildren<HealthBar>();
 		positionOffset = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
 		if (enemyData.enemyType == EnemyTypes.FLYING)
@@ -97,7 +101,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 				isIdle = true;
 			}
 		}
-		else if (canAttack && enemyData.stats.attacksTroops)
+		else if (canAttack && attacksTroops)
 		{
 			AttackAnimation();
 			Attack();

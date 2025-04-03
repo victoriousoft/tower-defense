@@ -8,6 +8,6 @@ public class BlackDog : BaseEnemy
 
 	protected override void UseAbility()
 	{
-		SpawnChild(childPrefab, Random.Range(-0.5f, 0.5f));
+		//SpawnChild(childPrefab, Random.Range(-0.5f, 0.5f));
 	}
 }

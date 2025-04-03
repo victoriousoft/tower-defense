@@ -2815,7 +2815,7 @@ GameObject:
   m_Component:
   - component: {fileID: 977683741}
   m_Layer: 0
-  m_Name: 1
+  m_Name: 0
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -3512,8 +3512,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1711564585}
   - {fileID: 977683741}
+  - {fileID: 1711564585}
   m_Father: {fileID: 1069999000}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3951,13 +3951,18 @@ MonoBehaviour:
   waves:
   - initialDelay: 0
     enemies:
-    - enemyPrefab: {fileID: 9059301247369330279, guid: 5d2dd7192bfa41b4aa5b9ccdce4406ac, type: 3}
-      pathParent: {fileID: 1763392645}
-      count: 20
-      spawnDelay: 5
+    - enemyPrefab: {fileID: 9059301247369330279, guid: 0b5ec1e12cd3ef140a485beb4a56ee39, type: 3}
+      pathParent: {fileID: 1110906503}
+      count: 6
+      spawnDelay: 2
       initialDelay: 0
-  - initialDelay: 9999999
-    enemies: []
+  - initialDelay: 0
+    enemies:
+    - enemyPrefab: {fileID: 9059301247369330279, guid: 5b10d5bc59d620841b25da864e41a57a, type: 3}
+      pathParent: {fileID: 1110906503}
+      count: 22
+      spawnDelay: 0.5
+      initialDelay: 0
   waveStartSound: {fileID: 8300000, guid: 6aed442235522994a8ea6eb3affac9d4, type: 3}
 --- !u!82 &1258185206
 AudioSource:
@@ -5337,7 +5342,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1711564585}
   m_Layer: 0
-  m_Name: 0
+  m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
