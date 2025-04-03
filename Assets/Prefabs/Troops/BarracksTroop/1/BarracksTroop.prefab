@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   troopData: {fileID: 11400000, guid: d4fecdeff226b4e47b4d5d0e2ee545b0, type: 2}
+  animator: {fileID: 0}
 --- !u!95 &6667852593715878989
 Animator:
   serializedVersion: 5
@@ -104,7 +105,7 @@ Animator:
   m_GameObject: {fileID: 1588823637165296686}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: fb880e9c633b2d34388c53594a1f3c48, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

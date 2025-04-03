@@ -7,5 +7,21 @@ AnimatorOverrideController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: barracks1troop
-  m_Controller: {fileID: 0}
-  m_Clips: []
+  m_Controller: {fileID: 9100000, guid: f1e95155a5418a5408cada8ab6b128d8, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 56a71b09c57c5764781647e10a361718, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 09d675f547bcca04fa3a39679a150c1f, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: afaf2e368f3c6da4c9c130afba30ea99, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ce5b0812e6b1c0f43aeb95e6c7413c41, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 2a50f4e2d8b40a8478ea11c2c7bf9f8c, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 14dba705128838946a6a6d769bbff0f6, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: c3e0492a8fde90144a0078e3f30f6cee, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 58b4a10b44e610c49a0bea8b385ac547, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: cd0ee5921d951724bb4e40be15f0c927, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 79f9b6c6338a5174ea6e9dd96530c3de, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: dce4ddb7782968b4ea9d0320fd1660b6, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 43498769f46c03a428efad5fa1a2b06e, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 38a8b89d0f0e9be4ab25489aed8b38a5, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 1f251f33cde60944b9ba751e7e7439bd, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: a1d73c33dfea72d489584b7d2291412d, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: dd8ea6b71ec89384a82da5d1b5fea204, type: 2}

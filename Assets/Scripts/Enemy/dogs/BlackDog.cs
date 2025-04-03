@@ -8,7 +8,14 @@ public class BlackDog : BaseEnemy
 			currentTarget == null
 			|| Vector3.Distance(transform.position, currentTarget.transform.position) > enemyData.stats.attackRange
 		)
+		{
+			if (!isIdle)
+			{
+				animator.SetTrigger("idle");
+				isIdle = true;
+			}
 			return;
+		}
 
 		animator.SetTrigger("attack");
 		currentTarget.GetComponent<BaseTroop>().TakeDamage(enemyData.stats.damage);

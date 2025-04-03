@@ -28,8 +28,10 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 	[HideInInspector]
 	public int currentPhysicalResistance,
 		currentMagicResistance;
-	private bool nerfed = false,
-		isIdle = false;
+	private bool nerfed = false;
+
+	[HideInInspector]
+	public bool isIdle = false;
 	private HealthBar healthBar;
 
 	protected bool canAttack = true;
@@ -70,18 +72,17 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 			}
 			else if (!isIdle)
 			{
+				animator.SetFloat("x", 0);
+				animator.SetFloat("y", 0);
 				animator.SetTrigger("idle");
 				isIdle = true;
 			}
 		}
 		else if (canAttack)
 		{
+			animator.SetFloat("x", 0);
+			animator.SetFloat("y", 0);
 			Attack();
-			isIdle = true;
-		}
-		else if (!isIdle)
-		{
-			animator.SetTrigger("idle");
 			isIdle = true;
 		}
 	}
