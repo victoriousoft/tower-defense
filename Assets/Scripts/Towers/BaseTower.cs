@@ -38,8 +38,6 @@ public abstract class BaseTower : MonoBehaviour
 		currentDamage = towerData.levels[level].damage;
 	}
 
-	protected virtual void FixedUpdate() { } //mozna zbytecny
-
 	public virtual IEnumerator ChargeShootAndResetCooldown()
 	{
 		towerAnimator.SetTrigger("charge");
@@ -64,7 +62,13 @@ public abstract class BaseTower : MonoBehaviour
 			targetType
 		);
 
+		SoundPlayer.PlayInBackground(gameObject, towerData.shootSound);
 		yield return Shoot(target);
+
+		if (towerData.hitSound != null)
+		{
+			SoundPlayer.PlayInBackground(gameObject, towerData.hitSound);
+		}
 
 		towerAnimator.SetTrigger("idle");
 
@@ -110,10 +114,17 @@ public abstract class BaseTower : MonoBehaviour
 
 		towerAnimator.SetTrigger("upgrade");
 
-		yield return new WaitForSeconds(0.5f);
+		SoundPlayer.PlayInBackground(
+			gameObject,
+			towerData.upgradeSounds[Random.Range(0, towerData.upgradeSounds.Length)]
+		);
+
+		//yield return new WaitForSeconds(0.5f);
 
 		if (shootCoroutine == null)
 			shootCoroutine = StartCoroutine(ChargeShootAndResetCooldown());
+
+		yield break;
 	}
 
 	public IEnumerator EnhanceTemporarily(float factor, float duration)

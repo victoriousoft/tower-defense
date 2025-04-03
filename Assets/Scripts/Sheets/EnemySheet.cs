@@ -32,4 +32,7 @@ public class EnemySheet : ScriptableObject
 	public Stats stats;
 	public Info info;
 	public EnemyTypes enemyType;
+
+	public AudioClip attackSound;
+	public AudioClip deathSound;
 }

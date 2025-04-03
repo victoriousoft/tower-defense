@@ -75,6 +75,11 @@ public abstract class BaseEvolutionTower : BaseTower
 			healthBar.SetHealth(0);
 			isSkillCharged = false;
 
+			SoundPlayer.PlayInBackground(
+				gameObject,
+				towerData.evolutions[evolutionIndex].upgradeSounds[Random.Range(0, towerData.upgradeSounds.Length)]
+			);
+
 			skillCoroutine = StartCoroutine(
 				healthBar.Animate(
 					0,
@@ -117,7 +122,13 @@ public abstract class BaseEvolutionTower : BaseTower
 			targetType
 		);
 
+		SoundPlayer.PlayInBackground(gameObject, towerData.evolutions[evolutionIndex].shootSound);
 		yield return Shoot(target);
+
+		if (towerData.evolutions[evolutionIndex].hitSound != null)
+		{
+			SoundPlayer.PlayInBackground(gameObject, towerData.evolutions[evolutionIndex].hitSound);
+		}
 
 		towerAnimator.SetTrigger("idle");
 
@@ -161,6 +172,11 @@ public abstract class BaseEvolutionTower : BaseTower
 			targetType
 		);
 
+		GameObject soundPlayer = SoundPlayer.PlayInBackground(
+			gameObject,
+			towerData.evolutions[evolutionIndex].skillSound,
+			true
+		);
 		yield return StartCoroutine(Skill(target));
 
 		skillCoroutine = StartCoroutine(
@@ -171,6 +187,8 @@ public abstract class BaseEvolutionTower : BaseTower
 				SkillChargeupCallback
 			)
 		);
+
+		Destroy(soundPlayer);
 	}
 
 	private IEnumerator BlinkyBlinky()

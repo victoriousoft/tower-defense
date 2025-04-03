@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -51,6 +50,9 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	public SpriteRenderer backgroundSprite;
 	public GameObject statusBar;
 
+	public AudioClip buildSound;
+	public AudioClip sellSound;
+
 	private Dictionary<TowerTypes, GameObject> towerPrefabs;
 	public Dictionary<ButtonAction, Sprite> towerIcons;
 	public Dictionary<TowerTypes, Sprite[]> evolutionTowerIcons;
@@ -75,6 +77,7 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	private bool isMouseDown = false;
 
 	private GameObject prefabToBuild;
+	private AudioSource audioSource;
 
 	void Awake()
 	{
@@ -111,6 +114,7 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 		};
 
 		animator = GetComponent<Animator>();
+		audioSource = GetComponent<AudioSource>();
 
 		rangeRenderer = GetComponent<LineRenderer>();
 		rangeRenderer.enabled = false;
@@ -315,9 +319,7 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 				menuButtons[(int)ButtonIndex.BOTTOM_CENTER]
 					.GetComponent<TowerHolderButton>()
 					.SetAction(ButtonAction.SELL);
-				menuButtons[(int)ButtonIndex.CENTER_LEFT]
-					.GetComponent<TowerHolderButton>()
-					.SetAction(ButtonAction.CYCLE_RETARGET);
+				// retarget/reposition v BuyTowerAnimationCompletion()
 				break;
 
 			case MenuState.UpgradeTowerFinal:
@@ -330,9 +332,18 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 				menuButtons[(int)ButtonIndex.BOTTOM_CENTER]
 					.GetComponent<TowerHolderButton>()
 					.SetAction(ButtonAction.SELL);
-				menuButtons[(int)ButtonIndex.CENTER_LEFT]
-					.GetComponent<TowerHolderButton>()
-					.SetAction(ButtonAction.CYCLE_RETARGET);
+				if (towerInstance.GetComponent<BaseTower>().towerType == TowerTypes.Barracks)
+				{
+					menuButtons[(int)ButtonIndex.CENTER_LEFT]
+						.GetComponent<TowerHolderButton>()
+						.SetAction(ButtonAction.REPOSITION_BARRACKS);
+				}
+				else
+				{
+					menuButtons[(int)ButtonIndex.CENTER_LEFT]
+						.GetComponent<TowerHolderButton>()
+						.SetAction(ButtonAction.CYCLE_RETARGET);
+				}
 				break;
 
 			case MenuState.EvolutionTower:
@@ -342,24 +353,22 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 				menuButtons[(int)ButtonIndex.BOTTOM_CENTER]
 					.GetComponent<TowerHolderButton>()
 					.SetAction(ButtonAction.SELL);
-				menuButtons[(int)ButtonIndex.CENTER_LEFT]
-					.GetComponent<TowerHolderButton>()
-					.SetAction(ButtonAction.CYCLE_RETARGET);
+				if (towerInstance.GetComponent<BaseTower>().towerType == TowerTypes.Barracks)
+				{
+					menuButtons[(int)ButtonIndex.CENTER_LEFT]
+						.GetComponent<TowerHolderButton>()
+						.SetAction(ButtonAction.REPOSITION_BARRACKS);
+				}
+				else
+				{
+					menuButtons[(int)ButtonIndex.CENTER_LEFT]
+						.GetComponent<TowerHolderButton>()
+						.SetAction(ButtonAction.CYCLE_RETARGET);
+				}
 				break;
 
 			default:
 				break;
-		}
-
-		if (
-			towerInstance
-			&& towerInstance.GetComponent<BaseTower>() != null
-			&& towerInstance.GetComponent<BaseTower>().towerType == TowerTypes.Barracks
-		)
-		{
-			menuButtons[(int)ButtonIndex.CENTER_LEFT]
-				.GetComponent<TowerHolderButton>()
-				.SetAction(ButtonAction.REPOSITION_BARRACKS);
 		}
 	}
 
@@ -380,11 +389,15 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
 		animator.SetTrigger("BuildStart");
 
+		SoundPlayer.PlaySound(audioSource, buildSound, true);
+
 		prefabToBuild = towerPrefab;
 	}
 
 	private void BuyTowerAnimationCompletion()
 	{
+		audioSource.Stop();
+
 		towerInstance = Instantiate(prefabToBuild, transform.position, Quaternion.identity, transform);
 
 		BaseTower baseTowerScript = towerInstance.GetComponent<BaseTower>();
@@ -400,6 +413,12 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 				.GetComponent<TowerHolderButton>()
 				.SetAction(ButtonAction.REPOSITION_BARRACKS);
 		}
+		else
+		{
+			menuButtons[(int)ButtonIndex.CENTER_LEFT]
+				.GetComponent<TowerHolderButton>()
+				.SetAction(ButtonAction.CYCLE_RETARGET);
+		}
 
 		isMenuLocked = false;
 	}
@@ -408,6 +427,8 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	{
 		if (towerInstance == null)
 			return;
+
+		SoundPlayer.PlaySound(audioSource, sellSound, false);
 
 		if (isEvolutionTower())
 		{
@@ -483,6 +504,20 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 			transform.position
 		);
 
+		SoundPlayer.PlayInBackground(
+			gameObject,
+			towerInstance.GetComponent<BaseEvolutionTower>().towerData.evolutions[evolutionIndex].upgradeSounds[
+				Random.Range(
+					0,
+					towerInstance
+						.GetComponent<BaseEvolutionTower>()
+						.towerData.evolutions[evolutionIndex]
+						.upgradeSounds.Length
+				)
+			],
+			false
+		);
+
 		HideButtons();
 		ChangeState(MenuState.EvolutionTower);
 	}
@@ -509,13 +544,24 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
 	private IEnumerator WaitForMouseReleaseAndReposition()
 	{
-		yield return new WaitUntil(() => Input.GetMouseButtonUp(0));
-		yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+		while (true)
+		{
+			if (Input.GetMouseButtonDown(1))
+			{
+				HideButtons();
+				yield break;
+			}
 
-		Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			if (Input.GetMouseButtonDown(0))
+			{
+				Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+				towerInstance.GetComponent<Barracks>().SetTroopRandezvousPoint(mousePosition);
+				HideButtons();
+				yield break;
+			}
 
-		towerInstance.GetComponent<Barracks>().SetTroopRandezvousPoint(mousePosition);
-		HideButtons();
+			yield return null;
+		}
 	}
 
 	bool IsMouseOverAllButtons()

@@ -91,6 +91,8 @@ public class WaveSheet : MonoBehaviour
 	[HideInInspector]
 	public bool showNextWaveButton = true;
 
+	public AudioClip waveStartSound;
+
 	private Coroutine waveCountdownRoutine;
 
 	public static WaveSheet instance;
@@ -118,7 +120,7 @@ public class WaveSheet : MonoBehaviour
 			instance.waveCountdownRoutine = null;
 		}
 
-		Debug.Log("running wave " + (instance.currentWave + 1));
+		SoundPlayer.PlayInBackground(instance.gameObject, instance.waveStartSound);
 
 		instance.waveTriggerButton.gameObject.SetActive(false);
 		instance.StartCoroutine(instance.SpawnWave(instance.currentWave + 1));

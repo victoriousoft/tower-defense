@@ -24,6 +24,11 @@ public class TowerSheetNeo : ScriptableObject
 		public float cooldown;
 		public string skillName;
 		public Skill[] skillLevels;
+
+		public AudioClip shootSound;
+		public AudioClip hitSound;
+		public AudioClip skillSound;
+		public AudioClip[] upgradeSounds;
 	}
 
 	[System.Serializable]
@@ -52,6 +57,10 @@ public class TowerSheetNeo : ScriptableObject
 
 	public Level[] levels;
 	public Evolution[] evolutions;
+
+	public AudioClip shootSound;
+	public AudioClip hitSound;
+	public AudioClip[] upgradeSounds;
 
 	public string GetBuyStats()
 	{

@@ -7,11 +7,28 @@ public class MainMenuController : MonoBehaviour
 {
 	private VisualElement ui;
 	private List<Button> buttons = new();
+	private SliderInt volumeSlider;
+
+	public static MainMenuController instance;
+
+	private void Awake()
+	{
+		if (instance == null)
+		{
+			instance = this;
+		}
+		else
+		{
+			Debug.LogWarning("MainMenuController already exists, destroying this instance.");
+			Destroy(gameObject);
+		}
+	}
 
 	void Start()
 	{
 		ui = GetComponent<UIDocument>().rootVisualElement;
 		buttons = ui.Query<Button>().Where(x => x.ClassListContains("level-btn")).ToList();
+		volumeSlider = ui.Query<SliderInt>().Where(x => x.ClassListContains("volume-slider")).First();
 
 		for (int i = 0; i < buttons.Count; i++)
 		{
@@ -25,6 +42,13 @@ public class MainMenuController : MonoBehaviour
 			buttons[i].text = level.LevelName;
 			buttons[i].clicked += () => LoadLevel(level.SceneName);
 		}
+
+		volumeSlider.value = GlobalData.instance.volume;
+
+		volumeSlider.RegisterValueChangedCallback(evt =>
+		{
+			SetVolume(evt.newValue);
+		});
 	}
 
 	public void LockLevels()
@@ -53,5 +77,19 @@ public class MainMenuController : MonoBehaviour
 		PlayerStatsManager.ResetStats();
 		Overlay.ResumeGame();
 		SceneManager.LoadScene(levelPath);
+	}
+
+	public void SetVolume(int value)
+	{
+		Debug.Log("Setting volume to: " + value);
+		volumeSlider.value = value;
+		GlobalData.instance.volume = value;
+		WebGLMessageHandler.SendToJavaScript(
+			new WebGLMessageHandler.OutBrowserMessage
+			{
+				action = "setVolume",
+				args = new Dictionary<string, object> { { "volume", value } },
+			}
+		);
 	}
 }
