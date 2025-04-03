@@ -21,7 +21,7 @@ MonoBehaviour:
     magicResistance: 0
     attackRange: 0.5
     attackCooldown: 1
-    visRange: 1
+    visRange: 4
     playerLives: 2
   info:
     name: Doggo

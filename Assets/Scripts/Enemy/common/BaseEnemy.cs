@@ -55,7 +55,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		animator = GetComponent<Animator>();
 	}
 
-	void FixedUpdate()
+	void Update()
 	{
 		if (currentTarget == null)
 		{
@@ -64,9 +64,9 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 			if (!isPaused && health > 0)
 				Move();
-			if (currentTarget != null && canAttack)
-				Attack();
 		}
+		else if (canAttack)
+			Attack();
 	}
 
 	public void OnPointerClick(PointerEventData eventData)
@@ -198,10 +198,9 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 	public Vector2 GetAttackLocation(float troopAttackRange)
 	{
-		Vector2 direction =
-			((Vector2)points[currentPointIndex].position + positionOffset) - (Vector2)transform.position;
+		Vector2 direction = (Vector2)points[currentPointIndex].position + positionOffset - (Vector2)transform.position;
 
-		float minAttackRange = Mathf.Min(troopAttackRange, enemyData.stats.attackRange);
+		float minAttackRange = Mathf.Min(troopAttackRange - 0.1f, enemyData.stats.attackRange - 0.1f);
 		return (Vector2)transform.position + direction.normalized * minAttackRange;
 	}
 
