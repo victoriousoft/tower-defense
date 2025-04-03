@@ -4,11 +4,21 @@ using UnityEngine;
 public class HomingMissile : MonoBehaviour
 {
 	public bool isSkillBomber;
+	private Animator animator;
+	private bool movable = true;
+
+	void Start()
+	{
+		animator = GetComponent<Animator>();
+	}
 
 	public IEnumerator MoveToTarget(GameObject target, float damage, float speed)
 	{
-		while (target != null && Vector3.Distance(transform.position, target.transform.position) > 0.1f)
+		while (target != null && Vector3.Distance(transform.position, target.transform.position) > 0.1f && movable)
 		{
+			float direction = target.transform.position.x - transform.position.x;
+			animator.SetFloat("x", direction);
+
 			transform.position = Vector3.MoveTowards(
 				transform.position,
 				target.transform.position,
@@ -86,7 +96,9 @@ public class HomingMissile : MonoBehaviour
 		}
 
 		// bum efekt
-		Destroy(this.gameObject);
+		animator.SetTrigger("explode");
+		movable = false;
+		Destroy(this.gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
 	}
 
 	public void MoveToTargetGetter(GameObject target, float damage, float speed)
