@@ -6,13 +6,11 @@ public class Rat : BaseEnemy
 
 	protected override void UseAbility() { }
 
-	void Update()
+	void FixedUpdate()
 	{
-		if (health < enemyData.stats.maxHealth / 3 && attacksTroops)
+		if (health < enemyData.stats.maxHealth / 2 && attacksTroops)
 		{
-			attacksTroops = false;
-			currentSpeed *= 1.666f;
-			animator.SetTrigger("rage");
+			RageForExit();
 		}
 	}
 }

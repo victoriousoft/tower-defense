@@ -75,12 +75,11 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		if (health <= 0)
 			return;
 
-		if (currentTarget == null)
+		if (currentTarget == null || !attacksTroops)
 		{
-			isPaused = false;
 			currentTarget = FindEnemyInRange();
 
-			if (!isPaused && health > 0)
+			if (health > 0)
 			{
 				Move();
 				isIdle = false;
@@ -101,7 +100,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 				isIdle = true;
 			}
 		}
-		else if (canAttack && attacksTroops)
+		else if (canAttack)
 		{
 			AttackAnimation();
 			Attack();
@@ -353,6 +352,18 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		if (spriteRenderer.color == Color.yellow)
 			spriteRenderer.color = Color.white;
 		nerfed = false;
+	}
+
+	public void RageForExit()
+	{
+		canAttack = false;
+		attacksTroops = false;
+		currentTarget = null;
+		currentSpeed *= 1.666f;
+		animator.SetTrigger("rage");
+		animator.ResetTrigger("attack");
+		animator.SetBool("idle", false);
+		animator.SetBool("stop", false);
 	}
 
 	protected void SpawnChild(GameObject childPrefab, float xSpawnOffset)

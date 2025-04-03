@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: rat
   m_EditorClassIdentifier: 
   stats:
-    maxHealth: 20
+    maxHealth: 50
     damage: 20
     cashDrop: 100
     speed: 0.25
@@ -27,7 +27,7 @@ MonoBehaviour:
     abilityCooldown: 3
   info:
     name: Rattatouile
-    description: angered doggystar
+    description: zdrha kdyz hp v pulce
   enemyType: 0
   attackSound: {fileID: 0}
   deathSound: {fileID: 0}
