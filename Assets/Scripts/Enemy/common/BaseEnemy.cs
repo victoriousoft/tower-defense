@@ -60,6 +60,9 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 	void Update()
 	{
+		if (health <= 0)
+			return;
+
 		if (currentTarget == null)
 		{
 			isPaused = false;

@@ -56,6 +56,7 @@ public abstract class BaseTroop : MonoBehaviour
 
 		if (targetLocation != null)
 			WalkTo(targetLocation);
+
 		if (currentEnemy == null)
 			isFighting = false;
 
@@ -82,6 +83,9 @@ public abstract class BaseTroop : MonoBehaviour
 					animator.SetFloat("x", 0);
 					float direction = currentEnemy.transform.position.x - transform.position.x;
 					animator.SetFloat("x", direction);
+
+					isFighting = true;
+					animator.SetBool("fighting", true);
 					Attack();
 				}
 			}
@@ -97,6 +101,16 @@ public abstract class BaseTroop : MonoBehaviour
 				ignoreEnemies = false;
 				targetLocation = homeBase.GetComponent<Barracks>().RequestTroopRandezvousPoint(id);
 			}
+		}
+
+		if (currentEnemy == null && Vector2.Distance(transform.position, targetLocation) < 0.1f)
+		{
+			animator.SetBool("idle", true);
+			animator.SetBool("fighting", false);
+		}
+		else
+		{
+			animator.SetBool("idle", false);
 		}
 	}
 
@@ -223,5 +237,6 @@ public abstract class BaseTroop : MonoBehaviour
 		yield return new WaitForSeconds(troopData.stats.attackCooldown);
 		canAttack = true;
 		isFighting = false;
+		animator.SetBool("fighting", false);
 	}
 }
