@@ -135,10 +135,11 @@ public abstract class BaseTroop : MonoBehaviour
 	public IEnumerator Die()
 	{
 		healthBar.gameObject.SetActive(false);
-		animator.SetTrigger("die");
-		currentEnemy.GetComponent<BaseEnemy>().currentTarget = null;
 		float direction = currentEnemy.transform.position.x - transform.position.x;
-		animator.SetFloat("x", direction);
+		animator.SetTrigger("die");
+		if (direction > 0)
+			GetComponentInChildren<SpriteRenderer>().flipX = true;
+		currentEnemy.GetComponent<BaseEnemy>().currentTarget = null;
 
 		homeBase.GetComponent<Barracks>().RequestTroopRevive(id);
 		yield return null;
