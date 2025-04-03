@@ -72,18 +72,18 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 			{
 				Move();
 				isIdle = false;
+				animator.SetBool("idle", false);
 			}
 			else if (!isIdle)
 			{
-				animator.SetFloat("x", 0);
 				animator.SetFloat("y", 0);
-				animator.SetTrigger("idle");
+				animator.SetFloat("x", currentTarget.transform.position.x - transform.position.x);
+				animator.SetBool("idle", true);
 				isIdle = true;
 			}
 		}
 		else if (canAttack)
 		{
-			animator.SetFloat("x", 0);
 			animator.SetFloat("y", 0);
 			Attack();
 			isIdle = true;
@@ -121,7 +121,8 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 	{
 		if (points == null)
 			return;
-
+		if (currentTarget == null)
+			GetComponentInChildren<SpriteRenderer>().flipX = false;
 		Vector2 targetPos = (Vector2)points[currentPointIndex].position + positionOffset;
 		Vector2 moveDirection = (targetPos - (Vector2)transform.position).normalized;
 
