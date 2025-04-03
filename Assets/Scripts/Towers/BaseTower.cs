@@ -141,7 +141,7 @@ public abstract class BaseTower : MonoBehaviour
 		// Tohle asi neni potreba, ale pro jistotu to necham tady, u hackermana to tweakuje
 		/* fuckoff unreachable code my ASS
 		GetComponent<LineRenderer>()
-			.SetPosition(0, transform.Find("shotOrigin").position);
+		    .SetPosition(0, transform.Find("shotOrigin").position);
 		GetComponent<LineRenderer>().SetPosition(1, transform.Find("shotOrigin").position);
 		*/
 	}
