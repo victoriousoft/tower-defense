@@ -323,15 +323,10 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 				break;
 
 			case MenuState.UpgradeTowerFinal:
-				menuButtons[(int)ButtonIndex.TOP_LEFT]
-					.GetComponent<TowerHolderButton>()
-					.SetAction(ButtonAction.BUY_EVOLUTION_1);
-				menuButtons[(int)ButtonIndex.TOP_RIGHT]
-					.GetComponent<TowerHolderButton>()
-					.SetAction(ButtonAction.BUY_EVOLUTION_2);
 				menuButtons[(int)ButtonIndex.BOTTOM_CENTER]
 					.GetComponent<TowerHolderButton>()
 					.SetAction(ButtonAction.SELL);
+
 				if (towerInstance.GetComponent<BaseTower>().towerType == TowerTypes.Barracks)
 				{
 					menuButtons[(int)ButtonIndex.CENTER_LEFT]
@@ -344,6 +339,27 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 						.GetComponent<TowerHolderButton>()
 						.SetAction(ButtonAction.CYCLE_RETARGET);
 				}
+
+				int evolutionCount = towerInstance.GetComponent<BaseTower>().towerData.evolutions.Length;
+				if (evolutionCount != 0)
+				{
+					menuButtons[(int)ButtonIndex.TOP_LEFT]
+						.GetComponent<TowerHolderButton>()
+						.SetAction(ButtonAction.BUY_EVOLUTION_1);
+					menuButtons[(int)ButtonIndex.TOP_RIGHT]
+						.GetComponent<TowerHolderButton>()
+						.SetAction(ButtonAction.BUY_EVOLUTION_2);
+				}
+				else
+				{
+					menuButtons[(int)ButtonIndex.TOP_LEFT]
+						.GetComponent<TowerHolderButton>()
+						.SetAction(ButtonAction.NONE);
+					menuButtons[(int)ButtonIndex.TOP_CENTER]
+						.GetComponent<TowerHolderButton>()
+						.SetAction(ButtonAction.UPGRADE_LEVEL);
+				}
+
 				break;
 
 			case MenuState.EvolutionTower:

@@ -155,6 +155,12 @@ public class TowerHolderButton : MonoBehaviour, IPointerClickHandler, IPointerEn
 
 			case ButtonAction.UPGRADE_LEVEL:
 				tower = towerHolder.GetComponent<TowerHolderNeo>().GetBaseTowerScript();
+				if (tower.level + 1 >= tower.towerData.levels.Length)
+				{
+					TooltipManager.Show("Max level reached", "No more upgrades available");
+					break;
+				}
+
 				string upgradeStats = tower.towerData.GetUpgradeStats(tower.level);
 				TooltipManager.Show(tower.towerData.towerName + " " + (tower.level + 2), upgradeStats);
 				TowerHelpers.SetRangeCircle(
