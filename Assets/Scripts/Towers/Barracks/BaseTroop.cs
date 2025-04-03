@@ -30,6 +30,7 @@ public abstract class BaseTroop : MonoBehaviour
 	protected bool canAttack = true;
 	protected bool ignoreEnemies = false;
 	protected bool isFighting = false;
+	private bool dead = false;
 
 	public Animator animator;
 	protected abstract void Attack();
@@ -43,6 +44,9 @@ public abstract class BaseTroop : MonoBehaviour
 
 	void Update()
 	{
+		if (health <= 0)
+			return;
+
 		if (canAttack && currentEnemy == null)
 		{
 			Heal(10);
@@ -98,8 +102,11 @@ public abstract class BaseTroop : MonoBehaviour
 	{
 		health -= damage;
 		healthBar.SetHealth(health / troopData.stats.maxHealth);
-		if (health <= 0)
-			Die();
+		if (health <= 0 && dead == false)
+		{
+			dead = true;
+			StartCoroutine(Die());
+		}
 	}
 
 	public void Heal(float amount)
@@ -109,12 +116,15 @@ public abstract class BaseTroop : MonoBehaviour
 		healthBar.SetHealth(health / troopData.stats.maxHealth);
 	}
 
-	public void Die()
+	public IEnumerator Die()
 	{
 		healthBar.gameObject.SetActive(false);
-		animator.SetBool("death", true);
-		currentEnemy.GetComponent<BaseEnemy>().currentTarget = null;
+		animator.SetTrigger("die");
+		if (currentEnemy != null)
+			currentEnemy.GetComponent<BaseEnemy>().currentTarget = null;
 		homeBase.GetComponent<Barracks>().RequestTroopRevive(id);
+		yield return null;
+		yield return null;
 		Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
 	}
 

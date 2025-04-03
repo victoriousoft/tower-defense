@@ -129,7 +129,6 @@ public class Barracks : BaseTower
 
 	public void RequestTroopRevive(int troopId)
 	{
-		Destroy(troops[troopId]);
 		troops[troopId] = null;
 
 		StartCoroutine(RespawnTroop(troopId));

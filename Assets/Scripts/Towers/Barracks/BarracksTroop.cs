@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TestTroop : BaseTroop
+public class BarracksTroop : BaseTroop
 {
 	protected override void Attack()
 	{
