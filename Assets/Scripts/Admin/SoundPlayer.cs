@@ -14,6 +14,13 @@ public class SoundPlayer : MonoBehaviour
 
 	public static GameObject PlayInBackground(GameObject sourceGameObject, AudioClip clip, bool loop = false)
 	{
+		// TODO: remove ts
+		if (clip == null)
+		{
+			Debug.LogWarning("SoundPlayer: No clip provided to play.");
+			return null;
+		}
+
 		GameObject soundObject = new("SoundPlayer - " + clip.name);
 		soundObject.transform.SetParent(sourceGameObject.transform);
 
