@@ -74,7 +74,10 @@ public abstract class BaseTroop : MonoBehaviour
 					&& Vector2.Distance(transform.position, currentEnemy.transform.position)
 						<= troopData.stats.attackRange
 				)
+				{
+					animator.SetFloat("x", 0);
 					Attack();
+				}
 			}
 			else
 			{
@@ -108,10 +111,11 @@ public abstract class BaseTroop : MonoBehaviour
 
 	public void Die()
 	{
+		healthBar.gameObject.SetActive(false);
 		animator.SetBool("death", true);
 		currentEnemy.GetComponent<BaseEnemy>().currentTarget = null;
 		homeBase.GetComponent<Barracks>().RequestTroopRevive(id);
-		Destroy(gameObject);
+		Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
 	}
 
 	public void WalkTo(Vector3 target)
