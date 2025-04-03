@@ -15,13 +15,31 @@ public class Hackerman : BaseEvolutionTower
 		base.Start();
 	}
 
+	public override IEnumerator ChargeShootAndResetCooldown()
+	{
+		while (!enemiesInRange())
+		{
+			yield return null;
+		}
+
+		GameObject target = TowerHelpers.SelectEnemyToAttack(
+			TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range, towerData.enemyTypes),
+			targetType
+		);
+
+		yield return Shoot(target);
+
+		yield return new WaitForSeconds(towerData.levels[level].cooldown);
+		StartCoroutine(ChargeShootAndResetCooldown());
+	}
+
 	protected override IEnumerator Shoot(GameObject enemy)
 	{
 		if (skillInUse)
 			yield break;
 		for (int i = 0; i < projectileOrigins.Length; i++)
 		{
-			if (enemy == null)
+			if (enemy == null || enemy.GetComponent<BaseEnemy>().health <= 0)
 			{
 				if (
 					TowerHelpers
@@ -43,20 +61,24 @@ public class Hackerman : BaseEvolutionTower
 					break;
 				}
 			}
+			towerAnimator.ResetTrigger("idle");
+			towerAnimator.SetTrigger("attack");
 			yield return TowerHelpers.AnimateLaser(
 				GetComponent<LineRenderer>(),
 				projectileOrigins[i],
 				enemy,
-				0.35f,
+				0.15f,
 				KillProjectile
 			);
 
 			yield return new WaitForSeconds(0.125f);
 		}
+		towerAnimator.SetTrigger("idle");
 	}
 
 	protected override IEnumerator ChargeUp(GameObject enemy)
 	{
+		Debug.Log(towerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime);
 		yield return null;
 	}
 
@@ -110,7 +132,6 @@ public class Hackerman : BaseEvolutionTower
 		if (sphere != null)
 		{
 			Destroy(sphere);
-			GetComponent<Animator>().SetTrigger("idle");
 		}
 		else if (enemy != null)
 			enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.evolutions[0].damage / 50, DamageTypes.MAGIC);

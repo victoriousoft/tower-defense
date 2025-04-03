@@ -50,30 +50,34 @@ public class HomingMissile : MonoBehaviour
 			new EnemyTypes[] { EnemyTypes.GROUND, EnemyTypes.FLYING }
 		);
 
+		if (enemies.Length == 0)
+		{
+			Destroy(this.gameObject);
+			return;
+		}
+
 		foreach (GameObject e in enemies)
 		{
 			if (e == null)
-				break;
+				continue;
 
-			float thisEnemyHealth = e.GetComponent<BaseEnemy>().health;
 			e.GetComponent<BaseEnemy>().TakeDamage(damage, DamageTypes.EXPLOSION);
 
-			if (isSkillBomber && thisEnemyHealth <= damage)
+			if (isSkillBomber && e.GetComponent<BaseEnemy>().health <= 0)
 			{
-				GameObject newBomber = Instantiate(gameObject, transform.position, Quaternion.identity);
-				HomingMissile bomberScript = newBomber.GetComponent<HomingMissile>();
-				if (bomberScript != null)
+				GameObject[] potentialTargets = TowerHelpers.GetEnemiesInRange(
+					transform.position,
+					100,
+					new EnemyTypes[] { EnemyTypes.GROUND }
+				);
+
+				if (potentialTargets.Length > 0)
 				{
-					bomberScript.isSkillBomber = true;
-
-					GameObject[] potentialTargets = TowerHelpers.GetEnemiesInRange(
-						transform.position,
-						100,
-						new EnemyTypes[] { EnemyTypes.GROUND }
-					);
-
-					if (potentialTargets.Length > 0)
+					GameObject newBomber = Instantiate(gameObject, transform.position, Quaternion.identity);
+					HomingMissile bomberScript = newBomber.GetComponent<HomingMissile>();
+					if (bomberScript != null)
 					{
+						bomberScript.isSkillBomber = true;
 						GameObject nextTarget = potentialTargets[0];
 						bomberScript.MoveToTargetGetter(nextTarget, damage, speed);
 					}
@@ -82,7 +86,6 @@ public class HomingMissile : MonoBehaviour
 		}
 
 		// bum efekt
-
 		Destroy(this.gameObject);
 	}
 

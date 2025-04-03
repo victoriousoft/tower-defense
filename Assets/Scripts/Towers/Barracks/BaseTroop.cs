@@ -29,23 +29,100 @@ public abstract class BaseTroop : MonoBehaviour
 	protected HealthBar healthBar;
 	protected bool canAttack = true;
 	protected bool ignoreEnemies = false;
-	protected bool isFigtning = false;
+	protected bool isFighting = false;
+	private bool dead = false;
 
+	public Animator animator;
 	protected abstract void Attack();
-	protected abstract void FixedUpdate();
 
 	void Awake()
 	{
 		health = troopData.stats.maxHealth;
 		healthBar = GetComponentInChildren<HealthBar>();
+		animator = GetComponent<Animator>();
+	}
+
+	void Update()
+	{
+		if (health <= 0)
+			return;
+
+		if (canAttack && currentEnemy == null)
+		{
+			Heal(10);
+			canAttack = false;
+			StartCoroutine(ResetAttackCooldown());
+		}
+
+		if (targetLocation != null)
+			WalkTo(targetLocation);
+
+		if (currentEnemy == null)
+			isFighting = false;
+
+		if (!ignoreEnemies)
+		{
+			if (
+				currentEnemy == null
+				|| currentEnemy.GetComponent<BaseEnemy>().currentTarget != gameObject
+				|| currentEnemy.GetComponent<BaseEnemy>().health <= 0
+			)
+				FindNewEnemy();
+
+			if (currentEnemy != null && currentEnemy.GetComponent<BaseEnemy>().currentTarget == gameObject)
+				currentEnemy.GetComponent<BaseEnemy>().RequestTarget(gameObject);
+
+			if (currentEnemy != null)
+			{
+				if (
+					canAttack
+					&& Vector2.Distance(transform.position, currentEnemy.transform.position)
+						<= troopData.stats.attackRange
+				)
+				{
+					animator.SetFloat("x", 0);
+					float direction = currentEnemy.transform.position.x - transform.position.x;
+					animator.SetFloat("x", direction);
+
+					isFighting = true;
+					animator.SetBool("fighting", true);
+					Attack();
+				}
+			}
+			else
+			{
+				targetLocation = homeBase.GetComponent<Barracks>().RequestTroopRandezvousPoint(id);
+			}
+		}
+		else
+		{
+			if (Vector2.Distance(transform.position, targetLocation) < 0.1f)
+			{
+				ignoreEnemies = false;
+				targetLocation = homeBase.GetComponent<Barracks>().RequestTroopRandezvousPoint(id);
+			}
+		}
+
+		if (currentEnemy == null && Vector2.Distance(transform.position, targetLocation) < 0.1f)
+		{
+			animator.SetBool("idle", true);
+			animator.SetBool("fighting", false);
+		}
+		else
+		{
+			animator.SetBool("idle", false);
+		}
 	}
 
 	public void TakeDamage(float damage)
 	{
 		health -= damage;
 		healthBar.SetHealth(health / troopData.stats.maxHealth);
-		if (health <= 0)
-			Die();
+		if (health <= 0 && dead == false)
+		{
+			dead = true;
+			StartCoroutine(Die());
+		}
 	}
 
 	public void Heal(float amount)
@@ -55,23 +132,34 @@ public abstract class BaseTroop : MonoBehaviour
 		healthBar.SetHealth(health / troopData.stats.maxHealth);
 	}
 
-	public void Die()
+	public IEnumerator Die()
 	{
+		healthBar.gameObject.SetActive(false);
+		float direction = currentEnemy.transform.position.x - transform.position.x;
+		animator.SetTrigger("die");
+		if (direction > 0)
+			GetComponentInChildren<SpriteRenderer>().flipX = true;
 		currentEnemy.GetComponent<BaseEnemy>().currentTarget = null;
+
 		homeBase.GetComponent<Barracks>().RequestTroopRevive(id);
-		Destroy(gameObject);
+		yield return null;
+		yield return null;
+		Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
 	}
 
 	public void WalkTo(Vector3 target)
 	{
-		transform.position = Vector2.MoveTowards(
-			transform.position,
-			target,
-			troopData.stats.speed * Time.fixedDeltaTime
-		);
+		Vector2 currentPosition = transform.position;
+		Vector2 newPosition = Vector2.MoveTowards(currentPosition, target, troopData.stats.speed * Time.deltaTime);
+
+		Vector2 movement = newPosition - currentPosition;
+
+		animator.SetFloat("x", movement.x);
+
+		transform.position = newPosition;
 	}
 
-	protected void FindNewEnemy()
+	void FindNewEnemy()
 	{
 		GameObject[] enemiesInTroopRange = TowerHelpers.GetEnemiesInRange(
 			transform.position,
@@ -101,7 +189,7 @@ public abstract class BaseTroop : MonoBehaviour
 			SetEnemy(enemiesInRange[0]);
 		else
 		{
-			if (!isFigtning)
+			if (!isFighting)
 			{
 				GameObject fightingEnemy = homeBase.GetComponent<Barracks>().FindFightingEnemy();
 				if (fightingEnemy != null)
@@ -125,7 +213,7 @@ public abstract class BaseTroop : MonoBehaviour
 
 	public void ForceReposition(Vector2 position)
 	{
-		isFigtning = false;
+		isFighting = false;
 		ignoreEnemies = true;
 
 		if (currentEnemy != null && currentEnemy.GetComponent<BaseEnemy>().currentTarget == gameObject)
@@ -149,5 +237,7 @@ public abstract class BaseTroop : MonoBehaviour
 	{
 		yield return new WaitForSeconds(troopData.stats.attackCooldown);
 		canAttack = true;
+		isFighting = false;
+		animator.SetBool("fighting", false);
 	}
 }

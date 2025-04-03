@@ -52,7 +52,8 @@ public static class TowerHelpers
 				collider.CompareTag("Enemy")
 				&& includedTypes.Contains(collider.GetComponent<BaseEnemy>().enemyData.enemyType)
 			)
-				enemies.Add(collider.gameObject);
+				if (collider.GetComponent<BaseEnemy>().health > 0)
+					enemies.Add(collider.gameObject);
 		}
 		return enemies.ToArray();
 	}
@@ -60,24 +61,25 @@ public static class TowerHelpers
 	public static GameObject SelectEnemyToAttack(GameObject[] enemies, TowerTargetTypes targetType)
 	{
 		GameObject target = null;
+		var validEnemies = enemies.Where(e => e.GetComponent<BaseEnemy>().health > 0);
 
 		switch (targetType)
 		{
 			case TowerTargetTypes.CLOSEST_TO_FINISH:
-				target = enemies.OrderBy(e => e.GetComponent<BaseEnemy>().GetDistanceToFinish()).FirstOrDefault();
+				target = validEnemies.OrderBy(e => e.GetComponent<BaseEnemy>().GetDistanceToFinish()).FirstOrDefault();
 				break;
 			case TowerTargetTypes.CLOSEST_TO_START:
-				target = enemies.OrderBy(e => e.GetComponent<BaseEnemy>().GetDistanceToStart()).FirstOrDefault();
+				target = validEnemies.OrderBy(e => e.GetComponent<BaseEnemy>().GetDistanceToStart()).FirstOrDefault();
 				break;
 			case TowerTargetTypes.MOST_HP:
-				target = enemies.OrderByDescending(e => e.GetComponent<BaseEnemy>().health).FirstOrDefault();
+				target = validEnemies.OrderByDescending(e => e.GetComponent<BaseEnemy>().health).FirstOrDefault();
 				break;
 			case TowerTargetTypes.LEAST_HP:
-				target = enemies.OrderBy(e => e.GetComponent<BaseEnemy>().health).FirstOrDefault();
+				target = validEnemies.OrderBy(e => e.GetComponent<BaseEnemy>().health).FirstOrDefault();
 				break;
 			default:
 				Debug.LogWarning("Invalid target type, fallback to closest to finish");
-				target = enemies.OrderBy(e => e.GetComponent<BaseEnemy>().GetDistanceToFinish()).FirstOrDefault();
+				target = validEnemies.OrderBy(e => e.GetComponent<BaseEnemy>().GetDistanceToFinish()).FirstOrDefault();
 				break;
 		}
 
