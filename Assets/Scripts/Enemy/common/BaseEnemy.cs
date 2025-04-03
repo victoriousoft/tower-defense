@@ -54,7 +54,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 	void Awake()
 	{
-		currentSpeed = enemyData.stats.speed;
+		currentSpeed = enemyData.stats.speed / 10;
 		health = enemyData.stats.maxHealth;
 		attacksTroops = enemyData.stats.attacksTroops;
 		healthBar = GetComponentInChildren<HealthBar>();

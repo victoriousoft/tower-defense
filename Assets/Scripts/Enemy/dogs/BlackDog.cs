@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BlackDog : BaseEnemy
 {
-	public GameObject childPrefab;
+	//public GameObject childPrefab;
 
 	protected override void Attack() { }
 

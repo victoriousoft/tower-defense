@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
     maxHealth: 20
-    damage: 20
+    damage: 10
     cashDrop: 100
-    speed: 0.25
+    speed: 2.5
     physicalResistance: 0
     magicResistance: 0
     attackRange: 0.5
@@ -27,7 +27,7 @@ MonoBehaviour:
     abilityCooldown: 3
   info:
     name: Minnie
-    description: angered doggystar
+    description: Stop trying guys!
   enemyType: 0
   attackSound: {fileID: 0}
   deathSound: {fileID: 0}

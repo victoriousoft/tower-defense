@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9751f8ef079f9d43a7683ae5fb17a5b, type: 3}
-  m_Name: bBlackDogEnemyData
+  m_Name: BrownDogEnemyData
   m_EditorClassIdentifier: 
   stats:
-    maxHealth: 20
-    damage: 20
+    maxHealth: 50
+    damage: 10
     cashDrop: 100
-    speed: 0.25
-    physicalResistance: 2
+    speed: 3
+    physicalResistance: 0
     magicResistance: 0
     attackRange: 0.5
     attackCooldown: 1
-    visRange: 4
+    visRange: 1
     playerLives: 2
     attacksTroops: 0
-    abilityCooldown: 3
+    abilityCooldown: 0
   info:
     name: Doggo
-    description: angered doggystar
+    description: Angered doggo.
   enemyType: 0
   attackSound: {fileID: 0}
   deathSound: {fileID: 0}

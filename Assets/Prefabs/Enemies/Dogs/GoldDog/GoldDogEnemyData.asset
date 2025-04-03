@@ -13,17 +13,21 @@ MonoBehaviour:
   m_Name: GoldDogEnemyData
   m_EditorClassIdentifier: 
   stats:
-    maxHealth: 500
+    maxHealth: 80
     damage: 10
     cashDrop: 100
     speed: 1
-    physicalResistance: 2
+    physicalResistance: 4
     magicResistance: 0
     attackRange: 0.5
     attackCooldown: 1
     visRange: 1
     playerLives: 2
+    attacksTroops: 0
+    abilityCooldown: 0
   info:
     name: Gold Standard Retriever
     description: Au Woof!
   enemyType: 0
+  attackSound: {fileID: 0}
+  deathSound: {fileID: 0}
