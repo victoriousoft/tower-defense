@@ -13,9 +13,14 @@ public class MainMenuController : MonoBehaviour
 
 	private void Awake()
 	{
+		Debug.Log("MainMenuController awake");
+
 		if (instance == null)
 		{
 			instance = this;
+			ui = GetComponent<UIDocument>().rootVisualElement;
+			buttons = ui.Query<Button>().Where(x => x.ClassListContains("level-btn")).ToList();
+			volumeSlider = ui.Query<SliderInt>().Where(x => x.ClassListContains("volume-slider")).First();
 		}
 		else
 		{
@@ -26,10 +31,6 @@ public class MainMenuController : MonoBehaviour
 
 	void Start()
 	{
-		ui = GetComponent<UIDocument>().rootVisualElement;
-		buttons = ui.Query<Button>().Where(x => x.ClassListContains("level-btn")).ToList();
-		volumeSlider = ui.Query<SliderInt>().Where(x => x.ClassListContains("volume-slider")).First();
-
 		for (int i = 0; i < buttons.Count; i++)
 		{
 			if (i >= GlobalData.instance.levelSheet.levels.Length)
@@ -49,22 +50,24 @@ public class MainMenuController : MonoBehaviour
 		{
 			SetVolume(evt.newValue);
 		});
+
+		LockLevels();
 	}
 
-	public void LockLevels()
+	public static void LockLevels()
 	{
-		for (int i = 0; i < buttons.Count; i++)
+		for (int i = 0; i < instance.buttons.Count; i++)
 		{
 			if (i >= GlobalData.instance.levelSheet.levels.Length)
 			{
-				buttons[i].SetEnabled(false);
+				instance.buttons[i].SetEnabled(false);
 			}
 		}
 
-		for (int i = PlayerStatsManager.levelStars.Count + 1; i < buttons.Count; i++)
+		for (int i = PlayerStatsManager.levelStars.Count + 1; i < instance.buttons.Count; i++)
 		{
-			buttons[i].AddToClassList("lock-overlay");
-			buttons[i].SetEnabled(false);
+			instance.buttons[i].AddToClassList("lock-overlay");
+			instance.buttons[i].SetEnabled(false);
 		}
 	}
 
@@ -79,10 +82,9 @@ public class MainMenuController : MonoBehaviour
 		SceneManager.LoadScene(levelPath);
 	}
 
-	public void SetVolume(int value)
+	public static void SetVolume(int value)
 	{
-		Debug.Log("Setting volume to: " + value);
-		volumeSlider.value = value;
+		instance.volumeSlider.value = value;
 		GlobalData.instance.volume = value;
 		WebGLMessageHandler.SendToJavaScript(
 			new WebGLMessageHandler.OutBrowserMessage

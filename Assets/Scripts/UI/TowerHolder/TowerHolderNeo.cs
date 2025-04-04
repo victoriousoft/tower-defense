@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -38,14 +39,17 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
 	public Sprite magicIcon;
 	public Sprite IBMIcon;
+	public Sprite hackerIcon;
 
 	public Sprite bombIcon;
 	public Sprite suicideBomberIcon;
+	public Sprite grippenIcon;
 
 	public Sprite sellIcon;
 	public Sprite upgradeIcon;
 	public Sprite repositionIcon;
 	public Sprite cycleRetargetIcon;
+	public Sprite lockIcon;
 
 	public SpriteRenderer backgroundSprite;
 	public GameObject statusBar;
@@ -103,14 +107,15 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 			{ ButtonAction.BUY_EVOLUTION_1, null },
 			{ ButtonAction.BUY_EVOLUTION_2, null },
 			{ ButtonAction.UPGRADE_EVOLUTION, upgradeIcon },
+			{ ButtonAction.LOCKED, lockIcon },
 		};
 
 		evolutionTowerIcons = new Dictionary<TowerTypes, Sprite[]>
 		{
 			{ TowerTypes.Archer, new Sprite[] { machineGunIcon, vietcongIcon } },
 			{ TowerTypes.Barracks, new Sprite[] { null, null } },
-			{ TowerTypes.Magic, new Sprite[] { null, IBMIcon } },
-			{ TowerTypes.Bomb, new Sprite[] { suicideBomberIcon, null } },
+			{ TowerTypes.Magic, new Sprite[] { hackerIcon, IBMIcon } },
+			{ TowerTypes.Bomb, new Sprite[] { suicideBomberIcon, grippenIcon } },
 		};
 
 		animator = GetComponent<Animator>();
@@ -210,7 +215,6 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 					% TowerHelpers.TowerTargetTypes.GetValues(typeof(TowerHelpers.TowerTargetTypes)).Length;
 				towerInstance.GetComponent<BaseTower>().targetType = (TowerHelpers.TowerTargetTypes)targetTypeIndex;
 				//HideButtons();
-				Debug.Log("Target type: " + targetTypeIndex);
 				break;
 
 			case ButtonAction.SELL:
@@ -232,6 +236,10 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
 			case ButtonAction.REPOSITION_BARRACKS:
 				RepositionBarracks();
+				break;
+
+			case ButtonAction.LOCKED:
+				HideButtons();
 				break;
 
 			default:
@@ -319,7 +327,7 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 				menuButtons[(int)ButtonIndex.BOTTOM_CENTER]
 					.GetComponent<TowerHolderButton>()
 					.SetAction(ButtonAction.SELL);
-				// retarget/reposition v BuyTowerAnimationCompletion()
+				// retarget/reposition logic v BuyTowerAnimationCompletion()
 				break;
 
 			case MenuState.UpgradeTowerFinal:
@@ -340,24 +348,29 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 						.SetAction(ButtonAction.CYCLE_RETARGET);
 				}
 
-				int evolutionCount = towerInstance.GetComponent<BaseTower>().towerData.evolutions.Length;
-				if (evolutionCount != 0)
+				LevelSheet.EvolutionLock[] evolutionLocks = GlobalData
+					.instance.levelSheet.levels[PlayerStatsManager.currentLevel]
+					.evolutionLocks.Where(x => x.towerType == towerInstance.GetComponent<BaseTower>().towerType)
+					.ToArray();
+
+				for (int i = 0; i < evolutionLocks.Length; i++)
 				{
-					menuButtons[(int)ButtonIndex.TOP_LEFT]
-						.GetComponent<TowerHolderButton>()
-						.SetAction(ButtonAction.BUY_EVOLUTION_1);
-					menuButtons[(int)ButtonIndex.TOP_RIGHT]
-						.GetComponent<TowerHolderButton>()
-						.SetAction(ButtonAction.BUY_EVOLUTION_2);
-				}
-				else
-				{
-					menuButtons[(int)ButtonIndex.TOP_LEFT]
-						.GetComponent<TowerHolderButton>()
-						.SetAction(ButtonAction.NONE);
-					menuButtons[(int)ButtonIndex.TOP_CENTER]
-						.GetComponent<TowerHolderButton>()
-						.SetAction(ButtonAction.UPGRADE_LEVEL);
+					int evolutionIndex = evolutionLocks[i].evolutionIndex;
+
+					switch (evolutionIndex)
+					{
+						case 0:
+							menuButtons[(int)ButtonIndex.TOP_LEFT]
+								.GetComponent<TowerHolderButton>()
+								.SetAction(ButtonAction.LOCKED);
+							break;
+
+						case 1:
+							menuButtons[(int)ButtonIndex.TOP_RIGHT]
+								.GetComponent<TowerHolderButton>()
+								.SetAction(ButtonAction.LOCKED);
+							break;
+					}
 				}
 
 				break;

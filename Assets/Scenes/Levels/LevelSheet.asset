@@ -18,3 +18,4 @@ MonoBehaviour:
     LevelName: Sandbox
     initialGold: 99999999
     initialLives: 10
+    evolutionLocks: []

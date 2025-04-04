@@ -18,6 +18,7 @@ public enum ButtonAction
 	BUY_EVOLUTION_2,
 	UPGRADE_EVOLUTION,
 	REPOSITION_BARRACKS,
+	LOCKED,
 }
 
 public static class ButtonActionExtensions
@@ -231,6 +232,13 @@ public class TowerHolderButton : MonoBehaviour, IPointerClickHandler, IPointerEn
 						+ " "
 						+ (evolutionTower.skillLevel + 2),
 					skillStats
+				);
+				break;
+
+			case ButtonAction.LOCKED:
+				TooltipManager.Show(
+					"Locked",
+					"This tower is locked in this level\n Keep on gaming in order to unlock it!"
 				);
 				break;
 
