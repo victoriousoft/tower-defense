@@ -33,11 +33,6 @@ public class WebGLMessageHandler : MonoBehaviour
 
 	void Start()
 	{
-		Debug.Log("UNITY - Current scene name: " + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
-
-		if (Application.isEditor)
-			return;
-
 		if (instance == null)
 		{
 			instance = this;
@@ -47,6 +42,25 @@ public class WebGLMessageHandler : MonoBehaviour
 		{
 			Destroy(gameObject);
 		}
+
+#if UNITY_EDITOR
+
+		ReceiveFromJavaScript(
+			new InBrowserMessage
+			{
+				action = "loadSave",
+				args = new Dictionary<string, object> { { "levels", "[3,3,3,3]" } },
+			}
+		);
+		ReceiveFromJavaScript(
+			new InBrowserMessage
+			{
+				action = "setVolume",
+				args = new Dictionary<string, object> { { "volume", "50" } },
+			}
+		);
+		return;
+#endif
 
 		bool initRes = InitMessageListener();
 		if (!initRes)

@@ -26,6 +26,7 @@ public class MainMenuController : MonoBehaviour
 
 	void Start()
 	{
+		Debug.Log("MainMenuController started");
 		ui = GetComponent<UIDocument>().rootVisualElement;
 		buttons = ui.Query<Button>().Where(x => x.ClassListContains("level-btn")).ToList();
 		volumeSlider = ui.Query<SliderInt>().Where(x => x.ClassListContains("volume-slider")).First();

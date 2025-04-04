@@ -36,6 +36,7 @@
     transition-property: background-color, scale;
     transition-duration: 0.2s, 0.1s;
     transition-timing-function: ease-in-out;
+    -unity-font-definition: url('project://database/Assets/Fonts/GideonRoman-Regular%20SDF%20-%20Copy.asset?fileID=11400000&guid=a2e2311ef74f4484d8f5b2b9e0b1730b&type=2#GideonRoman-Regular SDF - Copy');
 }
 
 .level-btn:hover {
@@ -69,9 +70,10 @@
 }
 
 .volume-slider {
-	color: rgb(255, 255, 255);
-	-unity-text-align: middle-center;
-	width: 524px;
-	font-size: 30px;
-	-unity-font-style: normal;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-center;
+    width: 524px;
+    font-size: 30px;
+    -unity-font-style: normal;
+    -unity-font-definition: url('project://database/Assets/Fonts/GideonRoman-Regular%20SDF%20-%20Copy.asset?fileID=11400000&guid=a2e2311ef74f4484d8f5b2b9e0b1730b&type=2#GideonRoman-Regular SDF - Copy');
 }
