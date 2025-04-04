@@ -23,7 +23,7 @@ MonoBehaviour:
     attackCooldown: 1
     visRange: 1
     playerLives: 2
-    attacksTroops: 0
+    attacksTroops: 1
     abilityCooldown: 0
   info:
     name: Dalmatine

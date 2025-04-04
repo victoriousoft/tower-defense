@@ -61,7 +61,7 @@ public class MiddleEastBomber : BaseEvolutionTower
 
 	void SkillSpawn()
 	{
-		GameObject newBomber = Instantiate(bomberPrefab, transform.position, Quaternion.identity);
+		GameObject newBomber = Instantiate(bomberPrefab, transform.position, Quaternion.identity, gameObject.transform);
 		HomingMissile bomberScript = newBomber.GetComponent<HomingMissile>();
 		bomberScript.isSkillBomber = true;
 		GameObject target = TowerHelpers.SelectEnemyToAttack(

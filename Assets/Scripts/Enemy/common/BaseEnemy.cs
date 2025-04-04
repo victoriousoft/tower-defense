@@ -113,7 +113,17 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		animator.SetFloat("y", 0);
 		if (
 			currentTarget == null
-			|| Vector3.Distance(transform.position, currentTarget.transform.position) > enemyData.stats.attackRange
+			|| (
+				enemyData.enemyType == EnemyTypes.GROUND
+				&& Vector3.Distance(transform.position, currentTarget.transform.position) > enemyData.stats.attackRange
+			)
+			|| (
+				enemyData.enemyType == EnemyTypes.FLYING
+				&& Vector3.Distance(
+					new Vector3(transform.position.x, transform.position.y - 1, transform.position.z),
+					currentTarget.transform.position
+				) > enemyData.stats.attackRange
+			)
 		)
 		{
 			if (!isIdle)
@@ -145,7 +155,16 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 	GameObject FindEnemyInRange()
 	{
-		Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, enemyData.stats.visRange);
+		Collider2D[] colliders;
+		if (enemyData.enemyType == EnemyTypes.GROUND)
+			colliders = Physics2D.OverlapCircleAll(transform.position, enemyData.stats.visRange);
+		else
+		{
+			colliders = Physics2D.OverlapCircleAll(
+				new Vector3(transform.position.x, transform.position.y - 1, transform.position.z),
+				enemyData.stats.visRange
+			);
+		}
 		foreach (Collider2D collider in colliders)
 		{
 			if (collider.gameObject.CompareTag("Troop"))
