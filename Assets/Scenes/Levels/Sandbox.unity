@@ -3953,6 +3953,11 @@ MonoBehaviour:
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: 1831f1016d936a14482e890eb049e42a, type: 3}
       pathParent: {fileID: 1110906503}
+      count: 2
+      spawnDelay: 2
+      initialDelay: 0
+    - enemyPrefab: {fileID: 9059301247369330279, guid: 39710a61dc13d034083b859739ca91ef, type: 3}
+      pathParent: {fileID: 1110906503}
       count: 1
       spawnDelay: 2
       initialDelay: 0
