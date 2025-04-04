@@ -6,7 +6,8 @@ public class Vietcong : BaseEvolutionTower
 {
 	private Animator flipAnimator;
 	private Transform currentOrigin;
-	public GameObject spikesPrefab;
+	public GameObject spikesPrefab,
+		crosshiarIcon;
 
 	[SerializeField]
 	private SpriteRenderer spriteRendererLeft,
@@ -26,6 +27,14 @@ public class Vietcong : BaseEvolutionTower
 	{
 		if (enemy != null)
 		{
+			GameObject icon = Instantiate(
+				crosshiarIcon,
+				enemy.transform.position,
+				Quaternion.identity,
+				enemy.transform
+			);
+			icon.GetComponent<SelfDestruct>().DestroySelf(0.75f);
+
 			if (facingLeft && enemy.transform.position.x > transform.position.x)
 			{
 				spriteRendererLeft.gameObject.SetActive(false);

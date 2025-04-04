@@ -31,7 +31,8 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 	private bool nerfed = false;
 
 	[HideInInspector]
-	public bool isIdle = false;
+	public bool isIdle = false,
+		attacksTroops;
 	private HealthBar healthBar;
 
 	protected bool canAttack = true;
@@ -39,6 +40,8 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 	[HideInInspector]
 	public float currentSpeed;
+
+	[HideInInspector]
 	public Animator animator;
 
 	private SpriteRenderer spriteRenderer;
@@ -47,12 +50,16 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 	protected virtual void UseAbility() { }
 
-	protected virtual void ExtendedDeath() { }
+	protected virtual IEnumerator ExtendedDeath()
+	{
+		yield return null;
+	}
 
 	void Awake()
 	{
-		currentSpeed = enemyData.stats.speed;
+		currentSpeed = enemyData.stats.speed / 10;
 		health = enemyData.stats.maxHealth;
+		attacksTroops = enemyData.stats.attacksTroops;
 		healthBar = GetComponentInChildren<HealthBar>();
 		positionOffset = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
 		if (enemyData.enemyType == EnemyTypes.FLYING)
@@ -71,12 +78,11 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		if (health <= 0)
 			return;
 
-		if (currentTarget == null)
+		if (currentTarget == null || !attacksTroops)
 		{
-			isPaused = false;
 			currentTarget = FindEnemyInRange();
 
-			if (!isPaused && health > 0)
+			if (health > 0)
 			{
 				Move();
 				isIdle = false;
@@ -97,7 +103,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 				isIdle = true;
 			}
 		}
-		else if (canAttack && enemyData.stats.attacksTroops)
+		else if (canAttack)
 		{
 			AttackAnimation();
 			Attack();
@@ -110,7 +116,17 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		animator.SetFloat("y", 0);
 		if (
 			currentTarget == null
-			|| Vector3.Distance(transform.position, currentTarget.transform.position) > enemyData.stats.attackRange
+			|| (
+				enemyData.enemyType == EnemyTypes.GROUND
+				&& Vector3.Distance(transform.position, currentTarget.transform.position) > enemyData.stats.attackRange
+			)
+			|| (
+				enemyData.enemyType == EnemyTypes.FLYING
+				&& Vector3.Distance(
+					new Vector3(transform.position.x, transform.position.y - 1, transform.position.z),
+					currentTarget.transform.position
+				) > enemyData.stats.attackRange
+			)
 		)
 		{
 			if (!isIdle)
@@ -142,7 +158,16 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 	GameObject FindEnemyInRange()
 	{
-		Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, enemyData.stats.visRange);
+		Collider2D[] colliders;
+		if (enemyData.enemyType == EnemyTypes.GROUND)
+			colliders = Physics2D.OverlapCircleAll(transform.position, enemyData.stats.visRange);
+		else
+		{
+			colliders = Physics2D.OverlapCircleAll(
+				new Vector3(transform.position.x, transform.position.y - 1, transform.position.z),
+				enemyData.stats.visRange
+			);
+		}
 		foreach (Collider2D collider in colliders)
 		{
 			if (collider.gameObject.CompareTag("Troop"))
@@ -268,7 +293,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		animator.SetBool("death", true);
 		yield return null;
 
-		ExtendedDeath();
+		StartCoroutine(ExtendedDeath());
 
 		Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
 	}
@@ -351,14 +376,35 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		nerfed = false;
 	}
 
-	protected void SpawnChild(GameObject childPrefab, float xSpawnOffset)
+	public void RageForExit()
+	{
+		canAttack = false;
+		attacksTroops = false;
+		currentTarget = null;
+		currentSpeed *= 2f;
+		animator.SetTrigger("rage");
+		animator.ResetTrigger("attack");
+		animator.SetBool("idle", false);
+		animator.SetBool("stop", false);
+	}
+
+	protected IEnumerator SpawnChild(GameObject childPrefab, float xSpawnOffset)
 	{
 		GameObject child = Instantiate(
 			childPrefab,
-			transform.position + new Vector3(xSpawnOffset, 0, 0),
+			transform.position /*+ new Vector3(xSpawnOffset, 0, 0)*/
+			,
 			Quaternion.identity
 		);
 		child.transform.SetParent(gameObject.transform.parent.gameObject.transform);
+		yield return new WaitForSeconds(0.2f);
+		for (float j = 0; Mathf.Abs(j) < Mathf.Abs(xSpawnOffset); j += 0.1f * Mathf.Sign(xSpawnOffset))
+		{
+			child.transform.position = new Vector2(
+				child.transform.position.x + 0.1f * Mathf.Sign(xSpawnOffset),
+				child.transform.position.y
+			);
+		}
 		child.GetComponent<BaseEnemy>().currentPointIndex = currentPointIndex;
 		child.GetComponent<BaseEnemy>().SetPathParent(points);
 	}
