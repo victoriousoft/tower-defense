@@ -60,12 +60,12 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 	{
 		currentSpeed = enemyData.stats.speed / 10;
 		health = enemyData.stats.maxHealth;
+		currentDamage = enemyData.stats.damage;
 		attacksTroops = enemyData.stats.attacksTroops;
 		healthBar = GetComponentInChildren<HealthBar>();
 		positionOffset = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.25f, 0.25f));
 		if (enemyData.enemyType == EnemyTypes.FLYING)
 			positionOffset.y += 1f;
-
 		currentPhysicalResistance = enemyData.stats.physicalResistance;
 		currentMagicResistance = enemyData.stats.magicResistance;
 		spriteRenderer = GetComponentInChildren<SpriteRenderer>();

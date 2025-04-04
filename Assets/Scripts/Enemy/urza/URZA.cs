@@ -5,14 +5,30 @@ using UnityEngine;
 public class URZA : BaseEnemy
 {
 	public int catCount;
-	public GameObject catPrefab;
+	public GameObject catPrefab,
+		projectilePrefab;
 
-	protected override void Attack() { }
+	protected override void Attack()
+	{
+		StartCoroutine(Shoot());
+	}
 
 	protected override void UseAbility()
 	{
-		//animace
-		StartCoroutine(SpawnCats(catCount, false));
+		//StartCoroutine(SpawnCats(catCount, false));
+	}
+
+	private IEnumerator Shoot()
+	{
+		if (currentTarget == null)
+			yield break;
+		yield return new WaitForSeconds(0.5f);
+		animator.SetTrigger("attack");
+
+		GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+		EnemyProjectile projectileScript = projectile.GetComponent<EnemyProjectile>();
+		projectileScript.damage = currentDamage;
+		projectileScript.target = currentTarget;
 	}
 
 	private IEnumerator SpawnCats(int catCount, bool buffed)

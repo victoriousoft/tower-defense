@@ -19,7 +19,7 @@ MonoBehaviour:
     speed: 0.85
     physicalResistance: 0
     magicResistance: 4
-    attackRange: 0.5
+    attackRange: 20
     attackCooldown: 1
     visRange: 1
     playerLives: 5

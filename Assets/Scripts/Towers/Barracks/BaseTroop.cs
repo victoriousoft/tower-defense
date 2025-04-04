@@ -54,8 +54,19 @@ public abstract class BaseTroop : MonoBehaviour
 			StartCoroutine(ResetAttackCooldown());
 		}
 
-		if (targetLocation != null)
+		if (currentEnemy == null && targetLocation != null)
+		{
 			WalkTo(targetLocation);
+		}
+		else if (currentEnemy != null)
+		{
+			float distanceToEnemy = Vector2.Distance(transform.position, currentEnemy.transform.position);
+			if (distanceToEnemy > troopData.stats.attackRange)
+			{
+				animator.SetBool("idle", false);
+				WalkTo(currentEnemy.transform.position);
+			}
+		}
 
 		if (currentEnemy == null)
 			isFighting = false;
@@ -85,7 +96,8 @@ public abstract class BaseTroop : MonoBehaviour
 					animator.SetFloat("x", direction);
 
 					isFighting = true;
-					animator.SetBool("fighting", true);
+					animator.SetTrigger("fighting");
+					animator.SetBool("idle", true);
 					Attack();
 				}
 			}
@@ -106,9 +118,8 @@ public abstract class BaseTroop : MonoBehaviour
 		if (currentEnemy == null && Vector2.Distance(transform.position, targetLocation) < 0.1f)
 		{
 			animator.SetBool("idle", true);
-			animator.SetBool("fighting", false);
 		}
-		else
+		else if (currentEnemy == null)
 		{
 			animator.SetBool("idle", false);
 		}
@@ -116,6 +127,7 @@ public abstract class BaseTroop : MonoBehaviour
 
 	public void TakeDamage(float damage)
 	{
+		Debug.Log("Taking damage: " + damage);
 		health -= damage;
 		healthBar.SetHealth(health / troopData.stats.maxHealth);
 		if (health <= 0 && dead == false)

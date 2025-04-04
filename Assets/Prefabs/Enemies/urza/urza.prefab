@@ -95,7 +95,6 @@ GameObject:
   - component: {fileID: 8454266277183463836}
   - component: {fileID: 6324347410508317063}
   - component: {fileID: 3669478635275523187}
-  - component: {fileID: -7034019478127596031}
   - component: {fileID: 3572593920736383794}
   m_Layer: 0
   m_Name: urza
@@ -187,25 +186,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &-7034019478127596031
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9059301247369330279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 877ca46738226b84088375083f3bdf71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyData: {fileID: 11400000, guid: 3e743bf415dff034fb5b8e977a4e2920, type: 2}
-  currentPhysicalResistance: 0
-  currentMagicResistance: 0
-  isIdle: 0
-  attacksTroops: 0
-  currentSpeed: 0
-  animator: {fileID: 0}
 --- !u!114 &3572593920736383794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,7 +193,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9059301247369330279}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72db86c6e0b00e246ae26b3a8706b7db, type: 3}
   m_Name: 
@@ -224,7 +204,11 @@ MonoBehaviour:
   isIdle: 0
   attacksTroops: 0
   currentSpeed: 0
+  currentDamage: 0
   animator: {fileID: 0}
+  catCount: 7
+  catPrefab: {fileID: 0}
+  projectilePrefab: {fileID: 3273542251169830856, guid: 18373657e7f4db04e9287486939a3c49, type: 3}
 --- !u!1001 &5007395829321720595
 PrefabInstance:
   m_ObjectHideFlags: 0
