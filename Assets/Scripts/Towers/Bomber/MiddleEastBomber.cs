@@ -48,7 +48,12 @@ public class MiddleEastBomber : BaseEvolutionTower
 		{
 			if (currentBombers[i] == null)
 			{
-				GameObject newBomber = Instantiate(bomberPrefab, spawnPosition.transform.position, Quaternion.identity);
+				GameObject newBomber = Instantiate(
+					bomberPrefab,
+					spawnPosition.transform.position,
+					Quaternion.identity,
+					gameObject.transform
+				);
 				currentBombers[i] = newBomber;
 				HomingMissile bomberScript = newBomber.GetComponent<HomingMissile>();
 				StartCoroutine(bomberScript.MoveToTarget(bomberWaitPoints[i], 0, bomberSpeed));

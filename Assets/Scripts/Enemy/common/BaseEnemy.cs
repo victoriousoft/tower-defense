@@ -50,7 +50,10 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 	protected virtual void UseAbility() { }
 
-	protected virtual void ExtendedDeath() { }
+	protected virtual IEnumerator ExtendedDeath()
+	{
+		yield return null;
+	}
 
 	void Awake()
 	{
@@ -290,7 +293,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		animator.SetBool("death", true);
 		yield return null;
 
-		ExtendedDeath();
+		StartCoroutine(ExtendedDeath());
 
 		Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
 	}
@@ -378,21 +381,30 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		canAttack = false;
 		attacksTroops = false;
 		currentTarget = null;
-		currentSpeed *= 1.666f;
+		currentSpeed *= 2f;
 		animator.SetTrigger("rage");
 		animator.ResetTrigger("attack");
 		animator.SetBool("idle", false);
 		animator.SetBool("stop", false);
 	}
 
-	protected void SpawnChild(GameObject childPrefab, float xSpawnOffset)
+	protected IEnumerator SpawnChild(GameObject childPrefab, float xSpawnOffset)
 	{
 		GameObject child = Instantiate(
 			childPrefab,
-			transform.position + new Vector3(xSpawnOffset, 0, 0),
+			transform.position /*+ new Vector3(xSpawnOffset, 0, 0)*/
+			,
 			Quaternion.identity
 		);
 		child.transform.SetParent(gameObject.transform.parent.gameObject.transform);
+		yield return new WaitForSeconds(0.2f);
+		for (float j = 0; Mathf.Abs(j) < Mathf.Abs(xSpawnOffset); j += 0.1f * Mathf.Sign(xSpawnOffset))
+		{
+			child.transform.position = new Vector2(
+				child.transform.position.x + 0.1f * Mathf.Sign(xSpawnOffset),
+				child.transform.position.y
+			);
+		}
 		child.GetComponent<BaseEnemy>().currentPointIndex = currentPointIndex;
 		child.GetComponent<BaseEnemy>().SetPathParent(points);
 	}

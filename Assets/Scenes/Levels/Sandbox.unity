@@ -3951,50 +3951,11 @@ MonoBehaviour:
   waves:
   - initialDelay: 0
     enemies:
-    - enemyPrefab: {fileID: 3452856994613389641, guid: a6bf18b34be522843994351a56ac0eeb, type: 3}
+    - enemyPrefab: {fileID: 9059301247369330279, guid: 1831f1016d936a14482e890eb049e42a, type: 3}
       pathParent: {fileID: 1110906503}
-      count: 3
+      count: 1
       spawnDelay: 2
       initialDelay: 0
-  - initialDelay: 10
-    enemies:
-    - enemyPrefab: {fileID: 9059301247369330279, guid: 5b10d5bc59d620841b25da864e41a57a, type: 3}
-      pathParent: {fileID: 1110906503}
-      count: 22
-      spawnDelay: 0.5
-      initialDelay: 0
-    - enemyPrefab: {fileID: 9059301247369330279, guid: 5b10d5bc59d620841b25da864e41a57a, type: 3}
-      pathParent: {fileID: 1110906503}
-      count: 22
-      spawnDelay: 0.5
-      initialDelay: 0
-    - enemyPrefab: {fileID: 9059301247369330279, guid: 0b5ec1e12cd3ef140a485beb4a56ee39, type: 3}
-      pathParent: {fileID: 1110906503}
-      count: 5
-      spawnDelay: 3
-      initialDelay: 0
-  - initialDelay: 10
-    enemies:
-    - enemyPrefab: {fileID: 9059301247369330279, guid: 5d2dd7192bfa41b4aa5b9ccdce4406ac, type: 3}
-      pathParent: {fileID: 1110906503}
-      count: 3
-      spawnDelay: 0.5
-      initialDelay: 0
-    - enemyPrefab: {fileID: 9059301247369330279, guid: 19de934514311f74c9be5467f5d2a268, type: 3}
-      pathParent: {fileID: 1110906503}
-      count: 3
-      spawnDelay: 0.5
-      initialDelay: 1
-    - enemyPrefab: {fileID: 9059301247369330279, guid: cfe1d56f2c4d05149942c26df5e27e23, type: 3}
-      pathParent: {fileID: 1110906503}
-      count: 3
-      spawnDelay: 0.5
-      initialDelay: 1
-    - enemyPrefab: {fileID: 9059301247369330279, guid: dc2fd337830c2934097476c3650a2ea8, type: 3}
-      pathParent: {fileID: 1110906503}
-      count: 3
-      spawnDelay: 0.5
-      initialDelay: 1
   waveStartSound: {fileID: 8300000, guid: 6aed442235522994a8ea6eb3affac9d4, type: 3}
 --- !u!82 &1258185206
 AudioSource:
