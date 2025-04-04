@@ -59,8 +59,6 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	public Dictionary<ButtonAction, Sprite> towerIcons;
 	public Dictionary<TowerTypes, Sprite[]> evolutionTowerIcons;
 
-	public LevelSheet levelSheet;
-
 	[HideInInspector]
 	public MenuState menuState;
 
@@ -348,8 +346,8 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 						.SetAction(ButtonAction.CYCLE_RETARGET);
 				}
 
-				LevelSheet.EvolutionLock[] evolutionLocks = levelSheet
-					.levels[PlayerStatsManager.currentLevel]
+				LevelSheet.EvolutionLock[] evolutionLocks = GlobalData
+					.instance.levelSheet.levels[PlayerStatsManager.currentLevel]
 					.evolutionLocks.Where(x => x.towerType == towerInstance.GetComponent<BaseTower>().towerType)
 					.ToArray();
 

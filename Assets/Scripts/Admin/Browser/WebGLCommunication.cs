@@ -27,8 +27,6 @@ public class WebGLMessageHandler : MonoBehaviour
 		public Dictionary<string, object> args;
 	}
 
-	public MainMenuController mainMenuController;
-
 	private static WebGLMessageHandler instance;
 
 	void Start()
@@ -49,14 +47,7 @@ public class WebGLMessageHandler : MonoBehaviour
 			new InBrowserMessage
 			{
 				action = "loadSave",
-				args = new Dictionary<string, object> { { "levels", "[3,3,3,3]" } },
-			}
-		);
-		ReceiveFromJavaScript(
-			new InBrowserMessage
-			{
-				action = "setVolume",
-				args = new Dictionary<string, object> { { "volume", "50" } },
+				args = new Dictionary<string, object> { { "levels", "[3,3]" } },
 			}
 		);
 		return;
@@ -78,8 +69,6 @@ public class WebGLMessageHandler : MonoBehaviour
 			Debug.Log("UNITY - Sending message to JavaScript: " + jsonMessage);
 			SendToJavaScript(message);
 		}
-
-		DontDestroyOnLoad(gameObject);
 	}
 
 	public void _ReceiveFromJavaScript(string jsonMessage)
@@ -124,13 +113,12 @@ public class WebGLMessageHandler : MonoBehaviour
 				PlayerStatsManager.levelStars = string.IsNullOrEmpty(levelsString)
 					? new List<int>()
 					: levelsString.Split(',').Select(int.Parse).ToList();
-				Debug.Log("UNITY - Loaded save data: " + string.Join(", ", PlayerStatsManager.levelStars));
-				instance.mainMenuController.LockLevels();
+				MainMenuController.LockLevels();
 				break;
 
 			case "setVolume":
 				Debug.Log("UNITY - Setting volume: " + message.args["volume"]);
-				MainMenuController.instance.SetVolume(int.Parse(message.args["volume"].ToString()));
+				MainMenuController.SetVolume(int.Parse(message.args["volume"].ToString()));
 				break;
 
 			default:
