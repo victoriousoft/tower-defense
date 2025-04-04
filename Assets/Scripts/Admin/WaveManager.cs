@@ -101,7 +101,6 @@ public class WaveSheet : MonoBehaviour
 	{
 		if (instance == null)
 		{
-			Debug.Log("WaveSheet instance created.");
 			instance = this;
 		}
 		else
