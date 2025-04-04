@@ -7,7 +7,10 @@ public class SWAT : BaseEnemy
 	public GameObject explosionEffect;
 	public float explosionDamage;
 
-	protected override void Attack() { }
+	protected override void Attack()
+	{
+		NerfResistance(1, 0, animator.GetCurrentAnimatorStateInfo(0).length * 3);
+	}
 
 	protected override IEnumerator ExtendedDeath()
 	{

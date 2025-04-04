@@ -26,8 +26,8 @@ MonoBehaviour:
     attacksTroops: 0
     abilityCooldown: 3
   info:
-    name: The Y.A.R.N.
-    description: Warriors worst nightmare.
+    name: Y^2.A.R.N. (what?)
+    description: who even invited this guy to the assault
   enemyType: 0
   attackSound: {fileID: 0}
   deathSound: {fileID: 0}

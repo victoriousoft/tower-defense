@@ -3951,7 +3951,7 @@ MonoBehaviour:
   waves:
   - initialDelay: 0
     enemies:
-    - enemyPrefab: {fileID: 9059301247369330279, guid: 1831f1016d936a14482e890eb049e42a, type: 3}
+    - enemyPrefab: {fileID: 9059301247369330279, guid: e4ba1dbe206aa9d4db6a6bf89d626dcf, type: 3}
       pathParent: {fileID: 1110906503}
       count: 2
       spawnDelay: 2

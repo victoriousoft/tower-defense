@@ -39,7 +39,8 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 	protected bool isAbilityCharged = false;
 
 	[HideInInspector]
-	public float currentSpeed;
+	public float currentSpeed,
+		currentDamage;
 
 	[HideInInspector]
 	public Animator animator;
@@ -61,7 +62,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		health = enemyData.stats.maxHealth;
 		attacksTroops = enemyData.stats.attacksTroops;
 		healthBar = GetComponentInChildren<HealthBar>();
-		positionOffset = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
+		positionOffset = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.25f, 0.25f));
 		if (enemyData.enemyType == EnemyTypes.FLYING)
 			positionOffset.y += 1f;
 
@@ -146,7 +147,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		animator.SetTrigger("attack");
 		if (transform.position.x > currentTarget.transform.position.x)
 			GetComponentInChildren<SpriteRenderer>().flipX = true;
-		currentTarget.GetComponent<BaseTroop>().TakeDamage(enemyData.stats.damage);
+		currentTarget.GetComponent<BaseTroop>().TakeDamage(currentDamage);
 		canAttack = false;
 		StartCoroutine(ResetAttackCooldown());
 	}
