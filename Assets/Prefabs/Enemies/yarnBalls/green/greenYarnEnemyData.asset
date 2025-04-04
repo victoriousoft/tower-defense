@@ -27,7 +27,7 @@ MonoBehaviour:
     abilityCooldown: 3
   info:
     name: G. Y.A.R.N.
-    description: Also known as G.Y.A.T.R.N
+    description: Fiends call it G.Y.A.T.R.N. How funny, right??
   enemyType: 0
   attackSound: {fileID: 0}
   deathSound: {fileID: 0}

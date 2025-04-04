@@ -16,7 +16,7 @@ MonoBehaviour:
     maxHealth: 50
     damage: 45
     cashDrop: 100
-    speed: 0.25
+    speed: 1.2
     physicalResistance: 1
     magicResistance: 0
     attackRange: 0.5
@@ -24,6 +24,7 @@ MonoBehaviour:
     visRange: 4
     playerLives: 2
     attacksTroops: 1
+    hasAbility: 0
     abilityCooldown: 3
   info:
     name: '"Princess"'

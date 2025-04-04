@@ -15,7 +15,7 @@ public class URZA : BaseEnemy
 
 	protected override void UseAbility()
 	{
-		//StartCoroutine(SpawnCats(catCount, false));
+		StartCoroutine(SpawnCats(catCount, false));
 	}
 
 	private IEnumerator Shoot()
@@ -35,15 +35,25 @@ public class URZA : BaseEnemy
 	{
 		for (int i = 0; i < catCount; i++)
 		{
-			GameObject cat = catPrefab;
-			SpawnChild(cat, Random.Range(-0.3f, 0.3f));
-			cat.transform.SetParent(transform);
-			if (buffed)
-			{
-				cat.GetComponent<BaseEnemy>().currentDamage = 1000;
-			}
-			yield return new WaitForSeconds(0.5f);
+			StartCoroutine(
+				SpawnChild(
+					catPrefab,
+					Random.Range(-0.3f, 0.3f),
+					child =>
+					{
+						if (buffed)
+						{
+							child.GetComponent<BaseEnemy>().currentDamage = 1000;
+						}
+					}
+				)
+			);
+			yield return new WaitForSeconds(0.75f);
+			animator.Play("ability");
 		}
+
+		abilityInUse = false;
+		animator.Play("moveRight");
 	}
 
 	protected override IEnumerator ExtendedDeath()

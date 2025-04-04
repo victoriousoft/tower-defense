@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 7530796829965081550}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: -0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
+  m_LocalScale: {x: 1.7, y: 1.7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8454266277183463836}
@@ -203,11 +203,12 @@ MonoBehaviour:
   currentMagicResistance: 0
   isIdle: 0
   attacksTroops: 0
+  abilityInUse: 0
   currentSpeed: 0
   currentDamage: 0
   animator: {fileID: 0}
   catCount: 7
-  catPrefab: {fileID: 0}
+  catPrefab: {fileID: 9059301247369330279, guid: 5d2dd7192bfa41b4aa5b9ccdce4406ac, type: 3}
   projectilePrefab: {fileID: 3273542251169830856, guid: 18373657e7f4db04e9287486939a3c49, type: 3}
 --- !u!1001 &5007395829321720595
 PrefabInstance:
@@ -259,7 +260,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1836382847107017493, guid: a651510a993b289478439f239264d2a3, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.015649602
+      value: 0.013889021
       objectReference: {fileID: 0}
     - target: {fileID: 1836382847107017493, guid: a651510a993b289478439f239264d2a3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -295,7 +296,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1836382847107017493, guid: a651510a993b289478439f239264d2a3, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.75
+      value: 2.4
       objectReference: {fileID: 0}
     - target: {fileID: 1836382847107017493, guid: a651510a993b289478439f239264d2a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

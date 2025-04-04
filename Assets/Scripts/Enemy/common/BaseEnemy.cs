@@ -32,7 +32,8 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 	[HideInInspector]
 	public bool isIdle = false,
-		attacksTroops;
+		attacksTroops,
+		abilityInUse = false;
 	private HealthBar healthBar;
 
 	protected bool canAttack = true;
@@ -88,12 +89,13 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 				Move();
 				isIdle = false;
 				animator.SetBool("idle", false);
-
-				if (isAbilityCharged)
+				if (isAbilityCharged && enemyData.stats.hasAbility)
 				{
+					animator.Play("ability");
 					UseAbility();
 					isAbilityCharged = false;
 					StartCoroutine(ResetAbilityCooldown());
+					abilityInUse = true;
 				}
 			}
 			else if (!isIdle)
@@ -195,7 +197,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 	void Move()
 	{
-		if (points == null)
+		if (points == null || abilityInUse)
 			return;
 		if (currentTarget == null)
 			GetComponentInChildren<SpriteRenderer>().flipX = false;
@@ -389,7 +391,11 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		animator.SetBool("stop", false);
 	}
 
-	protected IEnumerator SpawnChild(GameObject childPrefab, float xSpawnOffset)
+	protected IEnumerator SpawnChild(
+		GameObject childPrefab,
+		float xSpawnOffset,
+		System.Action<GameObject> onChildSpawned
+	)
 	{
 		GameObject child = Instantiate(
 			childPrefab,
@@ -408,6 +414,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		}
 		child.GetComponent<BaseEnemy>().currentPointIndex = currentPointIndex;
 		child.GetComponent<BaseEnemy>().SetPathParent(points);
+		onChildSpawned?.Invoke(child);
 	}
 
 	protected IEnumerator ResetAttackCooldown()
