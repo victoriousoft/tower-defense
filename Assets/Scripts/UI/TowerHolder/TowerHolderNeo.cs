@@ -42,6 +42,7 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
 	public Sprite bombIcon;
 	public Sprite suicideBomberIcon;
+	public Sprite grippenIcon;
 
 	public Sprite sellIcon;
 	public Sprite upgradeIcon;
@@ -113,7 +114,7 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 			{ TowerTypes.Archer, new Sprite[] { machineGunIcon, vietcongIcon } },
 			{ TowerTypes.Barracks, new Sprite[] { null, null } },
 			{ TowerTypes.Magic, new Sprite[] { null, IBMIcon } },
-			{ TowerTypes.Bomb, new Sprite[] { suicideBomberIcon, null } },
+			{ TowerTypes.Bomb, new Sprite[] { suicideBomberIcon, grippenIcon } },
 		};
 
 		animator = GetComponent<Animator>();
