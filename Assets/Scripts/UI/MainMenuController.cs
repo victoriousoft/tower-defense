@@ -56,7 +56,6 @@ public class MainMenuController : MonoBehaviour
 
 	public static void LockLevels()
 	{
-		Debug.Log("Locking levels, buttons: " + instance.buttons);
 		for (int i = 0; i < instance.buttons.Count; i++)
 		{
 			if (i >= GlobalData.instance.levelSheet.levels.Length)
