@@ -63,6 +63,7 @@ MonoBehaviour:
   barracksIcon: {fileID: 21300000, guid: 56143a7aa5da5cc4793db5fc40a43cff, type: 3}
   magicIcon: {fileID: 21300000, guid: 24b3bc512aa00f14aa3c500476625dcf, type: 3}
   IBMIcon: {fileID: 21300000, guid: e5f6993930e6f0e4e9b1216480bb11e0, type: 3}
+  hackerIcon: {fileID: 21300000, guid: 36db401c4da20b047ae85a26867d127f, type: 3}
   bombIcon: {fileID: 21300000, guid: 9268d56183b82c843aa390d3ab82e98e, type: 3}
   suicideBomberIcon: {fileID: 21300000, guid: 794f17a1a92c7f14584619588d161530, type: 3}
   grippenIcon: {fileID: 21300000, guid: 91216e834a7cc684f9ba7a3c33ece47b, type: 3}
