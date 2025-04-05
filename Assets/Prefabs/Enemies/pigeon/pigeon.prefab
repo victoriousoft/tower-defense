@@ -119,7 +119,9 @@ MonoBehaviour:
   currentMagicResistance: 0
   isIdle: 0
   attacksTroops: 0
+  abilityInUse: 0
   currentSpeed: 0
+  currentDamage: 0
   animator: {fileID: 0}
 --- !u!1 &3487413319612676149
 GameObject:
@@ -255,7 +257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1836382847107017493, guid: a651510a993b289478439f239264d2a3, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.009468681
+      value: 0.004038984
       objectReference: {fileID: 0}
     - target: {fileID: 1836382847107017493, guid: a651510a993b289478439f239264d2a3, type: 3}
       propertyPath: m_LocalPosition.x

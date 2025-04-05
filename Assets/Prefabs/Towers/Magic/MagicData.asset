@@ -23,15 +23,15 @@ MonoBehaviour:
   levels:
   - price: 100
     range: 2.5
-    damage: 25
+    damage: 12.5
     cooldown: 2
   - price: 150
     range: 3
-    damage: 50
+    damage: 20
     cooldown: 1
   - price: 200
     range: 3.5
-    damage: 100
+    damage: 40
     cooldown: 0.5
   evolutions:
   - name: Hackerman

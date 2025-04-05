@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
     maxHealth: 50
-    damage: 45
-    cashDrop: 100
-    speed: 1.2
-    physicalResistance: 1
+    damage: 10
+    cashDrop: 10
+    speed: 3
+    physicalResistance: 0
     magicResistance: 0
     attackRange: 0.5
     attackCooldown: 1
@@ -25,10 +25,12 @@ MonoBehaviour:
     playerLives: 2
     attacksTroops: 1
     hasAbility: 0
+    isRanged: 0
     abilityCooldown: 3
   info:
     name: '"Princess"'
     description: Not-so-good boy! Sharp teeth!
   enemyType: 0
-  attackSound: {fileID: 0}
-  deathSound: {fileID: 0}
+  attackSounds: []
+  deathSounds: []
+  abilitySounds: []

@@ -212,7 +212,7 @@ MonoBehaviour:
   - {fileID: 9059301247369330279, guid: 19de934514311f74c9be5467f5d2a268, type: 3}
   - {fileID: 9059301247369330279, guid: dc2fd337830c2934097476c3650a2ea8, type: 3}
   - {fileID: 9059301247369330279, guid: cfe1d56f2c4d05149942c26df5e27e23, type: 3}
-  spawnCount: 10
+  spawnCount: 5
 --- !u!1001 &5007395829321720595
 PrefabInstance:
   m_ObjectHideFlags: 0

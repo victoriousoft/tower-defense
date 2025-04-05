@@ -202,7 +202,10 @@ MonoBehaviour:
   currentPhysicalResistance: 0
   currentMagicResistance: 0
   isIdle: 0
+  attacksTroops: 0
+  abilityInUse: 0
   currentSpeed: 0
+  currentDamage: 0
   animator: {fileID: 0}
 --- !u!1001 &5007395829321720595
 PrefabInstance:

@@ -23,7 +23,7 @@ MonoBehaviour:
   levels:
   - price: 75
     range: 3
-    damage: 5
+    damage: 10
     cooldown: 0.25
   - price: 100
     range: 3.5
