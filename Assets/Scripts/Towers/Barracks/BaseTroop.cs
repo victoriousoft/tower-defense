@@ -42,7 +42,7 @@ public abstract class BaseTroop : MonoBehaviour
 		animator = GetComponent<Animator>();
 	}
 
-	void Update()
+	void FixedUpdate()
 	{
 		if (health <= 0)
 			return;

@@ -20,7 +20,7 @@ public class MachineGun : BaseEvolutionTower
 		spinAnimationAnimator = GetComponent<Animator>();
 	}
 
-	void Update()
+	void FixedUpdate()
 	{
 		if (skillInUse)
 			return;

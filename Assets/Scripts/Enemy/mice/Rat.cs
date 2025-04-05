@@ -8,6 +8,8 @@ public class Rat : BaseEnemy
 
 	void FixedUpdate()
 	{
+		base.FixedUpdate();
+
 		if (health < enemyData.stats.maxHealth / 2 && attacksTroops)
 		{
 			RageForExit();

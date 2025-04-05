@@ -25,6 +25,13 @@ public class TooltipManager : MonoBehaviour
 
 	public static void Show(string header = "", string content = "")
 	{
+		Show(header, content, Color.white);
+	}
+
+	public static void Show(string header, string content, Color textColor)
+	{
+		instance.tooltip.headerText.color = textColor;
+
 		instance.tooltip.SetText(header, content);
 		instance.tooltip.gameObject.SetActive(true);
 	}

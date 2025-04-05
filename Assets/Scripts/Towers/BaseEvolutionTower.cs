@@ -36,7 +36,7 @@ public abstract class BaseEvolutionTower : BaseTower
 		healthBar.gameObject.SetActive(false);
 	}
 
-	private void Update()
+	private void FixedUpdate()
 	{
 		if (waitingForFirstWave && WaveSheet.instance.currentWave >= 0)
 		{

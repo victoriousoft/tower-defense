@@ -6,13 +6,13 @@ using UnityEngine.SceneManagement;
 public class PlayerStatsManager : MonoBehaviour
 {
 #if UNITY_EDITOR
-	public static int currentLevel = 0;
+	public static int currentLevel = 1;
 #else
 	public static int currentLevel = -1;
 #endif
 	public static int currentWave = 0;
 	public static int lives = 25;
-	public static int gold = 260;
+	public static int gold = 800;
 
 	[System.NonSerialized]
 	[HideInInspector]

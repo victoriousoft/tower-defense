@@ -77,7 +77,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		StartCoroutine(ResetAbilityCooldown());
 	}
 
-	void Update()
+	protected void FixedUpdate()
 	{
 		if (health <= 0)
 			return;

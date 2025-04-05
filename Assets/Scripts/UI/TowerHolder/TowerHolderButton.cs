@@ -76,6 +76,8 @@ public class TowerHolderButton : MonoBehaviour, IPointerClickHandler, IPointerEn
 		TowerHelpers.TowerTargetTypes.LEAST_HP,
 	};
 
+	static Color red = new Color(1f, 0.4f, 0.36f, 1f);
+
 	public void Awake()
 	{
 		backgroundSpriteRenderer = GetComponent<SpriteRenderer>();
@@ -124,7 +126,12 @@ public class TowerHolderButton : MonoBehaviour, IPointerClickHandler, IPointerEn
 			case ButtonAction.BUILD_BOMB:
 				tower = towerHolder.GetComponent<TowerHolderNeo>().GetBaseTowerScript(buttonAction.GetTowerType());
 				string stats = tower.towerData.GetBuyStats();
-				TooltipManager.Show(tower.towerData.towerName, stats);
+
+				if (tower.towerData.levels[0].price > PlayerStatsManager.gold)
+					TooltipManager.Show(tower.towerData.towerName, stats, red);
+				else
+					TooltipManager.Show(tower.towerData.towerName, stats);
+
 				TowerHelpers.SetRangeCircle(
 					lineRenderer,
 					tower.towerData.levels[0].range,
@@ -163,7 +170,12 @@ public class TowerHolderButton : MonoBehaviour, IPointerClickHandler, IPointerEn
 				}
 
 				string upgradeStats = tower.towerData.GetUpgradeStats(tower.level);
-				TooltipManager.Show(tower.towerData.towerName + " " + (tower.level + 2), upgradeStats);
+
+				if (tower.towerData.levels[tower.level + 1].price > PlayerStatsManager.gold)
+					TooltipManager.Show(tower.towerData.towerName, upgradeStats, red);
+				else
+					TooltipManager.Show(tower.towerData.towerName, upgradeStats);
+
 				TowerHelpers.SetRangeCircle(
 					lineRenderer,
 					tower.towerData.levels[tower.level + 1].range,
@@ -198,7 +210,11 @@ public class TowerHolderButton : MonoBehaviour, IPointerClickHandler, IPointerEn
 				int evolutionIndex = buttonAction.GetEvolutionIndex();
 				tower = towerHolder.GetComponent<TowerHolderNeo>().GetBaseTowerScript();
 				string EvolutionStats = tower.towerData.GetEvolutionBuyStats(evolutionIndex);
-				TooltipManager.Show(tower.towerData.evolutions[evolutionIndex].name, EvolutionStats);
+
+				if (tower.towerData.evolutions[evolutionIndex].price > PlayerStatsManager.gold)
+					TooltipManager.Show(tower.towerData.towerName, EvolutionStats, red);
+				else
+					TooltipManager.Show(tower.towerData.towerName, EvolutionStats);
 
 				TowerHelpers.SetRangeCircle(
 					lineRenderer,
@@ -227,12 +243,27 @@ public class TowerHolderButton : MonoBehaviour, IPointerClickHandler, IPointerEn
 							evolutionTower.skillLevel
 						);
 
-				TooltipManager.Show(
-					evolutionTower.towerData.evolutions[evolutionTower.evolutionIndex].skillName
-						+ " "
-						+ (evolutionTower.skillLevel + 2),
-					skillStats
-				);
+				if (
+					evolutionTower
+						.towerData
+						.evolutions[evolutionTower.evolutionIndex]
+						.skillLevels[evolutionTower.skillLevel + 1]
+						.upragdeCost > PlayerStatsManager.gold
+				)
+					TooltipManager.Show(
+						evolutionTower.towerData.evolutions[evolutionTower.evolutionIndex].skillName
+							+ " "
+							+ (evolutionTower.skillLevel + 2),
+						skillStats,
+						red
+					);
+				else
+					TooltipManager.Show(
+						evolutionTower.towerData.evolutions[evolutionTower.evolutionIndex].skillName
+							+ " "
+							+ (evolutionTower.skillLevel + 2),
+						skillStats
+					);
 				break;
 
 			case ButtonAction.LOCKED:
