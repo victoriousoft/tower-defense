@@ -127,8 +127,6 @@ public abstract class BaseTroop : MonoBehaviour
 
 	public void TakeDamage(float damage)
 	{
-		Debug.Log("Taking damage: " + damage);
-		Debug.Log("Current health: " + health);
 		health -= damage;
 		healthBar.SetHealth(health / troopData.stats.maxHealth);
 
