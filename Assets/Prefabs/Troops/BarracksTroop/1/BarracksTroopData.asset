@@ -19,7 +19,7 @@ MonoBehaviour:
     damage: 15
     speed: 1
     attackRange: 0.5
-    visRange: 2
+    visRange: 1
     attackCooldown: 1
   enemyTypes: 00000000
   attackSounds: []

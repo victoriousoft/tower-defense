@@ -12,7 +12,7 @@ public class PlayerStatsManager : MonoBehaviour
 #endif
 	public static int currentWave = 0;
 	public static int lives = 20;
-	public static int gold = 999999999;
+	public static int gold = 200;
 
 	[System.NonSerialized]
 	[HideInInspector]

@@ -137,9 +137,6 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 			)
 		)
 		{
-			Debug.Log("Distance to target: " + Vector3.Distance(transform.position, currentTarget.transform.position));
-			Debug.Log("Attack range: " + enemyData.stats.attackRange);
-
 			if (!isIdle)
 			{
 				if (transform.position.x > currentTarget.transform.position.x)
@@ -196,6 +193,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 				collider.gameObject.CompareTag("Troop")
 				&& collider.gameObject.GetComponent<BaseTroop>().health > 0
 				&& collider.gameObject.GetComponent<BaseTroop>().currentEnemy == null
+				&& collider.gameObject.GetComponent<BaseTroop>().homeBase.GetComponent<Barracks>().IsInRange(gameObject)
 			)
 			{
 				return collider.gameObject;

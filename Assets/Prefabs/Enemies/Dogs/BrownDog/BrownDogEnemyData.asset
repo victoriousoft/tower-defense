@@ -15,7 +15,7 @@ MonoBehaviour:
   stats:
     maxHealth: 50
     damage: 10
-    cashDrop: 100
+    cashDrop: 5
     speed: 3
     physicalResistance: 0
     magicResistance: 0

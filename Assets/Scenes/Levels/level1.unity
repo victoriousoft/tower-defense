@@ -4166,7 +4166,7 @@ MonoBehaviour:
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: 19de934514311f74c9be5467f5d2a268, type: 3}
       pathParent: {fileID: 1041984126}
-      count: 1
+      count: 7
       spawnDelay: 2.5
       initialDelay: 0
   - initialDelay: 20
@@ -4181,6 +4181,69 @@ MonoBehaviour:
       count: 3
       spawnDelay: 2.5
       initialDelay: 5
+  - initialDelay: 20
+    enemies:
+    - enemyPrefab: {fileID: 9059301247369330279, guid: 5b10d5bc59d620841b25da864e41a57a, type: 3}
+      pathParent: {fileID: 539522128}
+      count: 10
+      spawnDelay: 1.5
+      initialDelay: 0
+    - enemyPrefab: {fileID: 9059301247369330279, guid: 19de934514311f74c9be5467f5d2a268, type: 3}
+      pathParent: {fileID: 1041984126}
+      count: 5
+      spawnDelay: 2.5
+      initialDelay: 0
+  - initialDelay: 20
+    enemies:
+    - enemyPrefab: {fileID: 263465933958823401, guid: d2a5316ca0014cd418585664ddf513c7, type: 3}
+      pathParent: {fileID: 1041984126}
+      count: 1
+      spawnDelay: 0
+      initialDelay: 0
+    - enemyPrefab: {fileID: 263465933958823401, guid: d2a5316ca0014cd418585664ddf513c7, type: 3}
+      pathParent: {fileID: 1041984126}
+      count: 5
+      spawnDelay: 2.5
+      initialDelay: 5
+  - initialDelay: 20
+    enemies:
+    - enemyPrefab: {fileID: 9059301247369330279, guid: 19de934514311f74c9be5467f5d2a268, type: 3}
+      pathParent: {fileID: 1041984126}
+      count: 10
+      spawnDelay: 2.5
+      initialDelay: 0
+    - enemyPrefab: {fileID: 9059301247369330279, guid: 19de934514311f74c9be5467f5d2a268, type: 3}
+      pathParent: {fileID: 539522128}
+      count: 10
+      spawnDelay: 2.5
+      initialDelay: 0
+  - initialDelay: 20
+    enemies:
+    - enemyPrefab: {fileID: 9059301247369330279, guid: 19de934514311f74c9be5467f5d2a268, type: 3}
+      pathParent: {fileID: 1041984126}
+      count: 5
+      spawnDelay: 2.5
+      initialDelay: 0
+    - enemyPrefab: {fileID: 9059301247369330279, guid: 19de934514311f74c9be5467f5d2a268, type: 3}
+      pathParent: {fileID: 539522128}
+      count: 5
+      spawnDelay: 2.5
+      initialDelay: 0
+    - enemyPrefab: {fileID: 9059301247369330279, guid: 5b10d5bc59d620841b25da864e41a57a, type: 3}
+      pathParent: {fileID: 539522128}
+      count: 10
+      spawnDelay: 1.5
+      initialDelay: 12.5
+    - enemyPrefab: {fileID: 9059301247369330279, guid: 5b10d5bc59d620841b25da864e41a57a, type: 3}
+      pathParent: {fileID: 1041984126}
+      count: 10
+      spawnDelay: 1.5
+      initialDelay: 12.5
+    - enemyPrefab: {fileID: 9059301247369330279, guid: 0b5ec1e12cd3ef140a485beb4a56ee39, type: 3}
+      pathParent: {fileID: 1041984126}
+      count: 5
+      spawnDelay: 1.5
+      initialDelay: 16
   waveStartSound: {fileID: 8300000, guid: 6aed442235522994a8ea6eb3affac9d4, type: 3}
 --- !u!82 &1258185206
 AudioSource:
@@ -5787,11 +5850,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1997053013555343944, guid: 6dfda4cd63b3878439edc3a0ccedabaf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.02
+      value: -0.37
       objectReference: {fileID: 0}
     - target: {fileID: 1997053013555343944, guid: 6dfda4cd63b3878439edc3a0ccedabaf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.88
+      value: -0.76
       objectReference: {fileID: 0}
     - target: {fileID: 1997053013555343944, guid: 6dfda4cd63b3878439edc3a0ccedabaf, type: 3}
       propertyPath: m_LocalPosition.z
