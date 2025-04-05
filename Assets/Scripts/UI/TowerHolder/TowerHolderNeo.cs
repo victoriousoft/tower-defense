@@ -56,6 +56,7 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
 	public AudioClip buildSound;
 	public AudioClip sellSound;
+	public AudioClip upgradeSound;
 
 	private Dictionary<TowerTypes, GameObject> towerPrefabs;
 	public Dictionary<ButtonAction, Sprite> towerIcons;
@@ -507,6 +508,8 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 			transform.position
 		);
 
+		SoundPlayer.PlayInBackground(gameObject, upgradeSound);
+
 		HideButtons();
 		if (baseTower.level == 2)
 			ChangeState(MenuState.UpgradeTowerFinal);
@@ -540,25 +543,7 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 			transform.position
 		);
 
-		if (
-			towerInstance.GetComponent<BaseEvolutionTower>().towerData.evolutions[evolutionIndex].upgradeSounds.Length
-			> 0
-		)
-		{
-			SoundPlayer.PlayInBackground(
-				gameObject,
-				towerInstance.GetComponent<BaseEvolutionTower>().towerData.evolutions[evolutionIndex].upgradeSounds[
-					Random.Range(
-						0,
-						towerInstance
-							.GetComponent<BaseEvolutionTower>()
-							.towerData.evolutions[evolutionIndex]
-							.upgradeSounds.Length
-					)
-				],
-				false
-			);
-		}
+		SoundPlayer.PlayInBackground(gameObject, upgradeSound);
 
 		HideButtons();
 		ChangeState(MenuState.EvolutionTower);
@@ -573,6 +558,8 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 			>= evolutionTower.towerData.evolutions[evolutionTower.evolutionIndex].skillLevels.Length
 		)
 			return;
+
+		SoundPlayer.PlayInBackground(gameObject, upgradeSound);
 
 		evolutionTower.UpgradeSkill();
 		HideButtons();

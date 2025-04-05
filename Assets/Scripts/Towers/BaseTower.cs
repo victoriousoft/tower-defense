@@ -113,14 +113,6 @@ public abstract class BaseTower : MonoBehaviour
 
 		towerAnimator.SetTrigger("upgrade");
 
-		if (towerData.upgradeSounds.Length > 0)
-		{
-			SoundPlayer.PlayInBackground(
-				gameObject,
-				towerData.upgradeSounds[Random.Range(0, towerData.upgradeSounds.Length)]
-			);
-		}
-
 		//yield return new WaitForSeconds(0.5f);
 
 		if (shootCoroutine == null)

@@ -55,7 +55,6 @@ MonoBehaviour:
     shootSound: {fileID: 0}
     hitSound: {fileID: 8300000, guid: 729af20afd85fe240b734eebd7e5d1c9, type: 3}
     skillSound: {fileID: 0}
-    upgradeSounds: []
   - name: Caat JAS-39 Kitten
     prefab: {fileID: 8909524829413949195, guid: 3253ea2b69fb8ce4a8790f85b85cade0, type: 3}
     price: 550
@@ -70,10 +69,8 @@ MonoBehaviour:
       upragdeCost: 0
     - cooldown: 5
       upragdeCost: 0
-    shootSound: {fileID: 8300000, guid: 1c95c9c456f4e9c478b86b39fdd4d560, type: 3}
-    hitSound: {fileID: 0}
-    skillSound: {fileID: 0}
-    upgradeSounds: []
+    shootSound: {fileID: 8300000, guid: b233e9834c2de2f4282052850c8d387e, type: 3}
+    hitSound: {fileID: 8300000, guid: 729af20afd85fe240b734eebd7e5d1c9, type: 3}
+    skillSound: {fileID: 8300000, guid: 05958940a3fcf184caab34bab6a3e814, type: 3}
   shootSound: {fileID: 8300000, guid: 1c95c9c456f4e9c478b86b39fdd4d560, type: 3}
   hitSound: {fileID: 8300000, guid: 729af20afd85fe240b734eebd7e5d1c9, type: 3}
-  upgradeSounds: []
