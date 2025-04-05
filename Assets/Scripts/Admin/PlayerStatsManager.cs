@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerStatsManager : MonoBehaviour
 {
 #if UNITY_EDITOR
-	public static int currentLevel = 0;
+	public static int currentLevel = 1;
 #else
 	public static int currentLevel = -1;
 #endif

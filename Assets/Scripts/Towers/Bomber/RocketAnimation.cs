@@ -18,7 +18,7 @@ public class RocketAnimation : MonoBehaviour
 		}
 	}
 
-	void Update()
+	void FixedUpdate()
 	{
 		Vector3 direction = (transform.position - lastPosition).normalized;
 
