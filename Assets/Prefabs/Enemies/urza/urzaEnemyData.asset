@@ -24,12 +24,30 @@ MonoBehaviour:
     visRange: 20
     playerLives: 3
     attacksTroops: 1
-    hasAbility: 0
+    hasAbility: 1
     isRanged: 1
     abilityCooldown: 10
   info:
     name: urza
     description: ???
   enemyType: 0
-  attackSound: {fileID: 0}
-  deathSound: {fileID: 0}
+  attackSounds:
+  - {fileID: 8300000, guid: c6f36abc27093c4488159b71d4f39428, type: 3}
+  - {fileID: 8300000, guid: 7242d58e12545db48a6a52c6b2adec5f, type: 3}
+  - {fileID: 8300000, guid: b2433d0a900d73f43adc819d6bf9f4d4, type: 3}
+  - {fileID: 8300000, guid: 491205e24412d68478ab27a96013acbe, type: 3}
+  - {fileID: 8300000, guid: 748d4d08504bbbd49bb14022a7906af1, type: 3}
+  deathSounds:
+  - {fileID: 8300000, guid: 2a1818c25bb4eaf4b80ac5d4d89c5dd0, type: 3}
+  - {fileID: 8300000, guid: 87c007d1829a6b843b6b4517644b6b1d, type: 3}
+  - {fileID: 8300000, guid: 6976d0a9f308bf444ac1672b3296f5c0, type: 3}
+  - {fileID: 8300000, guid: ce5d1aaf6fe911a4e868bd958396eb51, type: 3}
+  abilitySounds:
+  - {fileID: 8300000, guid: 18916a39af99d7c49b170694d0293cf1, type: 3}
+  - {fileID: 8300000, guid: c532c048080e79241bc22d75ff3b8a2f, type: 3}
+  - {fileID: 8300000, guid: 81ba2fc3c149b7346995265b37f55ff2, type: 3}
+  - {fileID: 8300000, guid: 937696eb87807ea4eb400b4f5b7e2ab8, type: 3}
+  - {fileID: 8300000, guid: 4d4921bce3cf6a74fb71e7d1c883a47b, type: 3}
+  - {fileID: 8300000, guid: bc636ba1b94626e4ab711f71f12c1409, type: 3}
+  - {fileID: 8300000, guid: 8da27fcd42d29cf45b1f0908d77d6bf0, type: 3}
+  - {fileID: 8300000, guid: 01e6e045d483d1c4e9f8cf9e83b8207d, type: 3}

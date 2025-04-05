@@ -24,10 +24,22 @@ MonoBehaviour:
     visRange: 1
     playerLives: 2
     attacksTroops: 1
+    hasAbility: 0
+    isRanged: 0
     abilityCooldown: 0
   info:
     name: Dalmatine
     description: The 102nd one. Got high in the dog box and gained tech resistance.
   enemyType: 0
-  attackSound: {fileID: 0}
-  deathSound: {fileID: 0}
+  attackSounds:
+  - {fileID: 8300000, guid: 06d547e3511b38443ade62309b9027e3, type: 3}
+  - {fileID: 8300000, guid: 88cfed55579fe974fb512b4aac939381, type: 3}
+  - {fileID: 8300000, guid: b53e83dcec943e1488f89504a0e0678e, type: 3}
+  - {fileID: 8300000, guid: 1b79f25b18409fd49aa078ad60696562, type: 3}
+  - {fileID: 8300000, guid: 6c54014d788be7f42b77a8248a5bf6c2, type: 3}
+  deathSounds:
+  - {fileID: 8300000, guid: 4ad7649c364a9d841a014e54860fbe9a, type: 3}
+  - {fileID: 8300000, guid: 385d6c07b17a63f47a65ffee8f03943b, type: 3}
+  - {fileID: 8300000, guid: 68bd3a35cf8acda4ca4bb616315812fd, type: 3}
+  - {fileID: 8300000, guid: 1e2d8aee3fcce874d8725931d3b54cd2, type: 3}
+  abilitySounds: []

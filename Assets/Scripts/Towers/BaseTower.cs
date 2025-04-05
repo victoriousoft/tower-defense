@@ -67,10 +67,7 @@ public abstract class BaseTower : MonoBehaviour
 		SoundPlayer.PlayInBackground(gameObject, towerData.shootSound);
 		yield return Shoot(target);
 
-		if (towerData.hitSound != null)
-		{
-			SoundPlayer.PlayInBackground(gameObject, towerData.hitSound);
-		}
+		SoundPlayer.PlayInBackground(gameObject, towerData.hitSound);
 
 		towerAnimator.SetTrigger("idle");
 

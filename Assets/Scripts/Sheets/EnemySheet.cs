@@ -38,6 +38,7 @@ public class EnemySheet : ScriptableObject
 	public Info info;
 	public EnemyTypes enemyType;
 
-	public AudioClip attackSound;
-	public AudioClip deathSound;
+	public AudioClip[] attackSounds;
+	public AudioClip[] deathSounds;
+	public AudioClip[] abilitySounds;
 }

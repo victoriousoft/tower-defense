@@ -31,5 +31,7 @@ MonoBehaviour:
     name: Sticky note...
     description: Keep away from any Felidae at all cost!
   enemyType: 1
-  attackSound: {fileID: 0}
-  deathSound: {fileID: 0}
+  attackSounds:
+  - {fileID: 8300000, guid: c5e99ab8c91d6144a8cfbdb97af5b4b8, type: 3}
+  deathSounds: []
+  abilitySounds: []

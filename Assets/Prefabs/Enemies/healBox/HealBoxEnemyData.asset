@@ -24,10 +24,15 @@ MonoBehaviour:
     visRange: 1
     playerLives: 2
     attacksTroops: 1
+    hasAbility: 0
+    isRanged: 0
     abilityCooldown: 0
   info:
     name: Heal dog box
     description: Setninel healing station.
   enemyType: 0
-  attackSound: {fileID: 0}
-  deathSound: {fileID: 0}
+  attackSounds: []
+  deathSounds:
+  - {fileID: 8300000, guid: fae9272ba6c79204a9d35b94778e5ee6, type: 3}
+  abilitySounds:
+  - {fileID: 8300000, guid: ee2936af7c183db4b9b49d38bccd8b49, type: 3}

@@ -94,6 +94,9 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 				if (isAbilityCharged && enemyData.stats.hasAbility)
 				{
 					animator.Play("ability");
+
+					SoundPlayer.PlayInBackgroundRandom(gameObject, enemyData.abilitySounds);
+
 					UseAbility();
 					isAbilityCharged = false;
 					StartCoroutine(ResetAbilityCooldown());
@@ -110,6 +113,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		}
 		else if (canAttack)
 		{
+			SoundPlayer.PlayInBackgroundRandom(gameObject, enemyData.attackSounds);
 			AttackAnimation();
 			Attack();
 			isIdle = true;
@@ -293,6 +297,8 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 	public IEnumerator Death()
 	{
+		SoundPlayer.PlayInBackgroundRandom(gameObject, enemyData.deathSounds);
+
 		if (!nerfed)
 			PlayerStatsManager.AddGold(enemyData.stats.cashDrop);
 		else

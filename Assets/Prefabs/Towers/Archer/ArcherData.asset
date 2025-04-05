@@ -67,11 +67,11 @@ MonoBehaviour:
       upragdeCost: 0
     - cooldown: 0
       upragdeCost: 0
-    shootSound: {fileID: 0}
+    shootSound: {fileID: 8300000, guid: b649a2c16d8d2e54dbc50b8217916d91, type: 3}
     hitSound: {fileID: 0}
-    skillSound: {fileID: 0}
+    skillSound: {fileID: 8300000, guid: 4375ddc8fd8a78c4180cd310a7a96515, type: 3}
     upgradeSounds: []
-  shootSound: {fileID: 8300000, guid: 43afc6a57c9c4b24ab7a4d1324fa3cb0, type: 3}
-  hitSound: {fileID: 8300000, guid: c3f42a23a2a69ff4c97d997da5b663a1, type: 3}
+  shootSound: {fileID: 8300000, guid: 8110048bbd6a94a4da9b1d4d7a4e111d, type: 3}
+  hitSound: {fileID: 0}
   upgradeSounds:
   - {fileID: 8300000, guid: a5946311bebca9d4c989594793e33964, type: 3}

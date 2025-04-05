@@ -24,10 +24,20 @@ MonoBehaviour:
     visRange: 4
     playerLives: 2
     attacksTroops: 1
+    hasAbility: 0
+    isRanged: 0
     abilityCooldown: 3
   info:
     name: Rattatouile
     description: Runs like a rat when in danger.
   enemyType: 0
-  attackSound: {fileID: 0}
-  deathSound: {fileID: 0}
+  attackSounds:
+  - {fileID: 8300000, guid: 1d18ab24dd82b694190a61bf6fadd5a0, type: 3}
+  - {fileID: 8300000, guid: cb1b4262fbd14b34d885937bd184edbc, type: 3}
+  - {fileID: 8300000, guid: 22e5e7e73307f0a4e88b9df0c341d8bc, type: 3}
+  - {fileID: 8300000, guid: 2037d5e7018d989429f960d1b90eb8df, type: 3}
+  deathSounds:
+  - {fileID: 8300000, guid: 0428dbeafbfc9194897f6ab3b3c660d4, type: 3}
+  - {fileID: 8300000, guid: 6882569dba8e7a5468408316aa7ba002, type: 3}
+  - {fileID: 8300000, guid: b0c456469d8ded54e89655f0ccd1ff78, type: 3}
+  abilitySounds: []

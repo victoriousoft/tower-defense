@@ -188,8 +188,6 @@ public abstract class BaseEvolutionTower : BaseTower
 				SkillChargeupCallback
 			)
 		);
-
-		Destroy(soundPlayer);
 	}
 
 	private IEnumerator BlinkyBlinky()

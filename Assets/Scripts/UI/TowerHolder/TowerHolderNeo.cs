@@ -348,6 +348,13 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 						.SetAction(ButtonAction.CYCLE_RETARGET);
 				}
 
+				menuButtons[(int)ButtonIndex.TOP_LEFT]
+					.GetComponent<TowerHolderButton>()
+					.SetAction(ButtonAction.BUY_EVOLUTION_1);
+				menuButtons[(int)ButtonIndex.TOP_RIGHT]
+					.GetComponent<TowerHolderButton>()
+					.SetAction(ButtonAction.BUY_EVOLUTION_2);
+
 				LevelSheet.EvolutionLock[] evolutionLocks = GlobalData
 					.instance.levelSheet.levels[PlayerStatsManager.currentLevel]
 					.evolutionLocks.Where(x => x.towerType == towerInstance.GetComponent<BaseTower>().towerType)
@@ -533,7 +540,10 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 			transform.position
 		);
 
-		if (towerInstance.GetComponent<BaseEvolutionTower>().towerData.upgradeSounds.Length > 0)
+		if (
+			towerInstance.GetComponent<BaseEvolutionTower>().towerData.evolutions[evolutionIndex].upgradeSounds.Length
+			> 0
+		)
 		{
 			SoundPlayer.PlayInBackground(
 				gameObject,
