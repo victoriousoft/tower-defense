@@ -179,8 +179,6 @@ public abstract class BaseTroop : MonoBehaviour
 
 	void FindNewEnemy()
 	{
-		Debug.Log("FindNewEnemy() called");
-
 		GameObject[] enemiesInTowerRange = TowerHelpers.GetEnemiesInRange(
 			homeBase.transform.position,
 			homeBase.GetComponent<BaseTower>().towerData.levels[homeBase.GetComponent<BaseTower>().level].range,
@@ -202,7 +200,6 @@ public abstract class BaseTroop : MonoBehaviour
 			SetEnemy(enemiesInRange[0]);
 		else
 		{
-			Debug.Log("No enemies found in range, unlinking");
 			isFighting = false;
 			animator.SetBool("fighting", false);
 			currentEnemy = null;

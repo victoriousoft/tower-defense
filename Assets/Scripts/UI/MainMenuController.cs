@@ -58,14 +58,25 @@ public class MainMenuController : MonoBehaviour
 	{
 		for (int i = 0; i < instance.buttons.Count; i++)
 		{
+			instance.buttons[i].RemoveFromClassList("lock-overlay");
+			instance.buttons[i].SetEnabled(true);
+		}
+
+		for (int i = 0; i < instance.buttons.Count; i++)
+		{
 			if (i >= GlobalData.instance.levelSheet.levels.Length)
 			{
+				Debug.Log($"Level {i} does not exist, disabling button.");
 				instance.buttons[i].SetEnabled(false);
 			}
 		}
 
+		Debug.Log($"Locking levels, current star count: {PlayerStatsManager.levelStars.Count}");
+		Debug.Log($"Total levels: {GlobalData.instance.levelSheet.levels.Length}");
+
 		for (int i = PlayerStatsManager.levelStars.Count + 1; i < instance.buttons.Count; i++)
 		{
+			Debug.Log($"Locking level {i} button.");
 			instance.buttons[i].AddToClassList("lock-overlay");
 			instance.buttons[i].SetEnabled(false);
 		}

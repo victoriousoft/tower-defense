@@ -68,6 +68,7 @@ public class PlayerStatsManager : MonoBehaviour
 			stars = 3;
 
 		Overlay.PauseGame("You Win, " + stars + " stars", "wait for the save to upload, then go back to the main menu");
+		PlayerStatsManager.levelStars.Add(stars);
 		WebGLMessageHandler.SendToJavaScript(
 			new WebGLMessageHandler.OutBrowserMessage
 			{

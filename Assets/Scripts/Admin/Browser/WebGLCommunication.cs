@@ -47,7 +47,7 @@ public class WebGLMessageHandler : MonoBehaviour
 			new InBrowserMessage
 			{
 				action = "loadSave",
-				args = new Dictionary<string, object> { { "levels", "[3,3]" } },
+				args = new Dictionary<string, object> { { "levels", "[1,3]" } },
 			}
 		);
 		return;
