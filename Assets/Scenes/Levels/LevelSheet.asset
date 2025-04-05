@@ -45,7 +45,7 @@ MonoBehaviour:
     - towerType: 0
       evolutionIndex: 1
     - towerType: 1
-      evolutionIndex: 0
+      evolutionIndex: 1
     - towerType: 2
       evolutionIndex: 0
     - towerType: 2
