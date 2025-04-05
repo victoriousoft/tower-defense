@@ -16,9 +16,11 @@ MonoBehaviour:
     name: Test troop
   stats:
     maxHealth: 100
-    damage: 15
+    damage: 5
     speed: 1
     attackRange: 0.5
-    visRange: 4
+    visRange: 1
     attackCooldown: 1
   enemyTypes: 00000000
+  attackSounds: []
+  deathSounds: []

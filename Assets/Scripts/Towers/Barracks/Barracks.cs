@@ -158,6 +158,17 @@ public class Barracks : BaseTower
 		return null;
 	}
 
+	public bool IsInRange(GameObject obj)
+	{
+		float distanceToTower = Vector2.Distance(obj.transform.position, transform.position);
+		float range = towerData.levels[level].range - 0.2f;
+
+		if (distanceToTower > range)
+			return false;
+
+		return true;
+	}
+
 	private IEnumerator RespawnTroop(int troopId)
 	{
 		yield return new WaitForSeconds(respawnCooldown);

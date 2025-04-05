@@ -21,57 +21,52 @@ MonoBehaviour:
   - enemies: 0000000001000000
   - enemies: 0000000001000000
   levels:
-  - price: 100
-    range: 2
-    damage: 25
-    cooldown: 0.25
-  - price: 200
+  - price: 75
     range: 3
-    damage: 25
+    damage: 10
     cooldown: 0.25
-  - price: 300
+  - price: 100
+    range: 3.5
+    damage: 10
+    cooldown: 0.25
+  - price: 150
     range: 4
-    damage: 25
+    damage: 15
     cooldown: 0
   evolutions:
   - name: Kittengun
     prefab: {fileID: 4112298509408283667, guid: a804c04286e29ae44b34ce18f416c876, type: 3}
-    price: 400
+    price: 350
     damage: 3
     range: 3
     cooldown: 0.2
     skillName: Spin des Todes
     skillLevels:
-    - cooldown: 5
-      upragdeCost: 0
-    - cooldown: 5
-      upragdeCost: 0
-    - cooldown: 5
-      upragdeCost: 0
+    - cooldown: 120
+      upragdeCost: 200
+    - cooldown: 90
+      upragdeCost: 200
+    - cooldown: 60
+      upragdeCost: 250
     shootSound: {fileID: 8300000, guid: b2db7c67562c9924cabe048778d6b8c2, type: 3}
     hitSound: {fileID: 0}
     skillSound: {fileID: 8300000, guid: 45cbbbe95919c5941bcec09c64840f4e, type: 3}
-    upgradeSounds:
-    - {fileID: 8300000, guid: a5946311bebca9d4c989594793e33964, type: 3}
   - name: Vietcong
     prefab: {fileID: 6699204228030432529, guid: f08277f4443d0a04ebb20027867967ec, type: 3}
-    price: 500
-    damage: 200
-    range: 4
+    price: 300
+    damage: 35
+    range: 5
     cooldown: 5
     skillName: Paint It Cat
     skillLevels:
-    - cooldown: 0
-      upragdeCost: 0
-    - cooldown: 0
-      upragdeCost: 0
-    - cooldown: 0
-      upragdeCost: 0
+    - cooldown: 200
+      upragdeCost: 300
+    - cooldown: 180
+      upragdeCost: 200
+    - cooldown: 150
+      upragdeCost: 200
     shootSound: {fileID: 8300000, guid: b649a2c16d8d2e54dbc50b8217916d91, type: 3}
     hitSound: {fileID: 0}
     skillSound: {fileID: 8300000, guid: 4375ddc8fd8a78c4180cd310a7a96515, type: 3}
-    upgradeSounds: []
   shootSound: {fileID: 8300000, guid: 8110048bbd6a94a4da9b1d4d7a4e111d, type: 3}
   hitSound: {fileID: 0}
-  upgradeSounds:
-  - {fileID: 8300000, guid: a5946311bebca9d4c989594793e33964, type: 3}

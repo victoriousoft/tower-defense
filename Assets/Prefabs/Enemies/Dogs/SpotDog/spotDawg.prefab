@@ -198,12 +198,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 417fe0b8bf11189419ef2c719a4f5e1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyData: {fileID: 11400000, guid: 2737c388d3a097f44be1cbb5905f0e98, type: 2}
+  enemyData: {fileID: 11400000, guid: c6d8188201e8ea8418cfc959862bb7d6, type: 2}
   currentPhysicalResistance: 0
   currentMagicResistance: 0
   isIdle: 0
   attacksTroops: 0
+  abilityInUse: 0
   currentSpeed: 0
+  currentDamage: 0
   animator: {fileID: 0}
 --- !u!1001 &5007395829321720595
 PrefabInstance:

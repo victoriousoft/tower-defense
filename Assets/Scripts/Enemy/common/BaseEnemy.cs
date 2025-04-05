@@ -113,9 +113,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		}
 		else if (canAttack)
 		{
-			SoundPlayer.PlayInBackgroundRandom(gameObject, enemyData.attackSounds);
 			AttackAnimation();
-			Attack();
 			isIdle = true;
 		}
 	}
@@ -127,11 +125,12 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 			currentTarget == null
 			|| (
 				enemyData.enemyType == EnemyTypes.GROUND
-				&& Vector3.Distance(transform.position, currentTarget.transform.position) > enemyData.stats.attackRange
+				&& Vector2.Distance(transform.position, currentTarget.transform.position)
+					> enemyData.stats.attackRange + 0.1f
 			)
 			|| (
 				enemyData.enemyType == EnemyTypes.FLYING
-				&& Vector3.Distance(
+				&& Vector2.Distance(
 					new Vector3(transform.position.x, transform.position.y - 1, transform.position.z),
 					currentTarget.transform.position
 				) > enemyData.stats.attackRange
@@ -146,20 +145,27 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 				animator.SetBool("stop", true);
 				isIdle = true;
 			}
+			// evil return
 			return;
 		}
 		else
 			animator.SetBool("stop", false);
 
+		canAttack = false;
+		SoundPlayer.PlayInBackgroundRandom(gameObject, enemyData.attackSounds);
+
 		animator.SetBool("idle", true);
 		animator.SetTrigger("attack");
 		if (transform.position.x > currentTarget.transform.position.x)
 			GetComponentInChildren<SpriteRenderer>().flipX = true;
+
 		if (currentTarget != null && !enemyData.stats.isRanged)
 		{
 			currentTarget.GetComponent<BaseTroop>().TakeDamage(currentDamage);
 		}
-		canAttack = false;
+
+		Attack();
+
 		StartCoroutine(ResetAttackCooldown());
 	}
 
@@ -183,7 +189,12 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 		foreach (Collider2D collider in colliders)
 		{
-			if (collider.gameObject.CompareTag("Troop") && collider.gameObject.GetComponent<BaseTroop>().health > 0)
+			if (
+				collider.gameObject.CompareTag("Troop")
+				&& collider.gameObject.GetComponent<BaseTroop>().health > 0
+				&& collider.gameObject.GetComponent<BaseTroop>().currentEnemy == null
+				&& collider.gameObject.GetComponent<BaseTroop>().homeBase.GetComponent<Barracks>().IsInRange(gameObject)
+			)
 			{
 				return collider.gameObject;
 			}
@@ -400,6 +411,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		attacksTroops = false;
 		currentTarget = null;
 		currentSpeed *= 2f;
+
 		animator.SetTrigger("rage");
 		animator.ResetTrigger("attack");
 		animator.SetBool("idle", false);

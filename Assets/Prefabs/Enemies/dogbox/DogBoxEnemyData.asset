@@ -22,7 +22,7 @@ MonoBehaviour:
     attackRange: 0.5
     attackCooldown: 1
     visRange: 1
-    playerLives: 5
+    playerLives: 10
     attacksTroops: 0
     hasAbility: 0
     isRanged: 0

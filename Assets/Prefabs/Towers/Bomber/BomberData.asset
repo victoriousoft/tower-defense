@@ -21,54 +21,50 @@ MonoBehaviour:
   - enemies: 00000000
   - enemies: 0000000001000000
   levels:
-  - price: 100
-    range: 1
+  - price: 150
+    range: 2.3
     damage: 25
     cooldown: 3
   - price: 200
-    range: 2
+    range: 2.6
     damage: 25
     cooldown: 3
   - price: 300
-    range: 3
-    damage: 25
-    cooldown: 3
-  - price: 400
-    range: 4
+    range: 3.25
     damage: 25
     cooldown: 3
   evolutions:
   - name: explosive kitten
     prefab: {fileID: 8909524829413949195, guid: 2be2af70e2ebbf44e8cdff254d70fcd3, type: 3}
-    price: 10
-    damage: 30
-    range: 2
+    price: 350
+    damage: 35
+    range: 2.75
     cooldown: 3
     skillName: Blast Plague
     skillLevels:
-    - cooldown: 0
-      upragdeCost: 0
-    - cooldown: 0
-      upragdeCost: 0
-    - cooldown: 0
-      upragdeCost: 0
+    - cooldown: 200
+      upragdeCost: 200
+    - cooldown: 180
+      upragdeCost: 150
+    - cooldown: 160
+      upragdeCost: 150
     shootSound: {fileID: 0}
     hitSound: {fileID: 8300000, guid: 729af20afd85fe240b734eebd7e5d1c9, type: 3}
     skillSound: {fileID: 0}
   - name: Caat JAS-39 Kitten
     prefab: {fileID: 8909524829413949195, guid: 3253ea2b69fb8ce4a8790f85b85cade0, type: 3}
-    price: 550
-    damage: 40
-    range: 20
-    cooldown: 7
+    price: 350
+    damage: 3
+    range: 8
+    cooldown: 3
     skillName: Kamikadze!!
     skillLevels:
-    - cooldown: 5
-      upragdeCost: 0
-    - cooldown: 5
-      upragdeCost: 0
-    - cooldown: 5
-      upragdeCost: 0
+    - cooldown: 250
+      upragdeCost: 300
+    - cooldown: 225
+      upragdeCost: 300
+    - cooldown: 200
+      upragdeCost: 300
     shootSound: {fileID: 8300000, guid: b233e9834c2de2f4282052850c8d387e, type: 3}
     hitSound: {fileID: 8300000, guid: 729af20afd85fe240b734eebd7e5d1c9, type: 3}
     skillSound: {fileID: 8300000, guid: 05958940a3fcf184caab34bab6a3e814, type: 3}

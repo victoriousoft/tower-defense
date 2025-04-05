@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: SpotDogEnemyData
   m_EditorClassIdentifier: 
   stats:
-    maxHealth: 50
+    maxHealth: 30
     damage: 10
-    cashDrop: 100
-    speed: 3
+    cashDrop: 10
+    speed: 8
     physicalResistance: 0
-    magicResistance: 1
+    magicResistance: 0
     attackRange: 0.5
     attackCooldown: 1
     visRange: 1
-    playerLives: 2
+    playerLives: 1
     attacksTroops: 1
     hasAbility: 0
     isRanged: 0
