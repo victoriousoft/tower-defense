@@ -14,8 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenuSceneName: MainMenu
   levels:
-  - SceneName: Sandbox
-    LevelName: Sandbox
-    initialGold: 99999999
-    initialLives: 10
-    evolutionLocks: []
+  - SceneName: level1
+    LevelName: level 1
+    initialGold: 200
+    initialLives: 20
+    evolutionLocks:
+    - towerType: 0
+      evolutionIndex: 0
+    - towerType: 0
+      evolutionIndex: 1
+    - towerType: 1
+      evolutionIndex: 0
+    - towerType: 1
+      evolutionIndex: 1
+    - towerType: 2
+      evolutionIndex: 0
+    - towerType: 2
+      evolutionIndex: 1
+    - towerType: 3
+      evolutionIndex: 0
+    - towerType: 3
+      evolutionIndex: 1
