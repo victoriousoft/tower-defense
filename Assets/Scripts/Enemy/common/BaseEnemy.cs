@@ -32,14 +32,16 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 	[HideInInspector]
 	public bool isIdle = false,
-		attacksTroops;
+		attacksTroops,
+		abilityInUse = false;
 	private HealthBar healthBar;
 
 	protected bool canAttack = true;
 	protected bool isAbilityCharged = false;
 
 	[HideInInspector]
-	public float currentSpeed;
+	public float currentSpeed,
+		currentDamage;
 
 	[HideInInspector]
 	public Animator animator;
@@ -59,12 +61,12 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 	{
 		currentSpeed = enemyData.stats.speed / 10;
 		health = enemyData.stats.maxHealth;
+		currentDamage = enemyData.stats.damage;
 		attacksTroops = enemyData.stats.attacksTroops;
 		healthBar = GetComponentInChildren<HealthBar>();
-		positionOffset = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
+		positionOffset = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.25f, 0.25f));
 		if (enemyData.enemyType == EnemyTypes.FLYING)
 			positionOffset.y += 1f;
-
 		currentPhysicalResistance = enemyData.stats.physicalResistance;
 		currentMagicResistance = enemyData.stats.magicResistance;
 		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -87,12 +89,13 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 				Move();
 				isIdle = false;
 				animator.SetBool("idle", false);
-
-				if (isAbilityCharged)
+				if (isAbilityCharged && enemyData.stats.hasAbility)
 				{
+					animator.Play("ability");
 					UseAbility();
 					isAbilityCharged = false;
 					StartCoroutine(ResetAbilityCooldown());
+					abilityInUse = true;
 				}
 			}
 			else if (!isIdle)
@@ -146,7 +149,10 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		animator.SetTrigger("attack");
 		if (transform.position.x > currentTarget.transform.position.x)
 			GetComponentInChildren<SpriteRenderer>().flipX = true;
-		currentTarget.GetComponent<BaseTroop>().TakeDamage(enemyData.stats.damage);
+		if (currentTarget != null)
+		{
+			currentTarget.GetComponent<BaseTroop>().TakeDamage(currentDamage);
+		}
 		canAttack = false;
 		StartCoroutine(ResetAttackCooldown());
 	}
@@ -160,12 +166,12 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 	{
 		Collider2D[] colliders;
 		if (enemyData.enemyType == EnemyTypes.GROUND)
-			colliders = Physics2D.OverlapCircleAll(transform.position, enemyData.stats.visRange);
+			colliders = Physics2D.OverlapCircleAll(transform.position, enemyData.stats.attackRange);
 		else
 		{
 			colliders = Physics2D.OverlapCircleAll(
 				new Vector3(transform.position.x, transform.position.y - 1, transform.position.z),
-				enemyData.stats.visRange
+				enemyData.stats.attackRange
 			);
 		}
 		foreach (Collider2D collider in colliders)
@@ -194,7 +200,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 	void Move()
 	{
-		if (points == null)
+		if (points == null || abilityInUse)
 			return;
 		if (currentTarget == null)
 			GetComponentInChildren<SpriteRenderer>().flipX = false;
@@ -388,7 +394,11 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		animator.SetBool("stop", false);
 	}
 
-	protected IEnumerator SpawnChild(GameObject childPrefab, float xSpawnOffset)
+	protected IEnumerator SpawnChild(
+		GameObject childPrefab,
+		float xSpawnOffset,
+		System.Action<GameObject> onChildSpawned
+	)
 	{
 		GameObject child = Instantiate(
 			childPrefab,
@@ -407,6 +417,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		}
 		child.GetComponent<BaseEnemy>().currentPointIndex = currentPointIndex;
 		child.GetComponent<BaseEnemy>().SetPathParent(points);
+		onChildSpawned?.Invoke(child);
 	}
 
 	protected IEnumerator ResetAttackCooldown()

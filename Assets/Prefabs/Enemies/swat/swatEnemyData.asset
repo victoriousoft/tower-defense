@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: swatEnemyData
   m_EditorClassIdentifier: 
   stats:
-    maxHealth: 100
+    maxHealth: 200
     damage: 10
     cashDrop: 100
-    speed: 1.5
+    speed: 0.5
     physicalResistance: 3
     magicResistance: 1
     attackRange: 0.5
     attackCooldown: 1
     visRange: 1
-    playerLives: 2
+    playerLives: 1
     attacksTroops: 1
     abilityCooldown: 0
   info:

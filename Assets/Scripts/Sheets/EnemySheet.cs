@@ -29,6 +29,8 @@ public class EnemySheet : ScriptableObject
 		public int playerLives;
 
 		public bool attacksTroops;
+		public bool hasAbility;
+		public bool isRanged;
 		public int abilityCooldown;
 	}
 

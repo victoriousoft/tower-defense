@@ -5,9 +5,13 @@ using UnityEngine;
 public class SWAT : BaseEnemy
 {
 	public GameObject explosionEffect;
-	public float explosionDamage;
+	public float explosionDamage,
+		explosionRadius;
 
-	protected override void Attack() { }
+	protected override void Attack()
+	{
+		NerfResistance(1, 0, enemyData.stats.attackCooldown + animator.GetCurrentAnimatorStateInfo(0).length);
+	}
 
 	protected override IEnumerator ExtendedDeath()
 	{
@@ -17,7 +21,7 @@ public class SWAT : BaseEnemy
 			.GetComponent<SelfDestruct>()
 			.DestroySelf(explosionFX.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
 
-		Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, enemyData.stats.visRange);
+		Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
 		foreach (Collider2D collider in colliders)
 		{
 			if (collider.gameObject.CompareTag("Troop"))
