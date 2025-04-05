@@ -3951,16 +3951,11 @@ MonoBehaviour:
   waves:
   - initialDelay: 0
     enemies:
-    - enemyPrefab: {fileID: 9059301247369330279, guid: e4ba1dbe206aa9d4db6a6bf89d626dcf, type: 3}
+    - enemyPrefab: {fileID: 3452856994613389641, guid: a6bf18b34be522843994351a56ac0eeb, type: 3}
       pathParent: {fileID: 1110906503}
       count: 1
-      spawnDelay: 2
+      spawnDelay: 0
       initialDelay: 0
-    - enemyPrefab: {fileID: 9059301247369330279, guid: 4635a8fcb78eb8c498d43c20efab3dbc, type: 3}
-      pathParent: {fileID: 1110906503}
-      count: 7
-      spawnDelay: 2
-      initialDelay: 100
   waveStartSound: {fileID: 8300000, guid: 6aed442235522994a8ea6eb3affac9d4, type: 3}
 --- !u!82 &1258185206
 AudioSource:

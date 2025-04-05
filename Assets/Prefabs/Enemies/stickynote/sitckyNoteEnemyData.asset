@@ -19,15 +19,17 @@ MonoBehaviour:
     speed: 1.1
     physicalResistance: 0
     magicResistance: 0
-    attackRange: 50
+    attackRange: 1
     attackCooldown: 100
     visRange: 1
     playerLives: 1
     attacksTroops: 1
+    hasAbility: 0
+    isRanged: 0
     abilityCooldown: 10
   info:
     name: Sticky note...
     description: Keep away from any Felidae at all cost!
-  enemyType: 0
+  enemyType: 1
   attackSound: {fileID: 0}
   deathSound: {fileID: 0}

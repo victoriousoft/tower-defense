@@ -64,11 +64,13 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		currentDamage = enemyData.stats.damage;
 		attacksTroops = enemyData.stats.attacksTroops;
 		healthBar = GetComponentInChildren<HealthBar>();
+
 		positionOffset = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.25f, 0.25f));
 		if (enemyData.enemyType == EnemyTypes.FLYING)
 			positionOffset.y += 1f;
 		currentPhysicalResistance = enemyData.stats.physicalResistance;
 		currentMagicResistance = enemyData.stats.magicResistance;
+
 		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 		animator = GetComponent<Animator>();
 
@@ -80,7 +82,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		if (health <= 0)
 			return;
 
-		if (currentTarget == null || !attacksTroops)
+		if (currentTarget == null || !attacksTroops || currentTarget.GetComponent<BaseTroop>().health <= 0)
 		{
 			currentTarget = FindEnemyInRange();
 
@@ -149,7 +151,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		animator.SetTrigger("attack");
 		if (transform.position.x > currentTarget.transform.position.x)
 			GetComponentInChildren<SpriteRenderer>().flipX = true;
-		if (currentTarget != null)
+		if (currentTarget != null && !enemyData.stats.isRanged)
 		{
 			currentTarget.GetComponent<BaseTroop>().TakeDamage(currentDamage);
 		}
@@ -174,11 +176,15 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 				enemyData.stats.attackRange
 			);
 		}
+
 		foreach (Collider2D collider in colliders)
 		{
-			if (collider.gameObject.CompareTag("Troop"))
+			if (collider.gameObject.CompareTag("Troop") && collider.gameObject.GetComponent<BaseTroop>().health > 0)
+			{
 				return collider.gameObject;
+			}
 		}
+
 		return null;
 	}
 

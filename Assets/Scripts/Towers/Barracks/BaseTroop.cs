@@ -128,8 +128,10 @@ public abstract class BaseTroop : MonoBehaviour
 	public void TakeDamage(float damage)
 	{
 		Debug.Log("Taking damage: " + damage);
+		Debug.Log("Current health: " + health);
 		health -= damage;
 		healthBar.SetHealth(health / troopData.stats.maxHealth);
+
 		if (health <= 0 && dead == false)
 		{
 			dead = true;
@@ -147,11 +149,16 @@ public abstract class BaseTroop : MonoBehaviour
 	public IEnumerator Die()
 	{
 		healthBar.gameObject.SetActive(false);
-		float direction = currentEnemy.transform.position.x - transform.position.x;
+		float direction = 0;
+		if (currentEnemy != null)
+		{
+			direction = currentEnemy.transform.position.x - transform.position.x;
+			currentEnemy.GetComponent<BaseEnemy>().currentTarget = null;
+		}
+
 		animator.SetTrigger("die");
 		if (direction > 0)
 			GetComponentInChildren<SpriteRenderer>().flipX = true;
-		currentEnemy.GetComponent<BaseEnemy>().currentTarget = null;
 
 		homeBase.GetComponent<Barracks>().RequestTroopRevive(id);
 		yield return null;
