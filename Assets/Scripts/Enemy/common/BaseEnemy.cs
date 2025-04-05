@@ -411,6 +411,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		attacksTroops = false;
 		currentTarget = null;
 		currentSpeed *= 2f;
+
 		animator.SetTrigger("rage");
 		animator.ResetTrigger("attack");
 		animator.SetBool("idle", false);

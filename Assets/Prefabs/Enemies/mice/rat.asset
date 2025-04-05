@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: rat
   m_EditorClassIdentifier: 
   stats:
-    maxHealth: 50
+    maxHealth: 40
     damage: 15
-    cashDrop: 5
+    cashDrop: 6
     speed: 2.2
-    physicalResistance: 1
+    physicalResistance: 0
     magicResistance: 0
     attackRange: 0.5
     attackCooldown: 1

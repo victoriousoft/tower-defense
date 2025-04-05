@@ -77,6 +77,7 @@ public abstract class BaseTroop : MonoBehaviour
 				currentEnemy == null
 				|| currentEnemy.GetComponent<BaseEnemy>().currentTarget != gameObject
 				|| currentEnemy.GetComponent<BaseEnemy>().health <= 0
+				|| currentEnemy.GetComponent<BaseEnemy>().attacksTroops == false
 			)
 				FindNewEnemy();
 
@@ -178,6 +179,8 @@ public abstract class BaseTroop : MonoBehaviour
 
 	void FindNewEnemy()
 	{
+		Debug.Log("FindNewEnemy() called");
+
 		GameObject[] enemiesInTowerRange = TowerHelpers.GetEnemiesInRange(
 			homeBase.transform.position,
 			homeBase.GetComponent<BaseTower>().towerData.levels[homeBase.GetComponent<BaseTower>().level].range,
@@ -187,6 +190,7 @@ public abstract class BaseTroop : MonoBehaviour
 		GameObject[] enemiesInRange = enemiesInTowerRange
 			.Where(enemy =>
 				enemy.GetComponent<BaseEnemy>().currentTarget == null
+				&& enemy.GetComponent<BaseEnemy>().attacksTroops
 				&& troopData.enemyTypes.Contains(enemy.GetComponent<BaseEnemy>().enemyData.enemyType)
 				&& enemy.GetComponent<BaseEnemy>().enemyData.stats.attacksTroops == true
 			)
@@ -198,7 +202,12 @@ public abstract class BaseTroop : MonoBehaviour
 			SetEnemy(enemiesInRange[0]);
 		else
 		{
+			Debug.Log("No enemies found in range, unlinking");
+			isFighting = false;
+			animator.SetBool("fighting", false);
 			currentEnemy = null;
+			targetLocation = homeBase.GetComponent<Barracks>().RequestTroopRandezvousPoint(id);
+
 			if (!isFighting)
 			{
 				GameObject fightingEnemy = homeBase.GetComponent<Barracks>().FindFightingEnemy();
@@ -210,6 +219,9 @@ public abstract class BaseTroop : MonoBehaviour
 
 	private void SetEnemy(GameObject enemy)
 	{
+		if (!enemy.GetComponent<BaseEnemy>().attacksTroops)
+			return;
+
 		enemy.GetComponent<BaseEnemy>().isPaused = true;
 		enemy.GetComponent<BaseEnemy>().RequestTarget(gameObject);
 		targetLocation = enemy.GetComponent<BaseEnemy>().GetAttackLocation(troopData.stats.attackRange);

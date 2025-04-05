@@ -22,14 +22,14 @@ MonoBehaviour:
     attackRange: 0.5
     attackCooldown: 1
     visRange: 1
-    playerLives: 2
+    playerLives: 1
     attacksTroops: 1
     hasAbility: 0
     isRanged: 0
     abilityCooldown: 0
   info:
-    name: Doggo
-    description: Angered doggo.
+    name: '"Princess"'
+    description: Not-so-good boy! Sharp teeth!
   enemyType: 0
   attackSounds:
   - {fileID: 8300000, guid: 06d547e3511b38443ade62309b9027e3, type: 3}

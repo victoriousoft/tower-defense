@@ -20,7 +20,7 @@ public class DogBox : BaseEnemy
 
 	private GameObject GetRandomChildPrefab()
 	{
-		float[] weights = new float[] { 0.3f, 0.3f, 0.3f, 0.05f };
+		float[] weights = new float[] { 0.3f, 0.3f, 0.3f };
 
 		float totalWeight = 0f;
 		foreach (float weight in weights)

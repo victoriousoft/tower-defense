@@ -54,7 +54,7 @@ MonoBehaviour:
   - name: Vietcong
     prefab: {fileID: 6699204228030432529, guid: f08277f4443d0a04ebb20027867967ec, type: 3}
     price: 300
-    damage: 200
+    damage: 35
     range: 5
     cooldown: 5
     skillName: Paint It Cat

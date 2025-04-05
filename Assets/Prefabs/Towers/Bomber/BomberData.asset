@@ -37,7 +37,7 @@ MonoBehaviour:
   - name: explosive kitten
     prefab: {fileID: 8909524829413949195, guid: 2be2af70e2ebbf44e8cdff254d70fcd3, type: 3}
     price: 350
-    damage: 30
+    damage: 35
     range: 2.75
     cooldown: 3
     skillName: Blast Plague

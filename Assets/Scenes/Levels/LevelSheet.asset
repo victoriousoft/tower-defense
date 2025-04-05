@@ -17,7 +17,7 @@ MonoBehaviour:
   - SceneName: level1
     LevelName: level 1
     initialGold: 200
-    initialLives: 20
+    initialLives: 25
     evolutionLocks:
     - towerType: 0
       evolutionIndex: 0
@@ -33,5 +33,22 @@ MonoBehaviour:
       evolutionIndex: 1
     - towerType: 3
       evolutionIndex: 0
+    - towerType: 3
+      evolutionIndex: 1
+  - SceneName: level2
+    LevelName: level 2
+    initialGold: 260
+    initialLives: 25
+    evolutionLocks:
+    - towerType: 0
+      evolutionIndex: 0
+    - towerType: 0
+      evolutionIndex: 1
+    - towerType: 1
+      evolutionIndex: 0
+    - towerType: 2
+      evolutionIndex: 0
+    - towerType: 2
+      evolutionIndex: 1
     - towerType: 3
       evolutionIndex: 1

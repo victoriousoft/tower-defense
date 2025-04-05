@@ -11,8 +11,8 @@ public class PlayerStatsManager : MonoBehaviour
 	public static int currentLevel = -1;
 #endif
 	public static int currentWave = 0;
-	public static int lives = 20;
-	public static int gold = 200;
+	public static int lives = 25;
+	public static int gold = 260;
 
 	[System.NonSerialized]
 	[HideInInspector]
