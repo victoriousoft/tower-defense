@@ -21,10 +21,11 @@ MonoBehaviour:
     magicResistance: 4
     attackRange: 20
     attackCooldown: 1
-    visRange: 1
+    visRange: 20
     playerLives: 3
     attacksTroops: 1
-    hasAbility: 1
+    hasAbility: 0
+    isRanged: 1
     abilityCooldown: 10
   info:
     name: urza

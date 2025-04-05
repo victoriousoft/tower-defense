@@ -30,6 +30,7 @@ public class EnemySheet : ScriptableObject
 
 		public bool attacksTroops;
 		public bool hasAbility;
+		public bool isRanged;
 		public int abilityCooldown;
 	}
 

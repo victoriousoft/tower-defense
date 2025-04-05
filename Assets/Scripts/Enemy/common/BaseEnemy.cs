@@ -149,7 +149,10 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		animator.SetTrigger("attack");
 		if (transform.position.x > currentTarget.transform.position.x)
 			GetComponentInChildren<SpriteRenderer>().flipX = true;
-		currentTarget.GetComponent<BaseTroop>().TakeDamage(currentDamage);
+		if (currentTarget != null)
+		{
+			currentTarget.GetComponent<BaseTroop>().TakeDamage(currentDamage);
+		}
 		canAttack = false;
 		StartCoroutine(ResetAttackCooldown());
 	}
@@ -163,12 +166,12 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 	{
 		Collider2D[] colliders;
 		if (enemyData.enemyType == EnemyTypes.GROUND)
-			colliders = Physics2D.OverlapCircleAll(transform.position, enemyData.stats.visRange);
+			colliders = Physics2D.OverlapCircleAll(transform.position, enemyData.stats.attackRange);
 		else
 		{
 			colliders = Physics2D.OverlapCircleAll(
 				new Vector3(transform.position.x, transform.position.y - 1, transform.position.z),
-				enemyData.stats.visRange
+				enemyData.stats.attackRange
 			);
 		}
 		foreach (Collider2D collider in colliders)

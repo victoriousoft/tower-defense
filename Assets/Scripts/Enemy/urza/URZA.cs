@@ -22,8 +22,8 @@ public class URZA : BaseEnemy
 	{
 		if (currentTarget == null)
 			yield break;
-		yield return new WaitForSeconds(0.5f);
 		animator.SetTrigger("attack");
+		yield return new WaitForSeconds(0.5f);
 
 		GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
 		EnemyProjectile projectileScript = projectile.GetComponent<EnemyProjectile>();
