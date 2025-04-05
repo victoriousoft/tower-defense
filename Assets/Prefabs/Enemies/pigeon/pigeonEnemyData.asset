@@ -24,10 +24,18 @@ MonoBehaviour:
     visRange: 4
     playerLives: 2
     attacksTroops: 0
+    hasAbility: 0
+    isRanged: 0
     abilityCooldown: 3
   info:
     name: Pigeon
     description: A flappy birb.
   enemyType: 1
-  attackSound: {fileID: 0}
-  deathSound: {fileID: 0}
+  attackSounds: []
+  deathSounds:
+  - {fileID: 8300000, guid: 4fc9159ec404c984385dea1dfc4d4129, type: 3}
+  - {fileID: 8300000, guid: e17d69ae5cc84e74ab970c0479db46be, type: 3}
+  - {fileID: 8300000, guid: c59b5cc74ab82e345952f92aeb56ea40, type: 3}
+  - {fileID: 8300000, guid: bcc2e690cf595534d9bc5024beeba341, type: 3}
+  - {fileID: 8300000, guid: 699a388cc9db1b649a4ffbad95bd417e, type: 3}
+  abilitySounds: []

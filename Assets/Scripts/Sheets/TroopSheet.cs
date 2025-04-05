@@ -23,4 +23,6 @@ public class TroopSheet : ScriptableObject
 	public Info info;
 	public Stats stats;
 	public EnemyTypes[] enemyTypes;
+	public AudioClip[] attackSounds;
+	public AudioClip[] deathSounds;
 }

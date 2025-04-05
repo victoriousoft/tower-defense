@@ -67,10 +67,7 @@ public abstract class BaseTower : MonoBehaviour
 		SoundPlayer.PlayInBackground(gameObject, towerData.shootSound);
 		yield return Shoot(target);
 
-		if (towerData.hitSound != null)
-		{
-			SoundPlayer.PlayInBackground(gameObject, towerData.hitSound);
-		}
+		SoundPlayer.PlayInBackground(gameObject, towerData.hitSound);
 
 		towerAnimator.SetTrigger("idle");
 
@@ -115,14 +112,6 @@ public abstract class BaseTower : MonoBehaviour
 		GetComponentInChildren<SpriteRenderer>().color = Color.white;
 
 		towerAnimator.SetTrigger("upgrade");
-
-		if (towerData.upgradeSounds.Length > 0)
-		{
-			SoundPlayer.PlayInBackground(
-				gameObject,
-				towerData.upgradeSounds[Random.Range(0, towerData.upgradeSounds.Length)]
-			);
-		}
 
 		//yield return new WaitForSeconds(0.5f);
 

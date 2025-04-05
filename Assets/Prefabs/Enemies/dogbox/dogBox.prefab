@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -203,7 +203,9 @@ MonoBehaviour:
   currentMagicResistance: 0
   isIdle: 0
   attacksTroops: 0
+  abilityInUse: 0
   currentSpeed: 0
+  currentDamage: 0
   animator: {fileID: 0}
   childPrefabs:
   - {fileID: 9059301247369330279, guid: 5d2dd7192bfa41b4aa5b9ccdce4406ac, type: 3}

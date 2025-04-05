@@ -52,6 +52,9 @@ MonoBehaviour:
       upragdeCost: 0
     - cooldown: 0
       upragdeCost: 0
+    shootSound: {fileID: 8300000, guid: 7dffd370016fac04695869adc2496973, type: 3}
+    hitSound: {fileID: 0}
+    skillSound: {fileID: 0}
   - name: IBM
     prefab: {fileID: 3251297187297468064, guid: 194118687fb92b54097ba2efd0f5b2ab, type: 3}
     price: 400
@@ -66,3 +69,8 @@ MonoBehaviour:
       upragdeCost: 200
     - cooldown: 5
       upragdeCost: 200
+    shootSound: {fileID: 0}
+    hitSound: {fileID: 0}
+    skillSound: {fileID: 0}
+  shootSound: {fileID: 0}
+  hitSound: {fileID: 0}

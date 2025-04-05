@@ -14,10 +14,8 @@ public class SoundPlayer : MonoBehaviour
 
 	public static GameObject PlayInBackground(GameObject sourceGameObject, AudioClip clip, bool loop = false)
 	{
-		// TODO: remove ts
 		if (clip == null)
 		{
-			Debug.LogWarning("SoundPlayer: No clip provided to play.");
 			return null;
 		}
 
@@ -37,5 +35,16 @@ public class SoundPlayer : MonoBehaviour
 		}
 
 		return soundObject;
+	}
+
+	public static GameObject PlayInBackgroundRandom(GameObject sourceGameObject, AudioClip[] clips, bool loop = false)
+	{
+		if (clips == null || clips.Length == 0)
+		{
+			return null;
+		}
+
+		int randomIndex = Random.Range(0, clips.Length);
+		return PlayInBackground(sourceGameObject, clips[randomIndex], loop);
 	}
 }

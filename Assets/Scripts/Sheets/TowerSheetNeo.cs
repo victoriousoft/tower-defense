@@ -28,7 +28,6 @@ public class TowerSheetNeo : ScriptableObject
 		public AudioClip shootSound;
 		public AudioClip hitSound;
 		public AudioClip skillSound;
-		public AudioClip[] upgradeSounds;
 	}
 
 	[System.Serializable]
@@ -60,7 +59,6 @@ public class TowerSheetNeo : ScriptableObject
 
 	public AudioClip shootSound;
 	public AudioClip hitSound;
-	public AudioClip[] upgradeSounds;
 
 	public string GetBuyStats()
 	{

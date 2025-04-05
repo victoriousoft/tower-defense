@@ -24,11 +24,24 @@ MonoBehaviour:
     visRange: 1
     playerLives: 1
     attacksTroops: 1
+    hasAbility: 0
+    isRanged: 0
     abilityCooldown: 0
   info:
     name: SWAT
     description: Armored peace-enforcer... He is the skibidi sigma. Equipped with
       a suicide bomb to use in the worst situations.
   enemyType: 0
-  attackSound: {fileID: 0}
-  deathSound: {fileID: 0}
+  attackSounds:
+  - {fileID: 8300000, guid: c7995e07c5ad6fb4f8856a54da784333, type: 3}
+  - {fileID: 8300000, guid: 280bb58b301602c478d6eca51d2e65b3, type: 3}
+  - {fileID: 8300000, guid: 54ae6e78dd8f7764a8677bba239e8cae, type: 3}
+  - {fileID: 8300000, guid: ce9db0698626e8b4abfec663132c17eb, type: 3}
+  - {fileID: 8300000, guid: d166276e504fe8d45a63720998b8591f, type: 3}
+  - {fileID: 8300000, guid: cd734029d5153cf48b86038e4f2c4b4d, type: 3}
+  - {fileID: 8300000, guid: 4889ba5844441ab4fb511e0c1a744946, type: 3}
+  - {fileID: 8300000, guid: 7c0f75cf7efa05346a98f3f1ff01911e, type: 3}
+  - {fileID: 8300000, guid: a3abf8a62ed104f4eb1c87a37368c134, type: 3}
+  deathSounds:
+  - {fileID: 8300000, guid: 2f886373878e17748a3f99ccb8bb4461, type: 3}
+  abilitySounds: []

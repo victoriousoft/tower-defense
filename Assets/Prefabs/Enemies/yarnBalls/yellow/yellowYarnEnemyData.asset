@@ -24,10 +24,14 @@ MonoBehaviour:
     visRange: 4
     playerLives: 2
     attacksTroops: 0
+    hasAbility: 0
+    isRanged: 0
     abilityCooldown: 3
   info:
     name: Y^2.A.R.N. (what?)
     description: who even invited this guy to the assault
   enemyType: 0
-  attackSound: {fileID: 0}
-  deathSound: {fileID: 0}
+  attackSounds: []
+  deathSounds:
+  - {fileID: 8300000, guid: b3e2b66943bc0294a8dcbcfe415ce028, type: 3}
+  abilitySounds: []

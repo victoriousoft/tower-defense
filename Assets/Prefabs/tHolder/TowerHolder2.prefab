@@ -76,6 +76,7 @@ MonoBehaviour:
   statusBar: {fileID: 6069531162304824463}
   buildSound: {fileID: 8300000, guid: 8f970fa7fa2e4e443ac005c6eb524d83, type: 3}
   sellSound: {fileID: 8300000, guid: 49c16440d85c740408accdb7b9f20588, type: 3}
+  upgradeSound: {fileID: 8300000, guid: f4ab499de61adb74a818fb3aa7e38dcb, type: 3}
   menuState: 0
   targetTypeIndex: 0
   towerInstance: {fileID: 0}
