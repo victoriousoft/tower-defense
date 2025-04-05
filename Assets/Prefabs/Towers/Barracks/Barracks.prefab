@@ -95,7 +95,7 @@ MonoBehaviour:
   towerData: {fileID: 11400000, guid: 486ff5c4b199b964b8a8b93c0ca3038c, type: 2}
   towerAnimator: {fileID: 0}
   towerType: 0
-  troopCount: 3
+  troopCount: 1
   respawnCooldown: 5
   troopPrefabs:
   - {fileID: 1588823637165296686, guid: f36ba79fe68968846a3e5d2aae66b7b9, type: 3}

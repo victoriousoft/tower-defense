@@ -22,19 +22,15 @@ MonoBehaviour:
   - enemies: 0000000001000000
   levels:
   - price: 100
-    range: 2
-    damage: 12.5
-    cooldown: 3
-  - price: 200
-    range: 3
+    range: 2.5
     damage: 25
     cooldown: 2
-  - price: 300
-    range: 4
+  - price: 150
+    range: 3
     damage: 50
     cooldown: 1
-  - price: 400
-    range: 5
+  - price: 200
+    range: 3.5
     damage: 100
     cooldown: 0.5
   evolutions:
@@ -42,33 +38,33 @@ MonoBehaviour:
     prefab: {fileID: 6574171007775079891, guid: 57698a17fcd0b9f4985e45f05413ed83, type: 3}
     price: 400
     damage: 15
-    range: 6
+    range: 4
     cooldown: 0.5
     skillName: Root Access
     skillLevels:
-    - cooldown: 1
-      upragdeCost: 100
-    - cooldown: 0
-      upragdeCost: 0
-    - cooldown: 0
-      upragdeCost: 0
+    - cooldown: 200
+      upragdeCost: 200
+    - cooldown: 150
+      upragdeCost: 200
+    - cooldown: 60
+      upragdeCost: 1000
     shootSound: {fileID: 8300000, guid: 7dffd370016fac04695869adc2496973, type: 3}
     hitSound: {fileID: 0}
     skillSound: {fileID: 0}
   - name: IBM
     prefab: {fileID: 3251297187297468064, guid: 194118687fb92b54097ba2efd0f5b2ab, type: 3}
-    price: 400
+    price: 300
     damage: 25
-    range: 6
+    range: 3
     cooldown: 8
-    skillName: The Last SOUT
+    skillName: The Last SOUT (psvm)
     skillLevels:
-    - cooldown: 10
-      upragdeCost: 100
-    - cooldown: 5
+    - cooldown: 200
       upragdeCost: 200
-    - cooldown: 5
-      upragdeCost: 200
+    - cooldown: 180
+      upragdeCost: 150
+    - cooldown: 160
+      upragdeCost: 150
     shootSound: {fileID: 0}
     hitSound: {fileID: 0}
     skillSound: {fileID: 0}

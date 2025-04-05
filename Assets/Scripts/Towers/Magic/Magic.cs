@@ -29,7 +29,7 @@ public class Magic : BaseTower
 			Destroy(sphere);
 			GetComponent<Animator>().SetTrigger("idle");
 		}
-		else if (enemy != null)
+		else if (enemy != null && enemy.GetComponent<BaseEnemy>().health > 0)
 			enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.levels[level].damage / 50, DamageTypes.MAGIC);
 		damageDealt += towerData.levels[level].damage / 50;
 	}

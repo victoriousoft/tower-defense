@@ -18,7 +18,9 @@ MonoBehaviour:
     maxHealth: 100
     damage: 15
     speed: 1
-    attackRange: 0.5
+    attackRange: 1
     visRange: 4
     attackCooldown: 1
   enemyTypes: 00000000
+  attackSounds: []
+  deathSounds: []

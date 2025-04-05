@@ -49,7 +49,7 @@ public abstract class BaseTroop : MonoBehaviour
 
 		if (canAttack && currentEnemy == null)
 		{
-			Heal(10);
+			Heal(troopData.stats.maxHealth / 10);
 			canAttack = false;
 			StartCoroutine(ResetAttackCooldown());
 		}
@@ -204,6 +204,7 @@ public abstract class BaseTroop : MonoBehaviour
 			SetEnemy(enemiesInRange[0]);
 		else
 		{
+			currentEnemy = null;
 			if (!isFighting)
 			{
 				GameObject fightingEnemy = homeBase.GetComponent<Barracks>().FindFightingEnemy();
