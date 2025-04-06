@@ -15,8 +15,8 @@ MonoBehaviour:
   stats:
     maxHealth: 400
     damage: 20
-    cashDrop: 100
-    speed: 0.85
+    cashDrop: 200
+    speed: 3.5
     physicalResistance: 0
     magicResistance: 4
     attackRange: 20
@@ -26,7 +26,7 @@ MonoBehaviour:
     attacksTroops: 1
     hasAbility: 1
     isRanged: 1
-    abilityCooldown: 8
+    abilityCooldown: 25
   info:
     name: URZA
     description: ???

@@ -23,7 +23,7 @@ MonoBehaviour:
   levels:
   - price: 100
     range: 2.5
-    damage: 12.5
+    damage: 15
     cooldown: 2
   - price: 150
     range: 3
@@ -42,12 +42,12 @@ MonoBehaviour:
     cooldown: 0.5
     skillName: Root Access
     skillLevels:
-    - cooldown: 200
-      upragdeCost: 200
-    - cooldown: 150
-      upragdeCost: 200
     - cooldown: 60
-      upragdeCost: 1000
+      upragdeCost: 200
+    - cooldown: 45
+      upragdeCost: 200
+    - cooldown: 35
+      upragdeCost: 250
     shootSound: {fileID: 8300000, guid: 7dffd370016fac04695869adc2496973, type: 3}
     hitSound: {fileID: 0}
     skillSound: {fileID: 0}
