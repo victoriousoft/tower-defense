@@ -6,6 +6,7 @@ public class HealDogBox : BaseEnemy
 	public float healAmount = 10f;
 	public float healRange = 5f;
 	public float healInterval = 3f;
+	public Transform laserOrigin;
 
 	private LineRenderer lineRenderer;
 
@@ -62,6 +63,7 @@ public class HealDogBox : BaseEnemy
 
 	IEnumerator ShowHealLine(Transform target)
 	{
+		animator.Play("ability");
 		lineRenderer.enabled = true;
 		float duration = 0.5f;
 		float timer = 0f;
@@ -70,7 +72,7 @@ public class HealDogBox : BaseEnemy
 		{
 			if (target != null)
 			{
-				lineRenderer.SetPosition(0, transform.position);
+				lineRenderer.SetPosition(0, laserOrigin.position);
 				lineRenderer.SetPosition(1, target.position);
 			}
 			timer += Time.deltaTime;
@@ -78,5 +80,7 @@ public class HealDogBox : BaseEnemy
 		}
 
 		lineRenderer.enabled = false;
+
+		animator.Play("moveRight");
 	}
 }
