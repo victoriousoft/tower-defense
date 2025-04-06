@@ -85,6 +85,14 @@ public class TowerHolderButton : MonoBehaviour, IPointerClickHandler, IPointerEn
 		lineRenderer.enabled = false;
 	}
 
+	void Update()
+	{
+		if (IsMouseOver())
+		{
+			ShowTooltip();
+		}
+	}
+
 	public void OnPointerClick(PointerEventData eventData)
 	{
 		TooltipManager.Hide();

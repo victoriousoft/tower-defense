@@ -168,7 +168,7 @@ public abstract class BaseTroop : MonoBehaviour
 	public void WalkTo(Vector3 target)
 	{
 		Vector2 currentPosition = transform.position;
-		Vector2 newPosition = Vector2.MoveTowards(currentPosition, target, troopData.stats.speed * Time.deltaTime);
+		Vector2 newPosition = Vector2.MoveTowards(currentPosition, target, troopData.stats.speed * Time.fixedDeltaTime);
 
 		Vector2 movement = newPosition - currentPosition;
 

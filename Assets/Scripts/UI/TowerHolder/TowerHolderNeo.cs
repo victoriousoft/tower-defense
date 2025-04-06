@@ -152,6 +152,10 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
 	void Start()
 	{
+		Debug.Log("time scale: " + Time.timeScale);
+		Debug.Log("delta time: " + Time.deltaTime);
+		Debug.Log("fixed delta time: " + Time.fixedDeltaTime);
+
 		Transform buttons = transform.Find("Buttons");
 		if (buttons.childCount != menuButtons.Length)
 		{

@@ -76,7 +76,7 @@ public class Gripen : BaseEvolutionTower
 			plane.transform.position = Vector2.MoveTowards(
 				plane.transform.position,
 				endPosition,
-				planeSpeed * Time.deltaTime
+				planeSpeed * Time.fixedDeltaTime
 			);
 			yield return null;
 		}
@@ -102,7 +102,7 @@ public class Gripen : BaseEvolutionTower
 			plane.transform.position = Vector2.MoveTowards(
 				plane.transform.position,
 				endPosition,
-				planeSpeed * Time.deltaTime
+				planeSpeed * Time.fixedDeltaTime
 			);
 			yield return null;
 		}
