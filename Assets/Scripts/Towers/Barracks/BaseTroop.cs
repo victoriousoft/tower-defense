@@ -76,7 +76,7 @@ public abstract class BaseTroop : MonoBehaviour
 			if (
 				currentEnemy == null
 				|| currentEnemy.GetComponent<BaseEnemy>().currentTarget != gameObject
-				|| currentEnemy.GetComponent<BaseEnemy>().health <= 0
+				|| currentEnemy.GetComponent<BaseEnemy>().health <= 0.001f
 				|| currentEnemy.GetComponent<BaseEnemy>().attacksTroops == false
 			)
 				FindNewEnemy();
