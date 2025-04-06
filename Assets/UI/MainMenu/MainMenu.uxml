@@ -1,9 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/MainMenu/MainMenu.uss?fileID=7433441132597879392&amp;guid=6ab355a200b950a43a5930d06acaf1c0&amp;type=3#MainMenu" />
     <ui:VisualElement name="VisualElement" class="main-menu">
-        <ui:VisualElement class="title">
-            <ui:Label tabindex="-1" text="Ratar TD" display-tooltip-when-elided="true" style="-unity-font-definition: url(&apos;project://database/Assets/Fonts/seagram-tfb%20SDF.asset?fileID=11400000&amp;guid=714dc74092a769a41a7a87ee46203ca2&amp;type=2#seagram-tfb SDF&apos;);" />
-        </ui:VisualElement>
+        <ui:VisualElement class="title" />
         <ui:VisualElement name="LevelsContainer" class="levels-container">
             <ui:VisualElement class="levels-row">
                 <ui:Button text="Level 1" display-tooltip-when-elided="true" enable-rich-text="true" class="level-btn" />
