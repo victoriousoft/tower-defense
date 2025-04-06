@@ -134,6 +134,12 @@ public class MachineGun : BaseEvolutionTower
 
 	protected override IEnumerator Skill(GameObject enemy)
 	{
+		GameObject soundPlayer = SoundPlayer.PlayInBackground(
+			gameObject,
+			towerData.evolutions[evolutionIndex].skillSound,
+			true
+		);
+
 		skillInUse = true;
 		currentEnemy = null;
 		spinAnimationAnimator.speed = 3f;
@@ -166,6 +172,7 @@ public class MachineGun : BaseEvolutionTower
 		skillInUse = false;
 		spinAnimationAnimator.speed = 1f;
 
+		Destroy(soundPlayer);
 		yield return null;
 	}
 

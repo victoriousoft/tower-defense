@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -39,6 +40,18 @@ public class WaveSheet : MonoBehaviour
 			}
 
 			return info;
+		}
+
+		public GameObject[] GetPaths()
+		{
+			HashSet<GameObject> uniquePaths = new HashSet<GameObject>();
+
+			foreach (WaveEnemy enemy in enemies)
+			{
+				uniquePaths.Add(enemy.pathParent.gameObject);
+			}
+
+			return uniquePaths.ToArray();
 		}
 
 		public int GetEarlyCallCashback(float progress)
