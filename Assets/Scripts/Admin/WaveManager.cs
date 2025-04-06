@@ -148,6 +148,7 @@ public class WaveSheet : MonoBehaviour
 	public bool showNextWaveButton = true;
 
 	public AudioClip waveStartSound;
+	public AudioClip enemyPassSound;
 
 	private Coroutine waveCountdownRoutine;
 

@@ -569,6 +569,7 @@ MonoBehaviour:
   waveTriggerButton: {fileID: 956672197}
   waves: []
   waveStartSound: {fileID: 8300000, guid: 6aed442235522994a8ea6eb3affac9d4, type: 3}
+  enemyPassSound: {fileID: 8300000, guid: f03b86e77e9b8ff4397dbb1f5f5a453c, type: 3}
 --- !u!82 &1258185206
 AudioSource:
   m_ObjectHideFlags: 0
