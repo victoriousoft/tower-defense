@@ -121,6 +121,12 @@ public class Gripen : BaseEvolutionTower
 
 	IEnumerator Crash()
 	{
+		GameObject soundPlayer = SoundPlayer.PlayInBackground(
+			gameObject,
+			towerData.evolutions[evolutionIndex].skillSound,
+			true
+		);
+
 		plane.transform.position = transform.position;
 		animator.SetTrigger("kamikadze");
 
@@ -143,6 +149,8 @@ public class Gripen : BaseEvolutionTower
 		}
 		readyToCrash = false;
 		crashed = false;
+
+		Destroy(soundPlayer);
 	}
 
 	private void LateUpdate()

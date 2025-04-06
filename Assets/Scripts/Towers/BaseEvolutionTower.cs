@@ -172,12 +172,6 @@ public abstract class BaseEvolutionTower : BaseTower
 			TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range, towerData.enemyTypes),
 			targetType
 		);
-
-		GameObject soundPlayer = SoundPlayer.PlayInBackground(
-			gameObject,
-			towerData.evolutions[evolutionIndex].skillSound,
-			true
-		);
 		yield return StartCoroutine(Skill(target));
 
 		skillCoroutine = StartCoroutine(

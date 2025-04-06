@@ -36,6 +36,8 @@ public class PlayerStatsManager : MonoBehaviour
 
 	public static void SubtractLives(int value)
 	{
+		SoundPlayer.PlayInBackground(GlobalData.instance.gameObject, WaveSheet.instance.enemyPassSound);
+
 		lives -= value;
 		if (lives <= 0)
 			GameOver();
