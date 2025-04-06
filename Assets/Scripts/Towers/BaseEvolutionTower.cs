@@ -68,32 +68,16 @@ public abstract class BaseEvolutionTower : BaseTower
 
 		skillLevel++;
 
-		if (WaveSheet.instance.currentWave >= 0)
-		{
-			healthBar.gameObject.SetActive(true);
+		healthBar.gameObject.SetActive(true);
 
-			healthBar.SetHealth(0);
-			isSkillCharged = false;
+		healthBar.SetHealth(1);
+		isSkillCharged = true;
 
-			//TODO
-			/*SoundPlayer.PlayInBackground(
-				gameObject,
-				towerData.evolutions[evolutionIndex].upgradeSounds[Random.Range(0, towerData.upgradeSounds.Length)]
-			);*/
-
-			skillCoroutine = StartCoroutine(
-				healthBar.Animate(
-					0,
-					1,
-					towerData.evolutions[evolutionIndex].skillLevels[skillLevel].cooldown,
-					SkillChargeupCallback
-				)
-			);
-		}
-		else
-		{
-			waitingForFirstWave = true;
-		}
+		//TODO
+		/*SoundPlayer.PlayInBackground(
+			gameObject,
+			towerData.evolutions[evolutionIndex].upgradeSounds[Random.Range(0, towerData.upgradeSounds.Length)]
+		);*/
 	}
 
 	public override IEnumerator ChargeShootAndResetCooldown()
