@@ -1,4 +1,25 @@
 {
-	"enemies": [],
-	"towers": []
+	"enemies": [
+		"../Assets/Prefabs/Enemies/dogbox/DogBoxEnemyData.asset",
+		"../Assets/Prefabs/Enemies/Dogs/blackDog/bBlackDogEnemyData.asset",
+		"../Assets/Prefabs/Enemies/Dogs/BrownDog/BrownDogEnemyData.asset",
+		"../Assets/Prefabs/Enemies/Dogs/GoldDog/GoldDogEnemyData.asset",
+		"../Assets/Prefabs/Enemies/Dogs/SpotDog/SpotDogEnemyData.asset",
+		"../Assets/Prefabs/Enemies/healBox/HealBoxEnemyData.asset",
+		"../Assets/Prefabs/Enemies/mice/mouseEnemyData.asset",
+		"../Assets/Prefabs/Enemies/mice/rat.asset",
+		"../Assets/Prefabs/Enemies/pigeon/pigeonEnemyData.asset",
+		"../Assets/Prefabs/Enemies/stickynote/sitckyNoteEnemyData.asset",
+		"../Assets/Prefabs/Enemies/swat/swatEnemyData.asset",
+		"../Assets/Prefabs/Enemies/urza/urzaEnemyData.asset",
+		"../Assets/Prefabs/Enemies/yarnBalls/blue/blueYarnEnemyData.asset",
+		"../Assets/Prefabs/Enemies/yarnBalls/green/greenYarnEnemyData.asset",
+		"../Assets/Prefabs/Enemies/yarnBalls/pink/yarnEnemyData.asset",
+		"../Assets/Prefabs/Enemies/yarnBalls/yellow/yellowYarnEnemyData.asset"
+	],
+	"towers": [
+		"../Assets/Prefabs/Towers/Archer/ArcherData.asset",
+		"../Assets/Prefabs/Towers/Bomber/BomberData.asset",
+		"../Assets/Prefabs/Towers/Magic/MagicData.asset"
+	]
 }
