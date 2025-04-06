@@ -284,7 +284,7 @@ MonoBehaviour:
   currentDamage: 0
   animator: {fileID: 0}
   catCount: 7
-  catPrefab: {fileID: 9059301247369330279, guid: 5d2dd7192bfa41b4aa5b9ccdce4406ac, type: 3}
+  catPrefab: {fileID: 9059301247369330279, guid: b6b6b8fb1ba150345874744c9f27068b, type: 3}
   projectilePrefab: {fileID: 3273542251169830856, guid: 18373657e7f4db04e9287486939a3c49, type: 3}
 --- !u!1001 &5007395829321720595
 PrefabInstance:
