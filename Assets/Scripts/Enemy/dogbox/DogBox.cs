@@ -12,7 +12,6 @@ public class DogBox : BaseEnemy
 	{
 		for (int i = 0; i < spawnCount; i++)
 		{
-			Debug.Log("DogBox: ExtendedDeath() called");
 			StartCoroutine(SpawnChild(GetRandomChildPrefab(), Random.Range(-0.5f, 0.5f), null));
 			yield return new WaitForSeconds(0.1f);
 		}
