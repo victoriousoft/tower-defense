@@ -84,7 +84,10 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 		if (currentTarget == null || !attacksTroops || currentTarget.GetComponent<BaseTroop>().health <= 0)
 		{
-			currentTarget = FindEnemyInRange();
+			if (enemyData.stats.isRanged)
+			{
+				currentTarget = FindEnemyInRange();
+			}
 
 			if (health > 0)
 			{
@@ -194,6 +197,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 				&& collider.gameObject.GetComponent<BaseTroop>().health > 0
 				&& collider.gameObject.GetComponent<BaseTroop>().currentEnemy == null
 				&& collider.gameObject.GetComponent<BaseTroop>().homeBase.GetComponent<Barracks>().IsInRange(gameObject)
+				&& collider.gameObject.GetComponent<BaseTroop>().ignoreEnemies == false
 			)
 			{
 				return collider.gameObject;
