@@ -137,6 +137,11 @@ public class WaveSheet : MonoBehaviour
 
 	public IEnumerator SpawnWave(int waveIndex)
 	{
+		if (waveTriggerButton.GetComponent<WaveTriggerButton>().isMouseOver && TooltipManager.instance.isEnabled)
+		{
+			TooltipManager.Hide();
+		}
+
 		if (waveIndex >= waves.Length)
 		{
 			Debug.LogError(

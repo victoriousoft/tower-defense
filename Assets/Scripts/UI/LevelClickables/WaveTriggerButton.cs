@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class WaveTriggerButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
 	public HealthBar statusBar;
-	private bool isMouseOver = false;
+	public bool isMouseOver = false;
 
 	void Awake()
 	{
