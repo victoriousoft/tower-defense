@@ -75,7 +75,7 @@ public class WaveSheet : MonoBehaviour
 				lineRenderer.startWidth = 0.05f;
 				lineRenderer.endWidth = 0.05f;
 				lineRenderer.useWorldSpace = true;
-				lineRenderer.material = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
+				lineRenderer.material = instance.wavePreviewMaterial;
 
 				for (int i = 0; i < children.Length; i++)
 				{
@@ -149,6 +149,7 @@ public class WaveSheet : MonoBehaviour
 
 	public AudioClip waveStartSound;
 	public AudioClip enemyPassSound;
+	public Material wavePreviewMaterial;
 
 	private Coroutine waveCountdownRoutine;
 
