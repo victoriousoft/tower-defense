@@ -26,9 +26,9 @@ MonoBehaviour:
     attacksTroops: 1
     hasAbility: 1
     isRanged: 1
-    abilityCooldown: 10
+    abilityCooldown: 8
   info:
-    name: urza
+    name: URZA
     description: ???
   enemyType: 0
   attackSounds:

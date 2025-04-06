@@ -28,7 +28,7 @@ MonoBehaviour:
     isRanged: 0
     abilityCooldown: 0
   info:
-    name: Dalmatine
+    name: DogBox
     description: Dog box? Hot dog box? Hot box ?
   enemyType: 0
   attackSounds:
