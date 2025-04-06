@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -41,6 +42,61 @@ public class WaveSheet : MonoBehaviour
 			return info;
 		}
 
+		public GameObject[] GetPaths()
+		{
+			HashSet<GameObject> uniquePaths = new HashSet<GameObject>();
+
+			foreach (WaveEnemy enemy in enemies)
+			{
+				uniquePaths.Add(enemy.pathParent.gameObject);
+			}
+
+			return uniquePaths.ToArray();
+		}
+
+		public void DrawPaths()
+		{
+			GameObject[] paths = GetPaths();
+
+			foreach (GameObject path in paths)
+			{
+				GameObject[] children = path.GetComponentsInChildren<Transform>(true)
+					.Where(t => t.gameObject != path && t.gameObject.activeSelf)
+					.Select(t => t.gameObject)
+					.ToArray();
+
+				if (path.GetComponent<LineRenderer>() != null)
+				{
+					Destroy(path.GetComponent<LineRenderer>());
+				}
+
+				LineRenderer lineRenderer = path.gameObject.AddComponent<LineRenderer>();
+				lineRenderer.positionCount = children.Length;
+				lineRenderer.startWidth = 0.05f;
+				lineRenderer.endWidth = 0.05f;
+				lineRenderer.useWorldSpace = true;
+				lineRenderer.material = instance.wavePreviewMaterial;
+
+				for (int i = 0; i < children.Length; i++)
+				{
+					lineRenderer.SetPosition(i, children[i].transform.position);
+				}
+			}
+		}
+
+		public void HidePaths()
+		{
+			GameObject[] paths = GetPaths();
+			foreach (GameObject path in paths)
+			{
+				LineRenderer lineRenderer = path.GetComponent<LineRenderer>();
+				if (lineRenderer != null)
+				{
+					Destroy(lineRenderer);
+				}
+			}
+		}
+
 		public int GetEarlyCallCashback(float progress)
 		{
 			int secondsRemaining = Mathf.CeilToInt(initialDelay * (1 - progress));
@@ -62,7 +118,7 @@ public class WaveSheet : MonoBehaviour
 		{
 			yield return null;
 
-			yield return new WaitForSeconds(initialDelay);
+			yield return new WaitForSecondsRealtime(initialDelay);
 
 			for (int i = 0; i < count; i++)
 			{
@@ -72,7 +128,7 @@ public class WaveSheet : MonoBehaviour
 
 				if (i < count - 1)
 				{
-					yield return new WaitForSeconds(spawnDelay);
+					yield return new WaitForSecondsRealtime(spawnDelay);
 				}
 			}
 		}
@@ -92,6 +148,8 @@ public class WaveSheet : MonoBehaviour
 	public bool showNextWaveButton = true;
 
 	public AudioClip waveStartSound;
+	public AudioClip enemyPassSound;
+	public Material wavePreviewMaterial;
 
 	private Coroutine waveCountdownRoutine;
 
@@ -129,7 +187,7 @@ public class WaveSheet : MonoBehaviour
 	{
 		while (GameObject.Find("Enemies").transform.childCount > 0)
 		{
-			yield return new WaitForSeconds(0.5f);
+			yield return new WaitForSecondsRealtime(0.5f);
 		}
 
 		PlayerStatsManager.WinGame();
@@ -137,6 +195,11 @@ public class WaveSheet : MonoBehaviour
 
 	public IEnumerator SpawnWave(int waveIndex)
 	{
+		if (waveTriggerButton.GetComponent<WaveTriggerButton>().isMouseOver && TooltipManager.instance.isEnabled)
+		{
+			TooltipManager.Hide();
+		}
+
 		if (waveIndex >= waves.Length)
 		{
 			Debug.LogError(
@@ -146,6 +209,8 @@ public class WaveSheet : MonoBehaviour
 		}
 
 		currentWave = waveIndex;
+
+		waves[waveIndex].HidePaths();
 
 		yield return StartCoroutine(waves[waveIndex].SpawnWave(this));
 

@@ -36,7 +36,7 @@ public abstract class BaseEvolutionTower : BaseTower
 		healthBar.gameObject.SetActive(false);
 	}
 
-	private void Update()
+	private void FixedUpdate()
 	{
 		if (waitingForFirstWave && WaveSheet.instance.currentWave >= 0)
 		{
@@ -171,12 +171,6 @@ public abstract class BaseEvolutionTower : BaseTower
 		GameObject target = TowerHelpers.SelectEnemyToAttack(
 			TowerHelpers.GetEnemiesInRange(transform.position, towerData.levels[level].range, towerData.enemyTypes),
 			targetType
-		);
-
-		GameObject soundPlayer = SoundPlayer.PlayInBackground(
-			gameObject,
-			towerData.evolutions[evolutionIndex].skillSound,
-			true
 		);
 		yield return StartCoroutine(Skill(target));
 

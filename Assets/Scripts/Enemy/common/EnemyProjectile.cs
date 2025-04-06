@@ -10,7 +10,7 @@ public class EnemyProjectile : MonoBehaviour
 	public float damage;
 	public GameObject target;
 
-	void Update()
+	void FixedUpdate()
 	{
 		if (target == null)
 		{
@@ -18,7 +18,11 @@ public class EnemyProjectile : MonoBehaviour
 			return;
 		}
 
-		transform.position = Vector2.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+		transform.position = Vector2.MoveTowards(
+			transform.position,
+			target.transform.position,
+			speed * Time.fixedDeltaTime
+		);
 
 		if (Vector2.Distance(transform.position, target.transform.position) < 0.1f)
 		{

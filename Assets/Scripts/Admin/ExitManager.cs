@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class ExitManager : MonoBehaviour
 {
-	void Update() { }
-
 	void OnTriggerEnter2D(Collider2D col)
 	{
 		GameObject enemy = col.gameObject;

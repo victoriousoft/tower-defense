@@ -6,13 +6,13 @@ using UnityEngine.SceneManagement;
 public class PlayerStatsManager : MonoBehaviour
 {
 #if UNITY_EDITOR
-	public static int currentLevel = 0;
+	public static int currentLevel = 1;
 #else
 	public static int currentLevel = -1;
 #endif
 	public static int currentWave = 0;
 	public static int lives = 25;
-	public static int gold = 99999999;
+	public static int gold = 9999999;
 
 	[System.NonSerialized]
 	[HideInInspector]
@@ -36,6 +36,8 @@ public class PlayerStatsManager : MonoBehaviour
 
 	public static void SubtractLives(int value)
 	{
+		SoundPlayer.PlayInBackground(GlobalData.instance.gameObject, WaveSheet.instance.enemyPassSound);
+
 		lives -= value;
 		if (lives <= 0)
 			GameOver();

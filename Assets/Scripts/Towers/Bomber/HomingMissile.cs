@@ -27,7 +27,7 @@ public class HomingMissile : MonoBehaviour
 			transform.position = Vector3.MoveTowards(
 				transform.position,
 				target.transform.position,
-				Time.deltaTime * speed
+				Time.fixedDeltaTime * speed
 			);
 
 			yield return null;

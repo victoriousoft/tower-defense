@@ -24,7 +24,7 @@ public class StickyNote : BaseEnemy
 			transform.position = Vector3.MoveTowards(
 				transform.position,
 				currentTarget.transform.position,
-				Time.deltaTime * attackSpeed
+				Time.fixedDeltaTime * attackSpeed
 			);
 			yield return null;
 		}

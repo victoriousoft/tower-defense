@@ -209,7 +209,8 @@ def prepare_out_directories():
     os.makedirs("./out/towers", exist_ok=True)
 
 def generate_safe_filename(name: str) -> str:
-    return unidecode(name.lower().replace(" ", "_"))
+    valid_chars = f"_{string.ascii_lowercase}{string.digits}"
+    return ''.join(c for c in unidecode(name.lower()) if c in valid_chars)
 
 if __name__ == "__main__":
     config = load_file_config("./files.json")

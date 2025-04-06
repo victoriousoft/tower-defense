@@ -1,7 +1,7 @@
 .main-menu {
     justify-content: space-around;
     align-items: center;
-    background-image: url('project://database/Assets/UI/Images/ratar.jpg?fileID=2800000&guid=09d21e8312b938947a426948824073ab&type=3#ratar');
+    background-image: url('project://database/Assets/UI/Images/background.png?fileID=2800000&guid=e83a5fc0f2dc52245a1bb4d081965d19&type=3#background');
     width: 100%;
     height: 100%;
     -unity-background-image-tint-color: rgb(130, 130, 130);
@@ -58,6 +58,9 @@
     margin-bottom: 40px;
     letter-spacing: 4px;
     text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+    background-image: url('project://database/Assets/UI/Images/logo.png?fileID=2800000&guid=e6908b36c8a00764290931a420d0609d&type=3#logo');
+    width: 600px;
+    height: 600px;
 }
 
 .lock-overlay {

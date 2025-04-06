@@ -77,14 +77,17 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		StartCoroutine(ResetAbilityCooldown());
 	}
 
-	void Update()
+	protected void FixedUpdate()
 	{
 		if (health <= 0)
 			return;
 
 		if (currentTarget == null || !attacksTroops || currentTarget.GetComponent<BaseTroop>().health <= 0)
 		{
-			currentTarget = FindEnemyInRange();
+			if (enemyData.stats.isRanged)
+			{
+				currentTarget = FindEnemyInRange();
+			}
 
 			if (health > 0)
 			{
@@ -194,6 +197,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 				&& collider.gameObject.GetComponent<BaseTroop>().health > 0
 				&& collider.gameObject.GetComponent<BaseTroop>().currentEnemy == null
 				&& collider.gameObject.GetComponent<BaseTroop>().homeBase.GetComponent<Barracks>().IsInRange(gameObject)
+				&& collider.gameObject.GetComponent<BaseTroop>().ignoreEnemies == false
 			)
 			{
 				return collider.gameObject;
@@ -258,6 +262,9 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 	public float GetDistanceToFinish()
 	{
+		if (points == null)
+			return 0;
+
 		float distance = Vector2.Distance(
 			transform.position,
 			(Vector2)points[currentPointIndex].position + positionOffset
@@ -275,6 +282,9 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 	public float GetDistanceToStart()
 	{
+		if (points == null)
+			return 0;
+
 		float distance = Vector2.Distance(
 			transform.position,
 			(Vector2)points[currentPointIndex].position + positionOffset
@@ -300,8 +310,9 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 		healthBar.SetHealth(health / enemyData.stats.maxHealth);
 
-		if (health <= 0)
+		if (health <= 0.001f)
 		{
+			health = 0;
 			StartCoroutine(Death());
 		}
 	}

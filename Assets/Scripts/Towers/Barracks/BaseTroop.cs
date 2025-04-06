@@ -28,7 +28,7 @@ public abstract class BaseTroop : MonoBehaviour
 
 	protected HealthBar healthBar;
 	protected bool canAttack = true;
-	protected bool ignoreEnemies = false;
+	public bool ignoreEnemies = false;
 	protected bool isFighting = false;
 	private bool dead = false;
 
@@ -42,7 +42,7 @@ public abstract class BaseTroop : MonoBehaviour
 		animator = GetComponent<Animator>();
 	}
 
-	void Update()
+	void FixedUpdate()
 	{
 		if (health <= 0)
 			return;
@@ -76,7 +76,7 @@ public abstract class BaseTroop : MonoBehaviour
 			if (
 				currentEnemy == null
 				|| currentEnemy.GetComponent<BaseEnemy>().currentTarget != gameObject
-				|| currentEnemy.GetComponent<BaseEnemy>().health <= 0
+				|| currentEnemy.GetComponent<BaseEnemy>().health <= 0.001f
 				|| currentEnemy.GetComponent<BaseEnemy>().attacksTroops == false
 			)
 				FindNewEnemy();
@@ -131,8 +131,9 @@ public abstract class BaseTroop : MonoBehaviour
 		health -= damage;
 		healthBar.SetHealth(health / troopData.stats.maxHealth);
 
-		if (health <= 0 && dead == false)
+		if (health <= 0.001f && dead == false)
 		{
+			health = 0;
 			dead = true;
 			StartCoroutine(Die());
 		}
@@ -168,7 +169,7 @@ public abstract class BaseTroop : MonoBehaviour
 	public void WalkTo(Vector3 target)
 	{
 		Vector2 currentPosition = transform.position;
-		Vector2 newPosition = Vector2.MoveTowards(currentPosition, target, troopData.stats.speed * Time.deltaTime);
+		Vector2 newPosition = Vector2.MoveTowards(currentPosition, target, troopData.stats.speed * Time.fixedDeltaTime);
 
 		Vector2 movement = newPosition - currentPosition;
 
@@ -179,15 +180,22 @@ public abstract class BaseTroop : MonoBehaviour
 
 	void FindNewEnemy()
 	{
+		GameObject[] enemiesInTroopRange = TowerHelpers.GetEnemiesInRange(
+			transform.position,
+			troopData.stats.visRange,
+			new EnemyTypes[] { EnemyTypes.GROUND }
+		);
+
 		GameObject[] enemiesInTowerRange = TowerHelpers.GetEnemiesInRange(
 			homeBase.transform.position,
 			homeBase.GetComponent<BaseTower>().towerData.levels[homeBase.GetComponent<BaseTower>().level].range,
 			new EnemyTypes[] { EnemyTypes.GROUND }
 		);
 
-		GameObject[] enemiesInRange = enemiesInTowerRange
+		GameObject[] enemiesInRange = enemiesInTroopRange
 			.Where(enemy =>
-				enemy.GetComponent<BaseEnemy>().currentTarget == null
+				enemiesInTowerRange.Contains(enemy)
+				&& enemy.GetComponent<BaseEnemy>().currentTarget == null
 				&& enemy.GetComponent<BaseEnemy>().attacksTroops
 				&& troopData.enemyTypes.Contains(enemy.GetComponent<BaseEnemy>().enemyData.enemyType)
 				&& enemy.GetComponent<BaseEnemy>().enemyData.stats.attacksTroops == true
@@ -238,6 +246,7 @@ public abstract class BaseTroop : MonoBehaviour
 		if (currentEnemy != null && currentEnemy.GetComponent<BaseEnemy>().currentTarget == gameObject)
 		{
 			currentEnemy.GetComponent<BaseEnemy>().currentTarget = null;
+			currentEnemy.GetComponent<BaseEnemy>().isPaused = false;
 		}
 
 		currentEnemy = null;

@@ -253,18 +253,16 @@ public static class TowerHelpers
 				pathPoints[j] = path.transform.GetChild(j).gameObject;
 			}
 
-			GameObject[] closestPointsArray = pathPoints
-				.OrderBy(p => Vector2.Distance(origin, p.transform.position))
-				.Take(2)
-				.ToArray();
+			for (int j = 0; j < pathPoints.Length - 1; j++)
+			{
+				Vector2 closestPoint = GetClosestPointOnLineSegment(
+					origin,
+					pathPoints[j].transform.position,
+					pathPoints[j + 1].transform.position
+				);
 
-			Vector2 closestPoint = GetClosestPointOnLineSegment(
-				origin,
-				closestPointsArray[0].transform.position,
-				closestPointsArray[1].transform.position
-			);
-
-			closestPoints.Add(closestPoint);
+				closestPoints.Add(closestPoint);
+			}
 		}
 
 		var pointsInRange = closestPoints.Where(p => Vector2.Distance(p, basePosition) <= maxRange).ToList();

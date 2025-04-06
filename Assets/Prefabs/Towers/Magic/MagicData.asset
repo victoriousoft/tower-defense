@@ -68,5 +68,5 @@ MonoBehaviour:
     shootSound: {fileID: 0}
     hitSound: {fileID: 0}
     skillSound: {fileID: 0}
-  shootSound: {fileID: 0}
+  shootSound: {fileID: 8300000, guid: 7dffd370016fac04695869adc2496973, type: 3}
   hitSound: {fileID: 0}
