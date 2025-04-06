@@ -262,6 +262,9 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 	public float GetDistanceToFinish()
 	{
+		if (points == null)
+			return 0;
+
 		float distance = Vector2.Distance(
 			transform.position,
 			(Vector2)points[currentPointIndex].position + positionOffset
