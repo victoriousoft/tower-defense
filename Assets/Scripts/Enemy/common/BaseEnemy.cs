@@ -300,8 +300,9 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 		healthBar.SetHealth(health / enemyData.stats.maxHealth);
 
-		if (health <= 0)
+		if (health <= 0.001f)
 		{
+			health = 0;
 			StartCoroutine(Death());
 		}
 	}

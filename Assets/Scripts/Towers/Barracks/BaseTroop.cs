@@ -131,8 +131,9 @@ public abstract class BaseTroop : MonoBehaviour
 		health -= damage;
 		healthBar.SetHealth(health / troopData.stats.maxHealth);
 
-		if (health <= 0 && dead == false)
+		if (health <= 0.001f && dead == false)
 		{
+			health = 0;
 			dead = true;
 			StartCoroutine(Die());
 		}
