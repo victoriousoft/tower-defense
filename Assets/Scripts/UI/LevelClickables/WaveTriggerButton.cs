@@ -25,6 +25,7 @@ public class WaveTriggerButton : MonoBehaviour, IPointerClickHandler, IPointerEn
 	{
 		isMouseOver = true;
 		SetNextWaveButtonState();
+		WaveSheet.instance.waves[WaveSheet.instance.currentWave + 1].DrawPaths();
 	}
 
 	public void OnPointerClick(PointerEventData eventData)
@@ -33,6 +34,7 @@ public class WaveTriggerButton : MonoBehaviour, IPointerClickHandler, IPointerEn
 		PlayerStatsManager.AddGold(
 			WaveSheet.instance.waves[WaveSheet.instance.currentWave + 1].GetEarlyCallCashback(1 - statusBar.progress)
 		);
+		WaveSheet.instance.waves[WaveSheet.instance.currentWave + 1].HidePaths();
 		WaveSheet.TriggerWaveSpawn();
 		TooltipManager.Hide();
 	}
@@ -41,6 +43,7 @@ public class WaveTriggerButton : MonoBehaviour, IPointerClickHandler, IPointerEn
 	{
 		isMouseOver = false;
 		TooltipManager.Hide();
+		WaveSheet.instance.waves[WaveSheet.instance.currentWave + 1].HidePaths();
 	}
 
 	private void SetNextWaveButtonState()

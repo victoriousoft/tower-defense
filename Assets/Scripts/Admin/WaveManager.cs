@@ -54,6 +54,49 @@ public class WaveSheet : MonoBehaviour
 			return uniquePaths.ToArray();
 		}
 
+		public void DrawPaths()
+		{
+			GameObject[] paths = GetPaths();
+
+			foreach (GameObject path in paths)
+			{
+				GameObject[] children = path.GetComponentsInChildren<Transform>(true)
+					.Where(t => t.gameObject != path && t.gameObject.activeSelf)
+					.Select(t => t.gameObject)
+					.ToArray();
+
+				if (path.GetComponent<LineRenderer>() != null)
+				{
+					Destroy(path.GetComponent<LineRenderer>());
+				}
+
+				LineRenderer lineRenderer = path.gameObject.AddComponent<LineRenderer>();
+				lineRenderer.positionCount = children.Length;
+				lineRenderer.startWidth = 0.05f;
+				lineRenderer.endWidth = 0.05f;
+				lineRenderer.useWorldSpace = true;
+				lineRenderer.material = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
+
+				for (int i = 0; i < children.Length; i++)
+				{
+					lineRenderer.SetPosition(i, children[i].transform.position);
+				}
+			}
+		}
+
+		public void HidePaths()
+		{
+			GameObject[] paths = GetPaths();
+			foreach (GameObject path in paths)
+			{
+				LineRenderer lineRenderer = path.GetComponent<LineRenderer>();
+				if (lineRenderer != null)
+				{
+					Destroy(lineRenderer);
+				}
+			}
+		}
+
 		public int GetEarlyCallCashback(float progress)
 		{
 			int secondsRemaining = Mathf.CeilToInt(initialDelay * (1 - progress));
@@ -164,6 +207,8 @@ public class WaveSheet : MonoBehaviour
 		}
 
 		currentWave = waveIndex;
+
+		waves[waveIndex].HidePaths();
 
 		yield return StartCoroutine(waves[waveIndex].SpawnWave(this));
 
