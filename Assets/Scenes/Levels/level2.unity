@@ -1090,6 +1090,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Overlay
       objectReference: {fileID: 0}
+    - target: {fileID: 3497122700899891654, guid: e72046e338788334f8a39c362cace6fc, type: 3}
+      propertyPath: m_text
+      value: "- huge splash damage\n- pre-charge\n- ability summons bombers that
+        \n  clone on-kill"
+      objectReference: {fileID: 0}
     - target: {fileID: 3793949391159781813, guid: e72046e338788334f8a39c362cace6fc, type: 3}
       propertyPath: m_text
       value: KittenGun (archer tower)
@@ -1186,6 +1191,14 @@ PrefabInstance:
       propertyPath: m_text
       value: Suicide Bombers (bomb tower)
       objectReference: {fileID: 0}
+    - target: {fileID: 4661905255041860513, guid: e72046e338788334f8a39c362cace6fc, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 272
+      objectReference: {fileID: 0}
+    - target: {fileID: 4661905255041860513, guid: e72046e338788334f8a39c362cace6fc, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 81
+      objectReference: {fileID: 0}
     - target: {fileID: 6044122615447525832, guid: e72046e338788334f8a39c362cace6fc, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -1217,6 +1230,14 @@ PrefabInstance:
     - target: {fileID: 6617451174321822781, guid: e72046e338788334f8a39c362cace6fc, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6781501579983044067, guid: e72046e338788334f8a39c362cace6fc, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 272
+      objectReference: {fileID: 0}
+    - target: {fileID: 6781501579983044067, guid: e72046e338788334f8a39c362cace6fc, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 119.00003
       objectReference: {fileID: 0}
     - target: {fileID: 8022513128620208970, guid: e72046e338788334f8a39c362cace6fc, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2539,7 +2560,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveTriggerButton: {fileID: 1632044471}
   waves:
-  - initialDelay: 0
+  - changesMap: 0
+    initialDelay: 0
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: 0b5ec1e12cd3ef140a485beb4a56ee39, type: 3}
       pathParent: {fileID: 988431023}
@@ -2551,7 +2573,8 @@ MonoBehaviour:
       count: 4
       spawnDelay: 1.5
       initialDelay: 15
-  - initialDelay: 20
+  - changesMap: 0
+    initialDelay: 20
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: 5b10d5bc59d620841b25da864e41a57a, type: 3}
       pathParent: {fileID: 988431023}
@@ -2563,7 +2586,8 @@ MonoBehaviour:
       count: 7
       spawnDelay: 2
       initialDelay: 10
-  - initialDelay: 20
+  - changesMap: 0
+    initialDelay: 20
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: cfe1d56f2c4d05149942c26df5e27e23, type: 3}
       pathParent: {fileID: 988431023}
@@ -2585,7 +2609,8 @@ MonoBehaviour:
       count: 15
       spawnDelay: 1
       initialDelay: 20
-  - initialDelay: 20
+  - changesMap: 0
+    initialDelay: 20
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: 5d2dd7192bfa41b4aa5b9ccdce4406ac, type: 3}
       pathParent: {fileID: 2099994073}
@@ -2602,7 +2627,8 @@ MonoBehaviour:
       count: 5
       spawnDelay: 1.5
       initialDelay: 25
-  - initialDelay: 20
+  - changesMap: 0
+    initialDelay: 20
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: 1831f1016d936a14482e890eb049e42a, type: 3}
       pathParent: {fileID: 988431023}
@@ -2619,7 +2645,8 @@ MonoBehaviour:
       count: 10
       spawnDelay: 3
       initialDelay: 30
-  - initialDelay: 20
+  - changesMap: 0
+    initialDelay: 20
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: a9e2d0790ff106d4db02e85b0839324e, type: 3}
       pathParent: {fileID: 988431023}
@@ -2651,7 +2678,8 @@ MonoBehaviour:
       count: 4
       spawnDelay: 3
       initialDelay: 60
-  - initialDelay: 20
+  - changesMap: 0
+    initialDelay: 20
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: cfe1d56f2c4d05149942c26df5e27e23, type: 3}
       pathParent: {fileID: 1037889889}
@@ -2673,7 +2701,8 @@ MonoBehaviour:
       count: 30
       spawnDelay: 1
       initialDelay: 15
-  - initialDelay: 20
+  - changesMap: 0
+    initialDelay: 20
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: 1831f1016d936a14482e890eb049e42a, type: 3}
       pathParent: {fileID: 1037889889}
@@ -2695,7 +2724,8 @@ MonoBehaviour:
       count: 30
       spawnDelay: 2
       initialDelay: 20
-  - initialDelay: 20
+  - changesMap: 0
+    initialDelay: 20
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: a9e2d0790ff106d4db02e85b0839324e, type: 3}
       pathParent: {fileID: 1037889889}

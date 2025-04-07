@@ -29,7 +29,7 @@ MonoBehaviour:
     abilityCooldown: 0
   info:
     name: DogBox
-    description: Dog box? Hot dog box? Hot box ?
+    description: Who let the box out? Woof!
   enemyType: 0
   attackSounds:
   - {fileID: 8300000, guid: 06d547e3511b38443ade62309b9027e3, type: 3}
