@@ -9,6 +9,7 @@ TagManager:
   - Troop
   - Tower
   - WaveManager
+  - Map
   layers:
   - Default
   - TransparentFX

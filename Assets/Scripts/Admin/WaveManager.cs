@@ -10,6 +10,7 @@ public class WaveSheet : MonoBehaviour
 	[System.Serializable]
 	public class Wave
 	{
+		public bool changesMap;
 		public float initialDelay; // in seconds, delay before the first spawn
 		public WaveEnemy[] enemies;
 
@@ -178,6 +179,11 @@ public class WaveSheet : MonoBehaviour
 		}
 
 		SoundPlayer.PlayInBackground(instance.gameObject, instance.waveStartSound);
+
+		if (instance.waves[instance.currentWave + 1].changesMap)
+		{
+			GameObject.FindGameObjectWithTag("Map").GetComponent<Animator>().SetTrigger("change");
+		}
 
 		instance.waveTriggerButton.gameObject.SetActive(false);
 		instance.StartCoroutine(instance.SpawnWave(instance.currentWave + 1));

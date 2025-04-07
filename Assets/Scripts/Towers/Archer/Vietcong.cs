@@ -89,6 +89,11 @@ public class Vietcong : BaseEvolutionTower
 			if (target.GetComponent<BaseEnemy>().currentPhysicalResistance != 4)
 				targetEnemy = target;
 		}
+		if (targetEnemy == null)
+		{
+			Debug.Log("No enemy in range");
+			yield break;
+		}
 		GameObject spikes = Instantiate(
 			spikesPrefab,
 			new Vector2(targetEnemy.transform.position.x, enemy.transform.position.y - 0.1f),

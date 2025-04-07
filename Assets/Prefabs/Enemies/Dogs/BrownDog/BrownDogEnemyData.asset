@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
     maxHealth: 50
-    damage: 10
-    cashDrop: 5
+    damage: 20
+    cashDrop: 10
     speed: 9
     physicalResistance: 0
     magicResistance: 0

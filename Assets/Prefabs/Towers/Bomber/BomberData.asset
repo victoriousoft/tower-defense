@@ -27,27 +27,27 @@ MonoBehaviour:
     cooldown: 3
   - price: 200
     range: 2.6
-    damage: 25
-    cooldown: 3
+    damage: 30
+    cooldown: 2
   - price: 300
     range: 3.25
-    damage: 25
-    cooldown: 3
+    damage: 40
+    cooldown: 2
   evolutions:
   - name: explosive kitten
     prefab: {fileID: 8909524829413949195, guid: 2be2af70e2ebbf44e8cdff254d70fcd3, type: 3}
     price: 350
-    damage: 35
+    damage: 45
     range: 2.75
-    cooldown: 3
+    cooldown: 2
     skillName: Blast Plague
     skillLevels:
-    - cooldown: 200
+    - cooldown: 75
       upragdeCost: 200
-    - cooldown: 180
+    - cooldown: 50
       upragdeCost: 150
-    - cooldown: 160
-      upragdeCost: 150
+    - cooldown: 40
+      upragdeCost: 200
     shootSound: {fileID: 0}
     hitSound: {fileID: 8300000, guid: 729af20afd85fe240b734eebd7e5d1c9, type: 3}
     skillSound: {fileID: 0}

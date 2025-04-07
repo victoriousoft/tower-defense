@@ -37,16 +37,16 @@ MonoBehaviour:
   - name: Kittengun
     prefab: {fileID: 4112298509408283667, guid: a804c04286e29ae44b34ce18f416c876, type: 3}
     price: 350
-    damage: 3
+    damage: 4
     range: 3
     cooldown: 0.2
     skillName: Spin des Todes
     skillLevels:
-    - cooldown: 120
-      upragdeCost: 200
     - cooldown: 90
       upragdeCost: 200
     - cooldown: 60
+      upragdeCost: 200
+    - cooldown: 45
       upragdeCost: 250
     shootSound: {fileID: 8300000, guid: b2db7c67562c9924cabe048778d6b8c2, type: 3}
     hitSound: {fileID: 0}
@@ -54,16 +54,16 @@ MonoBehaviour:
   - name: Vietcong
     prefab: {fileID: 6699204228030432529, guid: f08277f4443d0a04ebb20027867967ec, type: 3}
     price: 300
-    damage: 35
-    range: 5
+    damage: 50
+    range: 6
     cooldown: 5
     skillName: Paint It Cat
     skillLevels:
-    - cooldown: 200
-      upragdeCost: 300
-    - cooldown: 180
+    - cooldown: 120
+      upragdeCost: 250
+    - cooldown: 100
       upragdeCost: 200
-    - cooldown: 150
+    - cooldown: 75
       upragdeCost: 200
     shootSound: {fileID: 8300000, guid: b649a2c16d8d2e54dbc50b8217916d91, type: 3}
     hitSound: {fileID: 0}
