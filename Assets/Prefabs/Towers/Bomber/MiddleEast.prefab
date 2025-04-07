@@ -485,4 +485,4 @@ MonoBehaviour:
   - {fileID: 8518867552760043048}
   spawnPosition: {fileID: 5339760391290419929}
   bomberPrefab: {fileID: 478314428750665847, guid: 247de406d9fffab4c815deb36d825798, type: 3}
-  bomberSpeed: 0.5
+  bomberSpeed: 3

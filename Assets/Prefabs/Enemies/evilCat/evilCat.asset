@@ -18,7 +18,7 @@ MonoBehaviour:
     cashDrop: 1
     speed: 10
     physicalResistance: 0
-    magicResistance: 4
+    magicResistance: 3
     attackRange: 0.5
     attackCooldown: 1
     visRange: 1
