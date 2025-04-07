@@ -37,7 +37,7 @@ MonoBehaviour:
       evolutionIndex: 1
   - SceneName: level2
     LevelName: dos
-    initialGold: 260
+    initialGold: 335
     initialLives: 25
     evolutionLocks:
     - towerType: 0
