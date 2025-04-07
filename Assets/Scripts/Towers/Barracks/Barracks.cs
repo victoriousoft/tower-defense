@@ -117,17 +117,23 @@ public class Barracks : BaseTower
 
 	public void SetTroopRandezvousPoint(Vector2 point)
 	{
-		Vector2 direction = (point - (Vector2)transform.position).normalized;
-		float distance = Mathf.Min(Vector2.Distance(point, transform.position), towerData.levels[level].range);
+		float range = towerData.levels[level].range;
+		Vector2 direction = (point - (Vector2)transform.position);
+		float distance = Vector2.Distance(point, transform.position);
 
-		Vector2 pointOnPath = TowerHelpers.GetClosesPointOnPath(
-			(Vector2)transform.position + direction * distance,
-			paths,
-			transform.position,
-			towerData.levels[level].range
-		);
+		if (distance > range)
+		{
+			point = (Vector2)transform.position + direction.normalized * range;
+		}
 
-		localTroopRandezvousPoint = pointOnPath - (Vector2)transform.position;
+		Vector2 pointOnPath = TowerHelpers.GetClosesPointOnPath(point, paths, transform.position, range);
+
+		Vector2 offsetDirection = (point - pointOnPath).normalized;
+		float maxOffset = 0.5f;
+		float offsetDistance = Mathf.Min((point - pointOnPath).magnitude, maxOffset);
+		Vector2 finalPoint = pointOnPath + (offsetDirection * offsetDistance);
+
+		localTroopRandezvousPoint = finalPoint - (Vector2)transform.position;
 
 		for (int i = 0; i < troopCount; i++)
 		{
