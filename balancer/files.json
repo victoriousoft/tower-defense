@@ -15,7 +15,8 @@
 		"../Assets/Prefabs/Enemies/yarnBalls/blue/blueYarnEnemyData.asset",
 		"../Assets/Prefabs/Enemies/yarnBalls/green/greenYarnEnemyData.asset",
 		"../Assets/Prefabs/Enemies/yarnBalls/pink/yarnEnemyData.asset",
-		"../Assets/Prefabs/Enemies/yarnBalls/yellow/yellowYarnEnemyData.asset"
+		"../Assets/Prefabs/Enemies/yarnBalls/yellow/yellowYarnEnemyData.asset",
+		"../Assets/Prefabs/Enemies/evilCat/evilCat.asset"
 	],
 	"towers": [
 		"../Assets/Prefabs/Towers/Archer/ArcherData.asset",

@@ -252,12 +252,21 @@ if __name__ == "__main__":
 
     combined_csv = ""
     max_lines = max(len(combined_towers_csv), len(combined_enemies_csv)) - 1
-    tower_indent_length = len(combined_towers_csv[0].split(",")) - 1
+    tower_indent_length = len(combined_towers_csv[0].split(","))
+    enemy_indent = "," * tower_indent_length
+
     for i in range(max_lines):
-        tower_line = combined_towers_csv[i] if i < len(combined_towers_csv) else "," * tower_indent_length
-        enemy_line = combined_enemies_csv[i] if i < len(combined_enemies_csv) else ""
-        if enemy_line:
-            combined_csv += f"{tower_line},,{enemy_line}\n"
+        if i < len(combined_towers_csv) - 1:
+            tower_line = combined_towers_csv[i]
+        else:
+            tower_line = "," * (tower_indent_length - 1)
+        
+        if i < len(combined_enemies_csv):
+            enemy_line = combined_enemies_csv[i]
+            if i > len(combined_towers_csv):
+                combined_csv += f"{enemy_indent},{enemy_line}\n"
+            else:
+                combined_csv += f"{tower_line},,{enemy_line}\n"
         else:
             combined_csv += f"{tower_line}\n"
 
