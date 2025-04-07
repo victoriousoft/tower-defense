@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerType: 2
   towerName: Magic
-  description: 
+  description: Mythical computer operator
   damageType: 1
   enemyTypes: 0000000001000000
   evolutionEnemyTypes:
@@ -35,12 +35,14 @@ MonoBehaviour:
     cooldown: 0.5
   evolutions:
   - name: Hackerman
+    description: I use Arch btw
     prefab: {fileID: 6574171007775079891, guid: 57698a17fcd0b9f4985e45f05413ed83, type: 3}
     price: 400
     damage: 15
     range: 4
     cooldown: 0.5
     skillName: Root Access
+    skillDescription: Reduces enemy immunity
     skillLevels:
     - cooldown: 60
       upragdeCost: 200
@@ -51,13 +53,15 @@ MonoBehaviour:
     shootSound: {fileID: 8300000, guid: 7dffd370016fac04695869adc2496973, type: 3}
     hitSound: {fileID: 0}
     skillSound: {fileID: 0}
-  - name: IBM
+  - name: BMI
+    description: Bell labs 99.7% accuracy
     prefab: {fileID: 3251297187297468064, guid: 194118687fb92b54097ba2efd0f5b2ab, type: 3}
     price: 300
     damage: 25
     range: 3
     cooldown: 8
     skillName: The Last SOUT (psvm)
+    skillDescription: Slows enemies down
     skillLevels:
     - cooldown: 200
       upragdeCost: 200

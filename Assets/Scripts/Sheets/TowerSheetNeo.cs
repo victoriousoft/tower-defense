@@ -17,12 +17,14 @@ public class TowerSheetNeo : ScriptableObject
 	public class Evolution
 	{
 		public string name;
+		public string description;
 		public GameObject prefab;
 		public int price;
 		public float damage;
 		public float range;
 		public float cooldown;
 		public string skillName;
+		public string skillDescription;
 		public Skill[] skillLevels;
 
 		public AudioClip shootSound;
@@ -63,7 +65,8 @@ public class TowerSheetNeo : ScriptableObject
 	public string GetBuyStats()
 	{
 		Level l = levels[0];
-		string stats = "Damage: " + l.damage + "\n";
+		string stats = description + "\n";
+		stats += "Damage: " + l.damage + "\n";
 		stats += "Range: " + l.range + "\n";
 		stats += "Cooldown: " + l.cooldown + "\n";
 		stats += "Price: " + l.price + "\n";
@@ -73,7 +76,8 @@ public class TowerSheetNeo : ScriptableObject
 	public string GetEvolutionBuyStats(int evolutionIndex)
 	{
 		Evolution e = evolutions[evolutionIndex];
-		string stats = "Damage: " + e.damage + "\n";
+		string stats = e.description + "\n";
+		stats += "Damage: " + e.damage + "\n";
 		stats += "Range: " + e.range + "\n";
 		stats += "Cooldown: " + e.cooldown + "\n";
 		stats += "Price: " + e.price + "\n";
@@ -83,7 +87,8 @@ public class TowerSheetNeo : ScriptableObject
 	public string GetEvolutionSkillStats(int evolutionIndex, int skillLevel)
 	{
 		Skill s = evolutions[evolutionIndex].skillLevels[skillLevel];
-		string stats = "Cooldown: " + s.cooldown + "\n";
+		string stats = evolutions[evolutionIndex].skillDescription + "\n";
+		stats += "Cooldown: " + s.cooldown + "\n";
 		stats += "Price: " + s.upragdeCost + "\n";
 		return stats;
 	}

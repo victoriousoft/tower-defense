@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerType: 0
   towerName: Barracks
-  description: 
+  description: A few brave soliders able to slow down enemy advancements
   damageType: 0
   enemyTypes: 00000000
   evolutionEnemyTypes: []
