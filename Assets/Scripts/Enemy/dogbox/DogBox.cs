@@ -5,6 +5,7 @@ public class DogBox : BaseEnemy
 {
 	public GameObject[] childPrefabs;
 	public int spawnCount;
+	private Coroutine spawnRoutine;
 
 	protected override void Attack() { }
 

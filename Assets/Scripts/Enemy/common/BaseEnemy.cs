@@ -38,6 +38,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 	protected bool canAttack = true;
 	protected bool isAbilityCharged = false;
+	private bool isDead = false;
 
 	[HideInInspector]
 	public float currentSpeed,
@@ -319,6 +320,10 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 
 	public IEnumerator Death()
 	{
+		if (isDead)
+			yield break;
+		isDead = true;
+
 		SoundPlayer.PlayInBackgroundRandom(gameObject, enemyData.deathSounds);
 
 		if (!nerfed)

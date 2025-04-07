@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: evilCat
   m_EditorClassIdentifier: 
   stats:
-    maxHealth: 40
+    maxHealth: 37
     damage: 20
-    cashDrop: 10
-    speed: 4
+    cashDrop: 1
+    speed: 10
     physicalResistance: 0
     magicResistance: 4
     attackRange: 0.5
