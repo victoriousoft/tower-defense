@@ -134,7 +134,7 @@ def parse_enemy_file(path: str) -> EnemyData:
         cashDrop=stats.get("cashDrop", 0),
         speed=stats.get("speed", 0),
         physicalResistance=stats.get("physicalResistance", 0),
-        magicalResistance=stats.get("magicalResistance", 0),
+        magicalResistance=stats.get("magicResistance", 0),
         attackCooldown=stats.get("attackCooldown", 0),
         visRange=stats.get("visRange", 0),
         playerLives=stats.get("playerLives", 0),
