@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerType: 3
   towerName: Bomber
-  description: 
+  description: Launches black explosive things
   damageType: 2
   enemyTypes: 00000000
   evolutionEnemyTypes:
@@ -35,12 +35,14 @@ MonoBehaviour:
     cooldown: 2
   evolutions:
   - name: explosive kitten
+    description: Is lowkey suicidal
     prefab: {fileID: 8909524829413949195, guid: 2be2af70e2ebbf44e8cdff254d70fcd3, type: 3}
     price: 350
     damage: 45
     range: 2.75
     cooldown: 2
     skillName: Blast Plague
+    skillDescription: More explosions
     skillLevels:
     - cooldown: 75
       upragdeCost: 200
@@ -52,12 +54,14 @@ MonoBehaviour:
     hitSound: {fileID: 8300000, guid: 729af20afd85fe240b734eebd7e5d1c9, type: 3}
     skillSound: {fileID: 0}
   - name: Caat JAS-39 Kitten
+    description: WTF is a mile
     prefab: {fileID: 8909524829413949195, guid: 3253ea2b69fb8ce4a8790f85b85cade0, type: 3}
     price: 350
     damage: 3
     range: 8
     cooldown: 3
     skillName: Kamikadze!!
+    skillDescription: Ditches the aircraft as a last resort
     skillLevels:
     - cooldown: 250
       upragdeCost: 300

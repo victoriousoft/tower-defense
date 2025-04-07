@@ -185,6 +185,12 @@ public class WaveSheet : MonoBehaviour
 			GameObject.FindGameObjectWithTag("Map").GetComponent<Animator>().SetTrigger("change");
 		}
 
+		if (instance.waveTriggerButton.isMouseOver)
+		{
+			instance.waveTriggerButton.isMouseOver = false;
+			TooltipManager.Hide();
+		}
+
 		instance.waveTriggerButton.gameObject.SetActive(false);
 		instance.StartCoroutine(instance.SpawnWave(instance.currentWave + 1));
 	}

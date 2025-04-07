@@ -220,9 +220,9 @@ public class TowerHolderButton : MonoBehaviour, IPointerClickHandler, IPointerEn
 				string EvolutionStats = tower.towerData.GetEvolutionBuyStats(evolutionIndex);
 
 				if (tower.towerData.evolutions[evolutionIndex].price > PlayerStatsManager.gold)
-					TooltipManager.Show(tower.towerData.towerName, EvolutionStats, red);
+					TooltipManager.Show(tower.towerData.evolutions[evolutionIndex].name, EvolutionStats, red);
 				else
-					TooltipManager.Show(tower.towerData.towerName, EvolutionStats);
+					TooltipManager.Show(tower.towerData.evolutions[evolutionIndex].name, EvolutionStats);
 
 				TowerHelpers.SetRangeCircle(
 					lineRenderer,
