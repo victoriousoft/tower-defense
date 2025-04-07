@@ -119,7 +119,7 @@ public class WaveSheet : MonoBehaviour
 		{
 			yield return null;
 
-			yield return new WaitForSecondsRealtime(initialDelay);
+			yield return new WaitForSeconds(initialDelay);
 
 			for (int i = 0; i < count; i++)
 			{
@@ -129,7 +129,7 @@ public class WaveSheet : MonoBehaviour
 
 				if (i < count - 1)
 				{
-					yield return new WaitForSecondsRealtime(spawnDelay);
+					yield return new WaitForSeconds(spawnDelay);
 				}
 			}
 		}
@@ -193,7 +193,7 @@ public class WaveSheet : MonoBehaviour
 	{
 		while (GameObject.Find("Enemies").transform.childCount > 0)
 		{
-			yield return new WaitForSecondsRealtime(0.5f);
+			yield return new WaitForSeconds(0.5f);
 		}
 
 		PlayerStatsManager.WinGame();
