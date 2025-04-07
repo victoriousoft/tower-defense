@@ -29,7 +29,7 @@ MonoBehaviour:
     abilityCooldown: 0
   info:
     name: Dalmatine
-    description: The 102nd one. Got high in the dog box and gained tech resistance.
+    description: The 102nd one.
   enemyType: 0
   attackSounds:
   - {fileID: 8300000, guid: 06d547e3511b38443ade62309b9027e3, type: 3}
