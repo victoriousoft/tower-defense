@@ -75,8 +75,8 @@ public abstract class BaseEvolutionTower : BaseTower
 
 		//TODO
 		/*SoundPlayer.PlayInBackground(
-		    gameObject,
-		    towerData.evolutions[evolutionIndex].upgradeSounds[Random.Range(0, towerData.upgradeSounds.Length)]
+			gameObject,
+			towerData.evolutions[evolutionIndex].upgradeSounds[Random.Range(0, towerData.upgradeSounds.Length)]
 		);*/
 	}
 

@@ -12,13 +12,14 @@ public class StickyNote : BaseEnemy
 
 	protected override void Attack()
 	{
+		Debug.Log("StickyNote attack");
 		if (attackRoutine == null)
 			attackRoutine = StartCoroutine(MoveAttack());
 	}
 
 	private IEnumerator MoveAttack()
 	{
-		while (Vector3.Distance(sprite.transform.position, currentTarget.transform.position) > 0.5f)
+		while (currentTarget && Vector3.Distance(sprite.transform.position, currentTarget.transform.position) > 0.5f)
 		{
 			animator.SetBool("idle", true);
 			transform.position = Vector3.MoveTowards(
@@ -28,7 +29,11 @@ public class StickyNote : BaseEnemy
 			);
 			yield return null;
 		}
-		currentTarget.GetComponent<BaseTroop>().TakeDamage(1000);
+
+		if (currentTarget)
+		{
+			currentTarget.GetComponent<BaseTroop>().TakeDamage(1000);
+		}
 		Destroy(gameObject);
 	}
 
