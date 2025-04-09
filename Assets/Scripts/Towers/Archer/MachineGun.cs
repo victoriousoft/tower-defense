@@ -181,7 +181,7 @@ public class MachineGun : BaseEvolutionTower
 		foreach (GameObject enemy in enemies)
 		{
 			if (enemy != null)
-				enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.evolutions[0].damage / 2, DamageTypes.PHYSICAL);
+				enemy.GetComponent<BaseEnemy>().TakeDamage(towerData.evolutions[0].damage / 3, DamageTypes.PHYSICAL);
 		}
 
 		yield return null;
