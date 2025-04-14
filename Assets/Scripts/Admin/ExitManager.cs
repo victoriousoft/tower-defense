@@ -8,6 +8,7 @@ public class ExitManager : MonoBehaviour
 		if (enemy.CompareTag("Enemy"))
 		{
 			PlayerStatsManager.SubtractLives(enemy.GetComponent<BaseEnemy>().enemyData.stats.playerLives);
+			TowerDefenseAgent.instance.OnEnemyPass(enemy.GetComponent<BaseEnemy>().enemyData.stats.playerLives);
 			Destroy(enemy);
 		}
 	}

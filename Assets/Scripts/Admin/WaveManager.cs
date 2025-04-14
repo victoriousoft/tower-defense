@@ -207,6 +207,8 @@ public class WaveSheet : MonoBehaviour
 
 	public IEnumerator SpawnWave(int waveIndex)
 	{
+		TowerDefenseAgent.instance.OnWaveStart(waveIndex);
+
 		if (waveTriggerButton.GetComponent<WaveTriggerButton>().isMouseOver && TooltipManager.instance.isEnabled)
 		{
 			TooltipManager.Hide();
@@ -252,5 +254,15 @@ public class WaveSheet : MonoBehaviour
 		{
 			StartCoroutine(AwaitAllEnemyDeath());
 		}
+	}
+
+	public void Reset()
+	{
+		currentWave = -1;
+		showNextWaveButton = true;
+		waveTriggerButton.gameObject.SetActive(false);
+		waveTriggerButton.statusBar.gameObject.SetActive(false);
+		StopAllCoroutines();
+		waveCountdownRoutine = null;
 	}
 }

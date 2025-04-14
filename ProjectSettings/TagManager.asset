@@ -10,6 +10,7 @@ TagManager:
   - Tower
   - WaveManager
   - Map
+  - TowerHolder
   layers:
   - Default
   - TransparentFX

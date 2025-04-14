@@ -1,0 +1,21 @@
+behaviors:
+    TowerDefenseAgent:
+        trainer_type: ppo
+        max_steps: 100000
+        time_horizon: 32
+        summary_freq: 500
+        reward_signals:
+            extrinsic:
+                gamma: 0.99
+                strength: 1.0
+        network_settings:
+            normalize: false
+            hidden_units: 128
+            num_layers: 2
+        hyperparameters:
+            batch_size: 512
+            buffer_size: 5120
+            learning_rate: 5.0e-4
+            learning_rate_schedule: constant
+        keep_checkpoints: 5
+        checkpoint_interval: 5000

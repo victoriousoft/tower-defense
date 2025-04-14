@@ -1968,21 +1968,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveTriggerButton: {fileID: 1644854474}
   waves:
-  - initialDelay: 0
+  - changesMap: 0
+    initialDelay: 0
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: 5d2dd7192bfa41b4aa5b9ccdce4406ac, type: 3}
       pathParent: {fileID: 1041984126}
       count: 7
       spawnDelay: 2.5
       initialDelay: 0
-  - initialDelay: 20
+  - changesMap: 0
+    initialDelay: 20
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: 5b10d5bc59d620841b25da864e41a57a, type: 3}
       pathParent: {fileID: 539522128}
       count: 10
       spawnDelay: 1.5
       initialDelay: 0
-  - initialDelay: 20
+  - changesMap: 0
+    initialDelay: 20
     enemies:
     - enemyPrefab: {fileID: 263465933958823401, guid: d2a5316ca0014cd418585664ddf513c7, type: 3}
       pathParent: {fileID: 1041984126}
@@ -1999,7 +2002,8 @@ MonoBehaviour:
       count: 5
       spawnDelay: 3.5
       initialDelay: 10
-  - initialDelay: 20
+  - changesMap: 0
+    initialDelay: 20
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: 5b10d5bc59d620841b25da864e41a57a, type: 3}
       pathParent: {fileID: 1041984126}
@@ -2011,7 +2015,8 @@ MonoBehaviour:
       count: 3
       spawnDelay: 2.5
       initialDelay: 5
-  - initialDelay: 20
+  - changesMap: 0
+    initialDelay: 20
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: 5b10d5bc59d620841b25da864e41a57a, type: 3}
       pathParent: {fileID: 539522128}
@@ -2023,7 +2028,8 @@ MonoBehaviour:
       count: 5
       spawnDelay: 4
       initialDelay: 0
-  - initialDelay: 20
+  - changesMap: 0
+    initialDelay: 20
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: 5d2dd7192bfa41b4aa5b9ccdce4406ac, type: 3}
       pathParent: {fileID: 1041984126}
@@ -2035,7 +2041,8 @@ MonoBehaviour:
       count: 10
       spawnDelay: 5
       initialDelay: 1
-  - initialDelay: 20
+  - changesMap: 0
+    initialDelay: 20
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: 5d2dd7192bfa41b4aa5b9ccdce4406ac, type: 3}
       pathParent: {fileID: 1041984126}
@@ -2067,7 +2074,8 @@ MonoBehaviour:
       count: 2
       spawnDelay: 2
       initialDelay: 35
-  - initialDelay: 20
+  - changesMap: 0
+    initialDelay: 20
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: 5b10d5bc59d620841b25da864e41a57a, type: 3}
       pathParent: {fileID: 1041984126}
@@ -2089,7 +2097,8 @@ MonoBehaviour:
       count: 15
       spawnDelay: 0.75
       initialDelay: 60
-  - initialDelay: 20
+  - changesMap: 0
+    initialDelay: 20
     enemies:
     - enemyPrefab: {fileID: 9059301247369330279, guid: 1831f1016d936a14482e890eb049e42a, type: 3}
       pathParent: {fileID: 1041984126}
@@ -2770,6 +2779,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1929494951}
+  - component: {fileID: 1929494953}
+  - component: {fileID: 1929494952}
   m_Layer: 0
   m_Name: Arena
   m_TagString: Untagged
@@ -2796,6 +2807,52 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1929494952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929494950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a13b4dc1cf111dc45a2632ec114f954f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 0
+--- !u!114 &1929494953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929494950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1c4e0b1822b495aa52bc52839ecb30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BrainParameters:
+    VectorObservationSize: 1
+    NumStackedVectorObservations: 1
+    m_ActionSpec:
+      m_NumContinuousActions: 3
+      BranchSizes: 05000000
+    VectorActionSize: 
+    VectorActionDescriptions: []
+    VectorActionSpaceType: 0
+    hasUpgradedBrainParametersWithActionSpec: 1
+  m_Model: {fileID: 0}
+  m_InferenceDevice: 0
+  m_BehaviorType: 0
+  m_BehaviorName: TowerDefenseAgent
+  TeamId: 0
+  m_UseChildSensors: 1
+  m_UseChildActuators: 1
+  m_ObservableAttributeHandling: 0
 --- !u!1001 &1985580966
 PrefabInstance:
   m_ObjectHideFlags: 0

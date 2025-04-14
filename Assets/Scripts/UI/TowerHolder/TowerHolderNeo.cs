@@ -464,7 +464,7 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 		isMenuLocked = false;
 	}
 
-	private void SellTower()
+	public void SellTower()
 	{
 		if (towerInstance == null)
 			return;
@@ -616,5 +616,68 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	public bool isEvolutionTower()
 	{
 		return towerInstance != null && towerInstance.GetComponent<BaseEvolutionTower>() != null;
+	}
+
+	public bool AgentBuyTower(TowerTypes towerType)
+	{
+		if (towerInstance != null)
+			return false;
+
+		GameObject towerPrefab = towerPrefabs[towerType];
+		if (!PlayerStatsManager.SubtractGold(towerPrefab.GetComponent<BaseTower>().towerData.levels[0].price))
+		{
+			Debug.Log("Not enough gold");
+			return false;
+		}
+
+		StartCoroutine(BuyTower(towerPrefab));
+		return true;
+	}
+
+	public bool AgentUpgradeTower()
+	{
+		if (towerInstance == null)
+			return false;
+
+		BaseTower baseTower = towerInstance.GetComponent<BaseTower>();
+		if (!PlayerStatsManager.SubtractGold(baseTower.towerData.levels[baseTower.level + 1].price))
+		{
+			Debug.Log("Not enough gold");
+			return false;
+		}
+
+		if (baseTower.level >= baseTower.towerData.levels.Length - 1)
+		{
+			Debug.Log("Max level reached");
+			return false;
+		}
+
+		baseTower.UpgradeTower();
+		TowerHelpers.SetRangeCircle(
+			rangeRenderer,
+			baseTower.towerData.levels[baseTower.level].range,
+			transform.position
+		);
+
+		SoundPlayer.PlayInBackground(gameObject, upgradeSound);
+		return true;
+	}
+
+	public void Reset()
+	{
+		if (towerInstance != null)
+		{
+			Destroy(towerInstance);
+			towerInstance = null;
+		}
+
+		HideButtons();
+		TowerHelpers.SetRangeCircle(rangeRenderer, 0, transform.position);
+		backgroundSprite.enabled = true;
+		ChangeState(MenuState.Initial);
+		isMenuActive = false;
+		isMenuLocked = false;
+		isMouseOver = false;
+		isMouseDown = false;
 	}
 }

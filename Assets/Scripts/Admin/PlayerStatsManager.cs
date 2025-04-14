@@ -53,10 +53,13 @@ public class PlayerStatsManager : MonoBehaviour
 	public static void GameOver()
 	{
 		Overlay.PauseGame("Game Over", "You have lost all your lives");
+		TowerDefenseAgent.instance.GameEnd(false);
 	}
 
 	public static void WinGame()
 	{
+		TowerDefenseAgent.instance.GameEnd(true, lives);
+
 		int initialLives = GlobalData.instance.levelSheet.levels[currentLevel].initialLives;
 		int stars = 0;
 
