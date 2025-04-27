@@ -323,6 +323,7 @@ public abstract class BaseEnemy : MonoBehaviour, IPointerClickHandler
 		if (isDead)
 			yield break;
 		isDead = true;
+		TowerDefenseAgent.instance.OnEnemyDeath(enemyData.stats.playerLives);
 
 		SoundPlayer.PlayInBackgroundRandom(gameObject, enemyData.deathSounds);
 

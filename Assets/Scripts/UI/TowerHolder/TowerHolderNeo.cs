@@ -58,7 +58,7 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	public AudioClip sellSound;
 	public AudioClip upgradeSound;
 
-	private Dictionary<TowerTypes, GameObject> towerPrefabs;
+	public Dictionary<TowerTypes, GameObject> towerPrefabs { get; private set; }
 	public Dictionary<ButtonAction, Sprite> towerIcons;
 	public Dictionary<TowerTypes, Sprite[]> evolutionTowerIcons;
 
@@ -77,7 +77,7 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	private LineRenderer rangeRenderer;
 	private bool isMenuActive = false;
 	private bool isMenuLocked = false;
-	private Animator animator;
+	public Animator animator { get; private set; }
 	private bool isMouseOver = false;
 	private bool isMouseDown = false;
 
@@ -640,15 +640,16 @@ public class TowerHolderNeo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 			return false;
 
 		BaseTower baseTower = towerInstance.GetComponent<BaseTower>();
-		if (!PlayerStatsManager.SubtractGold(baseTower.towerData.levels[baseTower.level + 1].price))
-		{
-			Debug.Log("Not enough gold");
-			return false;
-		}
 
 		if (baseTower.level >= baseTower.towerData.levels.Length - 1)
 		{
 			Debug.Log("Max level reached");
+			return false;
+		}
+
+		if (!PlayerStatsManager.SubtractGold(baseTower.towerData.levels[baseTower.level + 1].price))
+		{
+			Debug.Log("Not enough gold");
 			return false;
 		}
 
