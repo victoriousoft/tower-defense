@@ -5,7 +5,7 @@ behaviors:
             batch_size: 512 # Reduced to encourage more frequent updates
             buffer_size: 20480 # Increased to allow more diverse experiences
             learning_rate: 1.0e-4 # Reduced to stabilize learning
-            beta: 1.0e-3 # Increased to encourage exploration
+            beta: 5.0e-3 # Increased to encourage exploration
             epsilon: 0.3 # Increased to allow more exploration during training
             lambd: 0.95
             num_epoch: 3
@@ -17,5 +17,5 @@ behaviors:
                 gamma: 0.99
                 strength: 1.0
         max_steps: 5.0e6
-        time_horizon: 1000
+        time_horizon: 256
         summary_freq: 10000

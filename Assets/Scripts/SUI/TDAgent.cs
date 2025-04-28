@@ -20,6 +20,9 @@ public class TowerDefenseAgent : Agent
 
 	private float timeSinceLastAction = 0f;
 	private const float idleThreshold = 10f; // Threshold in seconds for punishing inactivity
+	private HashSet<int> visitedTowerIndices = new HashSet<int>();
+	private Dictionary<int, int> actionFrequency = new Dictionary<int, int>();
+	private int consecutiveDoNothing = 0;
 
 	private void FixedUpdate()
 	{
@@ -27,12 +30,12 @@ public class TowerDefenseAgent : Agent
 		timeSinceLastAction += Time.fixedDeltaTime;
 
 		// Small constant penalty for inactivity
-		AddReward(-0.001f);
+		AddReward(-0.0005f);
 
 		// Punish the agent if it has been idle for too long
 		if (timeSinceLastAction > idleThreshold)
 		{
-			AddReward(-1f); // Apply a penalty for inactivity
+			AddReward(-2f); // Increased penalty for inactivity
 			Debug.LogWarning("Agent punished for inactivity (timeout).");
 
 			timeSinceLastAction -= idleThreshold; // Subtract threshold instead of resetting to 0
@@ -47,18 +50,24 @@ public class TowerDefenseAgent : Agent
 
 	public override void OnEpisodeBegin()
 	{
+		// Reset player stats and game state
 		PlayerStatsManager.ResetStats();
 		Overlay.ResumeGame();
 		WaveSheet.instance.Reset();
 		timeSinceLevelLoad = 0f;
 
+		// Clear and reset tower holders
 		towerHolders.Clear();
+		visitedTowerIndices.Clear();
+		actionFrequency.Clear();
 
+		// Destroy all enemies
 		foreach (var enemy in GameObject.FindObjectsOfType<BaseEnemy>())
 		{
 			Destroy(enemy.gameObject);
 		}
 
+		// Initialize tower holders
 		TowerHolderNeo[] holdersArray = GameObject.FindObjectsOfType<TowerHolderNeo>();
 		foreach (var holder in holdersArray)
 		{
@@ -68,16 +77,19 @@ public class TowerDefenseAgent : Agent
 
 		Debug.Log("Episode Begin: " + towerHolders.Count + " tower holders found.");
 
+		// Trigger the first wave
 		WaveSheet.TriggerWaveSpawn();
 	}
 
 	public override void CollectObservations(VectorSensor sensor)
 	{
+		// Add player stats and game state as observations
 		sensor.AddObservation(PlayerStatsManager.gold);
 		sensor.AddObservation(PlayerStatsManager.lives);
 		sensor.AddObservation(WaveSheet.instance.currentWave);
 		sensor.AddObservation(timeSinceLevelLoad);
 
+		// Add tower holder states as observations
 		foreach (var holder in towerHolders)
 		{
 			sensor.AddObservation(
@@ -92,6 +104,7 @@ public class TowerDefenseAgent : Agent
 		bool canSell = false;
 		bool canUpgrade = false;
 
+		// Determine available actions based on tower holder states
 		for (int i = 0; i < towerHolders.Count; i++)
 		{
 			var holder = towerHolders[i];
@@ -102,25 +115,25 @@ public class TowerDefenseAgent : Agent
 
 			if (!isIdle)
 			{
-				continue; // if busy, can't interact
+				continue; // Skip if the holder is busy
 			}
 
 			if (tower == null)
 			{
-				canBuy = true; // empty spot → can buy
+				canBuy = true; // Empty spot → can buy
 			}
 			else
 			{
-				canSell = true; // there's a tower → can sell
+				canSell = true; // Tower exists → can sell
 
 				if (towerLevel < 2)
 				{
-					canUpgrade = true; // tower not maxed → can upgrade
+					canUpgrade = true; // Tower not maxed → can upgrade
 				}
 			}
 		}
 
-		// Now mask based on global possibilities:
+		// Mask unavailable actions
 		if (!canBuy)
 		{
 			actionMask.SetActionEnabled(0, 0, false); // Buy
@@ -141,11 +154,18 @@ public class TowerDefenseAgent : Agent
 		int towerIndex = actions.DiscreteActions[1];
 		int towerType = actions.DiscreteActions[2];
 
-		if (action != 3) // not "Do Nothing"
+		// Reset idle tracking if the agent performs an action
+		if (action != 3) // Not "Do Nothing"
 		{
 			timeSinceLastAction = 0f;
+			consecutiveDoNothing = 0;
+		}
+		else
+		{
+			consecutiveDoNothing++;
 		}
 
+		// Log the action for debugging
 		string actionString = action switch
 		{
 			0 => "Buy",
@@ -154,6 +174,7 @@ public class TowerDefenseAgent : Agent
 			3 => "Do Nothing",
 			_ => "Invalid Action",
 		};
+
 		string towerTypeString = towerType switch
 		{
 			0 => "Archer",
@@ -163,11 +184,31 @@ public class TowerDefenseAgent : Agent
 			_ => "Invalid Tower Type",
 		};
 
-		Debug.Log($"Action received: {actionString}, Tower Index: {towerIndex}, Tower Type: {towerTypeString}");
+		Debug.Log($"Action: {actionString}, Tower Index: {towerIndex}, Tower Type: {towerTypeString}");
 
+		// Track action frequency and punish repetitive actions
+		if (!actionFrequency.ContainsKey(action))
+		{
+			actionFrequency[action] = 0;
+		}
+		actionFrequency[action]++;
+
+		if (actionFrequency[action] > 5)
+		{
+			AddReward(-0.1f);
+		}
+
+		// Reward visiting new tower indices
+		if (!visitedTowerIndices.Contains(towerIndex))
+		{
+			AddReward(0.5f);
+			visitedTowerIndices.Add(towerIndex);
+		}
+
+		// Handle actions
 		switch (action)
 		{
-			case 0: // Buy tower
+			case 0: // Buy
 				if (
 					IsValidTowerHolder(towerIndex)
 					&& towerHolders[towerIndex].animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")
@@ -175,66 +216,67 @@ public class TowerDefenseAgent : Agent
 				{
 					if (towerHolders[towerIndex].AgentBuyTower(towerTypes[towerType]))
 					{
-						AddReward(0.5f); // Reward for buying early
-						Debug.Log($"Bought {towerTypes[towerType]} at {towerIndex}");
+						AddReward(0.4f);
 					}
 					else
 					{
-						AddReward(-0.5f); // Buying failed (e.g., not enough gold)
+						AddReward(-0.6f);
 					}
 				}
 				else
 				{
-					AddReward(-1f); // Invalid buy attempt
+					AddReward(-1f);
 				}
 				break;
 
-			case 1: // Sell tower
+			case 1: // Sell
 				if (IsValidTowerHolder(towerIndex))
 				{
 					if (towerHolders[towerIndex].towerInstance != null)
 					{
 						towerHolders[towerIndex].SellTower();
-						AddReward(0.3f); // Small reward for managing resources
-						Debug.Log($"Sold tower at {towerIndex}");
+						AddReward(0f);
 					}
 					else
 					{
-						AddReward(-0.3f); // Tried to sell nothing
+						AddReward(-0.4f);
 					}
 				}
 				else
 				{
-					AddReward(-1f); // Invalid sell attempt
+					AddReward(-1f);
 				}
 				break;
 
-			case 2: // Upgrade tower
+			case 2: // Upgrade
 				if (IsValidTowerHolder(towerIndex))
 				{
 					if (towerHolders[towerIndex].AgentUpgradeTower())
 					{
-						AddReward(0.6f); // Reward for improving defenses
-						Debug.Log($"Upgraded tower at {towerIndex}");
+						AddReward(0.5f);
 					}
 					else
 					{
-						AddReward(-0.5f); // Upgrade failed
+						AddReward(-0.6f);
 					}
 				}
 				else
 				{
-					AddReward(-1f); // Invalid upgrade attempt
+					AddReward(-1f);
 				}
 				break;
 
-			case 3: // Do nothing
-				AddReward(-0.01f);
+			case 3: // Do Nothing
+				AddReward(-0.02f); // Small constant penalty
+				if (consecutiveDoNothing > 5)
+				{
+					Debug.LogWarning($"Doing nothing for {consecutiveDoNothing} frames.");
+					AddReward(-0.1f * (consecutiveDoNothing - 5)); // Punish after 5 consecutive idles
+				}
 				break;
 
 			default:
-				Debug.LogError($"Invalid action received: {action}");
-				AddReward(-2f); // Strong punishment for illegal action
+				AddReward(-2f); // Invalid action penalty
 				break;
 		}
 	}
@@ -243,7 +285,8 @@ public class TowerDefenseAgent : Agent
 	{
 		var discreteActions = actionsOut.DiscreteActions;
 
-		discreteActions[0] = Random.Range(0, 3); // Buy, Sell, Upgrade
+		// Randomize actions for heuristic mode
+		discreteActions[0] = Random.Range(0, 4); // Action type
 		discreteActions[1] = Random.Range(0, towerHolders.Count); // Tower index
 		discreteActions[2] = Random.Range(0, towerTypes.Length); // Tower type
 
@@ -253,19 +296,19 @@ public class TowerDefenseAgent : Agent
 	public void OnEnemyPass(int livesLost)
 	{
 		Debug.Log($"Enemy passed! Lives lost: {livesLost}");
-		AddReward(-5f * livesLost);
+		AddReward(-5f * livesLost); // Punish for losing lives
 	}
 
 	public void OnWaveStart(int waveIndex)
 	{
 		Debug.Log($"Wave {waveIndex} started.");
-		AddReward(0.2f * waveIndex);
+		AddReward(0.2f * waveIndex); // Reward for starting a new wave
 	}
 
 	public void OnEnemyDeath(int enemyLives)
 	{
 		Debug.Log($"Enemy killed worth {enemyLives} lives");
-		AddReward(0.5f * enemyLives);
+		AddReward(0.5f * enemyLives); // Reward for killing enemies
 	}
 
 	public void GameEnd(bool win, int lives = 0)
@@ -274,7 +317,7 @@ public class TowerDefenseAgent : Agent
 
 		if (win)
 		{
-			AddReward(2f + (lives * 0.2f)); // Bigger win reward
+			AddReward(2f + (lives * 0.2f)); // Reward for winning
 		}
 		else
 		{
