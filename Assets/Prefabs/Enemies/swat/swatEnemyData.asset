@@ -15,7 +15,7 @@ MonoBehaviour:
   stats:
     maxHealth: 200
     damage: 10
-    cashDrop: 25
+    cashDrop: 35
     speed: 3.5
     physicalResistance: 3
     magicResistance: 1
@@ -29,8 +29,8 @@ MonoBehaviour:
     abilityCooldown: 0
   info:
     name: SWAT
-    description: Armored peace-enforcer... He is the skibidi sigma. Equipped with
-      a suicide bomb to use in the worst situations.
+    description: Armored peace enforcer... Rumors are he never has his body cam turned
+      on.
   enemyType: 0
   attackSounds:
   - {fileID: 8300000, guid: c7995e07c5ad6fb4f8856a54da784333, type: 3}
