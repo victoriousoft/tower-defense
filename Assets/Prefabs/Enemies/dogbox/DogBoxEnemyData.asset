@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DogBoxEnemyData
   m_EditorClassIdentifier: 
   stats:
-    maxHealth: 150
+    maxHealth: 100
     damage: 10
     cashDrop: 100
     speed: 3
